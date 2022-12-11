@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ServisTakip.Core.Entities
+{
+    public class BaseEntity : BaseEntity<long> { }
+    public class BaseEntity<T> : IEntity
+    {
+        public virtual T Id { get; set; }
+        public virtual string RecordUsername { get; set; }
+        public virtual DateTime RecordDate { get; set; }
+        public virtual string UpdateUsername { get; set; }
+        public virtual DateTime? UpdateDate { get; set; }
+        public virtual string Ip { get; set; }
+    }
+}

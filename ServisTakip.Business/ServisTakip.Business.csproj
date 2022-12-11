@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServisTakip.Core\ServisTakip.Core.csproj" />
+    <ProjectReference Include="..\ServisTakip.DataAccess\ServisTakip.DataAccess.csproj" />
+    <ProjectReference Include="..\ServisTakip.Entities\ServisTakip.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
