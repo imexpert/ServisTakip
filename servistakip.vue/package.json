@@ -48,7 +48,8 @@
     "vue-router": "^4.0.3",
     "vue3-apexcharts": "^1.4.1",
     "vuex": "^4.0.0",
-    "yup": "^0.32.8"
+    "yup": "^0.32.8",
+    "@vue/eslint-config-standard": "^4.0.0"
   },
   "devDependencies": {
     "@types/array-sort": "^1.0.0",
