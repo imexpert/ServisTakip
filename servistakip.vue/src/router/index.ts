@@ -18,27 +18,18 @@ const routes: Array<RouteRecordRaw> = [
           breadcrumbs: ["Dashboards"],
         },
       },
+    ],
+  },
+  {
+    path: "/",
+    component: () => import("@/components/page-layouts/Auth.vue"),
+    children: [
       {
-        path: "/builder",
-        name: "builder",
-        component: () => import("@/views/LayoutBuilder.vue"),
-        meta: {
-          pageTitle: "Layout Builder",
-          breadcrumbs: ["Layout"],
-        },
+        path: "/sign-in",
+        name: "sign-in",
+        component: () =>
+          import("@/views/authentication/SignIn.vue"),
       },
-    ],
-  },
-  {
-    path: "/",
-    component: () => import("@/layouts/AuthLayout.vue"),
-    children: [
-    ],
-  },
-  {
-    path: "/",
-    component: () => import("@/layouts/SystemLayout.vue"),
-    children: [
     ],
   },
   {

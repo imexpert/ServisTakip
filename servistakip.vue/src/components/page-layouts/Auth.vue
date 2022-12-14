@@ -7,18 +7,10 @@
     <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
       <!--begin::Logo-->
       <a href="#" v-if="themeMode === 'dark'" class="mb-12">
-        <img
-          alt="Logo"
-          src="media/logos/default-dark.svg"
-          class="h-45px app-sidebar-logo-default"
-        />
+        <img alt="Logo" src="media/logos/default-dark.svg" class="h-45px app-sidebar-logo-default" />
       </a>
       <a href="#" v-if="themeMode === 'light'" class="mb-12">
-        <img
-          alt="Logo"
-          src="media/logos/default.svg"
-          class="theme-dark-show h-45px"
-        />
+        <img alt="Logo" src="media/logos/default.svg" class="theme-dark-show h-45px" />
       </a>
       <!--end::Logo-->
 
@@ -30,11 +22,9 @@
     <div class="d-flex flex-center flex-column-auto p-10">
       <!--begin::Links-->
       <div class="d-flex align-items-center fw-semobold fs-6">
-        <a href="#" class="text-muted text-hover-primary px-2">About</a>
+        <a href="#" class="text-muted text-hover-primary px-2">Hakkımızda</a>
 
-        <a href="#" class="text-muted text-hover-primary px-2">Contact</a>
-
-        <a href="#" class="text-muted text-hover-primary px-2">Contact Us</a>
+        <a href="#" class="text-muted text-hover-primary px-2">İletişim</a>
       </div>
       <!--end::Links-->
     </div>
@@ -43,13 +33,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, computed } from "vue";
-import { useStore } from "vuex";
-import { Actions } from "@/store/enums/StoreEnums";
-import { getIllustrationsPath } from "@/core/helpers/assets";
+import { defineComponent, onMounted, onUnmounted, computed } from 'vue';
+import { useStore } from 'vuex';
+import { Actions } from '@/store/enums/StoreEnums';
+import { getIllustrationsPath } from '@/core/helpers/assets';
 
 export default defineComponent({
-  name: "auth-page-layout",
+  name: 'auth-page-layout',
   components: {},
   setup() {
     const store = useStore();
@@ -59,11 +49,11 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      store.dispatch(Actions.ADD_BODY_CLASSNAME, "bg-body");
+      store.dispatch(Actions.ADD_BODY_CLASSNAME, 'bg-body');
     });
 
     onUnmounted(() => {
-      store.dispatch(Actions.REMOVE_BODY_CLASSNAME, "bg-body");
+      store.dispatch(Actions.REMOVE_BODY_CLASSNAME, 'bg-body');
     });
 
     return {
