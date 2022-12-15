@@ -121,7 +121,9 @@ export default defineComponent({
       // Send login request
       store
         .dispatch(Actions.LOGIN, values)
-        .then(() => {
+        .then(result => {
+          console.log('result');
+          console.log(result);
           Swal.fire({
             text: 'You have successfully logged in!',
             icon: 'success',

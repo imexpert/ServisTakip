@@ -38,7 +38,7 @@ namespace ServisTakip.Business.Handlers.Authorizations.Queries
             [ValidationAspect(typeof(LoginUserValidator), Priority = 1)]
             public async Task<ResponseMessage<AccessToken>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
             {
-                var user = await _userRepository.GetAsync(u => u.Username == request.LoginModel.Username && u.Status);
+                var user = await _userRepository.GetAsync(u => u.Email == request.LoginModel.Email && u.Status);
 
                 if (user == null)
                 {

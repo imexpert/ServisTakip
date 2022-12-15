@@ -33,7 +33,7 @@ namespace CarbonCalculator.Business.Handlers.Authorizations.Commands
             [ValidationAspect(typeof(RegisterUserValidator), Priority = 1)]
             public async Task<ResponseMessage<CreateUserDto>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
             {
-                var isThereAnyUser = await _userRepository.GetAsync(u => u.Username == request.Model.Username);
+                var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Model.Email);
                 if (isThereAnyUser != null)
                     return ResponseMessage<CreateUserDto>.Fail(StatusCodes.Status400BadRequest, "Bu kullanıcı adı zaten eklenmiş.");
 
@@ -41,7 +41,7 @@ namespace CarbonCalculator.Business.Handlers.Authorizations.Commands
 
                 var user = new User
                 {
-                    Username = request.Model.Username,
+                    Email = request.Model.Email,
                     Firstname = request.Model.Firstname,
                     Lastname = request.Model.Lastname,
                     PasswordHash = passwordHash,

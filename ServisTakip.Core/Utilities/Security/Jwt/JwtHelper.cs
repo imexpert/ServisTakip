@@ -84,7 +84,7 @@ namespace ServisTakip.Core.Utilities.Security.Jwt
         private IEnumerable<Claim> SetClaims(User user)
         {
             var claims = new List<Claim>();
-            claims.Add(new Claim("UserCode", user.Username));
+            claims.Add(new Claim("Email", user.Email));
             claims.Add(new Claim("UserId", user.Id.ToString()));
             return claims;
         }

@@ -14,7 +14,7 @@ namespace ServisTakip.Business.Handlers.Authorizations.ValidationRules
                     .Matches(@"[a-z]+").WithMessage("Şifreniz en az 1 adet küçük harf içermelidir.")
                     .Matches(@"[0-9]+").WithMessage("Şifreniz en az 1 adet rakam içermelidir.");
 
-            RuleFor(m => m.Model.Username).NotNull().WithMessage("Kullanıcı adı boş olamaz");
+            RuleFor(m => m.Model.Email).NotNull().WithMessage("Kullanıcı adı boş olamaz");
             RuleFor(m => m.Model.Firstname).NotNull().WithMessage("İsim boş olamaz");
             RuleFor(m => m.Model.Lastname).NotNull().WithMessage("Soyadı boş olamaz");
         }
