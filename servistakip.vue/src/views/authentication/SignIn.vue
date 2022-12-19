@@ -75,7 +75,6 @@
     </Form>
     <!--end::Form-->
   </div>
-  <Loading />
   <!--end::Wrapper-->
 </template>
 
@@ -86,7 +85,6 @@ import { Actions } from '@/store/enums/StoreEnums';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2/dist/sweetalert2.min.js';
-import Loading from '@/components/kt-datatable/table-partials/Loading.vue';
 
 import * as Yup from 'yup';
 
@@ -96,7 +94,6 @@ export default defineComponent({
     Field,
     Form,
     ErrorMessage,
-    Loading,
   },
   setup() {
     const store = useStore();
@@ -118,14 +115,16 @@ export default defineComponent({
       submitButton.value?.setAttribute('data-kt-indicator', 'on');
       submitButton.value!.disabled = true;
 
-      debugger;
       // Send login request
       store
         .dispatch(Actions.LOGIN, values)
         .then(result => {
           if (result.isSuccess) {
+            // Go to page after successfully login
+            router.push({ name: 'dashboard' });
           } else {
             Swal.fire({
+              title: 'Hata',
               text: result.message,
               icon: 'error',
               buttonsStyling: false,

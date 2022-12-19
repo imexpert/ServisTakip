@@ -4,10 +4,9 @@ import { Actions, Mutations } from "@/store/enums/StoreEnums";
 import { Module, Action, Mutation, VuexModule } from "vuex-module-decorators";
 
 export interface User {
-  name: string;
+  firstname: string;
   surname: string;
   email: string;
-  password: string;
   api_token: string;
 }
 
@@ -66,11 +65,6 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
   }
 
   @Mutation
-  [Mutations.SET_PASSWORD](password) {
-    this.user.password = password;
-  }
-
-  @Mutation
   [Mutations.PURGE_AUTH]() {
     this.isAuthenticated = false;
     this.user = {} as User;
@@ -82,6 +76,12 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
   [Actions.LOGIN](credentials) {
     return ApiService.post("Auth/login", credentials)
       .then(({ data }) => {
+        console.log(data);
+        if (data.isSuccess) {
+          console.log(data.data);
+          this.context.commit(Mutations.SET_AUTH, data.data);
+        }
+
         return data;
       })
       .catch(({ response }) => {
@@ -117,15 +117,14 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
   }
 
   @Action
-  [Actions.VERIFY_AUTH](payload) {
+  [Actions.VERIFY_AUTH]() {
     if (JwtService.getToken()) {
       ApiService.setHeader();
-      ApiService.post("verify_token", payload)
+      ApiService.get("Auth/VerifyToken")
         .then(({ data }) => {
-          this.context.commit(Mutations.SET_AUTH, data);
+
         })
         .catch(({ response }) => {
-          this.context.commit(Mutations.SET_ERROR, response.data.errors);
           this.context.commit(Mutations.PURGE_AUTH);
         });
     } else {

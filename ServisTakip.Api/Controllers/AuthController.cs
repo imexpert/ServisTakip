@@ -30,16 +30,13 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="createUserDto"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateUserDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseMessage<CreateUserDto>))]
-        [HttpPost]
-        public async Task<IActionResult> Register([FromBody] CreateUserDto createUserDto)
+        [HttpGet]
+        public IActionResult VerifyToken()
         {
-            return CreateActionResult(await Mediator.Send(new RegisterUserCommand() { Model = createUserDto }));
+            return Ok();
         }
     }
 }
