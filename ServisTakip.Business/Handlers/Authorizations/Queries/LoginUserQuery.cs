@@ -42,7 +42,7 @@ namespace ServisTakip.Business.Handlers.Authorizations.Queries
 
                 if (user == null)
                 {
-                    return ResponseMessage<AccessToken>.Fail(StatusCodes.Status401Unauthorized, "Kullanıcı adı ya da şifre hatalı");
+                    return ResponseMessage<AccessToken>.Fail(StatusCodes.Status200OK, "Kullanıcı adı ya da şifre hatalı");
                 }
 
                 if (!HashingHelper.VerifyPasswordHash(request.LoginModel.Password, user.PasswordSalt, user.PasswordHash))

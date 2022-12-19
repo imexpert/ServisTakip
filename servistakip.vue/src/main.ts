@@ -8,6 +8,7 @@ import router from "./router";
 import store from "./store";
 import ElementPlus from "element-plus";
 import i18n from "@/core/plugins/i18n";
+import loading from 'vue3-loading-screen'
 
 //imports for app initialization
 import ApiService from "@/core/services/ApiService";
@@ -21,6 +22,7 @@ const app = createApp(App);
 app.use(store);
 app.use(router);
 app.use(ElementPlus);
+app.use(loading, /*{...}*/)
 
 ApiService.init(app);
 initApexCharts(app);

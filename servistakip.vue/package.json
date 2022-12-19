@@ -19,6 +19,7 @@
     "@popperjs/core": "2.11.5",
     "@tinymce/tinymce-vue": "^4.0.4",
     "@types/object-path": "^0.11.0",
+    "@vue/eslint-config-standard": "^4.0.0",
     "@vueform/multiselect": "^1.2.5",
     "animate.css": "^4.1.1",
     "apexcharts": "3.23.1",
@@ -47,9 +48,9 @@
     "vue-inline-svg": "^3.1.0",
     "vue-router": "^4.0.3",
     "vue3-apexcharts": "^1.4.1",
+    "vue3-loading-screen": "^1.0.3",
     "vuex": "^4.0.0",
-    "yup": "^0.32.8",
-    "@vue/eslint-config-standard": "^4.0.0"
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@types/array-sort": "^1.0.0",

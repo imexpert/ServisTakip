@@ -75,6 +75,7 @@
     </Form>
     <!--end::Form-->
   </div>
+  <Loading />
   <!--end::Wrapper-->
 </template>
 
@@ -85,6 +86,8 @@ import { Actions } from '@/store/enums/StoreEnums';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2/dist/sweetalert2.min.js';
+import Loading from '@/components/kt-datatable/table-partials/Loading.vue';
+
 import * as Yup from 'yup';
 
 export default defineComponent({
@@ -93,6 +96,7 @@ export default defineComponent({
     Field,
     Form,
     ErrorMessage,
+    Loading,
   },
   setup() {
     const store = useStore();
@@ -111,43 +115,29 @@ export default defineComponent({
       // Clear existing errors
       store.dispatch(Actions.LOGOUT);
 
-      if (submitButton.value) {
-        // eslint-disable-next-line
-        submitButton.value!.disabled = true;
-        // Activate indicator
-        submitButton.value.setAttribute('data-kt-indicator', 'on');
-      }
+      submitButton.value?.setAttribute('data-kt-indicator', 'on');
+      submitButton.value!.disabled = true;
 
+      debugger;
       // Send login request
       store
         .dispatch(Actions.LOGIN, values)
         .then(result => {
-          console.log('result');
-          console.log(result);
-          Swal.fire({
-            text: 'You have successfully logged in!',
-            icon: 'success',
-            buttonsStyling: false,
-            confirmButtonText: 'Ok, got it!',
-            customClass: {
-              confirmButton: 'btn fw-bold btn-light-primary',
-            },
-          }).then(function () {
-            // Go to page after successfully login
-            router.push({ name: 'dashboard' });
-          });
+          if (result.isSuccess) {
+          } else {
+            Swal.fire({
+              text: result.message,
+              icon: 'error',
+              buttonsStyling: false,
+              confirmButtonText: 'Tamam !',
+              customClass: {
+                confirmButton: 'btn fw-bold btn-light-danger',
+              },
+            });
+          }
         })
         .catch(() => {
           const [error] = Object.keys(store.getters.getErrors);
-          Swal.fire({
-            text: store.getters.getErrors[error],
-            icon: 'error',
-            buttonsStyling: false,
-            confirmButtonText: 'Try again!',
-            customClass: {
-              confirmButton: 'btn fw-bold btn-light-danger',
-            },
-          });
         });
 
       //Deactivate indicator
