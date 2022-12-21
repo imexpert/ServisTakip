@@ -1,31 +1,6 @@
 <template>
   <!--begin::List Widget 1-->
   <div class="card" :class="widgetClasses">
-    <!--begin::Header-->
-    <div class="card-header border-0">
-      <h3 class="card-title align-items-start flex-column">
-        <span class="card-label fw-bold text-dark"></span>
-      </h3>
-
-      <div class="card-toolbar">
-        <!--begin::Menu-->
-        <button
-          type="button"
-          class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-          data-kt-menu-trigger="click"
-          data-kt-menu-placement="bottom-end"
-          data-kt-menu-flip="top-end"
-        >
-          <span class="svg-icon svg-icon-2">
-            <inline-svg src="media/icons/duotune/general/gen024.svg" />
-          </span>
-        </button>
-        <FirmaOzetDropdown></FirmaOzetDropdown>
-        <!--end::Menu-->
-      </div>
-    </div>
-    <!--end::Header-->
-
     <!--begin::Body-->
     <div class="card-body">
       <!--begin::Form-->
@@ -261,6 +236,31 @@
     <!--end::Body-->
   </div>
   <!--end::List Widget 1-->
+
+  <div class="modal fade" tabindex="-1" id="kt_modal_1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+
+          <!--begin::Close-->
+          <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <span class="svg-icon svg-icon-2x"></span>
+          </div>
+          <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

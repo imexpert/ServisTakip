@@ -56,7 +56,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
     this.isAuthenticated = true;
     this.user = user;
     this.errors = {};
-    JwtService.saveToken(user.api_token);
+    JwtService.saveToken(user.token);
   }
 
   @Mutation
@@ -118,6 +118,8 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
 
   @Action
   [Actions.VERIFY_AUTH]() {
+    console.log("JwtService.getToken()")
+    console.log(JwtService.getToken())
     if (JwtService.getToken()) {
       ApiService.setHeader();
       ApiService.get("Auth/VerifyToken")
@@ -125,10 +127,10 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
 
         })
         .catch(({ response }) => {
-          this.context.commit(Mutations.PURGE_AUTH);
+          //this.context.commit(Mutations.PURGE_AUTH);
         });
     } else {
-      this.context.commit(Mutations.PURGE_AUTH);
+      //this.context.commit(Mutations.PURGE_AUTH);
     }
   }
 }

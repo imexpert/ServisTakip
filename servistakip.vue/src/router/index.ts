@@ -44,8 +44,7 @@ const router = createRouter({
 });
 
 router.beforeEach(() => {
-  // reset config to initial state
-  store.commit(Mutations.RESET_LAYOUT_CONFIG);
+  console.log("Geldim...");
 
   store.dispatch(Actions.VERIFY_AUTH);
 

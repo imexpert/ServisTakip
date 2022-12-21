@@ -19,7 +19,7 @@ namespace ServisTakip.Api.Controllers
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<AccessToken>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<UserDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginUserDto loginUserDto)

@@ -10,11 +10,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import FirmaOzet from "@/components/dashboard-default-widgets/FirmaOzet.vue";
+import { defineComponent } from 'vue';
+import FirmaOzet from '@/components/dashboard-default-widgets/FirmaOzet.vue';
 
 export default defineComponent({
-  name: "main-dashboard",
+  name: 'main-dashboard',
   components: {
     FirmaOzet,
   },

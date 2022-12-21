@@ -7,7 +7,7 @@
     data-bs-dismiss="click"
     data-bs-trigger="hover"
   >
-    <i class="fonticon-equalizer fs-4 me-1"></i>Customize
+    <i class="fonticon-equalizer fs-4 me-1"></i>İşlem Listesi
   </button>
 
   <div
@@ -33,9 +33,7 @@
         <!--begin::Card title-->
         <h3 class="card-title fs-3 fw-bold text-white flex-column m-0">
           Metronic Builder
-          <small class="text-white opacity-50 fs-7 fw-semibold pt-1"
-            >Get your product deeply customized</small
-          >
+          <small class="text-white opacity-50 fs-7 fw-semibold pt-1">Get your product deeply customized</small>
         </h3>
         <!--end::Card title-->
         <!--begin::Card toolbar-->
@@ -68,11 +66,7 @@
         >
           <!--begin::Form-->
           <form class="form" id="kt_app_layout_builder_form">
-            <input
-              type="hidden"
-              id="kt_app_layout_builder_action"
-              name="layout-builder[action]"
-            />
+            <input type="hidden" id="kt_app_layout_builder_action" name="layout-builder[action]" />
             <!--begin::Card body-->
             <div class="card-body p-0">
               <!--begin::Form group-->
@@ -80,9 +74,7 @@
                 <!--begin::Heading-->
                 <div class="mb-6">
                   <h4 class="fw-bold text-dark">Theme Mode</h4>
-                  <div class="fw-semibold text-muted fs-7 d-block lh-1">
-                    Enjoy Dark &amp; Light modes.
-                  </div>
+                  <div class="fw-semibold text-muted fs-7 d-block lh-1">Enjoy Dark &amp; Light modes.</div>
                 </div>
                 <!--end::Heading-->
                 <!--begin::Options-->
@@ -95,23 +87,14 @@
                   <!--begin::Col-->
                   <div class="col-6">
                     <!--begin::Option-->
-                    <label
-                      :class="[themeMode === 'light' && 'active']"
-                      class="form-check-image form-check-success"
-                    >
+                    <label :class="[themeMode === 'light' && 'active']" class="form-check-image form-check-success">
                       <!--begin::Image-->
                       <div class="form-check-wrapper">
-                        <img
-                          src="media/misc/layout/light.png"
-                          class="mw-100"
-                          alt=""
-                        />
+                        <img src="media/misc/layout/light.png" class="mw-100" alt="" />
                       </div>
                       <!--end::Image-->
                       <!--begin::Check-->
-                      <div
-                        class="form-check form-check-custom form-check-solid form-check-sm form-check-success"
-                      >
+                      <div class="form-check form-check-custom form-check-solid form-check-sm form-check-success">
                         <input
                           :checked="themeMode === 'light' ? 'checked' : false"
                           @change="onThemeModeChange"
@@ -132,23 +115,14 @@
                   <!--begin::Col-->
                   <div class="col-6">
                     <!--begin::Option-->
-                    <label
-                      :class="[themeMode === 'dark' && 'active']"
-                      class="form-check-image form-check-success"
-                    >
+                    <label :class="[themeMode === 'dark' && 'active']" class="form-check-image form-check-success">
                       <!--begin::Image-->
                       <div class="form-check-wrapper">
-                        <img
-                          src="media/misc/layout/dark.png"
-                          class="mw-100"
-                          alt=""
-                        />
+                        <img src="media/misc/layout/dark.png" class="mw-100" alt="" />
                       </div>
                       <!--end::Image-->
                       <!--begin::Check-->
-                      <div
-                        class="form-check form-check-custom form-check-solid form-check-sm form-check-success"
-                      >
+                      <div class="form-check form-check-custom form-check-solid form-check-sm form-check-success">
                         <input
                           @change="onThemeModeChange"
                           :checked="themeMode === 'dark' ? 'checked' : false"
@@ -178,17 +152,13 @@
                 <!--begin::Heading-->
                 <div class="d-flex flex-column mb-4">
                   <h4 class="fw-bold text-dark">Width Mode</h4>
-                  <div class="fs-7 fw-semibold text-muted">
-                    Page width options
-                  </div>
+                  <div class="fs-7 fw-semibold text-muted">Page width options</div>
                 </div>
                 <!--end::Heading-->
                 <!--begin::Options-->
                 <div class="d-flex">
                   <!--begin::Check-->
-                  <div
-                    class="form-check form-check-custom form-check-success form-check-solid form-check-sm me-5"
-                  >
+                  <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm me-5">
                     <input
                       v-model="config.general.pageWidth"
                       class="form-check-input"
@@ -206,9 +176,7 @@
                   </div>
                   <!--end::Check-->
                   <!--begin::Check-->
-                  <div
-                    class="form-check form-check-custom form-check-success form-check-solid form-check-sm me-5"
-                  >
+                  <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm me-5">
                     <input
                       v-model="config.general.pageWidth"
                       class="form-check-input"
@@ -217,18 +185,14 @@
                       id="kt_builder_page_width_fluid"
                     />
                     <!--begin::Label-->
-                    <label
-                      class="form-check-label text-gray-700 fw-bold text-nowrap"
-                      for="kt_builder_page_width_fluid"
+                    <label class="form-check-label text-gray-700 fw-bold text-nowrap" for="kt_builder_page_width_fluid"
                       >Fluid</label
                     >
                     <!--end::Label-->
                   </div>
                   <!--end::Check-->
                   <!--begin::Check-->
-                  <div
-                    class="form-check form-check-custom form-check-success form-check-solid form-check-sm me-5"
-                  >
+                  <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm me-5">
                     <input
                       v-model="config.general.pageWidth"
                       class="form-check-input"
@@ -237,9 +201,7 @@
                       id="kt_builder_page_width_fixed"
                     />
                     <!--begin::Label-->
-                    <label
-                      class="form-check-label text-gray-700 fw-bold text-nowrap"
-                      for="kt_builder_page_width_fixed"
+                    <label class="form-check-label text-gray-700 fw-bold text-nowrap" for="kt_builder_page_width_fixed"
                       >Fixed</label
                     >
                     <!--end::Label-->
@@ -257,17 +219,13 @@
                 <!--begin::Heading-->
                 <div class="d-flex flex-column mb-4">
                   <h4 class="fw-bold text-dark">Menu Icon</h4>
-                  <div class="fs-7 fw-semibold text-muted">
-                    Sidebar menu icon options
-                  </div>
+                  <div class="fs-7 fw-semibold text-muted">Sidebar menu icon options</div>
                 </div>
                 <!--end::Heading-->
                 <!--begin::Options-->
                 <div class="d-flex">
                   <!--begin::Check-->
-                  <div
-                    class="form-check form-check-custom form-check-success form-check-solid form-check-sm me-5"
-                  >
+                  <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm me-5">
                     <input
                       v-model="config.sidebar.default.menu.iconType"
                       class="form-check-input"
@@ -276,18 +234,14 @@
                       id="kt_builder_icon_svg"
                     />
                     <!--begin::Label-->
-                    <label
-                      class="form-check-label text-gray-700 fw-bold text-nowrap"
-                      for="kt_builder_icon_svg"
+                    <label class="form-check-label text-gray-700 fw-bold text-nowrap" for="kt_builder_icon_svg"
                       >SVG Duotone</label
                     >
                     <!--end::Label-->
                   </div>
                   <!--end::Check-->
                   <!--begin::Check-->
-                  <div
-                    class="form-check form-check-custom form-check-success form-check-solid form-check-sm me-5"
-                  >
+                  <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm me-5">
                     <input
                       v-model="config.sidebar.default.menu.iconType"
                       class="form-check-input"
@@ -296,9 +250,7 @@
                       id="kt_builder_icon_font"
                     />
                     <!--begin::Label-->
-                    <label
-                      class="form-check-label text-gray-700 fw-bold text-nowrap"
-                      for="kt_builder_icon_font"
+                    <label class="form-check-label text-gray-700 fw-bold text-nowrap" for="kt_builder_icon_font"
                       >Font Icons</label
                     >
                     <!--end::Label-->
@@ -316,12 +268,8 @@
                 <!--begin::Heading-->
                 <div class="mb-6">
                   <h4 class="fw-bold text-dark">Layouts</h4>
-                  <span class="fw-semibold text-muted fs-7 lh-1"
-                    >4 main layouts.{{ " " }}</span
-                  >
-                  <router-link to="/builder" class="text-primary"
-                    >More layout options</router-link
-                  >
+                  <span class="fw-semibold text-muted fs-7 lh-1">4 main layouts.{{ ' ' }}</span>
+                  <router-link to="/builder" class="text-primary">More layout options</router-link>
                 </div>
                 <!--end::Heading-->
                 <!--begin::Options-->
@@ -340,17 +288,11 @@
                     >
                       <!--begin::Image-->
                       <div class="form-check-wrapper">
-                        <img
-                          src="media/misc/layout/dark-sidebar.png"
-                          class="mw-100"
-                          alt=""
-                        />
+                        <img src="media/misc/layout/dark-sidebar.png" class="mw-100" alt="" />
                       </div>
                       <!--end::Image-->
                       <!--begin::Check-->
-                      <div
-                        class="form-check form-check-custom form-check-success form-check-sm form-check-solid"
-                      >
+                      <div class="form-check form-check-custom form-check-success form-check-sm form-check-solid">
                         <input
                           v-model="layoutType"
                           class="form-check-input"
@@ -359,9 +301,7 @@
                           name="layoutType"
                         />
                         <!--begin::Label-->
-                        <div class="form-check-label text-gray-700">
-                          Dark Sidebar
-                        </div>
+                        <div class="form-check-label text-gray-700">Dark Sidebar</div>
                         <!--end::Label-->
                       </div>
                       <!--end::Check-->
@@ -378,17 +318,11 @@
                     >
                       <!--begin::Image-->
                       <div class="form-check-wrapper">
-                        <img
-                          src="media/misc/layout/light-sidebar.png"
-                          class="mw-100"
-                          alt=""
-                        />
+                        <img src="media/misc/layout/light-sidebar.png" class="mw-100" alt="" />
                       </div>
                       <!--end::Image-->
                       <!--begin::Check-->
-                      <div
-                        class="form-check form-check-custom form-check-success form-check-sm form-check-solid"
-                      >
+                      <div class="form-check form-check-custom form-check-success form-check-sm form-check-solid">
                         <input
                           v-model="layoutType"
                           class="form-check-input"
@@ -397,9 +331,7 @@
                           name="layoutType"
                         />
                         <!--begin::Label-->
-                        <div class="form-check-label text-gray-700">
-                          Light Sidebar
-                        </div>
+                        <div class="form-check-label text-gray-700">Light Sidebar</div>
                         <!--end::Label-->
                       </div>
                       <!--end::Check-->
@@ -416,17 +348,11 @@
                     >
                       <!--begin::Image-->
                       <div class="form-check-wrapper">
-                        <img
-                          src="media/misc/layout/dark-header.png"
-                          class="mw-100"
-                          alt=""
-                        />
+                        <img src="media/misc/layout/dark-header.png" class="mw-100" alt="" />
                       </div>
                       <!--end::Image-->
                       <!--begin::Check-->
-                      <div
-                        class="form-check form-check-custom form-check-success form-check-sm form-check-solid"
-                      >
+                      <div class="form-check form-check-custom form-check-success form-check-sm form-check-solid">
                         <input
                           v-model="layoutType"
                           class="form-check-input"
@@ -435,9 +361,7 @@
                           name="layoutType"
                         />
                         <!--begin::Label-->
-                        <div class="form-check-label text-gray-700">
-                          Dark Header
-                        </div>
+                        <div class="form-check-label text-gray-700">Dark Header</div>
                         <!--end::Label-->
                       </div>
                       <!--end::Check-->
@@ -454,17 +378,11 @@
                     >
                       <!--begin::Image-->
                       <div class="form-check-wrapper">
-                        <img
-                          src="media/misc/layout/light-header.png"
-                          class="mw-100"
-                          alt=""
-                        />
+                        <img src="media/misc/layout/light-header.png" class="mw-100" alt="" />
                       </div>
                       <!--end::Image-->
                       <!--begin::Check-->
-                      <div
-                        class="form-check form-check-custom form-check-success form-check-sm form-check-solid"
-                      >
+                      <div class="form-check form-check-custom form-check-success form-check-sm form-check-solid">
                         <input
                           v-model="layoutType"
                           class="form-check-input"
@@ -473,9 +391,7 @@
                           name="layoutType"
                         />
                         <!--begin::Label-->
-                        <div class="form-check-label text-gray-700">
-                          Light Header
-                        </div>
+                        <div class="form-check-label text-gray-700">Light Header</div>
                         <!--end::Label-->
                       </div>
                       <!--end::Check-->
@@ -496,10 +412,7 @@
       </div>
       <!--end::Card body-->
       <!--begin::Card footer-->
-      <div
-        class="card-footer border-0 d-flex gap-3 pb-9 pt-0"
-        id="kt_app_layout_builder_footer"
-      >
+      <div class="card-footer border-0 d-flex gap-3 pb-9 pt-0" id="kt_app_layout_builder_footer">
         <button
           type="button"
           @click="submit"
@@ -521,10 +434,7 @@
           <!--end::Indicator label-->
           <!--begin::Indicator progress-->
           <span class="indicator-progress"
-            >Please wait...
-            <span
-              class="spinner-border spinner-border-sm align-middle ms-2"
-            ></span
+            >Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span
           ></span>
           <!--end::Indicator progress-->
         </button>
@@ -536,13 +446,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { config, layout, themeMode } from "@/core/helpers/config";
-import { useStore } from "vuex";
-import { Actions, Mutations } from "@/store/enums/StoreEnums";
+import { defineComponent, ref } from 'vue';
+import { config, layout, themeMode } from '@/core/helpers/config';
+import { useStore } from 'vuex';
+import { Actions, Mutations } from '@/store/enums/StoreEnums';
 
 export default defineComponent({
-  name: "customize-layout",
+  name: 'customize-layout',
   components: {},
   setup() {
     const store = useStore();
@@ -553,36 +463,36 @@ export default defineComponent({
      * Reset config
      * @param event
      */
-    const reset = (event) => {
+    const reset = event => {
       event.preventDefault();
       // remove existing saved config
-      localStorage.removeItem("config");
+      localStorage.removeItem('config');
       window.location.reload();
     };
 
-    const onThemeModeChange = (e) => {
+    const onThemeModeChange = e => {
       store.commit(Mutations.SET_LAYOUT_CONFIG_PROPERTY, {
-        property: "general.mode",
+        property: 'general.mode',
         value: e.target.value,
       });
       store.dispatch(Actions.SET_THEME_MODE_ACTION, e.target.value);
 
       // save new config to localStorage
-      localStorage.setItem("config", JSON.stringify(config.value));
+      localStorage.setItem('config', JSON.stringify(config.value));
     };
 
     /**
      * Submit form
      * @param event
      */
-    const submit = (event) => {
+    const submit = event => {
       event.preventDefault();
       store.commit(Mutations.SET_LAYOUT_CONFIG_PROPERTY, {
-        property: "general.layout",
+        property: 'general.layout',
         value: layoutType,
       });
       // save new config to localStorage
-      localStorage.setItem("config", JSON.stringify(config.value));
+      localStorage.setItem('config', JSON.stringify(config.value));
       window.location.reload();
     };
 

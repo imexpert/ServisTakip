@@ -64,8 +64,8 @@ app.UseAuthorization();
 
 app.Use(async (httpContext, next) =>
 {
-    LogContext.PushProperty("Username", Utils.Username);
-    LogContext.PushProperty("ClientIp", httpContext.Connection.RemoteIpAddress);
+    //LogContext.PushProperty("Username", Utils.Username);
+    //LogContext.PushProperty("ClientIp", httpContext.Connection.RemoteIpAddress);
 
     await next.Invoke();
 });
