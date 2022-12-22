@@ -1,10 +1,53 @@
 <template>
   <!--begin::List Widget 1-->
   <div class="card" :class="widgetClasses">
+    <div class="card-header">
+      <div class="d-flex align-items-center me-5">
+        <!--begin::Input group-->
+        <div class="d-flex align-items-center flex-shrink-0">
+          <!--begin::Label-->
+          <span class="fs-7 text-gray-700 fw-bold pe-3 d-none d-md-block">İşlemler:</span>
+          <!--end::Label-->
+          <!--begin::Actions-->
+          <div class="d-flex flex-shrink-0">
+            <!--begin::Button-->
+            <div>
+              <button
+                class="btn btn-sm btn-icon btn-active-color-success"
+                title="Yeni Müşteri Ekle"
+                data-bs-toggle="modal"
+                data-bs-target="#kt_modal_new_customer"
+              >
+                <!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
+                <span class="svg-icon svg-icon-2x">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
+                    <rect
+                      x="10.8891"
+                      y="17.8033"
+                      width="12"
+                      height="2"
+                      rx="1"
+                      transform="rotate(-90 10.8891 17.8033)"
+                      fill="currentColor"
+                    ></rect>
+                    <rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
+                  </svg>
+                </span>
+                <!--end::Svg Icon-->
+              </button>
+            </div>
+            <!--end::Button-->
+          </div>
+          <!--end::Actions-->
+        </div>
+        <!--end::Input group-->
+      </div>
+    </div>
     <!--begin::Body-->
     <div class="card-body">
       <!--begin::Form-->
-      <Form class="form" id="kt_modal_new_address_form">
+      <Form class="form" id="customerInfoForm">
         <!--begin::Modal body-->
         <div class="modal-body">
           <!--begin::Scroll-->
@@ -237,11 +280,11 @@
   </div>
   <!--end::List Widget 1-->
 
-  <div class="modal fade" tabindex="-1" id="kt_modal_1">
+  <div class="modal fade" tabindex="-1" id="kt_modal_new_customer">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
+          <h5 class="modal-title">Yeni Müşteri Ekleme</h5>
 
           <!--begin::Close-->
           <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -255,8 +298,8 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Vazgeç</button>
+          <button type="button" class="btn btn-primary">Kaydet</button>
         </div>
       </div>
     </div>

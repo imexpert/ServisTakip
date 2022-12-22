@@ -26,6 +26,21 @@ namespace ServisTakip.Core.Extensions
             private set { } 
         }
 
+        public static long CompanyId
+        {
+            get
+            {
+                var context = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
+                if (context.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    return Convert.ToInt64(context.HttpContext.User.Claims.First(s => s.Type == "UserId").Value);
+                }
+
+                return 0;
+            }
+            private set { }
+        }
+
         public static string Username
         {
             get
