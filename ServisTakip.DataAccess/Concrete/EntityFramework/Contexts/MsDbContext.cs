@@ -14,6 +14,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
         IHttpContextAccessor _httpContextAccessor;
 
         public const string DEFAULT_SCHEMA = "dbo";
+        public const string CONST_SCHEMA = "Const";
 
         public MsDbContext(DbContextOptions<MsDbContext> options, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
             : base(options, configuration)

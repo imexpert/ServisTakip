@@ -7,6 +7,7 @@ using Autofac.Core;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using ServisTakip.Core.Extensions;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
@@ -27,6 +28,11 @@ namespace ServisTakip.Business.Handlers.Customers.Commands
 
                 var customer = mapper.Map<Customer>(request.Model);
                 customer.Status = true;
+                customer.CompanyId = Utils.CompanyId;
+
+                customerRepo.Add(customer);
+                await customerRepo.SaveChangesAsync();
+                return ResponseMessage<CreateCustomerDto>.Success();
             }
         }
     }

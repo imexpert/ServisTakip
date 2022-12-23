@@ -33,7 +33,7 @@ namespace ServisTakip.Core.Extensions
                 var context = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
                 if (context.HttpContext.User.Identity.IsAuthenticated)
                 {
-                    return Convert.ToInt64(context.HttpContext.User.Claims.First(s => s.Type == "UserId").Value);
+                    return Convert.ToInt64(context.HttpContext.User.Claims.First(s => s.Type == "CompanyId").Value);
                 }
 
                 return 0;
