@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ServisTakip.Core.Entities.Concrete;
+using ServisTakip.Entities.Concrete;
+using ServisTakip.Entities.DTOs.Sectors;
 using ServisTakip.Entities.DTOs.User;
 
 namespace ServisTakip.Business.Helpers
@@ -14,6 +16,7 @@ namespace ServisTakip.Business.Helpers
         public AutoMapperHelper()
         {
             CreateMap<User, CreateUserDto>().ReverseMap();
+            CreateMap<Sector, SectorDto>().ReverseMap();
         }
     }
 }
