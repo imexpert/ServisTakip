@@ -12,14 +12,25 @@
           <div class="d-flex flex-shrink-0">
             <!--begin::Button-->
             <div>
-              <button class="btn btn-sm btn-icon btn-active-color-success" title="Yeni Müşteri Ekle"
-                data-bs-toggle="modal" data-bs-target="#kt_modal_new_customer">
+              <button
+                class="btn btn-sm btn-icon btn-active-color-success"
+                title="Yeni Müşteri Ekle"
+                data-bs-toggle="modal"
+                data-bs-target="#kt_modal_new_customer"
+              >
                 <!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
                 <span class="svg-icon svg-icon-2x">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
-                    <rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)"
-                      fill="currentColor"></rect>
+                    <rect
+                      x="10.8891"
+                      y="17.8033"
+                      width="12"
+                      height="2"
+                      rx="1"
+                      transform="rotate(-90 10.8891 17.8033)"
+                      fill="currentColor"
+                    ></rect>
                     <rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
                   </svg>
                 </span>
@@ -40,10 +51,16 @@
         <!--begin::Modal body-->
         <div class="modal-body">
           <!--begin::Scroll-->
-          <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true"
-            data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+          <div
+            class="scroll-y me-n7 pe-7"
+            id="kt_modal_new_address_scroll"
+            data-kt-scroll="true"
+            data-kt-scroll-activate="{default: false, lg: true}"
+            data-kt-scroll-max-height="auto"
             data-kt-scroll-dependencies="#kt_modal_new_address_header"
-            data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
+            data-kt-scroll-wrappers="#kt_modal_new_address_scroll"
+            data-kt-scroll-offset="300px"
+          >
             <!--begin::Input group-->
             <div class="row mb-1">
               <div class="col-md-4 fv-row">
@@ -58,8 +75,13 @@
 
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Cari Kod</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="carikod" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="carikod"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="carikod" />
@@ -69,8 +91,13 @@
 
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Sektör</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="sektor" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="sektor"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="sektor" />
@@ -90,8 +117,13 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Bölge</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="bolge" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="bolge"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="bolge" />
@@ -102,8 +134,13 @@
             <div class="row mb-1">
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Şehir</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="departman"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -112,8 +149,13 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">İlçe</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="departman"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -122,8 +164,13 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Semt</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="departman"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -134,8 +181,13 @@
             <div class="row mb-1">
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Yetkili Ad Soyad</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="departman"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -144,8 +196,13 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Yetkili Görevi</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="departman"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -154,8 +211,13 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Yetkili E-Mail</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="departman"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -166,8 +228,13 @@
             <div class="row mb-1">
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Tel</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="departman"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -176,8 +243,13 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Cep Tel</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="departman"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -186,8 +258,13 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Dahili</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <Field
+                  type="text"
+                  disabled
+                  class="form-control form-control-solid form-control-sm"
+                  placeholder=""
+                  name="departman"
+                />
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -206,8 +283,8 @@
   <div class="modal fade" tabindex="-1" id="kt_modal_new_customer" ref="kt_modal_new_customerRef">
     <div class="modal-dialog modal-dialog-centered mw-650px">
       <div class="modal-content rounded">
-        <div class="modal-header pb-0 border-0 justify-content-end">
-          <h5 class="modal-title">Yeni Müşteri Ekleme</h5>
+        <div class="modal-header pb-0 border-0 justify-content-center">
+          <h5 class="modal-title">YENİ MÜŞTERİ EKLEME</h5>
 
           <!--begin::Close-->
           <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -216,9 +293,15 @@
           <!--end::Close-->
         </div>
 
-        <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-          <Form class="form w-100" id="kt_login_signin_form" @submit.prevent="submit"
-            :validation-schema="musteriEkleme">
+        <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15 mt-5">
+          <Form
+            class="form w-100"
+            id="kt_login_signin_form"
+            :model="customerData"
+            :rules="rules"
+            ref="formRef"
+            @submit="submit"
+          >
             <!--begin::Input group-->
             <div class="fv-row mb-10">
               <!--begin::Label-->
@@ -226,18 +309,49 @@
               <!--end::Label-->
 
               <!--begin::Input-->
-              <Field class="form-control form-control-lg" type="text" name="title"
-                autocomplete="off" />
+              <Field class="form-control form-control-lg" type="text" name="title" autocomplete="off" />
               <!--end::Input-->
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
-                  <ErrorMessage name="title"  />
+                  <ErrorMessage name="title" />
                 </div>
               </div>
             </div>
             <!--end::Input group-->
+
+            <!--begin::Input group-->
+            <div class="fv-row mb-10">
+              <!--begin::Label-->
+              <label class="form-label fs-6 fw-bolder text-dark">Müşteri Sektörü</label>
+              <!--end::Label-->
+
+              <!--begin::Input-->
+              <SectorDropdown v-model:sector.sync="customerData.sector" />
+              <!--end::Input-->
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="sector" />
+                </div>
+              </div>
+            </div>
+            <!--end::Input group-->
+
+            <!--begin::Actions-->
+            <div class="text-center">
+              <!--begin::Submit button-->
+              <button type="submit" ref="submitButton" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
+                <span class="indicator-label"> Kaydet </span>
+
+                <span class="indicator-progress">
+                  Please wait...
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </button>
+              <!--end::Submit button-->
+            </div>
+            <!--end::Actions-->
           </Form>
-          
+
           <!--end:Form-->
         </div>
       </div>
@@ -274,25 +388,50 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
 
-    //Create form validation object
-    const musteriEkleme = Yup.object().shape({
-      title: Yup.string().min(10).required().label('title'),
-      password: Yup.string().min(4).required().label('Password'),
-    });
+    const formRef = ref<null | HTMLFormElement>(null);
 
     const customerData = ref<NewCustomerData>({
       title: '',
-      sector: '',
+      sector: '1',
     });
 
+    const rules = ref({
+      title: [
+        {
+          required: true,
+          message: 'Müşteri unvanı boş geçilemez',
+          trigger: 'blur',
+        },
+      ],
+      sector: [
+        {
+          required: true,
+          message: 'Müşteri sektörü boş geçilemez',
+          trigger: 'blur',
+        },
+      ],
+    });
+
+    const submitButton = ref<HTMLButtonElement | null>(null);
+
     const submit = () => {
-      
+      if (!formRef.value) {
+        alert('sdf');
+        return;
+      }
+
+      console.log(customerData);
+      formRef.value.validate(valid => {
+        if (valid) {
+        }
+      });
     };
 
     return {
-      musteriEkleme,
-      customerData,
       submit,
+      submitButton,
+      customerData,
+      rules,
     };
   },
   props: {

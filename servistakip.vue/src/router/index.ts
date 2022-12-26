@@ -44,8 +44,6 @@ const router = createRouter({
 });
 
 router.beforeEach(() => {
-  console.log("Geldim...");
-
   store.dispatch(Actions.VERIFY_AUTH);
 
   // Scroll page to top on every route change

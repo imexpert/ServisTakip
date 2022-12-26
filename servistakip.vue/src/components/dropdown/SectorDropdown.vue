@@ -1,11 +1,6 @@
 <template>
-  <select
-    name="cardExpiryYear"
-    v-model="selectedSector"
-    @change="changeSector($event)"
-    class="form-select form-select-solid select2-hidden-accessible"
-  >
-    <option v-for="item in sectorList" style="height: 30px" :value="item.id" :key="item.id">
+  <select name="sector" class="form-select form-select-solid select2-hidden-accessible">
+    <option v-for="item in sectorList" :value="item.id" :key="item.id">
       {{ item.name }}
     </option>
   </select>
@@ -19,11 +14,7 @@ import { Actions } from '@/store/enums/StoreEnums';
 
 export default defineComponent({
   name: 'dropdown-1',
-  props: {
-    sector: {
-      type: String,
-    },
-  },
+  props: ['name'],
   components: {
     Field,
     ErrorMessage,
@@ -40,13 +31,11 @@ export default defineComponent({
     };
   },
   created() {
-    console.log(this.selectedSector);
     this.getSectorList();
   },
   methods: {
     changeSector(event) {
       this.selectedSector = event.target.value;
-      console.log(this.selectedSector);
     },
     getSectorList() {
       var store = useStore();
