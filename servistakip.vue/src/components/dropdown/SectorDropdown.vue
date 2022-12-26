@@ -5,7 +5,6 @@
     @change="changeSector($event)"
     class="form-select form-select-solid select2-hidden-accessible"
   >
-    <option value="0" style="height: 30px" selected>Seçiniz</option>
     <option v-for="item in sectorList" style="height: 30px" :value="item.id" :key="item.id">
       {{ item.name }}
     </option>

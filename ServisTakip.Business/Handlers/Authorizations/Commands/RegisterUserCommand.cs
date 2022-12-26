@@ -41,6 +41,7 @@ namespace CarbonCalculator.Business.Handlers.Authorizations.Commands
 
                 var user = new User
                 {
+                    CompanyId = request.Model.CompanyId,
                     Email = request.Model.Email,
                     Firstname = request.Model.Firstname,
                     Lastname = request.Model.Lastname,

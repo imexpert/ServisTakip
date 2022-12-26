@@ -75,6 +75,8 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
                             {
                                 entityReference.RecordDate = DateTime.Now;
                                 entityReference.RecordUsername = Utils.Username;
+                                entityReference.UpdateDate = DateTime.Now;
+                                entityReference.UpdateUsername = Utils.Username;
                                 break;
                             }
                         case EntityState.Modified:
