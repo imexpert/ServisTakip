@@ -231,7 +231,7 @@
               <!--end::Input-->
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
-                  <ErrorMessage name="title" />
+                  <ErrorMessage name="title"  />
                 </div>
               </div>
             </div>
