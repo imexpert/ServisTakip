@@ -1,41 +1,63 @@
 <template>
-  <select name="sector" class="form-select form-select-solid select2-hidden-accessible">
-    <option v-for="item in sectorList" :value="item.id" :key="item.id">
-      {{ item.name }}
+  <el-select placeholder="please select your zone" v-model="selectedSector" @change="changeSector($event)">
+    <el-option v-for="item in sectorList" style="height: 30px" :value="item.id" :key="item.id">{{ item.name
+      }}</el-option>
+  </el-select>
+  <!-- <select name="Sector" v-model="selectedSector" @change="changeSector($event)" class="form-select form-select-solid select2-hidden-accessible">
+    <option v-for="item in sectorList" style="height: 30px" :value="item.id" :key="item.id">
+        {{ item.name }}
     </option>
-  </select>
+</select> -->
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { Field, ErrorMessage } from 'vee-validate';
-import { useStore } from 'vuex';
-import { Actions } from '@/store/enums/StoreEnums';
+import {
+  defineComponent,
+  ref
+} from 'vue';
+import {
+  Field,
+  ErrorMessage
+} from 'vee-validate';
+import {
+  useStore
+} from 'vuex';
+import {
+  Actions
+} from '@/store/enums/StoreEnums';
+
+interface SectorData {
+  id: Number;
+  name: String;
+}
 
 export default defineComponent({
   name: 'dropdown-1',
-  props: ['name'],
+  props: {
+    sector: {
+      type: Number,
+    },
+  },
   components: {
     Field,
     ErrorMessage,
   },
   data() {
     return {
-      sectorList: [
-        {
-          id: 0,
-          name: '',
-        },
-      ],
+      sectorList: [{
+        id: 0,
+        name: '',
+      },],
       selectedSector: this.sector,
     };
   },
   created() {
+    console.log(this.selectedSector);
     this.getSectorList();
   },
   methods: {
     changeSector(event) {
-      this.selectedSector = event.target.value;
+      this.selectedSector = event;
     },
     getSectorList() {
       var store = useStore();
