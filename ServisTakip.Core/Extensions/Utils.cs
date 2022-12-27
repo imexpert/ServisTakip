@@ -41,14 +41,14 @@ namespace ServisTakip.Core.Extensions
             private set { }
         }
 
-        public static string Username
+        public static string Email
         {
             get
             {
                 var context = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
                 if (context.HttpContext.User.Identity.IsAuthenticated)
                 {
-                    return context.HttpContext.User.Claims.First(s => s.Type == "UserCode").Value;
+                    return context.HttpContext.User.Claims.First(s => s.Type == "Email").Value;
                 }
 
                 return "-";

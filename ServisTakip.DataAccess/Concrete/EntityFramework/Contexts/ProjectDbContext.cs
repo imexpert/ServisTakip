@@ -74,9 +74,9 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
                         case EntityState.Added:
                             {
                                 entityReference.RecordDate = DateTime.Now;
-                                entityReference.RecordUsername = Utils.Username;
+                                entityReference.RecordUsername = Utils.Email;
                                 entityReference.UpdateDate = DateTime.Now;
-                                entityReference.UpdateUsername = Utils.Username;
+                                entityReference.UpdateUsername = Utils.Email;
                                 break;
                             }
                         case EntityState.Modified:
@@ -85,7 +85,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
                                 Entry(entityReference).Property(x => x.RecordUsername).IsModified = false;
 
                                 entityReference.UpdateDate = DateTime.Now;
-                                entityReference.UpdateUsername = Utils.Username;
+                                entityReference.UpdateUsername = Utils.Email;
                                 break;
                             }
                     }

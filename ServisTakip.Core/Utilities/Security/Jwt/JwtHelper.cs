@@ -86,6 +86,7 @@ namespace ServisTakip.Core.Utilities.Security.Jwt
             var claims = new List<Claim>();
             claims.Add(new Claim("CompanyId", user.CompanyId.ToString()));
             claims.Add(new Claim("UserId", user.Id.ToString()));
+            claims.Add(new Claim("Email", user.Email));
             return claims;
         }
     }

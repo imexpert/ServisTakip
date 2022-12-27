@@ -12,6 +12,7 @@ export default class SectorModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
+        alert("324")
         this.context.commit(Mutations.SET_ERROR, response.data.errors);
       });
   }

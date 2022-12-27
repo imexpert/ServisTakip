@@ -17,7 +17,10 @@ builder.Services.AddCustomAuthentication(builder.Configuration);
 //add basic MVC feature
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
-        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        {
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            options.UseCamelCasing(true);
+        }
     );
 
 builder.Services.AddCustomMediatR();
