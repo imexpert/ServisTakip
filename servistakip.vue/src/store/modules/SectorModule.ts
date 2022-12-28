@@ -6,8 +6,8 @@ import { Module, Action, VuexModule } from "vuex-module-decorators";
 export default class SectorModule extends VuexModule {
 
   @Action
-  [Actions.GET_SECTOR_LIST]() {
-    return ApiService.get("Sectors/GetSectorList")
+  async [Actions.GET_SECTOR_LIST]() {
+    return await ApiService.get("Sectors/GetSectorList")
       .then(({ data }) => {
         return data;
       })

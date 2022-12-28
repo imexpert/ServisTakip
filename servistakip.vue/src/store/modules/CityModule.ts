@@ -6,8 +6,8 @@ import { Module, Action, VuexModule } from "vuex-module-decorators";
 export default class CityModule extends VuexModule {
 
   @Action
-  [Actions.GET_CITY_LIST]() {
-    return ApiService.get("Cities/GetCityList")
+  async [Actions.GET_CITY_LIST]() {
+    return await ApiService.get("Cities/GetCityList")
       .then(({ data }) => {
         return data;
       })

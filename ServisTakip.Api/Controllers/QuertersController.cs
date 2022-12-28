@@ -17,7 +17,6 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<QuerterDto>>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetQuerterListAsync(long districtId)
         {

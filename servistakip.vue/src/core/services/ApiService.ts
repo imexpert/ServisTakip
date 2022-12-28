@@ -49,11 +49,11 @@ class ApiService {
    * @param slug: string
    * @returns Promise<AxiosResponse>
    */
-  public static get(
+  public static async get(
     resource: string,
     slug = "" as string
   ): Promise<AxiosResponse> {
-    return ApiService.vueInstance.axios.get(`${resource}/${slug}`);
+    return await ApiService.vueInstance.axios.get(`${resource}/${slug}`);
   }
 
   /**
@@ -62,11 +62,11 @@ class ApiService {
    * @param params: AxiosRequestConfig
    * @returns Promise<AxiosResponse>
    */
-  public static post(
+  public static async post(
     resource: string,
     params: AxiosRequestConfig
   ): Promise<AxiosResponse> {
-    return ApiService.vueInstance.axios.post(`${resource}`, params);
+    return await ApiService.vueInstance.axios.post(`${resource}`, params);
   }
 
   /**
