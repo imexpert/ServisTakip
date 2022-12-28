@@ -5,11 +5,6 @@ using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
 using ServisTakip.Entities.DTOs.Sectors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServisTakip.Business.Handlers.Sectors.Queries
 {

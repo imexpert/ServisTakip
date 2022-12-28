@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ServisTakip.Business.Handlers.Customers.Commands;
+﻿using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.Sectors.Queries;
 using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Sectors;
 
 namespace ServisTakip.Api.Controllers

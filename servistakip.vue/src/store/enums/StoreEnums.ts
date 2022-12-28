@@ -14,6 +14,7 @@ enum Actions {
   SET_BREADCRUMB_ACTION = "setBreadcrumbAction",
   SET_THEME_MODE_ACTION = "setThemeModeAction",
   GET_SECTOR_LIST = "getsectorlist",
+  GET_CITY_LIST = "getCitylist",
   ADD_CUSTOMER = "addCustomer",
 }
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ServisTakip.Core.Utilities.Results
+﻿namespace ServisTakip.Core.Utilities.Results
 {
     public class ResponseMessage<T>
     {

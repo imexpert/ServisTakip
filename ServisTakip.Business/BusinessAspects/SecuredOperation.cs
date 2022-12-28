@@ -1,12 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using ServisTakip.Core.CrossCuttingConcerns.Caching;
 using ServisTakip.Core.Utilities.Interceptors;
 using ServisTakip.Core.Utilities.IoC;

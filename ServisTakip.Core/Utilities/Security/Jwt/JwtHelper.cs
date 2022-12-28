@@ -2,15 +2,9 @@
 using ServisTakip.Core.Utilities.Security.Encyption;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
-using ServisTakip.Core.Extensions;
 
 namespace ServisTakip.Core.Utilities.Security.Jwt
 {
@@ -86,7 +80,6 @@ namespace ServisTakip.Core.Utilities.Security.Jwt
             var claims = new List<Claim>();
             claims.Add(new Claim("CompanyId", user.CompanyId.ToString()));
             claims.Add(new Claim("UserId", user.Id.ToString()));
-            claims.Add(new Claim("Email", user.Email));
             return claims;
         }
     }

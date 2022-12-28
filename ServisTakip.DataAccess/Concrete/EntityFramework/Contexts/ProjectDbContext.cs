@@ -1,14 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using ServisTakip.Core.Entities;
 using ServisTakip.Core.Entities.Concrete;
 using ServisTakip.Core.Extensions;
+using ServisTakip.Entities.Concrete;
 
 namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
 {
@@ -46,6 +42,9 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Group> Groups { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<Querter> Querters { get; set; }
         public DbSet<GroupClaim> GroupClaims { get; set; }
         protected IConfiguration Configuration { get; }
 

@@ -1,6 +1,5 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Serilog.Context;
 using ServisTakip.Api.Infrastructure;
 using ServisTakip.Business.DependencyResolvers;
 using ServisTakip.Core.Extensions;
@@ -17,10 +16,7 @@ builder.Services.AddCustomAuthentication(builder.Configuration);
 //add basic MVC feature
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
-        {
-            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            options.UseCamelCasing(true);
-        }
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
     );
 
 builder.Services.AddCustomMediatR();

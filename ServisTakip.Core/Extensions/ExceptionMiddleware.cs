@@ -6,14 +6,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Security;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace ServisTakip.Core.Extensions
 {
@@ -45,7 +40,7 @@ namespace ServisTakip.Core.Extensions
             var environment = ServiceTool.ServiceProvider.GetService<IWebHostEnvironment>();
 
             httpContext.Response.ContentType = "application/json";
-            
+            httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             string message;
 
@@ -96,11 +91,9 @@ namespace ServisTakip.Core.Extensions
                 }
             }
 
-            httpContext.Response.StatusCode = (int)HttpStatusCode.OK;
-
             var response = ResponseMessage<NoContent>.Fail(httpContext.Response.StatusCode, message);
 
-            await httpContext.Response.WriteAsync(JsonSerializer.Serialize(response, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+            await httpContext.Response.WriteAsync(JsonSerializer.Serialize(response));
         }
     }
 }

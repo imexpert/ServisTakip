@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ServisTakip.Entities.DTOs.User
+﻿namespace ServisTakip.Entities.DTOs.User
 {
     public class UserDto
     {

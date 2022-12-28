@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ServisTakip.Core.CrossCuttingConcerns.Logging
+﻿namespace ServisTakip.Core.CrossCuttingConcerns.Logging
 {
     public class LogDetailWithException : LogDetail
     {

@@ -1,9 +1,6 @@
 ﻿using ServisTakip.Core.Aspects.Autofac.Exception;
 using ServisTakip.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Castle.DynamicProxy;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 namespace ServisTakip.Core.Utilities.Interceptors

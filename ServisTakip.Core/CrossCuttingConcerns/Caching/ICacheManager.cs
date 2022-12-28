@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ServisTakip.Core.CrossCuttingConcerns.Caching
+﻿namespace ServisTakip.Core.CrossCuttingConcerns.Caching
 {
     /// <summary>
     /// Tüm Cache Managerlar bu interface i kullanacaktır.
