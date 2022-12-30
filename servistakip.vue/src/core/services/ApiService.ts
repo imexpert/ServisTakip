@@ -56,6 +56,13 @@ class ApiService {
     return await ApiService.vueInstance.axios.get(`${resource}/${slug}`);
   }
 
+  public static async getWithParamUrl(
+    resource: string,
+    slug = "" as string
+  ): Promise<AxiosResponse> {
+    return await ApiService.vueInstance.axios.get(`${resource}`);
+  }
+
   /**
    * @description set the POST HTTP request
    * @param resource: string

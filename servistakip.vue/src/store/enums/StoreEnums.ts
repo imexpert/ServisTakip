@@ -15,6 +15,8 @@ enum Actions {
   SET_THEME_MODE_ACTION = "setThemeModeAction",
   GET_SECTOR_LIST = "getsectorlist",
   GET_CITY_LIST = "getCitylist",
+  GET_DISTRICT_LIST = "getDistrictlist",
+  GET_QUERTER_LIST = "getQuerterlist",
   ADD_CUSTOMER = "addCustomer",
 }
 
