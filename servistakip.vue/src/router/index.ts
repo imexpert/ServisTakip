@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import store from "@/store";
-import { Mutations, Actions } from "@/store/enums/StoreEnums";
-import JwtService from "@/core/services/JwtService";
+import { Actions } from "@/store/enums/StoreEnums";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,10 +12,12 @@ const routes: Array<RouteRecordRaw> = [
         path: "/dashboard",
         name: "dashboard",
         component: () => import("@/views/Dashboard.vue"),
-        meta: {
-          pageTitle: "Dashboard",
-          breadcrumbs: ["Dashboards"],
-        },
+      },
+      {
+        path: "/customer",
+        name: "customer",
+        component: () => import("@/views/Customer.vue"),
+        props: true
       },
     ],
   },
