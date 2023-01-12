@@ -613,7 +613,7 @@ export default defineComponent({
         name: 'customer',
         path: '/customer',
         params: {
-          customerId: '5',
+            customerId: '5',
         },
       });
     },
