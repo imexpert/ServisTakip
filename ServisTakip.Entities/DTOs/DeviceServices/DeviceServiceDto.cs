@@ -1,8 +1,8 @@
-﻿using ServisTakip.Core.Entities;
+﻿using ServisTakip.Entities.DTOs.Devices;
 
-namespace ServisTakip.Entities.Concrete
+namespace ServisTakip.Entities.DTOs.DeviceServices
 {
-    public class DeviceService : BaseEntity
+    public class DeviceServiceDto
     {
         public long LinkedDeviceServiceId { get; set; }
         public long DeviceId { get; set; }
@@ -18,8 +18,8 @@ namespace ServisTakip.Entities.Concrete
         public int WBCount { get; set; }
         public int ColorCount { get; set; }
         public string StatusCode { get; set; }
-        public Device Device { get; set; }
-        public DeviceService LinkedDeviceService { get; set; }
-        public ICollection<DeviceService> DeviceServices { get; set; }
+        public DeviceDto Device { get; set; }
+        public DeviceServiceDto LinkedDeviceService { get; set; }
+        public ICollection<DeviceServiceDto> DeviceServices { get; set; }
     }
 }

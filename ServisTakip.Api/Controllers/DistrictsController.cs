@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.Districts.Queries;
 using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Entities.DTOs.Cities;
 using ServisTakip.Entities.DTOs.Districts;
 
 namespace ServisTakip.Api.Controllers

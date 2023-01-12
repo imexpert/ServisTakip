@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.Querters.Queries;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Entities.DTOs.Querters;

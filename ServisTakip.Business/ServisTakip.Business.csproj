@@ -12,4 +12,13 @@
     <ProjectReference Include="..\ServisTakip.Entities\ServisTakip.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\Addresses\Commands\" />
+    <Folder Include="Handlers\Addresses\Queries\" />
+    <Folder Include="Handlers\DeviceServices\Commands\" />
+    <Folder Include="Handlers\DeviceServices\Queries\" />
+    <Folder Include="Handlers\Devices\Commands\" />
+    <Folder Include="Handlers\Devices\Queries\" />
+  </ItemGroup>
+
 </Project>

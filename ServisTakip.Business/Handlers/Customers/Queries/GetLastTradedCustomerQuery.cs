@@ -1,11 +1,6 @@
 ﻿using MediatR;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Entities.DTOs.Customers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServisTakip.Business.Handlers.Customers.Queries
 {
