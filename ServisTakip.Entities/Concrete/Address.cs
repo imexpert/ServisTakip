@@ -15,5 +15,7 @@ namespace ServisTakip.Entities.Concrete
         public string Description { get; set; }
         public bool Status { get; set; }
         public ICollection<Device> Devices { get; set; }
+        public Customer Customer { get; set; }
+        public Querter Querter { get; set; }
     }
 }

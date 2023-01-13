@@ -5,6 +5,6 @@ namespace ServisTakip.DataAccess.Abstract
 {
     public interface IDeviceRepository : IEntityRepository<Device>
     {
-
+        Task<Device> GetLastTradedCustomerInfo();
     }
 }

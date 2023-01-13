@@ -10,5 +10,6 @@ namespace ServisTakip.Entities.Concrete
         public bool Status { get; set; }
         public Sector Sector { get; set; }
         public Company Company { get; set; }
+        public ICollection<Address> Addresses { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.Customers.Commands;
+using ServisTakip.Business.Handlers.Customers.Queries;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Entities.DTOs.Customers;
 
@@ -20,6 +21,20 @@ namespace ServisTakip.Api.Controllers
         public async Task<IActionResult> CreateCustomerAsync([FromBody] CreateCustomerDto model)
         {
             return CreateActionResult(await Mediator.Send(new CreateCustomerCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<LastTradedCustomerInfoDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetLastTradedCustomerAsync()
+        {
+            return CreateActionResult(await Mediator.Send(new GetLastTradedCustomerQuery()));
         }
     }
 }

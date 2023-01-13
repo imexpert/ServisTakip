@@ -46,6 +46,8 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<District> Districts { get; set; }
         public DbSet<Querter> Querters { get; set; }
         public DbSet<GroupClaim> GroupClaims { get; set; }
+        public DbSet<DeviceService> DeviceServices { get; set; }
+        public DbSet<Device> Devices { get; set; }
         protected IConfiguration Configuration { get; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

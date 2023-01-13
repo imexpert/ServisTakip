@@ -2,7 +2,7 @@
 {
     public class LastTradedCustomerInfoDto
     {
-        public string CustomerId { get; set; }
+        public long CustomerId { get; set; }
         public string CustomerTitle { get; set; }
     }
 }

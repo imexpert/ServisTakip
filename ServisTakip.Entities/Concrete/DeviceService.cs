@@ -1,4 +1,5 @@
 ﻿using ServisTakip.Core.Entities;
+using ServisTakip.Core.Entities.Concrete;
 
 namespace ServisTakip.Entities.Concrete
 {
@@ -18,6 +19,7 @@ namespace ServisTakip.Entities.Concrete
         public int WBCount { get; set; }
         public int ColorCount { get; set; }
         public string StatusCode { get; set; }
+        public User User { get; set; }
         public Device Device { get; set; }
         public DeviceService LinkedDeviceService { get; set; }
         public ICollection<DeviceService> DeviceServices { get; set; }

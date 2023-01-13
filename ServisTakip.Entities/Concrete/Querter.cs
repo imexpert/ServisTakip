@@ -8,5 +8,6 @@ namespace ServisTakip.Entities.Concrete
         public string Name { get; set; }
         public string RegionCode { get; set; }
         public District District { get; set; }
+        public ICollection<Address> Addresses { get; set; }
     }
 }
