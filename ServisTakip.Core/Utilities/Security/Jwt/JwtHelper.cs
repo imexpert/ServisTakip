@@ -68,10 +68,8 @@ namespace ServisTakip.Core.Utilities.Security.Jwt
         public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
-
-            using var generator = new RNGCryptoServiceProvider();
+            using var generator = RandomNumberGenerator.Create();
             generator.GetBytes(randomNumber);
-
             return Convert.ToBase64String(randomNumber);
         }
 

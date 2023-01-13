@@ -6,7 +6,11 @@ using ServisTakip.Entities.DTOs.Sectors;
 using ServisTakip.Entities.DTOs.User;
 using ServisTakip.Entities.DTOs.Cities;
 using ServisTakip.Entities.DTOs.Districts;
-using ServisTakip.Entities.DTOs.Querters;
+using ServisTakip.Entities.DTOs.BootCodes;
+using ServisTakip.Entities.DTOs.DeviceBrands;
+using ServisTakip.Entities.DTOs.DeviceModels;
+using ServisTakip.Entities.DTOs.DeviceTypes;
+using ServisTakip.Entities.DTOs.ResultCodes;
 
 namespace ServisTakip.Business.Helpers
 {
@@ -19,7 +23,11 @@ namespace ServisTakip.Business.Helpers
             CreateMap<Customer, CreateCustomerDto>().ReverseMap();
             CreateMap<City, CityDto>().ReverseMap();
             CreateMap<District, DistrictDto>().ReverseMap();
-            CreateMap<Querter, QuerterDto>().ReverseMap();
+            CreateMap<BootCode, BootCodeDto>().ReverseMap();
+            CreateMap<DeviceBrand, DeviceBrandDto>().ReverseMap();
+            CreateMap<DeviceModel, DeviceModelDto>().ReverseMap();
+            CreateMap<DeviceType, DeviceTypeDto>().ReverseMap();
+            CreateMap<ResultCode, ResultCodeDto>().ReverseMap();
         }
     }
 }

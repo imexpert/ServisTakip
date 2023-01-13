@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServisTakip.DataAccess", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServisTakip.Entities", "ServisTakip.Entities\ServisTakip.Entities.csproj", "{2BAF3FCA-8AAF-4B48-A26A-9BF0A2566542}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServisTakip.Api", "ServisTakip.Api\ServisTakip.Api.csproj", "{7A1FA812-8524-4A53-B6FB-E4B2035E0149}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServisTakip.Api", "ServisTakip.Api\ServisTakip.Api.csproj", "{7A1FA812-8524-4A53-B6FB-E4B2035E0149}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7E8A4106-585E-4628-A7FA-E5FC6C5B5CF5}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

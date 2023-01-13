@@ -1,5 +1,8 @@
 ﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
+using ServisTakip.DataAccess.Abstract;
 using ServisTakip.Entities.DTOs.Customers;
 
 namespace ServisTakip.Business.Handlers.Customers.Queries
@@ -10,7 +13,8 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
         {
             public Task<ResponseMessage<LastTradedCustomerInfoDto>> Handle(GetLastTradedCustomerQuery request, CancellationToken cancellationToken)
             {
-                throw new NotImplementedException();
+                var deviceServicesRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
+                return null;
             }
         }
     }

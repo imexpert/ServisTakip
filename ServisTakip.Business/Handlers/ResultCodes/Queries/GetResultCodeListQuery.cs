@@ -14,11 +14,11 @@ namespace ServisTakip.Business.Handlers.ResultCodes.Queries
         {
             public async Task<ResponseMessage<List<ResultCodeDto>>> Handle(GetResultCodeListQuery request, CancellationToken cancellationToken)
             {
-                var cityRepo = ServiceTool.ServiceProvider.GetService<IResultCodeRepository>();
+                var resultCodeRepo = ServiceTool.ServiceProvider.GetService<IResultCodeRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
-                var cityList = await cityRepo.GetListAsync();
-                var result = mapper.Map<List<ResultCodeDto>>(cityList);
+                var resultCodeList = await resultCodeRepo.GetListAsync();
+                var result = mapper.Map<List<ResultCodeDto>>(resultCodeList);
                 return ResponseMessage<List<ResultCodeDto>>.Success(result);
             }
         }

@@ -14,11 +14,11 @@ namespace ServisTakip.Business.Handlers.DeviceModels.Queries
         {
             public async Task<ResponseMessage<List<DeviceModelDto>>> Handle(GetDeviceModelListQuery request, CancellationToken cancellationToken)
             {
-                var cityRepo = ServiceTool.ServiceProvider.GetService<IDeviceModelRepository>();
+                var deviceModelRepo = ServiceTool.ServiceProvider.GetService<IDeviceModelRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
-                var cityList = await cityRepo.GetListAsync();
-                var result = mapper.Map<List<DeviceModelDto>>(cityList);
+                var deviceModelList = await deviceModelRepo.GetListAsync();
+                var result = mapper.Map<List<DeviceModelDto>>(deviceModelList);
                 return ResponseMessage<List<DeviceModelDto>>.Success(result);
             }
         }

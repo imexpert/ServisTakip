@@ -8,6 +8,7 @@ namespace CarbonCalculator.Business.Helpers
     {
         public static async Task UseDbOperationClaimCreator(this IApplicationBuilder app)
         {
+            await Task.CompletedTask;
             //var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
             //foreach (var operationName in GetOperationNames())
             //{

@@ -14,11 +14,11 @@ namespace ServisTakip.Business.Handlers.BootCodes.Queries
         {
             public async Task<ResponseMessage<List<BootCodeDto>>> Handle(GetBootCodeListQuery request, CancellationToken cancellationToken)
             {
-                var cityRepo = ServiceTool.ServiceProvider.GetService<IBootCodeRepository>();
+                var bootCodeRepo = ServiceTool.ServiceProvider.GetService<IBootCodeRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
-                var cityList = await cityRepo.GetListAsync();
-                var result = mapper.Map<List<BootCodeDto>>(cityList);
+                var bootCodeList = await bootCodeRepo.GetListAsync();
+                var result = mapper.Map<List<BootCodeDto>>(bootCodeList);
                 return ResponseMessage<List<BootCodeDto>>.Success(result);
             }
         }
