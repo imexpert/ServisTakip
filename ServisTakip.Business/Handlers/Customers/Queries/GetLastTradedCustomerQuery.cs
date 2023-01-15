@@ -22,6 +22,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 {
                     result.CustomerTitle = lastService.Device.Address.Customer.Title;
                     result.CustomerId = lastService.Device.Address.Customer.Id;
+                    result.CustomerSector = lastService.Device.Address.Customer.SectorId;
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
@@ -31,17 +32,19 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 {
                     result.CustomerTitle = lastDevice.Address.Customer.Title;
                     result.CustomerId = lastDevice.Address.Customer.Id;
+                    result.CustomerSector = lastDevice.Address.Customer.SectorId;
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
                 var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
                 var lastCustomerList = await customerRepo.GetListAsync(s => s.RecordUsername == Utils.Email);
                 
-                if (lastCustomerList != null && lastCustomerList.Count() > 0)
+                if (lastCustomerList != null && lastCustomerList.Any())
                 {
                     var lastCustomer = lastCustomerList.OrderByDescending(s=>s.RecordDate).First();
                     result.CustomerTitle = lastCustomer.Title;
                     result.CustomerId = lastCustomer.Id;
+                    result.CustomerSector = lastCustomer.SectorId;
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 

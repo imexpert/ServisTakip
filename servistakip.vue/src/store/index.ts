@@ -27,6 +27,16 @@ const store = createStore({
     ConfigModule,
     ThemeModeModule,
   },
+  mutations: {
+    setCustomerId(state, id) {
+      state.customerId = id
+    }
+  },
+  getters: {
+    getCustomerId: (state) => () => {
+      return state.customerId;
+    }
+  }
 });
 
 export default store;

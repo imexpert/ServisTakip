@@ -1,4 +1,6 @@
-﻿using ServisTakip.Entities.DTOs.Devices;
+﻿using ServisTakip.Entities.Concrete;
+using ServisTakip.Entities.DTOs.Devices;
+using ServisTakip.Entities.DTOs.Querters;
 
 namespace ServisTakip.Entities.DTOs.Addresses
 {
@@ -6,6 +8,7 @@ namespace ServisTakip.Entities.DTOs.Addresses
     {
         public long CustomerId { get; set; }
         public long QuarterId { get; set; }
+        public string AddressTitle { get; set; }
         public string AccountCode { get; set; }
         public string NetAddress { get; set; }
         public string AuthorizedName { get; set; }
@@ -15,5 +18,6 @@ namespace ServisTakip.Entities.DTOs.Addresses
         public string Description { get; set; }
         public bool Status { get; set; }
         public List<DeviceDto> Devices { get; set; }
+        public QuerterDto Querter { get; set; }
     }
 }

@@ -18,6 +18,8 @@ enum Actions {
   GET_DISTRICT_LIST = "getDistrictlist",
   GET_QUERTER_LIST = "getQuerterlist",
   ADD_CUSTOMER = "addCustomer",
+  GET_CUSTOMER = "getCustomer",
+  GET_LASTTRADED_CUSTOMER = "getLastTradedCustomer"
 }
 
 enum Mutations {

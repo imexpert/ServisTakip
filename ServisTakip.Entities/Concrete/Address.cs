@@ -6,6 +6,7 @@ namespace ServisTakip.Entities.Concrete
     {
         public long CustomerId { get; set; }
         public long QuarterId { get; set; }
+        public string AddressTitle { get; set; }
         public string AccountCode { get; set; }
         public string NetAddress { get; set; }
         public string AuthorizedName { get; set; }

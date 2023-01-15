@@ -4,5 +4,6 @@
     {
         public long CustomerId { get; set; }
         public string CustomerTitle { get; set; }
+        public long CustomerSector { get; set; }
     }
 }

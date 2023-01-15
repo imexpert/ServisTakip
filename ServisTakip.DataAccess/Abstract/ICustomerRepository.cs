@@ -5,5 +5,6 @@ namespace ServisTakip.DataAccess.Abstract
 {
     public interface ICustomerRepository : IEntityRepository<Customer>
     {
+        Task<Customer> GetCustomerById(long id);
     }
 }

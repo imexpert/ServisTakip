@@ -7,8 +7,8 @@
           İşlemler
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="routeCustomerPage">Yeni Müşteri Ekle</el-dropdown-item>
-              <el-dropdown-item>Müşteri Düzenle</el-dropdown-item>
+              <el-dropdown-item @click="routeAddCustomer">Yeni Müşteri Ekle</el-dropdown-item>
+              <el-dropdown-item @click="routeUpdateCustomer">Müşteri Düzenle</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -35,7 +35,15 @@
             <div class="row mb-1">
               <div class="col-md-4 fv-row">
                 <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
-                <Field type="text" class="form-control form-control-sm" placeholder="" name="cihazno" />
+                <el-input readonly v-model="firmaOzet.cihazNo" class="input-with-select">
+                  <template #append>
+                    <el-button>
+                      <el-icon>
+                        <Search />
+                      </el-icon>
+                    </el-button>
+                  </template>
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="cihazno" />
@@ -78,7 +86,22 @@
             <div class="row mb-1">
               <div class="col-md-8 fv-row">
                 <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
-                <Field type="text" class="form-control form-control-sm" placeholder="" name="unvan" />
+                <el-input readonly v-model="firmaOzet.customerTitle" class="input-with-select">
+                  <template #append>
+                    <el-button>
+                      <el-icon>
+                        <Search />
+                      </el-icon>
+                    </el-button>
+                  </template>
+                </el-input>
+                <!-- <Field
+                  type="text"
+                  class="form-control form-control-sm"
+                  placeholder=""
+                  name="unvan"
+                  v-model="firmaOzet.customerTitle"
+                /> -->
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="unvan" />
@@ -466,6 +489,7 @@ import SectorDropdown from '@/components/dropdown/SectorDropdown.vue';
 import CityDropdown from '@/components/dropdown/CityDropdown.vue';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { ElMessageBox } from 'element-plus';
+import { Search } from '@element-plus/icons-vue';
 
 interface NewCustomerData {
   title: string;
@@ -490,6 +514,11 @@ interface QuarterData {
   name: string;
 }
 
+interface FirmaOzetData {
+  customerId: string;
+  customerTitle: string;
+}
+
 export default defineComponent({
   name: 'default-dashboard-widget-2',
   components: {
@@ -498,6 +527,7 @@ export default defineComponent({
     ErrorMessage,
     Field,
     Form,
+    Search,
   },
   setup() {
     const centerDialogVisible = ref(false);
@@ -607,15 +637,46 @@ export default defineComponent({
   props: {
     widgetClasses: String,
   },
+  data() {
+    return {
+      firmaOzet: {
+        customerId: '',
+        customerTitle: '',
+        cihazNo: 0,
+        customerSectorId: 0,
+      },
+    };
+  },
+  async created() {
+    await this.getLastTradedCustomer();
+  },
   methods: {
-    routeCustomerPage() {
+    routeAddCustomer() {
       this.$router.push({
         name: 'customer',
         path: '/customer',
-        params: {
-            customerId: '5',
-        },
       });
+    },
+    routeUpdateCustomer() {
+      this.store.commit('setCustomerId', this.firmaOzet.customerId);
+
+      this.$router.push({
+        name: 'customer',
+        path: '/customer',
+      });
+    },
+    async getLastTradedCustomer() {
+      await this.store
+        .dispatch(Actions.GET_LASTTRADED_CUSTOMER)
+        .then(result => {
+          if (result.isSuccess) {
+            this.firmaOzet = result.data;
+            console.log(result.data);
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(this.store.getters.getErrors);
+        });
     },
     async addCustomer() {
       await this.getSectorList();

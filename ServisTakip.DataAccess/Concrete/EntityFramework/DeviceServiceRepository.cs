@@ -20,7 +20,9 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
         {
             return await _context.DeviceServices
                 .Include(s => s.User)
-                .Include(s => s.Device).ThenInclude(s => s.Address).ThenInclude(s => s.Customer)
+                .Include(s => s.Device)
+                    .ThenInclude(s => s.Address)
+                    .ThenInclude(s => s.Customer)
                 .Where(s => s.RecordUsername == Utils.Email)
                 .OrderByDescending(s=>s.RecordDate)
                 .FirstOrDefaultAsync();
