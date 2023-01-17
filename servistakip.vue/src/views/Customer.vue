@@ -162,9 +162,9 @@
             </label>
             <!--end::Label-->
 
-            <el-form-item prop="querterId">
+            <el-form-item prop="quarterId">
               <el-select placeholder="Semt seçiniz" filterable clearable :options="querterList"
-                v-model="customerAdress.querterId">
+                v-model="customerAdress.quarterId">
                 <el-option v-for="item in querterList" :key="item.id" :label="item.name" :value="item.id" />
               </el-select>
             </el-form-item>
@@ -316,7 +316,8 @@ interface QuarterData {
 
 interface CustomerAddressData {
   id: string,
-  querterId: string,
+  customerId:string,
+  quarterId: string,
   districtId: string,
   cityId: string,
   addressTitle: string,
@@ -333,10 +334,13 @@ export default defineComponent({
     ErrorMessage
   },
   setup() {
+    const store = useStore();
+
     var sectorList = ref<Array<SectorData>>([]);
     var customerAdress = ref<CustomerAddressData>({
       id: '',
-      querterId: '',
+      customerId: store.state.customerId,
+      quarterId: '',
       districtId: '',
       cityId: '',
       addressTitle: '',
@@ -354,7 +358,7 @@ export default defineComponent({
     const centerDialogVisible = ref(false);
     const formRef = ref<null | HTMLFormElement>(null);
 
-    const store = useStore();
+    
 
     var cityList = ref<Array<CityData>>([]);
     var districtList = ref<Array<DistrictData>>([]);
@@ -382,7 +386,7 @@ export default defineComponent({
           trigger: 'blur',
         },
       ],
-      querterId: [
+      quarterId: [
         {
           required: true,
           message: 'Semt seçilmedi.',
@@ -404,7 +408,7 @@ export default defineComponent({
       if (!formRef.value) {
         return;
       }
-      console.log(customerAdress);
+      console.log(customerAdress.value);
       formRef.value.validate(valid => {
         if (valid) {
           loading.value = true;
@@ -495,14 +499,14 @@ export default defineComponent({
     async onCityChange() {
       if (this.customerAdress?.cityId == '') {
         this.customerAdress.districtId = '';
-        this.customerAdress.querterId = '';
+        this.customerAdress.quarterId = '';
         this.querterList = [];
         this.districtList = [];
         return;
       }
 
       this.customerAdress.districtId = '';
-      this.customerAdress.querterId = '';
+      this.customerAdress.quarterId = '';
 
       await this.store
         .dispatch(Actions.GET_DISTRICT_LIST, this.customerAdress?.cityId)
@@ -520,7 +524,7 @@ export default defineComponent({
     },
     async onDistrictChange() {
       if (this.customerAdress.districtId == '') {
-        this.customerAdress.querterId = '';
+        this.customerAdress.quarterId = '';
         this.querterList = [];
         return;
       }
@@ -529,7 +533,7 @@ export default defineComponent({
         .dispatch(Actions.GET_QUERTER_LIST, this.customerAdress.districtId)
         .then(result => {
           if (result.isSuccess) {
-            this.customerAdress.querterId = '';
+            this.customerAdress.quarterId = '';
             this.querterList = result.data;
           }
         })
