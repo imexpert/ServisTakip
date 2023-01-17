@@ -86,9 +86,9 @@
             </label>
             <!--end::Label-->
 
-            <el-form-item prop="title">
+            <el-form-item prop="addressTitle">
               <el-input v-model="customerAdress.addressTitle" placeholder="Adres başlığını giriniz"
-                name="title"></el-input>
+                name="addressTitle"></el-input>
             </el-form-item>
           </div>
           <!--end::Input group-->
@@ -104,9 +104,9 @@
             </label>
             <!--end::Label-->
 
-            <el-form-item prop="title">
+            <el-form-item prop="accountCode">
               <el-input v-model="customerAdress.accountCode" placeholder="Muhasebe kodunu giriniz"
-                name="title"></el-input>
+                name="accountCode"></el-input>
             </el-form-item>
           </div>
           <!--end::Input group-->
@@ -184,9 +184,9 @@
             </label>
             <!--end::Label-->
 
-            <el-form-item prop="title">
+            <el-form-item prop="netAddress">
               <el-input style="width: 100%" v-model="customerAdress.netAddress" placeholder="Açık adres giriniz"
-                name="title"></el-input>
+                name="netAddress"></el-input>
             </el-form-item>
           </div>
           <!--end::Input group-->
@@ -204,9 +204,9 @@
             </label>
             <!--end::Label-->
 
-            <el-form-item prop="title">
+            <el-form-item prop="authorizedName">
               <el-input v-model="customerAdress.authorizedName" placeholder="Yetkili ad soyad bilgisini giriniz"
-                name="title"></el-input>
+                name="authorizedName"></el-input>
             </el-form-item>
           </div>
           <!--end::Input group-->
@@ -222,9 +222,9 @@
             </label>
             <!--end::Label-->
 
-            <el-form-item prop="title">
+            <el-form-item prop="authorizedTask">
               <el-input v-model="customerAdress.authorizedTask" placeholder="Yetkili görev bilgisini giriniz"
-                name="title"></el-input>
+                name="authorizedTask"></el-input>
             </el-form-item>
           </div>
           <!--end::Input group-->
@@ -242,9 +242,9 @@
             </label>
             <!--end::Label-->
 
-            <el-form-item prop="title">
+            <el-form-item prop="authorizedPhone">
               <el-input v-model="customerAdress.authorizedPhone" placeholder="Yetkili telefon bilgisini giriniz"
-                name="title"></el-input>
+                name="authorizedPhone"></el-input>
             </el-form-item>
           </div>
           <!--end::Input group-->
@@ -260,9 +260,9 @@
             </label>
             <!--end::Label-->
 
-            <el-form-item prop="title">
+            <el-form-item prop="authorizedEmail">
               <el-input v-model="customerAdress.authorizedEmail" placeholder="Yetkili e-mail bilgisini giriniz"
-                name="title"></el-input>
+                name="authorizedEmail"></el-input>
             </el-form-item>
           </div>
           <!--end::Input group-->
@@ -361,17 +361,38 @@ export default defineComponent({
     var querterList = ref<Array<QuarterData>>([]);
 
     const customerAddressRules = ref({
-      title: [
+      addressTitle: [
         {
           required: true,
-          message: 'Müşteri unvanı boş geçilemez',
+          message: 'Adres başlığı girilmedi.',
           trigger: 'blur',
         },
       ],
-      sectorId: [
+      cityId: [
         {
           required: true,
-          message: 'Müşteri sektörü boş geçilemez',
+          message: 'Şehir seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      districtId: [
+        {
+          required: true,
+          message: 'İlçe seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      querterId: [
+        {
+          required: true,
+          message: 'Semt seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      netAddress: [
+        {
+          required: true,
+          message: 'Açık adres girilmedi.',
           trigger: 'blur',
         },
       ],
@@ -389,13 +410,13 @@ export default defineComponent({
           loading.value = true;
 
           store
-            .dispatch(Actions.ADD_CUSTOMER, customerAdress.value)
+            .dispatch(Actions.ADD_ADDRESS, customerAdress.value)
             .then(result => {
               loading.value = false;
 
               if (result.isSuccess) {
                 Swal.fire({
-                  text: 'Müşteri başarıyla eklendi.',
+                  text: 'Adres başarıyla eklendi.',
                   icon: 'success',
                   buttonsStyling: false,
                   confirmButtonText: 'Tamam',

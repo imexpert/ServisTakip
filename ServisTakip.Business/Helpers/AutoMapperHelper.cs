@@ -33,6 +33,7 @@ namespace ServisTakip.Business.Helpers
             CreateMap<CustomerDto, Customer>().ReverseMap();
             CreateMap<QuerterDto, Querter>().ReverseMap();
             CreateMap<AddressDto, Address>().ReverseMap();
+            CreateMap<CreateAddressDto, Address>().ReverseMap();
         }
     }
 }

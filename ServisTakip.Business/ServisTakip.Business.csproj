@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\Addresses\Commands\" />
     <Folder Include="Handlers\Addresses\Queries\" />
     <Folder Include="Handlers\DeviceServices\Commands\" />
     <Folder Include="Handlers\DeviceServices\Queries\" />

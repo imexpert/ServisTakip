@@ -18,6 +18,7 @@ enum Actions {
   GET_DISTRICT_LIST = "getDistrictlist",
   GET_QUERTER_LIST = "getQuerterlist",
   ADD_CUSTOMER = "addCustomer",
+  ADD_ADDRESS = "addAddress",
   GET_CUSTOMER = "getCustomer",
   GET_LASTTRADED_CUSTOMER = "getLastTradedCustomer"
 }

@@ -4,6 +4,7 @@ import { config } from "vuex-module-decorators";
 import AuthModule from "@/store/modules/AuthModule";
 import SectorModule from "@/store/modules/SectorModule";
 import CustomerModule from "@/store/modules/CustomerModule";
+import AddressModule from "@/store/modules/AddressModule";
 import CityModule from "@/store/modules/CityModule";
 import DistrictModule from "@/store/modules/DistrictModule";
 import QuerterModule from "@/store/modules/QuerterModule";
@@ -26,6 +27,7 @@ const store = createStore({
     BreadcrumbsModule,
     ConfigModule,
     ThemeModeModule,
+    AddressModule
   },
   mutations: {
     setCustomerId(state, id) {
