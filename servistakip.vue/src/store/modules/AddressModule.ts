@@ -12,7 +12,7 @@ export default class AddressModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.SET_ERROR, response.data.errors);
+        this.context.commit(Mutations.PURGE_AUTH);
       });
   }
 }
