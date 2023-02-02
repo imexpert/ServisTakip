@@ -12,6 +12,7 @@ export default class DistrictModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
+        alert("401")
         this.context.commit(Mutations.PURGE_AUTH);
       });
   }
