@@ -27,6 +27,7 @@ enum Mutations {
   // mutation types
   SET_CLASSNAME_BY_POSITION = "appendBreadcrumb",
   PURGE_AUTH = "logOut",
+  SIGNOUT = "signout",
   SET_AUTH = "setAuth",
   SET_USER = "setUser",
   SET_PASSWORD = "setPassword",

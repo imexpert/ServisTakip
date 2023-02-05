@@ -13,6 +13,8 @@ using ServisTakip.Entities.DTOs.DeviceTypes;
 using ServisTakip.Entities.DTOs.ResultCodes;
 using ServisTakip.Entities.DTOs.Querters;
 using ServisTakip.Entities.DTOs.Addresses;
+using ServisTakip.Entities.DTOs.ContractCodes;
+using ServisTakip.Entities.DTOs.Contracts;
 
 namespace ServisTakip.Business.Helpers
 {
@@ -34,6 +36,8 @@ namespace ServisTakip.Business.Helpers
             CreateMap<QuerterDto, Querter>().ReverseMap();
             CreateMap<AddressDto, Address>().ReverseMap();
             CreateMap<CreateAddressDto, Address>().ReverseMap();
+            CreateMap<Contract, ContractDto>().ReverseMap();
+            CreateMap<ContractCode, ContractCodeDto>().ReverseMap();
         }
     }
 }

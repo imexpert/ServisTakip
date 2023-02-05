@@ -49,6 +49,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<DeviceService> DeviceServices { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Device> Devices { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
         protected IConfiguration Configuration { get; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
