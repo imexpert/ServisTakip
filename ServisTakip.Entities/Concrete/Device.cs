@@ -13,5 +13,6 @@ namespace ServisTakip.Entities.Concrete
         public Address Address { get; set; }
         public DeviceModel DeviceModel { get; set; }
         public ICollection<DeviceService> DeviceServices { get; set; }
+        public ICollection<Contract> Contracts { get; set; }
     }
 }
