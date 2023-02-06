@@ -8,7 +8,7 @@
     <!--end::Row-->
     <!--begin::Col-->
     <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-md-5 mb-xl-10">
-      <Sozlesme widget-classes="mb-5 mb-xxl-8" />
+      <Sozlesme cihazId="6" />
     </div>
     <!--end::Row-->
   </div>

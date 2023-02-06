@@ -113,7 +113,7 @@ export default defineComponent({
         };
     },
     props: {
-        widgetClasses: String,
+        cihazId: String,
     },
     data() {
         return {
