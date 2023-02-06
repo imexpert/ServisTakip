@@ -1,193 +1,246 @@
 <template>
-  <!--begin::List Widget 1-->
-  <div class="card" :class="widgetClasses">
-    <div class="card-header">
-      <div class="d-flex align-items-center me-5">
-        <el-dropdown split-button type="primary">
-          İşlemler
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click="routeAddCustomer">Yeni Müşteri Ekle</el-dropdown-item>
-              <el-dropdown-item @click="routeUpdateCustomer">Müşteri Düzenle</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
-    </div>
-    <!--begin::Body-->
-    <div class="card-body">
-      <!--begin::Form-->
-      <Form class="form" id="customerInfoForm">
-        <!--begin::Modal body-->
-        <div class="modal-body">
-          <!--begin::Scroll-->
-          <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true"
-            data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
-            data-kt-scroll-dependencies="#kt_modal_new_address_header"
-            data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
-            <!--begin::Input group-->
-            <div class="row mb-1">
-              <div class="col-md-4 fv-row">
-                <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
-                <el-input readonly v-model="firmaOzet.deviceId" class="input-with-select">
-                  <template #append>
-                    <el-button>
-                      <el-icon>
-                        <Search />
-                      </el-icon>
-                    </el-button>
-                  </template>
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="cihazno" />
+  <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+    <!--begin::Col-->
+    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-md-5 mb-xl-10">
+      <!--begin::List Widget 1-->
+      <div class="card" :class="widgetClasses">
+        <div class="card-header">
+          <div class="d-flex align-items-center me-5">
+            <el-dropdown split-button type="primary">
+              İşlemler
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click="routeAddCustomer">Yeni Müşteri Ekle</el-dropdown-item>
+                  <el-dropdown-item @click="routeUpdateCustomer">Müşteri Düzenle</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+        </div>
+        <!--begin::Body-->
+        <div class="card-body">
+          <!--begin::Form-->
+          <Form class="form" id="customerInfoForm">
+            <!--begin::Modal body-->
+            <div class="modal-body">
+              <!--begin::Scroll-->
+              <div
+                class="scroll-y me-n7 pe-7"
+                id="kt_modal_new_address_scroll"
+                data-kt-scroll="true"
+                data-kt-scroll-activate="{default: false, lg: true}"
+                data-kt-scroll-max-height="auto"
+                data-kt-scroll-dependencies="#kt_modal_new_address_header"
+                data-kt-scroll-wrappers="#kt_modal_new_address_scroll"
+                data-kt-scroll-offset="300px"
+              >
+                <!--begin::Input group-->
+                <div class="row mb-1">
+                  <div class="col-md-4 fv-row">
+                    <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
+                    <el-input readonly v-model="firmaOzet.deviceId" class="input-with-select">
+                      <template #append>
+                        <el-button>
+                          <el-icon>
+                            <Search />
+                          </el-icon>
+                        </el-button>
+                      </template>
+                    </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="cihazno" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Cari Kod</label>
-                <el-input readonly disabled v-model="firmaOzet.accountCode" class="input-with-select">
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="carikod" />
+                  <div class="col-md-4 fv-row">
+                    <label class="fs-5 fw-semobold mb-2">Cari Kod</label>
+                    <el-input readonly disabled v-model="firmaOzet.accountCode" class="input-with-select"> </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="carikod" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Sektör</label>
-                <el-input readonly disabled v-model="firmaOzet.customerSector" class="input-with-select">
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="sektor" />
+                  <div class="col-md-4 fv-row">
+                    <label class="fs-5 fw-semobold mb-2">Sektör</label>
+                    <el-input readonly disabled v-model="firmaOzet.customerSector" class="input-with-select">
+                    </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="sektor" />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="row mb-1">
-              <div class="col-md-8 fv-row">
-                <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
-                <el-input readonly v-model="firmaOzet.customerTitle" class="input-with-select">
-                  <template #append>
-                    <el-button>
-                      <el-icon>
-                        <Search />
-                      </el-icon>
-                    </el-button>
-                  </template>
-                </el-input>
-                <!-- <Field
+                <div class="row mb-1">
+                  <div class="col-md-8 fv-row">
+                    <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
+                    <el-input readonly v-model="firmaOzet.customerTitle" class="input-with-select">
+                      <template #append>
+                        <el-button>
+                          <el-icon>
+                            <Search />
+                          </el-icon>
+                        </el-button>
+                      </template>
+                    </el-input>
+                    <!-- <Field
                   type="text"
                   class="form-control form-control-sm"
                   placeholder=""
                   name="unvan"
                   v-model="firmaOzet.customerTitle"
                 /> -->
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="unvan" />
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="unvan" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 fv-row">
+                    <label class="fs-5 fw-semobold mb-2">Bölge</label>
+                    <el-input readonly disabled v-model="firmaOzet.regionCode" class="input-with-select"> </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="bolge" />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Bölge</label>
-                <el-input readonly disabled v-model="firmaOzet.regionCode" class="input-with-select">
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="bolge" />
+                <div class="row mb-1">
+                  <div class="col-md-4 fv-row">
+                    <label class="fs-5 fw-semobold mb-2">Şehir</label>
+                    <el-input readonly disabled v-model="firmaOzet.cityName" class="input-with-select"> </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="departman" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 fv-row">
+                    <label class="fs-5 fw-semobold mb-2">İlçe</label>
+                    <el-input readonly disabled v-model="firmaOzet.districtName" class="input-with-select"> </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="departman" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 fv-row">
+                    <label class="fs-5 fw-semobold mb-2">Semt</label>
+                    <el-input readonly disabled v-model="firmaOzet.quarterName" class="input-with-select"> </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="departman" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-md-4 fv-row">
+                    <label class="fs-5 fw-semobold mb-2">Yetkili Ad Soyad</label>
+                    <el-input readonly disabled v-model="firmaOzet.authorizedName" class="input-with-select">
+                    </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="departman" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 fv-row">
+                    <label class="fs-5 fw-semobold mb-2">Yetkili Görevi</label>
+                    <el-input readonly disabled v-model="firmaOzet.authorizedTask" class="input-with-select">
+                    </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="departman" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 fv-row">
+                    <label class="fs-5 fw-semobold mb-2">Yetkili E-Mail</label>
+                    <el-input readonly disabled v-model="firmaOzet.authorizedEmail" class="input-with-select">
+                    </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="departman" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-md-4 fv-row">
+                    <label class="fs-5 fw-semobold mb-2">Tel</label>
+                    <el-input readonly disabled v-model="firmaOzet.authorizedPhone" class="input-with-select">
+                    </el-input>
+                    <div class="fv-plugins-message-container">
+                      <div class="fv-help-block">
+                        <ErrorMessage name="departman" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row mb-1">
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Şehir</label>
-                <el-input readonly disabled v-model="firmaOzet.cityName" class="input-with-select">
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">İlçe</label>
-                <el-input readonly disabled v-model="firmaOzet.districtName" class="input-with-select">
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Semt</label>
-                <el-input readonly disabled v-model="firmaOzet.quarterName" class="input-with-select">
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row mb-1">
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Yetkili Ad Soyad</label>
-                <el-input readonly disabled v-model="firmaOzet.authorizedName" class="input-with-select">
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Yetkili Görevi</label>
-                <el-input readonly disabled v-model="firmaOzet.authorizedTask" class="input-with-select">
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Yetkili E-Mail</label>
-                <el-input readonly disabled v-model="firmaOzet.authorizedEmail" class="input-with-select">
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row mb-1">
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Tel</label>
-                <el-input readonly disabled v-model="firmaOzet.authorizedPhone" class="input-with-select">
-                </el-input>
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </Form>
         </div>
-      </Form>
+        <!--end::Body-->
+      </div>
+      <!--end::List Widget 1-->
     </div>
-    <!--end::Body-->
+    <!--begin::Col-->
+    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-md-5 mb-xl-10">
+      <el-card class="box-card">
+        <template #header>
+          <div class="card-header">
+            <span>Sözleşmeler</span>
+            <el-button class="button text-right" text>Yeni</el-button>
+          </div>
+        </template>
+        <div class="text item">
+          <el-table :data="contracts" style="width: 100%" :default-sort="{ prop: 'startDate', order: 'descending' }">
+            <el-table-column label="Başlangıç T." width="140" sortable>
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.startDateString }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Bitiş T." width="140" sortable>
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.endDateString }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Sözleşme Kodu" width="180">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.contractCode }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Bakım Periyodu" width="180">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.maintenancePeriod }} Aylık</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Operations">
+              <template #default="scope">
+                <el-button size="small" type="success">Düzenle</el-button>
+                <el-button size="small" type="danger">Sil</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-card>
+    </div>
   </div>
-  <!--end::List Widget 1-->
-
-
 </template>
 
 <script lang="ts">
@@ -238,18 +291,19 @@ export default defineComponent({
         customerId: '',
         customerTitle: '',
         customerSectorId: 0,
-        customerSector:'',
-        accountCode:'',
-        authorizedName:'',
-        authorizedPhone:'',
-        authorizedTask:'',
-        cityName:'',
-        authorizedEmail:'',
-        deviceId:'',
-        districtName:'',
-        quarterName:'',
-        regionCode:'',
+        customerSector: '',
+        accountCode: '',
+        authorizedName: '',
+        authorizedPhone: '',
+        authorizedTask: '',
+        cityName: '',
+        authorizedEmail: '',
+        deviceId: '',
+        districtName: '',
+        quarterName: '',
+        regionCode: '',
       },
+      contracts: [],
     };
   },
   async created() {
@@ -276,7 +330,8 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             this.firmaOzet = result.data;
-            console.log(result.data);
+            this.contracts = result.data.contracts;
+            console.log(this.contracts);
           }
         })
         .catch(() => {
