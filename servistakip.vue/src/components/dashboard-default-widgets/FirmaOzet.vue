@@ -29,7 +29,7 @@
             <div class="row mb-1">
               <div class="col-md-4 fv-row">
                 <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
-                <el-input readonly v-model="firmaOzet.cihazNo" class="input-with-select">
+                <el-input readonly v-model="firmaOzet.deviceId" class="input-with-select">
                   <template #append>
                     <el-button>
                       <el-icon>
@@ -47,8 +47,8 @@
 
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Cari Kod</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="carikod" />
+                <el-input readonly disabled v-model="firmaOzet.accountCode" class="input-with-select">
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="carikod" />
@@ -58,8 +58,8 @@
 
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Sektör</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="sektor" />
+                <el-input readonly disabled v-model="firmaOzet.customerSector" class="input-with-select">
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="sektor" />
@@ -94,8 +94,8 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Bölge</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="bolge" />
+                <el-input readonly disabled v-model="firmaOzet.regionCode" class="input-with-select">
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="bolge" />
@@ -106,8 +106,8 @@
             <div class="row mb-1">
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Şehir</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <el-input readonly disabled v-model="firmaOzet.cityName" class="input-with-select">
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -116,8 +116,8 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">İlçe</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <el-input readonly disabled v-model="firmaOzet.districtName" class="input-with-select">
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -126,8 +126,8 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Semt</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <el-input readonly disabled v-model="firmaOzet.quarterName" class="input-with-select">
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -138,8 +138,8 @@
             <div class="row mb-1">
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Yetkili Ad Soyad</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <el-input readonly disabled v-model="firmaOzet.authorizedName" class="input-with-select">
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -148,8 +148,8 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Yetkili Görevi</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <el-input readonly disabled v-model="firmaOzet.authorizedTask" class="input-with-select">
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -158,8 +158,8 @@
               </div>
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Yetkili E-Mail</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <el-input readonly disabled v-model="firmaOzet.authorizedEmail" class="input-with-select">
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -170,28 +170,8 @@
             <div class="row mb-1">
               <div class="col-md-4 fv-row">
                 <label class="fs-5 fw-semobold mb-2">Tel</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Cep Tel</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
-                <div class="fv-plugins-message-container">
-                  <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 fv-row">
-                <label class="fs-5 fw-semobold mb-2">Dahili</label>
-                <Field type="text" disabled class="form-control form-control-solid form-control-sm" placeholder=""
-                  name="departman" />
+                <el-input readonly disabled v-model="firmaOzet.authorizedPhone" class="input-with-select">
+                </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
                     <ErrorMessage name="departman" />
@@ -257,8 +237,18 @@ export default defineComponent({
       firmaOzet: {
         customerId: '',
         customerTitle: '',
-        cihazNo: 0,
         customerSectorId: 0,
+        customerSector:'',
+        accountCode:'',
+        authorizedName:'',
+        authorizedPhone:'',
+        authorizedTask:'',
+        cityName:'',
+        authorizedEmail:'',
+        deviceId:'',
+        districtName:'',
+        quarterName:'',
+        regionCode:'',
       },
     };
   },
