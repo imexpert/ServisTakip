@@ -19,7 +19,8 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
         public async Task<Device> GetLastTradedCustomerInfo()
         {
             return await _context.Devices
-                .Include(s => s.Address).ThenInclude(s => s.Customer)
+                .Include(s => s.Address).ThenInclude(s => s.Customer).ThenInclude(s => s.Sector)
+                .Include(s => s.Address).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
                 .Where(s => s.RecordUsername == Utils.Email)
                 .OrderByDescending(s => s.RecordDate)
                 .FirstOrDefaultAsync();

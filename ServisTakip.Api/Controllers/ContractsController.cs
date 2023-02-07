@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServisTakip.Business.Handlers.Cities.Queries;
 using ServisTakip.Business.Handlers.Contracts.Queries;
 using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Entities.DTOs.Cities;
 using ServisTakip.Entities.DTOs.Contracts;
 
 namespace ServisTakip.Api.Controllers
