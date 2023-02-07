@@ -1,4 +1,5 @@
 ﻿using ServisTakip.Entities.DTOs.Contracts;
+using ServisTakip.Entities.DTOs.Devices;
 
 namespace ServisTakip.Entities.DTOs.Customers
 {
@@ -18,5 +19,6 @@ namespace ServisTakip.Entities.DTOs.Customers
         public string AuthorizedPhone { get; set; }
         public string AuthorizedEmail { get; set; }
         public List<ContractDto> Contracts { get; set; }
+        public DeviceDto DeviceDto { get; set; }
     }
 }
