@@ -10,7 +10,7 @@ namespace ServisTakip.Entities.DTOs.DeviceModels
         public string Name { get; set; }
         public string PaperType { get; set; }
         public string ColorType { get; set; }
-        public bool IsScannerExist { get; set; }
+        public bool? IsScannerExist { get; set; }
         public bool Status { get; set; }
         public DeviceBrandDto DeviceBrand { get; set; }
         public List<DeviceDto> Devices { get; set; }

@@ -7,6 +7,7 @@ using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
 using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Customers;
+using ServisTakip.Entities.DTOs.Devices;
 
 namespace ServisTakip.Business.Handlers.Customers.Queries
 {
@@ -41,6 +42,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         DistrictName = lastService.Device.Address.Querter.District.Name,
                         QuarterName = lastService.Device.Address.Querter.Name,
                         RegionCode = lastService.Device.Address.Querter.RegionCode,
+                        DeviceDto = mapper.Map<DeviceDto>(lastService.Device)
                     };
 
                     var contracts = await contractRepo.GetListAsync(s => s.DeviceId == result.DeviceId);
@@ -69,6 +71,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         DistrictName = lastDevice.Address.Querter.District.Name,
                         QuarterName = lastDevice.Address.Querter.Name,
                         RegionCode = lastDevice.Address.Querter.RegionCode,
+                        DeviceDto = mapper.Map<DeviceDto>(lastDevice)
                     };
 
                     var contracts = await contractRepo.GetListAsync(s => s.DeviceId == result.DeviceId);
