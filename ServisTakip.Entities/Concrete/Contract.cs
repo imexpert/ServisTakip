@@ -11,5 +11,6 @@ namespace ServisTakip.Entities.Concrete
         public int MaintenancePeriod { get; set; }
         public bool Status { get; set; }
         public Device Device { get; set; }
+        public ICollection<ContractMaintenance> ContractMaintenances { get; set; }
     }
 }
