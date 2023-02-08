@@ -40,6 +40,21 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<SearchCustomerDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetCustomerWithQueryAsync(string filter)
+        {
+            return CreateActionResult(await Mediator.Send(new GetCustomerByFilterQuery() { Filter = filter }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
         [Consumes("application/json")]

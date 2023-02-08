@@ -18,10 +18,21 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
         public async Task<Customer> GetCustomerById(long id)
         {
             return await _context.Customers
+                .Include(s => s.Addresses).ThenInclude(s=>s.Devices).ThenInclude(s=>s.DeviceModel).ThenInclude(s=>s.DeviceBrand).ThenInclude(s=>s.DeviceType)
                 .Include(s => s.Addresses).ThenInclude(s=>s.Querter).ThenInclude(s=>s.District).ThenInclude(s=>s.City)
                 .Include(s => s.Sector)
                 .Where(s => s.Id == id)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Customer>> GetCustomerByFilterAsync(string filter, CancellationToken cancellationToken)
+        {
+            return await _context.Customers
+                .Include(s => s.Addresses).ThenInclude(s => s.Devices).ThenInclude(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
+                .Include(s => s.Addresses).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
+                .Include(s => s.Sector)
+                .Where(s => EF.Functions.Like(s.Title, $"%{filter}%"))
+                .ToListAsync();
         }
     }
 }

@@ -41,4 +41,16 @@ export default class CustomerModule extends VuexModule {
         router.push({ name: 'sign-in' });
       });
   }
+
+  @Action
+  [Actions.GET_CUSTOMER_BY_FILTER](filter) {
+    return ApiService.getWithParamUrl("Customers/GetCustomerWithQuery?filter=" + filter)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
 }
