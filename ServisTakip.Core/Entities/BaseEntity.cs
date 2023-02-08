@@ -9,5 +9,10 @@
         public virtual string UpdateUsername { get; set; }
         public virtual DateTime? UpdateDate { get; set; }
         public virtual string Ip { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

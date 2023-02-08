@@ -5,6 +5,7 @@ using ServisTakip.Core.Extensions;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
+using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Customers;
 
 namespace ServisTakip.Business.Handlers.Customers.Queries
@@ -22,13 +23,45 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 List<SearchCustomerDto> result = new List<SearchCustomerDto>();
 
                 var customerList = await customerRepo.GetCustomerByFilterAsync(request.Filter, cancellationToken);
-                foreach ( var customer in customerList ) 
+                foreach ( var customer in customerList )
                 {
-                    SearchCustomerDto cst = new SearchCustomerDto();
-                    cst.Title = customer.Title;
-                    cst.Id = customer.Id;
-                    cst.Sector = customer.Sector.Name;
-                    result.Add(cst);
+                    var cst = new SearchCustomerDto
+                    {
+                        Title = customer.Title,
+                        Id = customer.Id,
+                        Sector = customer.Sector.Name
+                    };
+
+                    if (customer.Addresses != null)
+                    {
+                        foreach (var address in customer.Addresses)
+                        {
+                            if (address.Devices != null)
+                            {
+                                foreach (var device in address.Devices)
+                                {
+                                    cst.AddressId = address.Id;
+                                    cst.Address = address.AddressTitle;
+                                    cst.DeviceId = device.Id;
+                                    cst.Model = device.DeviceModel.Name;
+                                    cst.SerialNo = device.SerialNumber;
+
+                                    result.Add(cst.Clone());
+
+                                }
+                            }
+                            else
+                            {
+                                cst.AddressId = address.Id;
+                                cst.Address = address.AddressTitle;
+                                result.Add(cst.Clone());
+                            }
+                        }
+                    }
+                    else
+                    {
+                        result.Add(cst.Clone());
+                    }
                 }
 
                 return ResponseMessage<List<SearchCustomerDto>>.Success(result);
