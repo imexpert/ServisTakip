@@ -20,7 +20,8 @@ enum Actions {
   ADD_CUSTOMER = "addCustomer",
   ADD_ADDRESS = "addAddress",
   GET_CUSTOMER = "getCustomer",
-  GET_LASTTRADED_CUSTOMER = "getLastTradedCustomer"
+  GET_LASTTRADED_CUSTOMER = "getLastTradedCustomer",
+  GET_CUSTOMER_BY_FILTER = "getCustomerByFilter"
 }
 
 enum Mutations {

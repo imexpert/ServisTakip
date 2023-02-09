@@ -21,6 +21,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
             return await _context.Devices
                 .Include(s => s.Address).ThenInclude(s => s.Customer).ThenInclude(s => s.Sector)
                 .Include(s => s.Address).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
+                .Include(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
                 .Where(s => s.RecordUsername == Utils.Email)
                 .OrderByDescending(s => s.RecordDate)
                 .FirstOrDefaultAsync();

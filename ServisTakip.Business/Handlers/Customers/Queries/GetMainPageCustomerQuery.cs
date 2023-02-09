@@ -11,15 +11,27 @@ using ServisTakip.Entities.DTOs.Devices;
 
 namespace ServisTakip.Business.Handlers.Customers.Queries
 {
-    public class GetLastTradedCustomerQuery : IRequest<ResponseMessage<LastTradedCustomerInfoDto>>
+    public class GetMainPageCustomerQuery : IRequest<ResponseMessage<LastTradedCustomerInfoDto>>
     {
-        public class GetLastTradedCustomerQueryHandler : IRequestHandler<GetLastTradedCustomerQuery, ResponseMessage<LastTradedCustomerInfoDto>>
+        public long CustomerId { get; set; }
+        public class GetMainPageCustomerQueryHandler : IRequestHandler<GetMainPageCustomerQuery, ResponseMessage<LastTradedCustomerInfoDto>>
         {
-            public async Task<ResponseMessage<LastTradedCustomerInfoDto>> Handle(GetLastTradedCustomerQuery request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<LastTradedCustomerInfoDto>> Handle(GetMainPageCustomerQuery request, CancellationToken cancellationToken)
             {
                 LastTradedCustomerInfoDto result = new LastTradedCustomerInfoDto();
 
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
+
+                var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
+                var customer = await customerRepo.GetCustomerById(request.CustomerId);
+
+                if (customer != null)
+                {
+                    result.CustomerTitle = customer.Title;
+                    result.CustomerId = customer.Id;
+                    result.CustomerSector = customer.Sector.Name;
+                    return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
+                }
 
                 // Login olan kullanıcının açmış olduğu servis kaydı var mı ona bakıyoruz
                 var deviceServicesRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
@@ -80,17 +92,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
-                var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
-                var lastCustomerList = await customerRepo.GetListAsync(s => s.RecordUsername == Utils.Email);
                 
-                if (lastCustomerList != null && lastCustomerList.Any())
-                {
-                    var lastCustomer = lastCustomerList.OrderByDescending(s=>s.RecordDate).First();
-                    result.CustomerTitle = lastCustomer.Title;
-                    result.CustomerId = lastCustomer.Id;
-                    result.CustomerSector = lastCustomer.Sector.Name;
-                    return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
-                }
 
                 return ResponseMessage<LastTradedCustomerInfoDto>.Fail("Son İşlem Bilgisi Alınamadı.");
             }

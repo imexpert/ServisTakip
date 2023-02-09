@@ -18,6 +18,7 @@ namespace ServisTakip.Entities.DTOs.Customers
         public string AuthorizedTask { get; set; }
         public string AuthorizedPhone { get; set; }
         public string AuthorizedEmail { get; set; }
+        public string RowId { get; set; }
         public List<ContractDto> Contracts { get; set; }
         public DeviceDto DeviceDto { get; set; }
     }
