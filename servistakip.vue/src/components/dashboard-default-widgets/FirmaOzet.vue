@@ -80,28 +80,34 @@
                                             :loading="loading">
                                             <li class="el-select-dropdown__item">
                                                 <div class="row">
-                                                    <div class="col-md-1">
-                                                        <span style="font-weight: 900;"> Id </span>
-                                                    </div>
-                                                    <div class="col-md-9">
-                                                        <span style="font-weight: 900;"> Unvan </span>
+                                                    <div class="col-md-6">
+                                                        <span style="font-weight: 900; "> Unvan </span>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <span style="font-weight: 900;"> Sektör </span>
+                                                        <span style="font-weight: 900;"> Semt </span>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <span style="font-weight: 900;"> Model </span>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <span style="font-weight: 900;"> Seri No </span>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <el-option v-for="item in customerList" :key="item.id"
-                                                :label="item.title" :value="item.id">
+                                            <el-option v-for="item in customerList" :key="item.rowId"
+                                                :label="item.title" :value="item.rowId">
                                                 <div class="row">
-                                                    <div class="col-md-1">
-                                                        {{ item.id }}
-                                                    </div>
-                                                    <div class="col-md-9">
+                                                    <div class="col-md-6" style="font-size: 12px;">
                                                         {{ item.title }}
                                                     </div>
-                                                    <div class="col-md-2">
-                                                        {{ item.sector }}
+                                                    <div class="col-md-2" style="font-size: 12px;">
+                                                        {{ item.querter }}
+                                                    </div>
+                                                    <div class="col-md-3" style="font-size: 12px;">
+                                                        {{ item.model }}
+                                                    </div>
+                                                    <div class="col-md-1" style="font-size: 12px;">
+                                                        {{ item.serialNo }}
                                                     </div>
                                                 </div>
                                             </el-option>
@@ -514,8 +520,15 @@ interface FirmaOzetData {
 
 interface CustomerListItem {
     id: string,
+    addressId:string,
+    deviceId:string,
     title: string,
     sector: string,
+    address:string,
+    model:string,
+    serialNo:string,
+    rowId:string,
+    querter:string
 }
 
 export default defineComponent({
@@ -669,10 +682,12 @@ export default defineComponent({
             };
         },
         async onCustomerChange() {
+            console.clear();
+            this.clearPage();
             console.log(this.selectedCustomer);
+
             if (!this.selectedCustomer) {
                 this.customerList = [];
-                this.clearPage();
             }
 
         },

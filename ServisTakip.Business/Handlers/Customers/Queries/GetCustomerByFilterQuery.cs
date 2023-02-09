@@ -29,19 +29,22 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     {
                         Title = customer.Title,
                         Id = customer.Id,
-                        Sector = customer.Sector.Name
+                        Sector = customer.Sector.Name,
+                        AddressId = 0,
+                        DeviceId = 0
                     };
 
-                    if (customer.Addresses != null)
+                    if (customer.Addresses.Count > 0)
                     {
                         foreach (var address in customer.Addresses)
                         {
-                            if (address.Devices != null)
+                            if (address.Devices.Count > 0)
                             {
                                 foreach (var device in address.Devices)
                                 {
                                     cst.AddressId = address.Id;
                                     cst.Address = address.AddressTitle;
+                                    cst.Querter = address.Querter.Name;
                                     cst.DeviceId = device.Id;
                                     cst.Model = device.DeviceModel.Name;
                                     cst.SerialNo = device.SerialNumber;
@@ -54,6 +57,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                             {
                                 cst.AddressId = address.Id;
                                 cst.Address = address.AddressTitle;
+                                cst.Querter = address.Querter.Name;
                                 result.Add(cst.Clone());
                             }
                         }
@@ -62,6 +66,11 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     {
                         result.Add(cst.Clone());
                     }
+                }
+
+                foreach (var item in result)
+                {
+                    item.RowId = $"{item.Id}|{item.AddressId}|{item.DeviceId}";
                 }
 
                 return ResponseMessage<List<SearchCustomerDto>>.Success(result);
