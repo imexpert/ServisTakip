@@ -31,6 +31,18 @@ export default class CustomerModule extends VuexModule {
   }
 
   @Action
+  [Actions.GET_MAIN_PAGE_CUSTOMER](rowId) {
+    return ApiService.getWithParamUrl("Customers/GetMainPageCustomer?rowId=" + rowId)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.GET_CUSTOMER](customerId) {
     return ApiService.getWithParamUrl("Customers/GetCustomerById?customerId=" + customerId)
       .then(({ data }) => {

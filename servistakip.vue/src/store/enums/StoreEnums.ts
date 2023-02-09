@@ -21,7 +21,9 @@ enum Actions {
   ADD_ADDRESS = "addAddress",
   GET_CUSTOMER = "getCustomer",
   GET_LASTTRADED_CUSTOMER = "getLastTradedCustomer",
-  GET_CUSTOMER_BY_FILTER = "getCustomerByFilter"
+  GET_CUSTOMER_BY_FILTER = "getCustomerByFilter",
+  GET_DEVICE_BY_FILTER = "getDeviceByFilter",
+  GET_MAIN_PAGE_CUSTOMER = "getMainPageCustomer"
 }
 
 enum Mutations {

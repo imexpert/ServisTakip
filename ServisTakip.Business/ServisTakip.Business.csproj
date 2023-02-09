@@ -19,7 +19,6 @@
     <Folder Include="Handlers\DeviceServices\Commands\" />
     <Folder Include="Handlers\DeviceServices\Queries\" />
     <Folder Include="Handlers\Devices\Commands\" />
-    <Folder Include="Handlers\Devices\Queries\" />
   </ItemGroup>
 
 </Project>
