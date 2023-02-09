@@ -32,7 +32,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .Include(s => s.Addresses).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
                 .Include(s => s.Sector)
                 .Where(s => EF.Functions.Like(s.Title, $"%{filter}%"))
-                .ToListAsync();
+                .ToListAsync(cancellationToken: cancellationToken);
         }
     }
 }

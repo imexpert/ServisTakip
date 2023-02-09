@@ -4,6 +4,7 @@ import { config } from "vuex-module-decorators";
 import AuthModule from "@/store/modules/AuthModule";
 import SectorModule from "@/store/modules/SectorModule";
 import CustomerModule from "@/store/modules/CustomerModule";
+import DeviceModule from "@/store/modules/DeviceModule";
 import AddressModule from "@/store/modules/AddressModule";
 import CityModule from "@/store/modules/CityModule";
 import DistrictModule from "@/store/modules/DistrictModule";
@@ -20,6 +21,7 @@ const store = createStore({
     AuthModule,
     SectorModule,
     CustomerModule,
+    DeviceModule,
     CityModule,
     DistrictModule,
     QuerterModule,
