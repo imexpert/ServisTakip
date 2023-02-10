@@ -8,19 +8,19 @@ using ServisTakip.Entities.DTOs.Customers;
 
 namespace ServisTakip.Business.Handlers.Devices.Queries
 {
-    public class GetDeviceByFilterQuery : IRequest<ResponseMessage<List<SearchCustomerDto>>>
+    public class GetDeviceBySerialNoFilterQuery : IRequest<ResponseMessage<List<SearchCustomerDto>>>
     {
-        public long DeviceId { get; set; }
-        public class GetDeviceByFilterQueryHandler : IRequestHandler<GetDeviceByFilterQuery, ResponseMessage<List<SearchCustomerDto>>>
+        public string Filter { get; set; }
+        public class GetDeviceBySerialNoFilterQueryHandler : IRequestHandler<GetDeviceBySerialNoFilterQuery, ResponseMessage<List<SearchCustomerDto>>>
         {
-            public async Task<ResponseMessage<List<SearchCustomerDto>>> Handle(GetDeviceByFilterQuery request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<List<SearchCustomerDto>>> Handle(GetDeviceBySerialNoFilterQuery request, CancellationToken cancellationToken)
             {
                 var customerRepo = ServiceTool.ServiceProvider.GetService<IDeviceRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
                 List<SearchCustomerDto> result = new List<SearchCustomerDto>();
 
-                var deviceList = await customerRepo.GetDeviceByFilterAsync(request.DeviceId, cancellationToken);
+                var deviceList = await customerRepo.GetDeviceBySerialNoFilterAsync(request.Filter, cancellationToken);
                 foreach (var device in deviceList)
                 {
                     var cst = new SearchCustomerDto

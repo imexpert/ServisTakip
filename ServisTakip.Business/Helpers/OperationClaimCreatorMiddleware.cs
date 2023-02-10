@@ -2,7 +2,7 @@
 using System.Reflection;
 using ServisTakip.Business.BusinessAspects;
 
-namespace CarbonCalculator.Business.Helpers
+namespace ServisTakip.Business.Helpers
 {
     public static class OperationClaimCreatorMiddleware
     {

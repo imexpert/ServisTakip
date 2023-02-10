@@ -23,6 +23,8 @@ enum Actions {
   GET_LASTTRADED_CUSTOMER = "getLastTradedCustomer",
   GET_CUSTOMER_BY_FILTER = "getCustomerByFilter",
   GET_DEVICE_BY_FILTER = "getDeviceByFilter",
+  GET_DEVICE_BY_SERIALNO_FILTER = "getDeviceBySerialNoFilter",
+  GET_DEVICE_BY_MODEL_NAME_FILTER = "getDeviceByModelNameFilter",
   GET_MAIN_PAGE_CUSTOMER = "getMainPageCustomer"
 }
 

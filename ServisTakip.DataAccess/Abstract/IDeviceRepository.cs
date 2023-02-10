@@ -7,6 +7,8 @@ namespace ServisTakip.DataAccess.Abstract
     {
         Task<Device> GetLastTradedCustomerInfo();
         Task<Device> GetDeviceInfo(long deviceId);
-        Task<List<Device>> GetDeviceByFilterAsync(string filter, CancellationToken cancellationToken);
+        Task<List<Device>> GetDeviceByFilterAsync(long deviceId, CancellationToken cancellationToken);
+        Task<List<Device>> GetDeviceBySerialNoFilterAsync(string filter, CancellationToken cancellationToken);
+        Task<List<Device>> GetDeviceByModelNameFilterAsync(string filter, CancellationToken cancellationToken);
     }
 }

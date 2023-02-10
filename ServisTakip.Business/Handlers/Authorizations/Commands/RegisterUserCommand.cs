@@ -9,7 +9,7 @@ using ServisTakip.Core.Utilities.Security.Hashing;
 using ServisTakip.DataAccess.Abstract;
 using ServisTakip.Entities.DTOs.User;
 
-namespace CarbonCalculator.Business.Handlers.Authorizations.Commands
+namespace ServisTakip.Business.Handlers.Authorizations.Commands
 {
     public class RegisterUserCommand : IRequest<ResponseMessage<CreateUserDto>>
     {

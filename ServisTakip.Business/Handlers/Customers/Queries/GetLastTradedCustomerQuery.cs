@@ -10,6 +10,7 @@ using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Devices;
 using ServisTakip.Entities.DTOs.DeviceServices;
+using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.Business.Handlers.Customers.Queries
 {
@@ -50,7 +51,17 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
 
                     var contracts = await contractRepo.GetListAsync(s => s.DeviceId == result.DeviceId);
                     result.Contracts = mapper.Map<List<ContractDto>>(contracts);
-                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(lastService.DeviceServices);
+
+                    var lastContract = result.Contracts.OrderByDescending(s => s.EndDate).FirstOrDefault();
+                    result.ContractType = lastContract?.ContractCode;
+
+                    var deviceServices = await deviceServicesRepo.GetDeviceServices(lastService.DeviceId);
+
+                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(deviceServices.Where(s => s.StatusCode == ((int)StatusCodes.ServisKaydiKapatildi)));
+                    var service = result.DeviceServices?.OrderByDescending(s=>s.ResultDate).FirstOrDefault();
+                    result.WbCount = service.WBCount;
+                    result.ColorCount = service.ColorCount;
+
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
@@ -80,6 +91,9 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
 
                     var contracts = await contractRepo.GetListAsync(s => s.DeviceId == result.DeviceId);
                     result.Contracts = mapper.Map<List<ContractDto>>(contracts);
+
+                    var lastContract = result.Contracts.OrderByDescending(s => s.EndDate).FirstOrDefault();
+                    result.ContractType = lastContract?.ContractCode;
 
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }

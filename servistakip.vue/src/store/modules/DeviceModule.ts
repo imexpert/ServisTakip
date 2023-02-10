@@ -8,7 +8,31 @@ export default class DeviceModule extends VuexModule {
 
   @Action
   [Actions.GET_DEVICE_BY_FILTER](filter) {
-    return ApiService.getWithParamUrl("Devices/GetDeviceWithQuery?filter=" + filter)
+    return ApiService.getWithParamUrl("Devices/GetDeviceWithQuery?deviceId=" + filter)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
+  [Actions.GET_DEVICE_BY_SERIALNO_FILTER](filter) {
+    return ApiService.getWithParamUrl("Devices/GetDeviceBySerialNoFilter?filter=" + filter)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
+  [Actions.GET_DEVICE_BY_MODEL_NAME_FILTER](filter) {
+    return ApiService.getWithParamUrl("Devices/GetDeviceByModelNameFilter?filter=" + filter)
       .then(({ data }) => {
         return data;
       })
