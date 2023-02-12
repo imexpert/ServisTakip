@@ -34,6 +34,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     .ThenInclude(s=>s.District)
                     .ThenInclude(s=>s.City)
                 .Where(s => s.RecordUsername == Utils.Email)
+                .AsNoTracking()
                 .OrderByDescending(s=>s.RecordDate)
                 .FirstOrDefaultAsync();
         }
@@ -56,6 +57,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     .ThenInclude(s => s.District)
                     .ThenInclude(s => s.City)
                 .Where(s => s.DeviceId == deviceId)
+                .AsNoTracking()
                 .OrderByDescending(s => s.RecordDate)
                 .ToListAsync();
         }

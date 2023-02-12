@@ -4,6 +4,7 @@ namespace ServisTakip.Entities.DTOs.Contracts
 {
     public class ContractDto
     {
+        public long Id { get; set; }
         public long DeviceId { get; set; }
         public DateTime StartDate { get; set; }
         public string StartDateString => StartDate.ToString("dd/MM/yyyy");
