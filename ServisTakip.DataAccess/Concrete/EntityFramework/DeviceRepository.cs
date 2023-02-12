@@ -23,6 +23,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .Include(s => s.Address).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
                 .Include(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
                 .Where(s => s.RecordUsername == Utils.Email)
+                .AsNoTracking()
                 .OrderByDescending(s => s.RecordDate)
                 .FirstOrDefaultAsync();
         }
@@ -34,18 +35,54 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .Include(s => s.Address).ThenInclude(s => s.Customer).ThenInclude(s => s.Sector)
                 .Include(s => s.Address).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
                 .Include(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
-                .Where(s => s.Id == deviceId)
+                .Where(s => s.Id == deviceId && s.Address.Customer.CompanyId == Utils.CompanyId)
+                .AsNoTracking()
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<Device>> GetDeviceByFilterAsync(string filter, CancellationToken cancellationToken)
+        public async Task<List<long>> GetAllDevices(long customerId)
+        {
+            return await _context.Devices
+                .Include(s => s.Address).ThenInclude(s => s.Customer)
+                .Where(s => s.Address.CustomerId == customerId)
+                .AsNoTracking()
+                .Select(s=>s.Id)
+                .ToListAsync();
+        }
+
+        public async Task<List<Device>> GetDeviceByFilterAsync(long deviceId, CancellationToken cancellationToken)
         {
             return await _context.Devices
                 .Include(s => s.DeviceServices).ThenInclude(s => s.User)
                 .Include(s => s.Address).ThenInclude(s => s.Customer).ThenInclude(s => s.Sector)
                 .Include(s => s.Address).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
                 .Include(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
-                .Where(s => EF.Functions.Like(s.Id.ToString(), $"%{filter}%"))
+                .Where(s => s.Id == deviceId && s.Address.Customer.CompanyId == Utils.CompanyId)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken: cancellationToken);
+        }
+
+        public async Task<List<Device>> GetDeviceBySerialNoFilterAsync(string filter, CancellationToken cancellationToken)
+        {
+            return await _context.Devices
+                .Include(s => s.DeviceServices).ThenInclude(s => s.User)
+                .Include(s => s.Address).ThenInclude(s => s.Customer).ThenInclude(s => s.Sector)
+                .Include(s => s.Address).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
+                .Include(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
+                .Where(s => EF.Functions.Like(s.SerialNumber, $"%{filter}%") && s.Address.Customer.CompanyId == Utils.CompanyId)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken: cancellationToken);
+        }
+
+        public async Task<List<Device>> GetDeviceByModelNameFilterAsync(string filter, CancellationToken cancellationToken)
+        {
+            return await _context.Devices
+                .Include(s => s.DeviceServices).ThenInclude(s => s.User)
+                .Include(s => s.Address).ThenInclude(s => s.Customer).ThenInclude(s => s.Sector)
+                .Include(s => s.Address).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
+                .Include(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
+                .Where(s => EF.Functions.Like(s.DeviceModel.Name, $"%{filter}%") && s.Address.Customer.CompanyId == Utils.CompanyId)
+                .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
         }
     }

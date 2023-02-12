@@ -47,7 +47,7 @@ namespace ServisTakip.Core.DataAccess.EntityFramework
         {
             return expression == null
                 ? await Context.Set<TEntity>().ToListAsync()
-                : await Context.Set<TEntity>().Where(expression).ToListAsync();
+                : await Context.Set<TEntity>().Where(expression).AsNoTracking().ToListAsync();
         }
 
         public IQueryable<TEntity> Query()

@@ -16,6 +16,20 @@
               </template>
             </el-dropdown>
           </div>
+          <div class="d-flex align-items-center me-5">
+            <el-button-group>
+              <el-button type="primary" title="Önceki Cihaz" @click="oncekiCihaz()">
+                <el-icon class="el-icon--left">
+                  <ArrowLeft />
+                </el-icon>
+              </el-button>
+              <el-button type="primary" title="Sonraki Cihaz" @click="sonrakiCihaz()">
+                <el-icon class="el-icon--right">
+                  <ArrowRight />
+                </el-icon>
+              </el-button>
+            </el-button-group>
+          </div>
         </div>
         <!--begin::Body-->
         <div class="card-body">
@@ -38,20 +52,6 @@
                 <div class="row mb-1">
                   <div class="col-md-4 fv-row">
                     <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
-                    <!-- <el-input readonly v-model="firmaOzet.deviceId" class="input-with-select">
-                      <template #append>
-                        <el-button>
-                          <el-icon>
-                            <Search />
-                          </el-icon>
-                        </el-button>
-                      </template>
-                    </el-input>
-                    <div class="fv-plugins-message-container">
-                      <div class="fv-help-block">
-                        <ErrorMessage name="cihazno" />
-                      </div>
-                    </div> -->
                     <el-select
                       @change="onDeviceNoChange()"
                       filterable
@@ -80,7 +80,12 @@
                           </div>
                         </div>
                       </li>
-                      <el-option v-for="item in deviceList" :key="item.rowId" :label="item.title" :value="item.rowId">
+                      <el-option
+                        v-for="item in deviceList"
+                        :key="item.rowId"
+                        :label="item.deviceId"
+                        :value="item.rowId"
+                      >
                         <div class="row">
                           <div class="col-md-6" style="font-size: 12px">
                             {{ item.title }}
@@ -345,20 +350,108 @@
             </div>
           </el-card>
         </div>
-        <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+        <div class="col-md-5 col-lg-5 col-xl-5 col-xxl-5">
           <el-card class="box-card">
             <div class="row align-items-center">
               <div class="col-md-6 mx-auto">
                 <label class="fs-5 fw-semobold">Model</label>
               </div>
               <div class="col-md-6">
-                <el-input v-model="deviceModel.name" style="font-size: 12px"> </el-input>
+                <el-select
+                  @change="onModelNameChange()"
+                  filterable
+                  remote
+                  clearable
+                  placeholder="Model adı giriniz"
+                  reserve-keyword
+                  remote-show-suffix
+                  v-model="selectedModelName"
+                  :remote-method="remoteMethodModelName"
+                  :loading="loading"
+                >
+                  <li class="el-select-dropdown__item">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <span style="font-weight: 900"> Unvan </span>
+                      </div>
+                      <div class="col-md-2">
+                        <span style="font-weight: 900"> Semt </span>
+                      </div>
+                      <div class="col-md-3">
+                        <span style="font-weight: 900"> Model </span>
+                      </div>
+                      <div class="col-md-1">
+                        <span style="font-weight: 900"> Seri No </span>
+                      </div>
+                    </div>
+                  </li>
+                  <el-option v-for="item in modelList" :key="item.rowId" :label="item.model" :value="item.rowId">
+                    <div class="row">
+                      <div class="col-md-6" style="font-size: 12px">
+                        {{ item.title }}
+                      </div>
+                      <div class="col-md-2" style="font-size: 12px">
+                        {{ item.querter }}
+                      </div>
+                      <div class="col-md-3" style="font-size: 12px">
+                        {{ item.model }}
+                      </div>
+                      <div class="col-md-1" style="font-size: 12px">
+                        {{ item.serialNo }}
+                      </div>
+                    </div>
+                  </el-option>
+                </el-select>
               </div>
               <div class="col-md-6 mt-2">
                 <label class="fs-5 fw-semobold">Seri No</label>
               </div>
               <div class="col-md-6 mt-2">
-                <el-input v-model="device.serialNumber" style="font-size: 12px"> </el-input>
+                <el-select
+                  @change="onSerialNoChange()"
+                  filterable
+                  remote
+                  clearable
+                  placeholder="Seri no giriniz"
+                  reserve-keyword
+                  remote-show-suffix
+                  v-model="selectedSerialNo"
+                  :remote-method="remoteMethodSerialNo"
+                  :loading="loading"
+                >
+                  <li class="el-select-dropdown__item">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <span style="font-weight: 900"> Unvan </span>
+                      </div>
+                      <div class="col-md-2">
+                        <span style="font-weight: 900"> Semt </span>
+                      </div>
+                      <div class="col-md-3">
+                        <span style="font-weight: 900"> Model </span>
+                      </div>
+                      <div class="col-md-1">
+                        <span style="font-weight: 900"> Seri No </span>
+                      </div>
+                    </div>
+                  </li>
+                  <el-option v-for="item in seriNoList" :key="item.rowId" :label="item.serialNo" :value="item.rowId">
+                    <div class="row">
+                      <div class="col-md-6" style="font-size: 12px">
+                        {{ item.title }}
+                      </div>
+                      <div class="col-md-2" style="font-size: 12px">
+                        {{ item.querter }}
+                      </div>
+                      <div class="col-md-3" style="font-size: 12px">
+                        {{ item.model }}
+                      </div>
+                      <div class="col-md-1" style="font-size: 12px">
+                        {{ item.serialNo }}
+                      </div>
+                    </div>
+                  </el-option>
+                </el-select>
               </div>
               <div class="col-md-6 mt-2">
                 <label class="fs-5 fw-semobold">Marka</label>
@@ -378,48 +471,64 @@
         <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-4">
           <el-card class="box-card">
             <div class="row">
-              <div class="col-md-6">
-                <label class="fs-5 fw-semobold mb-2">Söz. Tipi</label>
+              <div class="col-md-6 pt-2">
+                <label class="fs-5 fw-semobold">Söz. Tipi</label>
               </div>
-              <div class="col-md-6">
-                <el-input disabled> </el-input>
+              <div class="col-md-6 pt-2">
+                <el-input disabled v-model="firmaOzet.contractType"></el-input>
               </div>
-              <div class="col-md-6 mt-2">
+              <div class="col-md-6 pt-2 mt-2">
                 <label class="fs-5 fw-semobold mb-2">Cihaz Durumu</label>
               </div>
               <div class="col-md-6 mt-2">
-                <el-input disabled> </el-input>
+                <input
+                  type="text"
+                  disabled
+                  class="form-control form-control-sm form-control-solid border border-secondary"
+                  style="color: #a8abb2"
+                  :style="{ backgroundColor: backgroundColor }"
+                  name="row-name"
+                  v-model="firmaOzet.deviceStatus"
+                />
               </div>
-              <div class="col-md-6 mt-2">
+              <div class="col-md-6 pt-2 mt-2">
                 <label class="fs-5 fw-semobold mb-2">Bk. Durumu</label>
               </div>
               <div class="col-md-6 mt-2">
-                <el-input disabled> </el-input>
+                <input
+                  type="text"
+                  disabled
+                  class="form-control form-control-sm form-control-solid border border-secondary"
+                  style="color: #a8abb2"
+                  name="row-name"
+                  :style="{ backgroundColor: maintenanceBackgroundColor }"
+                  v-model="contractMaintenanceStatus"
+                />
               </div>
             </div>
           </el-card>
         </div>
 
-        <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+        <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3">
           <el-card class="box-card">
             <div class="row">
               <div class="col-md-6">
                 <label class="fs-5 fw-semobold mb-2">S/B Sayaç</label>
               </div>
               <div class="col-md-6">
-                <el-input disabled> </el-input>
+                <el-input disabled v-model="firmaOzet.wbCount"> </el-input>
               </div>
               <div class="col-md-6 mt-2">
-                <label class="fs-5 fw-semobold mb-2">Renkli Sayaç</label>
+                <label class="fs-5 fw-semobold mb-2">R.Sayaç</label>
               </div>
               <div class="col-md-6 mt-2">
-                <el-input disabled> </el-input>
+                <el-input disabled v-model="firmaOzet.colorCount"> </el-input>
               </div>
               <div class="col-md-6 mt-2">
-                <label class="fs-5 fw-semobold mb-2">Toplam Sayaç</label>
+                <label class="fs-5 fw-semobold mb-2">T.Sayaç</label>
               </div>
               <div class="col-md-6 mt-2">
-                <el-input disabled> </el-input>
+                <el-input disabled v-model="firmaOzet.totalCount"> </el-input>
               </div>
             </div>
           </el-card>
@@ -635,8 +744,12 @@ export default defineComponent({
 
     var customerList = ref<Array<CustomerListItem>>([]);
     var deviceList = ref<Array<CustomerListItem>>([]);
+    var modelList = ref<Array<CustomerListItem>>([]);
+    var seriNoList = ref<Array<CustomerListItem>>([]);
     var selectedCustomer = ref<string>();
     var selectedDevice = ref<string>();
+    var selectedSerialNo = ref<string>();
+    var selectedModelName = ref<string>();
 
     const remoteMethod = async (query: string) => {
       if (query && query.length > 3) {
@@ -669,7 +782,6 @@ export default defineComponent({
             console.clear();
             console.log(result.data);
             loading.value = false;
-
             if (result.isSuccess) {
               deviceList.value = result.data;
             }
@@ -679,6 +791,48 @@ export default defineComponent({
           });
       } else {
         customerList.value = [];
+      }
+    };
+
+    const remoteMethodSerialNo = async (query: string) => {
+      if (query && query.length > 3) {
+        loading.value = true;
+        await store
+          .dispatch(Actions.GET_DEVICE_BY_SERIALNO_FILTER, query)
+          .then(result => {
+            console.clear();
+            console.log(result.data);
+            loading.value = false;
+            if (result.isSuccess) {
+              seriNoList.value = result.data;
+            }
+          })
+          .catch(() => {
+            const [error] = Object.keys(store.getters.getErrors);
+          });
+      } else {
+        seriNoList.value = [];
+      }
+    };
+
+    const remoteMethodModelName = async (query: string) => {
+      if (query && query.length > 3) {
+        loading.value = true;
+        await store
+          .dispatch(Actions.GET_DEVICE_BY_MODEL_NAME_FILTER, query)
+          .then(result => {
+            console.clear();
+            console.log(result.data);
+            loading.value = false;
+            if (result.isSuccess) {
+              modelList.value = result.data;
+            }
+          })
+          .catch(() => {
+            const [error] = Object.keys(store.getters.getErrors);
+          });
+      } else {
+        modelList.value = [];
       }
     };
 
@@ -693,6 +847,12 @@ export default defineComponent({
       remoteMethodCihazNo,
       deviceList,
       selectedDevice,
+      selectedSerialNo,
+      selectedModelName,
+      remoteMethodSerialNo,
+      remoteMethodModelName,
+      modelList,
+      seriNoList,
     };
   },
   props: {
@@ -715,6 +875,12 @@ export default defineComponent({
         districtName: '',
         quarterName: '',
         regionCode: '',
+        contractType: '',
+        wbCount: '',
+        colorCount: '',
+        totalCount: '',
+        deviceStatus: '',
+        maintenanceStatus: '-',
       },
       device: {
         addressId: '',
@@ -741,6 +907,10 @@ export default defineComponent({
       },
       deviceServices: [],
       contracts: [],
+      backgroundColor: '#ABEBC6',
+      maintenanceBackgroundColor: '#ABEBC6',
+      contractMaintenanceStatus: '-',
+      deviceIds: [],
     };
   },
   async created() {
@@ -763,9 +933,17 @@ export default defineComponent({
         districtName: '',
         quarterName: '',
         regionCode: '',
+        contractType: '',
+        wbCount: '',
+        colorCount: '',
+        totalCount: '',
+        deviceStatus: '',
+        maintenanceStatus: '',
       };
 
       this.contracts = [];
+
+      this.deviceIds = [];
 
       this.deviceBrand = {
         companyId: '',
@@ -794,6 +972,9 @@ export default defineComponent({
       };
 
       this.deviceServices = [];
+
+      //   this.selectedCustomer = '';
+      //   this.selectedDevice = '';
     },
     async onCustomerChange() {
       console.clear();
@@ -802,38 +983,58 @@ export default defineComponent({
 
       if (!this.selectedCustomer) {
         this.customerList = [];
+        this.selectedDevice = '';
         return;
       }
 
-      await this.store
-        .dispatch(Actions.GET_MAIN_PAGE_CUSTOMER, this.selectedCustomer)
-        .then(result => {
-          console.clear();
-          console.log(result.data);
-          this.firmaOzet = result.data;
-          this.contracts = result.data.contracts;
-          this.device = result.data.deviceDto;
-          this.deviceModel = result.data.deviceDto.deviceModel;
-          this.deviceBrand = result.data.deviceDto.deviceModel.deviceBrand;
-          this.selectedCustomer = result.data.customerTitle;
-          this.deviceServices = result.data.deviceServices;
-        })
-        .catch(() => {
-          const [error] = Object.keys(this.store.getters.getErrors);
-        });
+      await this.getMainPageCustomer(this.selectedCustomer);
     },
     async onDeviceNoChange() {
       console.clear();
       this.clearPage();
-      console.log(this.selectedCustomer);
+      console.log(this.selectedDevice);
 
-      if (!this.selectedCustomer) {
-        this.customerList = [];
+      if (!this.selectedDevice) {
+        this.deviceList = [];
+        this.selectedCustomer = '';
         return;
       }
 
+      await this.getMainPageCustomer(this.selectedDevice);
+    },
+    async onSerialNoChange() {
+      console.clear();
+      this.clearPage();
+      console.log(this.selectedSerialNo);
+
+      if (!this.selectedSerialNo) {
+        this.seriNoList = [];
+        this.selectedCustomer = '';
+        this.selectedDevice = '';
+        this.selectedModelName = '';
+        return;
+      }
+
+      await this.getMainPageCustomer(this.selectedSerialNo);
+    },
+    async onModelNameChange() {
+      console.clear();
+      this.clearPage();
+      console.log(this.selectedModelName);
+
+      if (!this.selectedModelName) {
+        this.modelList = [];
+        this.selectedCustomer = '';
+        this.selectedDevice = '';
+        this.selectedSerialNo = '';
+        return;
+      }
+
+      await this.getMainPageCustomer(this.selectedModelName);
+    },
+    async getMainPageCustomer(rowId) {
       await this.store
-        .dispatch(Actions.GET_MAIN_PAGE_CUSTOMER, this.selectedCustomer)
+        .dispatch(Actions.GET_MAIN_PAGE_CUSTOMER, rowId)
         .then(result => {
           console.clear();
           console.log(result.data);
@@ -842,8 +1043,17 @@ export default defineComponent({
           this.device = result.data.deviceDto;
           this.deviceModel = result.data.deviceDto.deviceModel;
           this.deviceBrand = result.data.deviceDto.deviceModel.deviceBrand;
+          this.selectedDevice = result.data.deviceId;
           this.selectedCustomer = result.data.customerTitle;
+          this.selectedModelName = result.data.deviceDto.deviceModel.name;
+          this.selectedSerialNo = result.data.deviceDto.serialNumber;
           this.deviceServices = result.data.deviceServices;
+          this.firmaOzet.deviceStatus = result.data.deviceDto.status ? 'Aktif' : 'Pasif';
+          this.backgroundColor = result.data.deviceDto.status ? '#ABEBC6' : '#F5B7B1';
+          this.maintenanceBackgroundColor = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+          this.contractMaintenanceStatus = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
+
+          this.deviceIds = result.data.deviceIds;
         })
         .catch(() => {
           const [error] = Object.keys(this.store.getters.getErrors);
@@ -876,6 +1086,14 @@ export default defineComponent({
             this.selectedCustomer = result.data.customerTitle;
             this.selectedDevice = result.data.deviceId;
             this.deviceServices = result.data.deviceServices;
+            this.selectedModelName = result.data.deviceDto.deviceModel.name;
+            this.selectedSerialNo = result.data.deviceDto.serialNumber;
+            this.firmaOzet.deviceStatus = result.data.deviceDto.status ? 'Aktif' : 'Pasif';
+            this.backgroundColor = result.data.deviceDto.status ? '#ABEBC6' : '#F5B7B1';
+            this.maintenanceBackgroundColor = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+            this.contractMaintenanceStatus = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
+
+            this.deviceIds = result.data.deviceIds;
             console.log(result.data);
           }
         })
@@ -883,6 +1101,26 @@ export default defineComponent({
           const [error] = Object.keys(this.store.getters.getErrors);
         });
     },
+
+    async oncekiCihaz() {
+      var index = this.deviceIds.findIndex(item => {
+        return this.firmaOzet.deviceId === item;
+      });
+
+      if (index == 0) {
+        return;
+      }
+
+      var selectedItem = this.deviceIds.find(item => {
+        return this.firmaOzet.deviceId === item;
+      });
+      console.log(this.firmaOzet.deviceId[--index]);
+
+      console.log(index);
+      console.log(this.firmaOzet.deviceId);
+    },
+
+    async sonrakiCihaz() {},
   },
 });
 </script>

@@ -5,11 +5,11 @@ using ServisTakip.Core.Extensions;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Devices;
 using ServisTakip.Entities.DTOs.DeviceServices;
+using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.Business.Handlers.Customers.Queries
 {
@@ -23,8 +23,9 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
 
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
-                // Login olan kullanıcının açmış olduğu servis kaydı var mı ona bakıyoruz
+                var contractMaintenanceRepo = ServiceTool.ServiceProvider.GetService<IContractMaintenanceRepository>();
                 var deviceServicesRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
+                var deviceRepo = ServiceTool.ServiceProvider.GetService<IDeviceRepository>();
                 var contractRepo = ServiceTool.ServiceProvider.GetService<IContractRepository>();
                 var lastService = await deviceServicesRepo.GetLastTradedCustomerInfo();
                 if (lastService != null)
@@ -50,12 +51,29 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
 
                     var contracts = await contractRepo.GetListAsync(s => s.DeviceId == result.DeviceId);
                     result.Contracts = mapper.Map<List<ContractDto>>(contracts);
-                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(lastService.DeviceServices);
+
+                    var lastContract = result.Contracts.MaxBy(s => s.EndDate);
+                    result.ContractType = lastContract?.ContractCode;
+
+                    var contractMaintenances =
+                        await contractMaintenanceRepo.GetListAsync(s =>
+                            s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
+                            s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
+
+                    result.MaintenanceStatus = contractMaintenances.Any();
+
+                    var deviceServices = await deviceServicesRepo.GetDeviceServices(lastService.DeviceId);
+
+                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(deviceServices.Where(s => s.StatusCode == ((int)StatusCodes.ServisKaydiKapatildi)));
+                    var service = result.DeviceServices.MaxBy(s=>s.ResultDate);
+                    result.WbCount = service.WBCount;
+                    result.ColorCount = service.ColorCount;
+
+                    result.DeviceIds = await deviceRepo.GetAllDevices(result.CustomerId);
+
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
-                // Login olan kullanıcının eklemiş olduğu cihaz kaydı var mı ona bakıyoruz
-                var deviceRepo = ServiceTool.ServiceProvider.GetService<IDeviceRepository>();
                 var lastDevice = await deviceRepo.GetLastTradedCustomerInfo();
                 if (lastDevice != null)
                 {
@@ -81,15 +99,30 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     var contracts = await contractRepo.GetListAsync(s => s.DeviceId == result.DeviceId);
                     result.Contracts = mapper.Map<List<ContractDto>>(contracts);
 
+                    var lastContract = result.Contracts.MaxBy(s => s.EndDate);
+                    result.ContractType = lastContract?.ContractCode;
+
+                    var contractMaintenances =
+                        await contractMaintenanceRepo.GetListAsync(s =>
+                            s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
+                            s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
+
+                    result.MaintenanceStatus = contractMaintenances.Any();
+
+                    result.DeviceIds = await deviceRepo.GetAllDevices(result.CustomerId);
+
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
                 var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
                 var lastCustomerList = await customerRepo.GetListAsync(s => s.RecordUsername == Utils.Email);
 
-                if (lastCustomerList != null && lastCustomerList.Any())
+                var customerList = lastCustomerList.ToList();
+
+                if (!customerList.Any())
+                    return ResponseMessage<LastTradedCustomerInfoDto>.Fail("Son İşlem Bilgisi Alınamadı.");
                 {
-                    var lastCustomer = lastCustomerList.OrderByDescending(s => s.RecordDate).First();
+                    var lastCustomer = customerList.OrderByDescending(s => s.RecordDate).First();
                     result.CustomerTitle = lastCustomer.Title;
                     result.CustomerId = lastCustomer.Id;
                     result.CustomerSector = lastCustomer.Sector.Name;
@@ -97,7 +130,6 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
-                return ResponseMessage<LastTradedCustomerInfoDto>.Fail("Son İşlem Bilgisi Alınamadı.");
             }
         }
     }

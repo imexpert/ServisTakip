@@ -1,6 +1,7 @@
-﻿using ServisTakip.Entities.DTOs.DeviceServices;
+﻿using ServisTakip.Entities.DTOs.Contracts;
+using ServisTakip.Entities.DTOs.DeviceServices;
 
-namespace ServisTakip.Entities.DTOs.Contracts
+namespace ServisTakip.Entities.DTOs.ContractMaintenances
 {
     public class ContractMaintenanceDto
     {

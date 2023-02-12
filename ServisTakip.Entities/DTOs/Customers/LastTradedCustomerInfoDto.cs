@@ -19,7 +19,13 @@ namespace ServisTakip.Entities.DTOs.Customers
         public string AuthorizedTask { get; set; }
         public string AuthorizedPhone { get; set; }
         public string AuthorizedEmail { get; set; }
+        public string ContractType { get; set; }
+        public bool MaintenanceStatus { get; set; }
+        public int? WbCount { get; set; }
+        public int? ColorCount { get; set; }
+        public int? TotalCount => WbCount + ColorCount;
         public string RowId { get; set; }
+        public List<long> DeviceIds { get; set; }
         public List<ContractDto> Contracts { get; set; }
         public List<DeviceServiceDto> DeviceServices { get; set; }
         public DeviceDto DeviceDto { get; set; }

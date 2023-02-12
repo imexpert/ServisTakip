@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.Contracts;
+using ServisTakip.Entities.DTOs.ContractMaintenances;
 
 namespace ServisTakip.Business.Handlers.ContractMaintenances.Queries
 {

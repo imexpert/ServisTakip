@@ -2,6 +2,7 @@
 using ServisTakip.DataAccess.Abstract;
 using ServisTakip.DataAccess.Concrete.EntityFramework.Contexts;
 using ServisTakip.Core.DataAccess.EntityFramework;
+using ServisTakip.Core.Extensions;
 using ServisTakip.Entities.Concrete;
 
 namespace ServisTakip.DataAccess.Concrete.EntityFramework
@@ -21,7 +22,8 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .Include(s => s.Addresses).ThenInclude(s=>s.Devices).ThenInclude(s=>s.DeviceModel).ThenInclude(s=>s.DeviceBrand).ThenInclude(s=>s.DeviceType)
                 .Include(s => s.Addresses).ThenInclude(s=>s.Querter).ThenInclude(s=>s.District).ThenInclude(s=>s.City)
                 .Include(s => s.Sector)
-                .Where(s => s.Id == id)
+                .Where(s => s.Id == id && s.CompanyId == Utils.CompanyId)
+                .AsNoTracking()
                 .FirstOrDefaultAsync();
         }
 
@@ -31,7 +33,8 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .Include(s => s.Addresses).ThenInclude(s => s.Devices).ThenInclude(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
                 .Include(s => s.Addresses).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
                 .Include(s => s.Sector)
-                .Where(s => EF.Functions.Like(s.Title, $"%{filter}%"))
+                .Where(s => EF.Functions.Like(s.Title, $"%{filter}%") && s.CompanyId == Utils.CompanyId)
+                .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
         }
     }

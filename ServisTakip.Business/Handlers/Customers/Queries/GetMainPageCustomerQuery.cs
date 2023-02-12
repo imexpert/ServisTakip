@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Extensions;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
@@ -55,8 +54,18 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
 
                     var contracts = await contractRepo.GetListAsync(s => s.DeviceId == result.DeviceId);
                     result.Contracts = mapper.Map<List<ContractDto>>(contracts);
-                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(device.DeviceServices.Where(s=>s.StatusCode == (int)StatusCodes.ServisKaydiKapatildi));
+
+                    var lastContract = result.Contracts.MaxBy(s => s.EndDate);
+                    result.ContractType = lastContract?.ContractCode;
+
+                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(device.DeviceServices.Where(s => s.StatusCode == (int)StatusCodes.ServisKaydiKapatildi));
                     result.DeviceServices = result.DeviceServices.OrderByDescending(s => s.ResultDate).ToList();
+
+                    var service = result.DeviceServices.FirstOrDefault();
+                    result.WbCount = service.WBCount;
+                    result.ColorCount = service.ColorCount;
+
+                    result.DeviceIds = await deviceRepo.GetAllDevices(result.CustomerId);
 
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
@@ -84,6 +93,8 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 result.CustomerId = customer.Id;
                 result.CustomerSector = customer.Sector.Name;
                 result.RowId = $"{customer.Id}|{0}|{0}";
+
+                result.DeviceIds = await deviceRepo.GetAllDevices(result.CustomerId);
                 return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
             }
         }

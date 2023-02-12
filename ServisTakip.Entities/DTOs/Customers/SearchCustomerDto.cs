@@ -1,7 +1,4 @@
-﻿using ServisTakip.Entities.DTOs.Sectors;
-using ServisTakip.Entities.DTOs.Addresses;
-
-namespace ServisTakip.Entities.DTOs.Customers
+﻿namespace ServisTakip.Entities.DTOs.Customers
 {
     public class SearchCustomerDto
     {
