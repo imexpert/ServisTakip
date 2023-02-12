@@ -1111,6 +1111,9 @@ export default defineComponent({
         return;
       }
 
+      var selectedItem = this.deviceIds.find(item => {
+        return this.firmaOzet.deviceId === item;
+      });
       console.log(this.firmaOzet.deviceId[--index]);
 
       console.log(index);
