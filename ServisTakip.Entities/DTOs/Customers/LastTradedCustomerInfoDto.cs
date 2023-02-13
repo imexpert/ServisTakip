@@ -25,7 +25,7 @@ namespace ServisTakip.Entities.DTOs.Customers
         public int? ColorCount { get; set; }
         public int? TotalCount => WbCount + ColorCount;
         public string RowId { get; set; }
-        public List<long> DeviceIds { get; set; }
+        public List<DeviceDto> Devices { get; set; }
         public List<ContractDto> Contracts { get; set; }
         public List<DeviceServiceDto> DeviceServices { get; set; }
         public DeviceDto DeviceDto { get; set; }

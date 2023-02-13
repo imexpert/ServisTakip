@@ -18,15 +18,10 @@
           </div>
           <div class="d-flex align-items-center me-5">
             <el-button-group>
-              <el-button type="primary" title="Önceki Cihaz" @click="oncekiCihaz()">
-                <el-icon class="el-icon--left">
-                  <ArrowLeft />
-                </el-icon>
-              </el-button>
-              <el-button type="primary" title="Sonraki Cihaz" @click="sonrakiCihaz()">
-                <el-icon class="el-icon--right">
-                  <ArrowRight />
-                </el-icon>
+              <el-button type="success" title="Önceki Cihaz" @click="cihazListesi()">
+                <el-icon>
+                  <List />
+                </el-icon>&nbsp; Cihaz Listesi
               </el-button>
             </el-button-group>
           </div>
@@ -38,32 +33,17 @@
             <!--begin::Modal body-->
             <div class="modal-body">
               <!--begin::Scroll-->
-              <div
-                class="scroll-y me-n7 pe-7"
-                id="kt_modal_new_address_scroll"
-                data-kt-scroll="true"
-                data-kt-scroll-activate="{default: false, lg: true}"
-                data-kt-scroll-max-height="auto"
+              <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true"
+                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
                 data-kt-scroll-dependencies="#kt_modal_new_address_header"
-                data-kt-scroll-wrappers="#kt_modal_new_address_scroll"
-                data-kt-scroll-offset="300px"
-              >
+                data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
                 <!--begin::Input group-->
                 <div class="row mb-1">
                   <div class="col-md-4 fv-row">
                     <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
-                    <el-select
-                      @change="onDeviceNoChange()"
-                      filterable
-                      remote
-                      clearable
-                      placeholder="Cihaz no giriniz"
-                      reserve-keyword
-                      remote-show-suffix
-                      v-model="selectedDevice"
-                      :remote-method="remoteMethodCihazNo"
-                      :loading="loading"
-                    >
+                    <el-select @change="onDeviceNoChange()" filterable remote clearable placeholder="Cihaz no giriniz"
+                      reserve-keyword remote-show-suffix v-model="selectedDevice" :remote-method="remoteMethodCihazNo"
+                      :loading="loading">
                       <li class="el-select-dropdown__item">
                         <div class="row">
                           <div class="col-md-6">
@@ -80,12 +60,8 @@
                           </div>
                         </div>
                       </li>
-                      <el-option
-                        v-for="item in deviceList"
-                        :key="item.rowId"
-                        :label="item.deviceId"
-                        :value="item.rowId"
-                      >
+                      <el-option v-for="item in deviceList" :key="item.rowId" :label="item.deviceId"
+                        :value="item.rowId">
                         <div class="row">
                           <div class="col-md-6" style="font-size: 12px">
                             {{ item.title }}
@@ -128,18 +104,9 @@
                 <div class="row mb-1">
                   <div class="col-md-12 fv-row">
                     <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
-                    <el-select
-                      @change="onCustomerChange()"
-                      filterable
-                      remote
-                      clearable
-                      placeholder="Arama için en az 4 harf giriniz"
-                      reserve-keyword
-                      remote-show-suffix
-                      v-model="selectedCustomer"
-                      :remote-method="remoteMethod"
-                      :loading="loading"
-                    >
+                    <el-select @change="onCustomerChange()" filterable remote clearable
+                      placeholder="Arama için en az 4 harf giriniz" reserve-keyword remote-show-suffix
+                      v-model="selectedCustomer" :remote-method="remoteMethod" :loading="loading">
                       <li class="el-select-dropdown__item">
                         <div class="row">
                           <div class="col-md-6">
@@ -291,12 +258,8 @@
               </div>
             </template>
             <div class="text item">
-              <el-table
-                :data="contracts"
-                style="width: 100%"
-                max-height="147"
-                :default-sort="{ prop: 'startDate', order: 'descending' }"
-              >
+              <el-table :data="contracts" style="width: 100%" max-height="147"
+                :default-sort="{ prop: 'startDate', order: 'descending' }">
                 <el-table-column label="Başlangıç Tarihi" width="160" sortable>
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
@@ -357,18 +320,9 @@
                 <label class="fs-5 fw-semobold">Model</label>
               </div>
               <div class="col-md-6">
-                <el-select
-                  @change="onModelNameChange()"
-                  filterable
-                  remote
-                  clearable
-                  placeholder="Model adı giriniz"
-                  reserve-keyword
-                  remote-show-suffix
-                  v-model="selectedModelName"
-                  :remote-method="remoteMethodModelName"
-                  :loading="loading"
-                >
+                <el-select @change="onModelNameChange()" filterable remote clearable placeholder="Model adı giriniz"
+                  reserve-keyword remote-show-suffix v-model="selectedModelName" :remote-method="remoteMethodModelName"
+                  :loading="loading">
                   <li class="el-select-dropdown__item">
                     <div class="row">
                       <div class="col-md-6">
@@ -407,18 +361,9 @@
                 <label class="fs-5 fw-semobold">Seri No</label>
               </div>
               <div class="col-md-6 mt-2">
-                <el-select
-                  @change="onSerialNoChange()"
-                  filterable
-                  remote
-                  clearable
-                  placeholder="Seri no giriniz"
-                  reserve-keyword
-                  remote-show-suffix
-                  v-model="selectedSerialNo"
-                  :remote-method="remoteMethodSerialNo"
-                  :loading="loading"
-                >
+                <el-select @change="onSerialNoChange()" filterable remote clearable placeholder="Seri no giriniz"
+                  reserve-keyword remote-show-suffix v-model="selectedSerialNo" :remote-method="remoteMethodSerialNo"
+                  :loading="loading">
                   <li class="el-select-dropdown__item">
                     <div class="row">
                       <div class="col-md-6">
@@ -481,29 +426,18 @@
                 <label class="fs-5 fw-semobold mb-2">Cihaz Durumu</label>
               </div>
               <div class="col-md-6 mt-2">
-                <input
-                  type="text"
-                  disabled
-                  class="form-control form-control-sm form-control-solid border border-secondary"
-                  style="color: #a8abb2"
-                  :style="{ backgroundColor: backgroundColor }"
-                  name="row-name"
-                  v-model="firmaOzet.deviceStatus"
-                />
+                <input type="text" disabled
+                  class="form-control form-control-sm form-control-solid border border-secondary" style="color: #a8abb2"
+                  :style="{ backgroundColor: backgroundColor }" name="row-name" v-model="firmaOzet.deviceStatus" />
               </div>
               <div class="col-md-6 pt-2 mt-2">
                 <label class="fs-5 fw-semobold mb-2">Bk. Durumu</label>
               </div>
               <div class="col-md-6 mt-2">
-                <input
-                  type="text"
-                  disabled
-                  class="form-control form-control-sm form-control-solid border border-secondary"
-                  style="color: #a8abb2"
-                  name="row-name"
-                  :style="{ backgroundColor: maintenanceBackgroundColor }"
-                  v-model="contractMaintenanceStatus"
-                />
+                <input type="text" disabled
+                  class="form-control form-control-sm form-control-solid border border-secondary" style="color: #a8abb2"
+                  name="row-name" :style="{ backgroundColor: maintenanceBackgroundColor }"
+                  v-model="contractMaintenanceStatus" />
               </div>
             </div>
           </el-card>
@@ -694,6 +628,61 @@
       </el-card>
     </div>
   </div>
+
+  <el-dialog v-model="centerDialogVisible" title="Cihaz Listesi" width="50%" destroy-on-close center>
+    <div class="row">
+      <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-5">
+        <el-card class="box-card" style="height: 300px">
+          <div class="text item">
+            <el-table :data="customerDeviceList" style="width: 100%" max-height="300">
+              <el-table-column label="Cihaz No" width="160" sortable>
+                <template #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ scope.row.id }}</span>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column label="Marka" width="160" sortable>
+                <template #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ scope.row.deviceModel.deviceBrand.name }}</span>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column label="Model" width="160" sortable>
+                <template #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ scope.row.deviceModel.name }}</span>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column label="Seri No" width="160" sortable>
+                <template #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ scope.row.serialNumber }}</span>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column label="Cihaz Durumu" width="150" sortable>
+                <template #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ scope.row.status ? "Aktif" : "Pasif" }}</span>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column label="#" fixed="left">
+                <template #default="scope">
+                  <el-button size="small" type="primary" circle title="Cihaz Seç" @click="getMainPageCustomer(scope.row.rowId)">
+                    <el-icon><Select /></el-icon>
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-card>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -707,6 +696,28 @@ import { object } from 'yup/lib/locale';
 interface FirmaOzetData {
   customerId: string;
   customerTitle: string;
+}
+
+interface ModelData {
+  name:string;
+  deviceBrand:BrandData
+}
+
+interface BrandData {
+  name:string;
+}
+
+interface DeviceData {
+  id: string;
+  addressId: string;
+  deviceModelId: string;
+  serialNumber: string;
+  assemblyDate: string;
+  assemblyDateString: string;
+  description: string;
+  status: string;
+  deviceModel:ModelData;
+  rowId:string;
 }
 
 interface CustomerListItem {
@@ -743,6 +754,7 @@ export default defineComponent({
     ];
 
     var customerList = ref<Array<CustomerListItem>>([]);
+    var customerDeviceList = ref<Array<DeviceData>>([]);
     var deviceList = ref<Array<CustomerListItem>>([]);
     var modelList = ref<Array<CustomerListItem>>([]);
     var seriNoList = ref<Array<CustomerListItem>>([]);
@@ -853,6 +865,7 @@ export default defineComponent({
       remoteMethodModelName,
       modelList,
       seriNoList,
+      customerDeviceList
     };
   },
   props: {
@@ -910,7 +923,6 @@ export default defineComponent({
       backgroundColor: '#ABEBC6',
       maintenanceBackgroundColor: '#ABEBC6',
       contractMaintenanceStatus: '-',
-      deviceIds: [],
     };
   },
   async created() {
@@ -943,7 +955,7 @@ export default defineComponent({
 
       this.contracts = [];
 
-      this.deviceIds = [];
+      this.customerDeviceList = [];
 
       this.deviceBrand = {
         companyId: '',
@@ -1036,6 +1048,7 @@ export default defineComponent({
       await this.store
         .dispatch(Actions.GET_MAIN_PAGE_CUSTOMER, rowId)
         .then(result => {
+          this.centerDialogVisible = false;
           console.clear();
           console.log(result.data);
           this.firmaOzet = result.data;
@@ -1053,7 +1066,7 @@ export default defineComponent({
           this.maintenanceBackgroundColor = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
           this.contractMaintenanceStatus = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
 
-          this.deviceIds = result.data.deviceIds;
+          this.customerDeviceList = result.data.devices;
         })
         .catch(() => {
           const [error] = Object.keys(this.store.getters.getErrors);
@@ -1093,7 +1106,7 @@ export default defineComponent({
             this.maintenanceBackgroundColor = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
             this.contractMaintenanceStatus = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
 
-            this.deviceIds = result.data.deviceIds;
+            this.customerDeviceList = result.data.devices;
             console.log(result.data);
           }
         })
@@ -1102,31 +1115,17 @@ export default defineComponent({
         });
     },
 
-    async oncekiCihaz() {
-      var index = this.deviceIds.findIndex(item => {
-        return this.firmaOzet.deviceId === item;
-      });
-
-      if (index == 0) {
-        return;
-      }
-
-      var selectedItem = this.deviceIds.find(item => {
-        return this.firmaOzet.deviceId === item;
-      });
-      console.log(this.firmaOzet.deviceId[--index]);
-
-      console.log(index);
-      console.log(this.firmaOzet.deviceId);
+    async cihazListesi() {
+      this.centerDialogVisible = true;
     },
 
-    async sonrakiCihaz() {},
+    async sonrakiCihaz() { },
   },
 });
 </script>
 
 <style>
-.demo-tabs > .el-tabs__content {
+.demo-tabs>.el-tabs__content {
   padding: 32px;
   color: #6b778c;
   font-size: 32px;
