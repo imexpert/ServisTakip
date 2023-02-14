@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using System.Net;
 using System.Security;
 using System.Text.Json;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ServisTakip.Core.Extensions
 {
@@ -37,63 +39,37 @@ namespace ServisTakip.Core.Extensions
 
         private async Task HandleExceptionAsync(HttpContext httpContext, Exception e)
         {
+            ResponseMessage<NoContent> result = new()
+            {
+                IsSuccess = false
+            };
+
             var environment = ServiceTool.ServiceProvider.GetService<IWebHostEnvironment>();
 
             httpContext.Response.ContentType = "application/json";
-            httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
-            string message;
+            httpContext.Response.StatusCode = (int)HttpStatusCode.OK;
 
             if (environment.IsDevelopment() || environment.IsStaging())
             {
-                message = e.GetInnermostException().Message;
+                result.Message = e.GetInnermostException().Message;
             }
             else
             {
-                message = ExceptionMessage.InternalServerError;
-            }
-            
-            if (e.GetType() == typeof(ValidationException))
-            {
-                var vex = (ValidationException)e;
-                message = string.Join(", ", vex.Errors.Select(s => s.ErrorMessage).ToArray());
-                httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            }
-            else if (e.GetType() == typeof(ApplicationException))
-            {
-                message = e.Message;
-                httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            }
-            else if (e.GetType() == typeof(UnauthorizedAccessException))
-            {
-                message = e.Message;
-                httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            }
-            else if (e.GetType() == typeof(SecurityException))
-            {
-                message = e.Message;
-                httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            }
-            else if (e.GetType() == typeof(NotSupportedException))
-            {
-                message = e.Message;
-                httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            }
-            else
-            {
-                if (environment.IsDevelopment() || environment.IsStaging())
-                {
-                    message = e.GetInnermostException().Message;
-                }
-                else
-                {
-                    message = ExceptionMessage.InternalServerError;
-                }
+                result.Message = "İşlem sırasında hata oluştu. Lütfen tekrar deneyiniz.";
             }
 
-            var response = ResponseMessage<NoContent>.Fail(httpContext.Response.StatusCode, message);
+            DefaultContractResolver contractResolver = new()
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
+            };
 
-            await httpContext.Response.WriteAsync(JsonSerializer.Serialize(response));
+            string json = JsonConvert.SerializeObject(result, new JsonSerializerSettings
+            {
+                ContractResolver = contractResolver,
+                Formatting = Formatting.Indented
+            });
+
+            await httpContext.Response.WriteAsync(json);
         }
     }
 }

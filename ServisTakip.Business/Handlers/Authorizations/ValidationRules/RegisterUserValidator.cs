@@ -1,5 +1,5 @@
-﻿using CarbonCalculator.Business.Handlers.Authorizations.Commands;
-using FluentValidation;
+﻿using FluentValidation;
+using ServisTakip.Business.Handlers.Authorizations.Commands;
 
 namespace ServisTakip.Business.Handlers.Authorizations.ValidationRules
 {

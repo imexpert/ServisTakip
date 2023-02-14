@@ -1,19 +1,29 @@
 <template>
   <router-view />
+  <el-config-provider :locale="locale">
+      <el-table mb-1 :data="[]" />
+      <el-pagination :total="100" />
+    </el-config-provider>
 </template>
 
 <script lang="ts">
+import { computed, ref } from 'vue'
 import { defineComponent, nextTick, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { Mutations, Actions } from '@/store/enums/StoreEnums';
 import { themeMode } from '@/core/helpers/config';
 import { initializeComponents } from '@/core/plugins/keenthemes';
+import tr from 'element-plus/dist/locale/tr.mjs'
 
 export default defineComponent({
   name: 'app',
   setup() {
     const store = useStore();
 
+    const language = ref('tr')
+    var locale = tr;
+
+    
     onMounted(() => {
       /**
        * Overrides the layout config using saved data from localStorage
@@ -32,6 +42,10 @@ export default defineComponent({
         store.dispatch(Actions.REMOVE_BODY_CLASSNAME, 'page-loading');
       });
     });
+
+    return {
+      locale
+        };
   },
 });
 </script>
@@ -69,5 +83,9 @@ export default defineComponent({
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 100%;
+}
+
+.swal2-container {
+  z-index: 20000 !important;
 }
 </style>

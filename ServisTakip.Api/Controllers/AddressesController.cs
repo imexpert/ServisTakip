@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.Addresses.Commands;
-using ServisTakip.Business.Handlers.Customers.Commands;
-using ServisTakip.Business.Handlers.Customers.Queries;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Entities.DTOs.Addresses;
-using ServisTakip.Entities.DTOs.Customers;
 
 namespace ServisTakip.Api.Controllers
 {
