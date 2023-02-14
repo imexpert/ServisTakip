@@ -20,13 +20,23 @@ enum Actions {
   ADD_CUSTOMER = "addCustomer",
   ADD_ADDRESS = "addAddress",
   GET_CUSTOMER = "getCustomer",
-  GET_LASTTRADED_CUSTOMER = "getLastTradedCustomer"
+  GET_LASTTRADED_CUSTOMER = "getLastTradedCustomer",
+  GET_CUSTOMER_BY_FILTER = "getCustomerByFilter",
+  GET_DEVICE_BY_FILTER = "getDeviceByFilter",
+  GET_DEVICE_BY_SERIALNO_FILTER = "getDeviceBySerialNoFilter",
+  GET_DEVICE_BY_MODEL_NAME_FILTER = "getDeviceByModelNameFilter",
+  GET_MAIN_PAGE_CUSTOMER = "getMainPageCustomer",
+
+  GET_BOOTCODE_LIST = "getBootCodelist",
+
+  GET_TECHNICIAN_LIST = "getTechnicianlist",
 }
 
 enum Mutations {
   // mutation types
   SET_CLASSNAME_BY_POSITION = "appendBreadcrumb",
   PURGE_AUTH = "logOut",
+  SIGNOUT = "signout",
   SET_AUTH = "setAuth",
   SET_USER = "setUser",
   SET_PASSWORD = "setPassword",

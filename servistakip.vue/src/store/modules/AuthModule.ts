@@ -2,6 +2,7 @@ import ApiService from "@/core/services/ApiService";
 import JwtService from "@/core/services/JwtService";
 import { Actions, Mutations } from "@/store/enums/StoreEnums";
 import { Module, Action, Mutation, VuexModule } from "vuex-module-decorators";
+import router from "@/router";
 
 export interface User {
   firstname: string;
@@ -92,6 +93,14 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
   @Action
   [Actions.LOGOUT]() {
     this.context.commit(Mutations.PURGE_AUTH);
+    router.push({ name: 'sign-in' });
+  }
+
+  @Mutation
+  [Mutations.SIGNOUT]() {
+    console.log("SIGNOUT")
+    this.context.commit(Mutations.PURGE_AUTH);
+    router.push({ name: 'sign-in' });
   }
 
   @Action

@@ -1,10 +1,4 @@
-﻿using ServisTakip.Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ServisTakip.Entities.DTOs.Sectors;
+﻿using ServisTakip.Entities.DTOs.Sectors;
 using ServisTakip.Entities.DTOs.Addresses;
 
 namespace ServisTakip.Entities.DTOs.Customers

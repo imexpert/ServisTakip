@@ -40,6 +40,21 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<SearchCustomerDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetCustomerWithQueryAsync(string filter)
+        {
+            return CreateActionResult(await Mediator.Send(new GetCustomerByFilterQuery() { Filter = filter }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
         [Consumes("application/json")]
@@ -50,6 +65,21 @@ namespace ServisTakip.Api.Controllers
         public async Task<IActionResult> GetCustomerByIdAsync(long customerId)
         {
             return CreateActionResult(await Mediator.Send(new GetCustomerByIdQuery() { CustomerId = customerId }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rowId"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<LastTradedCustomerInfoDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetMainPageCustomerAsync(string rowId)
+        {
+            return CreateActionResult(await Mediator.Send(new GetMainPageCustomerQuery() { RowId = rowId }));
         }
     }
 }

@@ -3,6 +3,10 @@ using ServisTakip.DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 using ServisTakip.Core.DataAccess.EntityFramework;
 using ServisTakip.Core.Entities.Concrete;
+using System.ComponentModel;
+using ServisTakip.Entities.DTOs.User;
+using ServisTakip.Core.Extensions;
+using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.DataAccess.Concrete.EntityFramework
 {
@@ -32,6 +36,14 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
         public async Task<User> GetByRefreshToken(string refreshToken)
         {
             return await Context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken && u.Status);
+        }
+
+        public async Task<List<User>> GetTechnicianUserListAsync(CancellationToken cancellationToken)
+        {
+            return await Context.Users
+                .Include(s=>s.UserGroups)
+                .Where(s=>s.CompanyId == Utils.CompanyId && s.UserGroups.Any(t=>t.GroupId == (long)GroupCodes.Technician))
+                .ToListAsync(cancellationToken);
         }
     }
 }

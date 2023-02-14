@@ -5,6 +5,6 @@ namespace ServisTakip.DataAccess.Abstract
 {
     public interface IAddressRepository : IEntityRepository<Address>
     {
-
+        Task<Address> GetAddressInfo(long addressId);
     }
 }

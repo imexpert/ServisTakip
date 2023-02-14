@@ -10,5 +10,6 @@
         public byte[] PasswordHash { get; set; }
         public string RefreshToken { get; set; }
         public bool Status { get; set; }
+        public ICollection<UserGroup> UserGroups { get; set; }
     }
 }

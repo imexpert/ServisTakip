@@ -1,5 +1,4 @@
-﻿using ServisTakip.Entities.Concrete;
-using ServisTakip.Entities.DTOs.Devices;
+﻿using ServisTakip.Entities.DTOs.Devices;
 using ServisTakip.Entities.DTOs.Querters;
 
 namespace ServisTakip.Entities.DTOs.Addresses
