@@ -25,7 +25,11 @@ enum Actions {
   GET_DEVICE_BY_FILTER = "getDeviceByFilter",
   GET_DEVICE_BY_SERIALNO_FILTER = "getDeviceBySerialNoFilter",
   GET_DEVICE_BY_MODEL_NAME_FILTER = "getDeviceByModelNameFilter",
-  GET_MAIN_PAGE_CUSTOMER = "getMainPageCustomer"
+  GET_MAIN_PAGE_CUSTOMER = "getMainPageCustomer",
+
+  GET_BOOTCODE_LIST = "getBootCodelist",
+
+  GET_TECHNICIAN_LIST = "getTechnicianlist",
 }
 
 enum Mutations {

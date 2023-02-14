@@ -10,6 +10,6 @@ namespace ServisTakip.DataAccess.Abstract
         Task<List<Device>> GetDeviceByFilterAsync(long deviceId, CancellationToken cancellationToken);
         Task<List<Device>> GetDeviceBySerialNoFilterAsync(string filter, CancellationToken cancellationToken);
         Task<List<Device>> GetDeviceByModelNameFilterAsync(string filter, CancellationToken cancellationToken);
-        Task<List<long>> GetAllDevices(long customerId);
+        Task<List<Device>> GetAllDevices(long customerId);
     }
 }

@@ -65,8 +65,8 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.WbCount = service.WBCount;
                     result.ColorCount = service.ColorCount;
 
-                    result.DeviceIds = await deviceRepo.GetAllDevices(result.CustomerId);
-
+                    result.Devices = mapper.Map<List<DeviceDto>>(await deviceRepo.GetAllDevices(result.CustomerId));
+                    result.Devices.Select(c => { c.RowId = $"{result.CustomerId}|{c.AddressId}|{c.Id}"; return c; }).ToList();
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
                 else if (Convert.ToInt32(splitIds[1]) > 0)
@@ -93,8 +93,6 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 result.CustomerId = customer.Id;
                 result.CustomerSector = customer.Sector.Name;
                 result.RowId = $"{customer.Id}|{0}|{0}";
-
-                result.DeviceIds = await deviceRepo.GetAllDevices(result.CustomerId);
                 return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
             }
         }

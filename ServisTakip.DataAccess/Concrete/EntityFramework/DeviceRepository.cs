@@ -40,13 +40,13 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<long>> GetAllDevices(long customerId)
+        public async Task<List<Device>> GetAllDevices(long customerId)
         {
             return await _context.Devices
                 .Include(s => s.Address).ThenInclude(s => s.Customer)
+                .Include(s=>s.DeviceModel).ThenInclude(s=>s.DeviceBrand)
                 .Where(s => s.Address.CustomerId == customerId)
                 .AsNoTracking()
-                .Select(s=>s.Id)
                 .ToListAsync();
         }
 

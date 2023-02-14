@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using ServisTakip.Core.Extensions;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
@@ -69,7 +70,9 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.WbCount = service.WBCount;
                     result.ColorCount = service.ColorCount;
 
-                    result.DeviceIds = await deviceRepo.GetAllDevices(result.CustomerId);
+                    result.Devices = mapper.Map<List<DeviceDto>>(await deviceRepo.GetAllDevices(result.CustomerId));
+
+                    result.Devices.Select(c => { c.RowId = $"{result.CustomerId}|{c.AddressId}|{c.Id}"; return c; }).ToList();
 
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
@@ -109,8 +112,8 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
 
                     result.MaintenanceStatus = contractMaintenances.Any();
 
-                    result.DeviceIds = await deviceRepo.GetAllDevices(result.CustomerId);
-
+                    result.Devices = mapper.Map<List<DeviceDto>>(await deviceRepo.GetAllDevices(result.CustomerId));
+                    result.Devices.Select(c => { c.RowId = $"{result.CustomerId}|{c.AddressId}|{c.Id}"; return c; }).ToList();
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
