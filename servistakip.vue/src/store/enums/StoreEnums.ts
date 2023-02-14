@@ -30,6 +30,8 @@ enum Actions {
   GET_BOOTCODE_LIST = "getBootCodelist",
 
   GET_TECHNICIAN_LIST = "getTechnicianlist",
+
+  ADD_DEVICESERVICE = "addDeviceService",
 }
 
 enum Mutations {
