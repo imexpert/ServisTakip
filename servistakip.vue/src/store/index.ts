@@ -3,6 +3,7 @@ import { config } from "vuex-module-decorators";
 
 import AuthModule from "@/store/modules/AuthModule";
 import SectorModule from "@/store/modules/SectorModule";
+import UserModule from "@/store/modules/UserModule";
 import CustomerModule from "@/store/modules/CustomerModule";
 import DeviceModule from "@/store/modules/DeviceModule";
 import AddressModule from "@/store/modules/AddressModule";
@@ -31,7 +32,8 @@ const store = createStore({
     ConfigModule,
     ThemeModeModule,
     AddressModule,
-    BootCodeModule
+    BootCodeModule,
+    UserModule
   },
   mutations: {
     setCustomerId(state, id) {

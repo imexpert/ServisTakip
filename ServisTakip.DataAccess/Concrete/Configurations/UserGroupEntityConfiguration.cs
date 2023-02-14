@@ -11,6 +11,9 @@ namespace ServisTakip.DataAccess.Concrete.Configurations
         {
             builder.ToTable("UserGroups", MsDbContext.DEFAULT_SCHEMA);
             builder.HasKey(x => x.Id);
+
+            builder.HasOne(s => s.Group).WithMany(s => s.UserGroups).HasForeignKey(s => s.GroupId);
+            builder.HasOne(s => s.User).WithMany(s => s.UserGroups).HasForeignKey(s => s.UserId);
         }
     }
 }

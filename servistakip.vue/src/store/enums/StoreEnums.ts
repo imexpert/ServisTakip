@@ -28,6 +28,8 @@ enum Actions {
   GET_MAIN_PAGE_CUSTOMER = "getMainPageCustomer",
 
   GET_BOOTCODE_LIST = "getBootCodelist",
+
+  GET_TECHNICIAN_LIST = "getTechnicianlist",
 }
 
 enum Mutations {
