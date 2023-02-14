@@ -8,6 +8,7 @@ namespace ServisTakip.Entities.DTOs.DeviceServices
 {
     public class CreateDeviceServiceDto
     {
+        public long DeviceId { get; set; }
         public DateTime FailureDate { get; set; }
         public string ServiceBootCode { get; set; }
         public string BootDescription { get; set; }

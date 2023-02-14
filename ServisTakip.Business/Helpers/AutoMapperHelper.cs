@@ -43,6 +43,7 @@ namespace ServisTakip.Business.Helpers
             CreateMap<Device, DeviceDto>().ReverseMap();
             CreateMap<ContractCode, ContractCodeDto>().ReverseMap();
             CreateMap<DeviceServiceDto, DeviceService>().ReverseMap();
+            CreateMap<CreateDeviceServiceDto, DeviceService>().ReverseMap();
         }
     }
 }

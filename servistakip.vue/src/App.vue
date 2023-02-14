@@ -84,4 +84,8 @@ export default defineComponent({
 .el-date-editor.el-input__inner {
   width: 100%;
 }
+
+.swal2-container {
+  z-index: 20000 !important;
+}
 </style>
