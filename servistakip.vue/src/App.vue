@@ -1,29 +1,25 @@
 <template>
   <router-view />
-  <el-config-provider :locale="locale">
-      <el-table mb-1 :data="[]" />
-      <el-pagination :total="100" />
-    </el-config-provider>
+  <el-config-provider :locale="locale"> </el-config-provider>
 </template>
 
 <script lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref } from 'vue';
 import { defineComponent, nextTick, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { Mutations, Actions } from '@/store/enums/StoreEnums';
 import { themeMode } from '@/core/helpers/config';
 import { initializeComponents } from '@/core/plugins/keenthemes';
-import tr from 'element-plus/dist/locale/tr.mjs'
+import tr from 'element-plus/dist/locale/tr.mjs';
 
 export default defineComponent({
   name: 'app',
   setup() {
     const store = useStore();
 
-    const language = ref('tr')
+    const language = ref('tr');
     var locale = tr;
 
-    
     onMounted(() => {
       /**
        * Overrides the layout config using saved data from localStorage
@@ -44,8 +40,8 @@ export default defineComponent({
     });
 
     return {
-      locale
-        };
+      locale,
+    };
   },
 });
 </script>

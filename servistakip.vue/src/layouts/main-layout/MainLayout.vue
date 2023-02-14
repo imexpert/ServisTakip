@@ -26,10 +26,7 @@
   </div>
   <!--end::App-->
 
-  <KTDrawers />
   <KTScrollTop />
-  <KTModals />
-  <KTCustomize />
 </template>
 
 <script lang="ts">

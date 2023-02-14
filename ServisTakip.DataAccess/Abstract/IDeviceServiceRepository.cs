@@ -7,5 +7,6 @@ namespace ServisTakip.DataAccess.Abstract
     {
         Task<DeviceService> GetLastTradedCustomerInfo();
         Task<List<DeviceService>> GetDeviceServices(long deviceId);
+        Task<List<DeviceService>> GetDeviceServiceWithStatusCode(int statusCode);
     }
 }
