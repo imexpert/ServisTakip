@@ -33,7 +33,7 @@
         {
             return new ResponseMessage<T>
             {
-                StatusCode = 500,
+                StatusCode = 200,
                 IsSuccess = false,
                 Message = message
             };

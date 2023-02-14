@@ -712,9 +712,9 @@
                 <span>Firma Unvan</span>
               </label>
               <!--end::Label-->
-
               <el-form-item prop="customerTitle">
                 <el-input v-model="firmaOzet.customerTitle" disabled></el-input>
+
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -800,9 +800,7 @@
               <!--end::Label-->
 
               <el-form-item prop="phone">
-                <el-input v-model="newService.phone" placeholder="Talebi bildiren telefon giriniz"
-                  :formatter="(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                  :parser="(value) => value.replace(/\$\s?|(,*)/g, '')" />
+                <el-input v-model="newService.phone" placeholder="Talebi bildiren telefon giriniz"/>
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -890,6 +888,9 @@ import {
   object
 } from 'yup/lib/locale';
 
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { hideModal } from '@/core/helpers/dom';
+
 interface FirmaOzetData {
   customerId: string;
   customerTitle: string;
@@ -931,6 +932,7 @@ interface CustomerListItem {
 }
 
 interface NewDeviceServiceData {
+  deviceId: string;
   failureDate: string;
   serviceBootCode: string;
   bootDescription: string;
@@ -953,6 +955,30 @@ interface UserData {
   email: string;
 }
 
+
+interface FirmaOzet {
+  customerId: string;
+  customerTitle: string;
+  customerSectorId: 0,
+  customerSector: string;
+  accountCode: string;
+  authorizedName: string;
+  authorizedPhone: string;
+  authorizedTask: string;
+  cityName: string;
+  authorizedEmail: string;
+  deviceId: string;
+  districtName: string;
+  quarterName: string;
+  regionCode: string;
+  contractType: string;
+  wbCount: string;
+  colorCount: string;
+  totalCount: string;
+  deviceStatus: string;
+  maintenanceStatus: string;
+}
+
 export default defineComponent({
   name: 'default-dashboard-widget-2',
   components: {
@@ -968,6 +994,28 @@ export default defineComponent({
     const store = useStore();
     const loading = ref<boolean>(false);
 
+    var firmaOzet = ref<FirmaOzet>({
+      customerId: '',
+      customerTitle: '',
+      customerSectorId: 0,
+      customerSector: '',
+      accountCode: '',
+      authorizedName: '',
+      authorizedPhone: '',
+      authorizedTask: '',
+      cityName: '',
+      authorizedEmail: '',
+      deviceId: '',
+      districtName: '',
+      quarterName: '',
+      regionCode: '',
+      contractType: '',
+      wbCount: '',
+      colorCount: '',
+      totalCount: '',
+      deviceStatus: '',
+      maintenanceStatus: '-',
+    });
     const shortcuts = [{
       text: 'Bugün',
       value: new Date(),
@@ -983,6 +1031,7 @@ export default defineComponent({
     ];
 
     var newService = ref<NewDeviceServiceData>({
+      deviceId: firmaOzet.value.deviceId,
       failureDate: '',
       serviceBootCode: '',
       bootDescription: '',
@@ -1048,12 +1097,47 @@ export default defineComponent({
       if (!formServiceRef.value) {
         return;
       }
-      console.log(newServiceRules.value);
+      
       formServiceRef.value.validate(valid => {
         if (valid) {
           loading.value = true;
 
-
+          newService.value.deviceId = firmaOzet.value.deviceId;
+          
+          store
+            .dispatch(Actions.ADD_DEVICESERVICE, newService.value)
+            .then(result => {
+              loading.value = false;
+              console.clear();
+              console.log(result)
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Servis başarıyla eklendi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(() => {
+                  hideModal(formServiceRef.value);
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
         }
       });
     };
@@ -1168,7 +1252,8 @@ export default defineComponent({
       technicianUserList,
       newServiceRules,
       formServiceRef,
-      servicAcSubmit
+      servicAcSubmit,
+      firmaOzet
     };
   },
   props: {
@@ -1176,28 +1261,6 @@ export default defineComponent({
   },
   data() {
     return {
-      firmaOzet: {
-        customerId: '',
-        customerTitle: '',
-        customerSectorId: 0,
-        customerSector: '',
-        accountCode: '',
-        authorizedName: '',
-        authorizedPhone: '',
-        authorizedTask: '',
-        cityName: '',
-        authorizedEmail: '',
-        deviceId: '',
-        districtName: '',
-        quarterName: '',
-        regionCode: '',
-        contractType: '',
-        wbCount: '',
-        colorCount: '',
-        totalCount: '',
-        deviceStatus: '',
-        maintenanceStatus: '-',
-      },
       device: {
         addressId: '',
         assemblyDate: '',

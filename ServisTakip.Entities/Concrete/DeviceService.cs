@@ -7,7 +7,7 @@ namespace ServisTakip.Entities.Concrete
     {
         public long? LinkedDeviceServiceId { get; set; }
         public long DeviceId { get; set; }
-        public long UserId { get; set; }
+        public long? UserId { get; set; }
         public DateTime? UserAssignDate { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
