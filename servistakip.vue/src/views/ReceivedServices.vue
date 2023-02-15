@@ -10,8 +10,9 @@
                 <h4>Alınan Servisler</h4>
               </div>
               <div class="col-md-3">
-                (<span style="font-weight: 800; font-size: 14px;"> Toplam Servis Sayısı :</span> <span
-                  style="color:red;font-weight: bold;"> {{ receivedDeviceServiceList.length }}</span>)
+                (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
+                <span style="color: red; font-weight: bold"> {{ receivedDeviceServiceList.length }}</span
+                >)
               </div>
             </div>
           </div>
@@ -78,15 +79,11 @@
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item @click="teknisyenAtaAc(scope.row.deviceId)">
-                        <el-icon>
-                          <ArrowRight />
-                        </el-icon>&nbsp; Teknisyen Ata
+                      <el-dropdown-item @click="teknisyenAtaAc(scope.row.id)">
+                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Teknisyen Ata
                       </el-dropdown-item>
-                      <el-dropdown-item>
-                        <el-icon>
-                          <RemoveFilled />
-                        </el-icon>&nbsp; İptal Et
+                      <el-dropdown-item @click="cancelDeviceService(scope.row.id)">
+                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -106,8 +103,9 @@
                 <h4>Teknisyendeki İşler</h4>
               </div>
               <div class="col-md-3">
-                (<span style="font-weight: 800; font-size: 14px;"> Toplam Servis Sayısı :</span> <span
-                  style="color:red;font-weight: bold;"> {{ technicianAssignedDeviceServiceList.length }}</span>)
+                (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
+                <span style="color: red; font-weight: bold"> {{ technicianAssignedDeviceServiceList.length }}</span
+                >)
               </div>
             </div>
           </div>
@@ -189,29 +187,19 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item>
-                        <el-icon>
-                          <ArrowRight />
-                        </el-icon>&nbsp; Talebi Kapat
+                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Talebi Kapat
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="takeDeviceServiceBack(scope.row.id)">
+                        <el-icon> <ArrowLeft /> </el-icon>&nbsp; Geri
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon>
-                          <ArrowLeft />
-                        </el-icon>&nbsp; Geri
+                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon>
-                          <RemoveFilled />
-                        </el-icon>&nbsp; İptal Et
+                        <el-icon> <DeleteFilled /> </el-icon>&nbsp; Sil
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon>
-                          <DeleteFilled />
-                        </el-icon>&nbsp; Sil
-                      </el-dropdown-item>
-                      <el-dropdown-item>
-                        <el-icon>
-                          <Share />
-                        </el-icon>&nbsp; Teknisyen Raporu
+                        <el-icon> <Share /> </el-icon>&nbsp; Teknisyen Raporu
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -292,24 +280,16 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item>
-                        <el-icon>
-                          <ArrowRight />
-                        </el-icon>&nbsp; Teknisyen Ata
+                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Teknisyen Ata
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon>
-                          <Share />
-                        </el-icon>&nbsp; Sipariş Fişi
+                        <el-icon> <Share /> </el-icon>&nbsp; Sipariş Fişi
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon>
-                          <List />
-                        </el-icon>&nbsp; Parça Listesi
+                        <el-icon> <List /> </el-icon>&nbsp; Parça Listesi
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon>
-                          <RemoveFilled />
-                        </el-icon>&nbsp; İptal Et
+                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -324,8 +304,15 @@
 
   <el-dialog v-model="teknisyenRaporDialogVisible" title="Teknisyen Raporu" width="40%" destroy-on-close center>
     <div class="row">
-      <el-form status-icon :rules="teknisyenAtaRules" ref="formAssignTechnicianRef" :model="assignTechnicianModel"
-        @submit.prevent="teknisyenAtaSubmit()" label-width="120px" label-position="top">
+      <el-form
+        status-icon
+        :rules="teknisyenAtaRules"
+        ref="formAssignTechnicianRef"
+        :model="assignTechnicianModel"
+        @submit.prevent="teknisyenAtaSubmit()"
+        label-width="120px"
+        label-position="top"
+      >
         <div class="row">
           <div class="col-md-12">
             <!--begin::Input group-->
@@ -338,12 +325,14 @@
 
               <el-form-item prop="userId">
                 <el-select placeholder="Teknisyen" filterable clearable v-model="assignTechnicianModel.userId">
-                  <el-option v-for="item in technicianUserList" :key="item.id" :label="item.firstname + item.lastname"
-                    :value="item.id">
+                  <el-option
+                    v-for="item in technicianUserList"
+                    :key="item.id"
+                    :label="item.firstname + item.lastname"
+                    :value="item.id"
+                  >
                     <div class="row">
-                      <div class="col-md-9" style="font-size: 12px">
-                        {{ item.firstname }} {{ item.lastname }}
-                      </div>
+                      <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
                     </div>
                   </el-option>
                 </el-select>
@@ -371,28 +360,13 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  onActivated,
-  ref
-} from 'vue';
-import {
-  useStore
-} from 'vuex';
-import {
-  Actions
-} from '@/store/enums/StoreEnums';
-import {
-  ErrorMessage
-} from 'vee-validate';
-import {
-  ElMessageBox
-} from 'element-plus';
+import { defineComponent, onMounted, onActivated, ref } from 'vue';
+import { useStore } from 'vuex';
+import { Actions } from '@/store/enums/StoreEnums';
+import { ErrorMessage } from 'vee-validate';
+import { ElMessageBox } from 'element-plus';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import {
-  hideModal
-} from '@/core/helpers/dom';
+import { hideModal } from '@/core/helpers/dom';
 
 interface ReceivedServiceData {
   linkedDeviceServiceId: string;
@@ -414,7 +388,7 @@ interface ReceivedServiceData {
 }
 
 interface UserData {
-  id:string;
+  id: string;
   firstname: string;
   lastname: string;
   email: string;
@@ -502,6 +476,10 @@ interface AssignTechnicianData {
   userId: string;
 }
 
+interface TakeBackData {
+  id: string;
+}
+
 export default defineComponent({
   components: {
     ErrorMessage,
@@ -521,7 +499,11 @@ export default defineComponent({
 
     var assignTechnicianModel = ref<AssignTechnicianData>({
       id: '',
-      userId: ''
+      userId: '',
+    });
+
+    var takeBackModel = ref<TakeBackData>({
+      id: '',
     });
 
     const teknisyenAtaRules = ref({
@@ -531,7 +513,7 @@ export default defineComponent({
           message: 'Teknisyen seçilmedi.',
           trigger: 'blur',
         },
-      ]
+      ],
     });
 
     const teknisyenAtaSubmit = () => {
@@ -548,7 +530,7 @@ export default defineComponent({
             .then(result => {
               loading.value = false;
               console.clear();
-              console.log(result)
+              console.log(result);
               if (result.isSuccess) {
                 Swal.fire({
                   text: 'Servis başarıyla teknisyene atandı eklendi.',
@@ -559,6 +541,7 @@ export default defineComponent({
                     confirmButton: 'btn btn-primary',
                   },
                 }).then(async () => {
+                  teknisyenRaporDialogVisible.value = false;
                   await getReceivedDeviceServiceList();
                   await getTechnicianAssignedDeviceServiceList();
                   hideModal(formAssignTechnicianRef.value);
@@ -586,7 +569,7 @@ export default defineComponent({
     async function teknisyenAtaAc(deviceServiceId) {
       selectedDeviceServiceId.value = deviceServiceId;
       await getTechnicianList();
-    };
+    }
 
     async function getTechnicianList() {
       await store
@@ -600,7 +583,7 @@ export default defineComponent({
         .catch(() => {
           const [error] = Object.keys(store.getters.getErrors);
         });
-    };
+    }
 
     async function getReceivedDeviceServiceList() {
       await store
@@ -613,7 +596,7 @@ export default defineComponent({
         .catch(() => {
           const [error] = Object.keys(store.getters.getErrors);
         });
-    };
+    }
 
     async function getTechnicianAssignedDeviceServiceList() {
       await store
@@ -626,8 +609,87 @@ export default defineComponent({
         .catch(() => {
           const [error] = Object.keys(store.getters.getErrors);
         });
-    };
+    }
 
+    async function takeDeviceServiceBack(id) {
+      assignTechnicianModel.value.id = id;
+      await store
+        .dispatch(Actions.UPDATE_TAKEDEVICESERVICEBACK, assignTechnicianModel)
+        .then(async result => {
+          if (result.isSuccess) {
+            Swal.fire({
+              text: 'Servis başarıyla geri alındı.',
+              icon: 'success',
+              buttonsStyling: false,
+              confirmButtonText: 'Tamam',
+              customClass: {
+                confirmButton: 'btn btn-primary',
+              },
+            }).then(async () => {
+              teknisyenRaporDialogVisible.value = false;
+              await getReceivedDeviceServiceList();
+              await getTechnicianAssignedDeviceServiceList();
+            });
+          } else {
+            Swal.fire({
+              title: 'Hata',
+              text: result.message,
+              icon: 'error',
+              buttonsStyling: false,
+              confirmButtonText: 'Tamam !',
+              customClass: {
+                confirmButton: 'btn fw-bold btn-danger',
+              },
+            });
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function cancelDeviceService(id: string) {
+      Swal.fire({
+        text: 'Search for a movie. e.g. "La La Land".',
+        content: 'input',
+        button: {
+          text: 'Search!',
+          closeModal: false,
+        },
+      })
+        .then(name => {
+          if (!name) throw null;
+
+          return fetch(`https://itunes.apple.com/search?term=${name}&entity=movie`);
+        })
+        .then(results => {
+          return results.json();
+        })
+        .then(json => {
+          const movie = json.results[0];
+
+          if (!movie) {
+            return Swal('No movie was found!');
+          }
+
+          const name = movie.trackName;
+          const imageURL = movie.artworkUrl100;
+
+          Swal.fire({
+            title: 'Top result:',
+            text: name,
+            icon: imageURL,
+          });
+        })
+        .catch(err => {
+          if (err) {
+            Swal.fire('Oh noes!', 'The AJAX request failed!', 'error');
+          } else {
+            Swal.stopLoading();
+            Swal.close();
+          }
+        });
+    }
     onMounted(async () => {
       await getReceivedDeviceServiceList();
       await getTechnicianAssignedDeviceServiceList();
@@ -649,7 +711,9 @@ export default defineComponent({
       getTechnicianList,
       teknisyenAtaAc,
       getReceivedDeviceServiceList,
-      getTechnicianAssignedDeviceServiceList
+      getTechnicianAssignedDeviceServiceList,
+      takeDeviceServiceBack,
+      cancelDeviceService,
     };
   },
 });

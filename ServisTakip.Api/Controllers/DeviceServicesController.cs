@@ -41,6 +41,36 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceServiceDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
+        public async Task<IActionResult> TakeDeviceServiceBackAsync([FromBody] DeviceServiceDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new TakeDeviceServiceBackCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceServiceDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
+        public async Task<IActionResult> CancelDeviceServiceAsync([FromBody] DeviceServiceDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new CancelDeviceServiceCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
