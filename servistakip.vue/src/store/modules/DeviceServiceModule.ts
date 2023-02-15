@@ -19,6 +19,19 @@ export default class DeviceServiceModule extends VuexModule {
   }
 
   @Action
+  [Actions.UPDATE_ASSIGNTECHNICIANDEVICESERVICE](deviceService) {
+    console.log(deviceService);
+    return ApiService.put("DeviceServices/AssignTechnicianDeviceService", deviceService)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.GET_RECEIVEDDEVICESERVICE]() {
     return ApiService.get("DeviceServices/GetReceivedDeviceServicesList")
       .then(({ data }) => {

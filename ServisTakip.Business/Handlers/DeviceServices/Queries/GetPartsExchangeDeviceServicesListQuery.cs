@@ -9,17 +9,17 @@ using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Queries
 {
-    public class GetTechnicianAssignedDeviceServicesListQuery : IRequest<ResponseMessage<List<DeviceServiceDto>>>
+    public class GetPartsExchangeDeviceServicesListQuery : IRequest<ResponseMessage<List<DeviceServiceDto>>>
     {
-        public class GetTechnicianAssignedDeviceServicesListQueryHandler : IRequestHandler<GetTechnicianAssignedDeviceServicesListQuery,ResponseMessage<List<DeviceServiceDto>>>
+        public class GetPartsExchangeDeviceServicesListQueryHandler : IRequestHandler<GetPartsExchangeDeviceServicesListQuery,ResponseMessage<List<DeviceServiceDto>>>
         {
-            public async Task<ResponseMessage<List<DeviceServiceDto>>> Handle(GetTechnicianAssignedDeviceServicesListQuery request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<List<DeviceServiceDto>>> Handle(GetPartsExchangeDeviceServicesListQuery request, CancellationToken cancellationToken)
             {
                 var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
                 var deviceServices =
-                    await deviceServiceRepo.GetDeviceServiceWithStatusCode((int)StatusCodes.TeknisyenAtandi);
+                    await deviceServiceRepo.GetDeviceServiceWithStatusCode((int)StatusCodes.ParcaDegisimIslerineAtandi);
                 var result = mapper.Map<List<DeviceServiceDto>>(deviceServices);
                 return ResponseMessage<List<DeviceServiceDto>>.Success(result);
             }
