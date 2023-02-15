@@ -2,9 +2,11 @@ import { createI18n } from "vue-i18n";
 
 const messages = {
   en: {
-    dashboard: "Dashboard",
+    dashboard: "Ana Sayfa",
+    alinanServisler: "Alınan Servisler",
+    kapatilacakIsler: "Teklifler & Kapatılacak İşler",
     layoutBuilder: "Layout builder",
-    craft: "Crafted",
+    craft: "Raporlar",
     pages: "Pages",
     profile: "Profile",
     profileOverview: "Overview",

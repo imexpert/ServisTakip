@@ -1,14 +1,10 @@
 ﻿using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Messages;
 using ServisTakip.Core.Utilities.Results;
-using FluentValidation;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Net;
-using System.Security;
-using System.Text.Json;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 

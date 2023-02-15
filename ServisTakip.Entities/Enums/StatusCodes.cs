@@ -8,5 +8,6 @@
         ServisKaydiKapatildi = 4,
         ServisKaydiIptalEdildi = 5,
         ServisKaydiSilindi = 6,
+        ParcaDegisimIslerineAtandi = 7,
     }
 }
