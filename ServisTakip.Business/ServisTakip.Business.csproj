@@ -16,7 +16,6 @@
     <Folder Include="Handlers\Addresses\Queries\" />
     <Folder Include="Handlers\ContractMaintenances\Commands\" />
     <Folder Include="Handlers\Contracts\Commands\" />
-    <Folder Include="Handlers\DeviceServices\Queries\" />
     <Folder Include="Handlers\Devices\Commands\" />
   </ItemGroup>
 

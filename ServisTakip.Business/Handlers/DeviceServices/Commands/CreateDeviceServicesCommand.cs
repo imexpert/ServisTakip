@@ -8,11 +8,6 @@ using ServisTakip.DataAccess.Abstract;
 using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.DeviceServices;
 using ServisTakip.Entities.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 {
@@ -27,7 +22,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 
                 var anyServices = await deviceServiceRepo
                     .Query()
-                    .Where(s => s.StatusCode != (int)StatusCodes.ServisKaydiKapatildi)
+                    .Where(s => s.StatusCode != (int)StatusCodes.ServisKaydiKapatildi && s.DeviceId == request.Model.DeviceId)
                     .ToListAsync();
                 
                 if (anyServices.Any()) 

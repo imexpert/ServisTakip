@@ -5,6 +5,7 @@ namespace ServisTakip.Entities.DTOs.DeviceServices
 {
     public class DeviceServiceDto
     {
+        public long Id { get; set; }
         public long? LinkedDeviceServiceId { get; set; }
         public long DeviceId { get; set; }
         public long? UserId { get; set; }

@@ -3,8 +3,6 @@ using ServisTakip.DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 using ServisTakip.Core.DataAccess.EntityFramework;
 using ServisTakip.Core.Entities.Concrete;
-using System.ComponentModel;
-using ServisTakip.Entities.DTOs.User;
 using ServisTakip.Core.Extensions;
 using ServisTakip.Entities.Enums;
 

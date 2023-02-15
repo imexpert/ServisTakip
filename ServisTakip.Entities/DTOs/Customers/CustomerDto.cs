@@ -11,6 +11,5 @@ namespace ServisTakip.Entities.DTOs.Customers
         public string Title { get; set; }
         public bool Status { get; set; }
         public SectorDto Sector { get; set; }
-        public List<AddressDto> Addresses { get; set; }
     }
 }
