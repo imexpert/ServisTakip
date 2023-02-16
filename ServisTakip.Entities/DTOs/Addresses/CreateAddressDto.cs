@@ -11,5 +11,6 @@
         public string AuthorizedTask { get; set; }
         public string AuthorizedPhone { get; set; }
         public string AuthorizedEmail { get; set; }
+        public string Department { get; set; }
     }
 }

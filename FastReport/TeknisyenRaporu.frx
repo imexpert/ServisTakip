@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/16/2023 16:32:01" ReportInfo.Modified="02/16/2023 17:41:04" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="ServisTakip" ConnectionString="rijcmlqnGnokm6M726K9MhodVs/+ShsgGVlx3Ao5/YCM1IKbpoWfEipkPtlrrn5HGqGx3vabZc2sHNm4rwgkC4qaOzRoLUPVy7txqZryhz9jM/q2+ht453MpMEbeN5lSySUaT8l1M6IuAuT185YbdoEl1Jz3MmkH8XHsK6V4wzZc/+i01/GbV/iWwYFnOTKYpAaeRdQfIdLXc7J7aI7OFJRGqRqHKCqZ1oNR5h/aXypeYed15U=">
+      <TableDataSource Name="VW_TechnicianReport" DataType="System.Int32" Enabled="true" TableName="VW_TechnicianReport">
+        <Column Name="UserId" DataType="System.Int64"/>
+        <Column Name="Title" DataType="System.String"/>
+        <Column Name="Firstname" DataType="System.String"/>
+        <Column Name="Lastname" DataType="System.String"/>
+        <Column Name="NetAddress" DataType="System.String"/>
+        <Column Name="Querter" DataType="System.String"/>
+        <Column Name="District" DataType="System.String"/>
+        <Column Name="City" DataType="System.String"/>
+        <Column Name="SerialNumber" DataType="System.String"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="DeviceNo" DataType="System.Int64"/>
+        <Column Name="ContractCode" DataType="System.String"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="94.5">
+      <TextObject Name="Text1" Left="9.45" Top="56.7" Width="151.2" Height="18.9" Text="Teknisyen Bilgileri :" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text2" Left="160.65" Top="56.7" Width="132.3" Height="18.9" Text="ALİ OSMAN ÜNAL" Font="Arial, 10pt"/>
+      <TextObject Name="Text3" Width="718.2" Height="28.35" Text="TEKNİSYEN RAPORU" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="98.5" Width="718.2" Height="28.35"/>
+    <DataBand Name="Data1" Top="130.85" Width="718.2" Height="132.3" DataSource="VW_TechnicianReport">
+      <TextObject Name="Text5" Left="160.65" Top="9.45" Width="330.75" Height="18.9" Text="[VW_TechnicianReport.Title]" Font="Arial, 10pt"/>
+      <TextObject Name="Text6" Left="491.4" Top="9.45" Width="94.5" Height="18.9" Text="Cihaz No :" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Left="585.9" Top="9.45" Width="548.1" Height="18.9" Text="[VW_TechnicianReport.DeviceNo]" Font="Arial, 10pt"/>
+      <TableObject Name="Table1" Left="151.2" Top="37.8" Width="330.75" Height="94.5">
+        <TableColumn Name="Column1"/>
+        <TableColumn Name="Column2"/>
+        <TableColumn Name="Column3"/>
+        <TableColumn Name="Column4"/>
+        <TableColumn Name="Column5"/>
+        <TableRow Name="Row1">
+          <TableCell Name="Cell1" Font="Arial, 10pt"/>
+          <TableCell Name="Cell2" Font="Arial, 10pt"/>
+          <TableCell Name="Cell3" Font="Arial, 10pt"/>
+          <TableCell Name="Cell4" Font="Arial, 10pt"/>
+          <TableCell Name="Cell5" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row2">
+          <TableCell Name="Cell6" Font="Arial, 10pt"/>
+          <TableCell Name="Cell7" Font="Arial, 10pt"/>
+          <TableCell Name="Cell8" Font="Arial, 10pt"/>
+          <TableCell Name="Cell9" Font="Arial, 10pt"/>
+          <TableCell Name="Cell10" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row3">
+          <TableCell Name="Cell11" Font="Arial, 10pt"/>
+          <TableCell Name="Cell12" Font="Arial, 10pt"/>
+          <TableCell Name="Cell13" Font="Arial, 10pt"/>
+          <TableCell Name="Cell14" Font="Arial, 10pt"/>
+          <TableCell Name="Cell15" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row4">
+          <TableCell Name="Cell16" Font="Arial, 10pt"/>
+          <TableCell Name="Cell17" Font="Arial, 10pt"/>
+          <TableCell Name="Cell18" Font="Arial, 10pt"/>
+          <TableCell Name="Cell19" Font="Arial, 10pt"/>
+          <TableCell Name="Cell20" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row5">
+          <TableCell Name="Cell21" Font="Arial, 10pt"/>
+          <TableCell Name="Cell22" Font="Arial, 10pt"/>
+          <TableCell Name="Cell23" Font="Arial, 10pt"/>
+          <TableCell Name="Cell24" Font="Arial, 10pt"/>
+          <TableCell Name="Cell25" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="267.15" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>
