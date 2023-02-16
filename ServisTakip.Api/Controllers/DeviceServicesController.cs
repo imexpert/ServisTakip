@@ -71,6 +71,21 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<bool>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteDeviceServiceAsync(long id)
+        {
+            return CreateActionResult(await Mediator.Send(new DeleteDeviceServiceCommand() { Id = id }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
