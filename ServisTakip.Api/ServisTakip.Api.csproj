@@ -7,6 +7,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="FastReport.Data.MsSql" Version="2021.4.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.8" />
 	</ItemGroup>
@@ -14,5 +15,11 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\ServisTakip.Business\ServisTakip.Business.csproj" />
 	  <ProjectReference Include="..\ServisTakip.Core\ServisTakip.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="ReportFiles\TeknisyenRaporu.frx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>
