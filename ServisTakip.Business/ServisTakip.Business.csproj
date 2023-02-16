@@ -19,4 +19,8 @@
     <Folder Include="Handlers\Devices\Commands\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FastReport.Core" Version="2020.1.12" />
+  </ItemGroup>
+
 </Project>

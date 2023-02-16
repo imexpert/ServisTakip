@@ -14,6 +14,7 @@ namespace ServisTakip.Entities.Concrete
         public string AuthorizedPhone { get; set; }
         public string AuthorizedEmail { get; set; }
         public string Description { get; set; }
+        public string Department { get; set; }
         public bool Status { get; set; }
         public ICollection<Device> Devices { get; set; }
         public Customer Customer { get; set; }

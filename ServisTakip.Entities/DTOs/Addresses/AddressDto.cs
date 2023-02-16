@@ -17,6 +17,7 @@ namespace ServisTakip.Entities.DTOs.Addresses
         public string AuthorizedPhone { get; set; }
         public string AuthorizedEmail { get; set; }
         public string Description { get; set; }
+        public string Department { get; set; }
         public bool Status { get; set; }
         public CustomerDto Customer { get; set; }
         public List<DeviceDto> Devices { get; set; }
