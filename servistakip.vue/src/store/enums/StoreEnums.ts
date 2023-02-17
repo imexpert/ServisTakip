@@ -35,6 +35,9 @@ enum Actions {
   GET_RECEIVEDDEVICESERVICE = "getReceivedDeviceService",
   GET_TECHNICIANASSINEDDEVICESERVICE = "getTechnicianAssignedDeviceService",
   UPDATE_ASSIGNTECHNICIANDEVICESERVICE = "updateAssignTechnicianDeviceService",
+  UPDATE_TAKEDEVICESERVICEBACK = "updateTakeDeviceServiceBack",
+  UPDATE_CANCELDEVICESERVICE = "updateCancelDeviceService",
+  DELETE_DELETEDEVICESERVICE = "deleteDeleteDeviceService",
 }
 
 enum Mutations {

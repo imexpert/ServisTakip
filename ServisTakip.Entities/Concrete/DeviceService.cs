@@ -18,6 +18,7 @@ namespace ServisTakip.Entities.Concrete
         public string DetectionCode { get; set; }
         public string DetectionDescription { get; set; }
         public string ServiceResultCode { get; set; }
+        public string CancelDescription { get; set; }
         public string ResultDescription { get; set; }
         public int? WBCount { get; set; }
         public int? ColorCount { get; set; }
