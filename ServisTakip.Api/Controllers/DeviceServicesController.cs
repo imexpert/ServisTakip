@@ -134,11 +134,10 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceServiceDto>>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetTechnicianDeviceServiceReportAsync()
+        public async Task<IActionResult> GetTechnicianDeviceServiceReportAsync(long userId)
         {
-            return CreateActionResult(await Mediator.Send(new GetTechnicianDeviceServiceReportQuery()));
+            return CreateActionResult(await Mediator.Send(new GetTechnicianDeviceServiceReportQuery() { UserId = userId }));
         }
     }
 }

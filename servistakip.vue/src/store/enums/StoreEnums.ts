@@ -38,6 +38,7 @@ enum Actions {
   UPDATE_TAKEDEVICESERVICEBACK = "updateTakeDeviceServiceBack",
   UPDATE_CANCELDEVICESERVICE = "updateCancelDeviceService",
   DELETE_DELETEDEVICESERVICE = "deleteDeleteDeviceService",
+  GET_TECHNICIANDEVICESERVICEREPORT = "getTechnicianDeviceServiceReport",
 }
 
 enum Mutations {
