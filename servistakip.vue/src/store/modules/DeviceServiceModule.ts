@@ -33,7 +33,7 @@ export default class DeviceServiceModule extends VuexModule {
 
   @Action
   [Actions.DELETE_DELETEDEVICESERVICE](id) {
-    return ApiService.delete("DeviceServices/DeleteDeviceService?id="+ id)
+    return ApiService.delete("DeviceServices/DeleteDeviceService?id=" + id)
       .then(({ data }) => {
         return data;
       })
@@ -84,6 +84,18 @@ export default class DeviceServiceModule extends VuexModule {
   @Action
   [Actions.GET_TECHNICIANASSINEDDEVICESERVICE]() {
     return ApiService.get("DeviceServices/GetTechnicianAssignedDeviceServicesList")
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
+  [Actions.GET_TECHNICIANDEVICESERVICEREPORT](userId) {
+    return ApiService.getWithParamUrl("DeviceServices/GetTechnicianDeviceServiceReport?userId=" + userId)
       .then(({ data }) => {
         return data;
       })

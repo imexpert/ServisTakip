@@ -4,6 +4,7 @@ using ServisTakip.Core.DataAccess.EntityFramework;
 using ServisTakip.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using ServisTakip.Core.Extensions;
+using ServisTakip.Entities.DTOs.Reports;
 
 namespace ServisTakip.DataAccess.Concrete.EntityFramework
 {
@@ -83,6 +84,13 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .AsNoTracking()
                 .OrderByDescending(s => s.RecordDate)
                 .ToListAsync();
+        }
+
+        public async Task<List<TechnicianDeviceServiceReportModel>> GetTechnicianDeviceServiceListAsync(long userId, CancellationToken cancellationToken)
+        {
+            return await _context.TechnicianDeviceServiceReports
+                .Where(s => s.UserId == userId)
+                .ToListAsync(cancellationToken);
         }
     }
 }

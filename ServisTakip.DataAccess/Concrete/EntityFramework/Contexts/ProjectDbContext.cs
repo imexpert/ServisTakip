@@ -5,6 +5,7 @@ using ServisTakip.Core.Entities;
 using ServisTakip.Core.Entities.Concrete;
 using ServisTakip.Core.Extensions;
 using ServisTakip.Entities.Concrete;
+using ServisTakip.Entities.DTOs.Reports;
 
 namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
 {
@@ -52,6 +53,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<ContractMaintenance> ContractMaintenances { get; set; }
+        public DbSet<TechnicianDeviceServiceReportModel> TechnicianDeviceServiceReports { get; set; }
         protected IConfiguration Configuration { get; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

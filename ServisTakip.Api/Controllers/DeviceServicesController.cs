@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.DeviceServices.Commands;
 using ServisTakip.Business.Handlers.DeviceServices.Queries;
 using ServisTakip.Core.Utilities.Results;
@@ -123,6 +124,20 @@ namespace ServisTakip.Api.Controllers
         public async Task<IActionResult> GetPartsExchangeDeviceServicesListAsync()
         {
             return CreateActionResult(await Mediator.Send(new GetPartsExchangeDeviceServicesListQuery()));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceServiceDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetTechnicianDeviceServiceReportAsync(long userId)
+        {
+            return CreateActionResult(await Mediator.Send(new GetTechnicianDeviceServiceReportQuery() { UserId = userId }));
         }
     }
 }

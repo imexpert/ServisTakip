@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
@@ -17,10 +17,18 @@
     <Folder Include="Handlers\ContractMaintenances\Commands\" />
     <Folder Include="Handlers\Contracts\Commands\" />
     <Folder Include="Handlers\Devices\Commands\" />
+    <Folder Include="ReportFiles\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FastReport.Core" Version="2020.1.12" />
+    <PackageReference Include="FastReport.Data.MsSql" Version="2019.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReportFiles\TeknisyenRaporu.frx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
