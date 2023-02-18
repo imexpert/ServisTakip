@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="02/16/2023 16:32:01" ReportInfo.Modified="02/17/2023 17:48:03" ReportInfo.CreatorVersion="2020.1.17.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/16/2023 16:32:01" ReportInfo.Modified="02/19/2023 02:25:47" ReportInfo.CreatorVersion="2020.1.17.0">
   <Dictionary>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqnGnokm6M726K9MhodVs/+ShsgGVlx3Ao5/YCM1IKbpoWfEipkPtlrrn5HGqGx3vabZc2sHNm4rwgkC4qaOzRoLUPVy7txqZryhz9jM/q2+ht453MpMEbeN5lSySUaT8l1M6IuAuT185YbdoEl1Jz3MmkH8XHsK6V4wzZc/+i01/GbV/iWwYFnOTKYpAaeRdQfIdLXc7J7aI7OFJRGqRqHNcAgAhsKz5xvDx3rNX2s5w=">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqnGnokm6M726K9MhodVs/+ShsgGVlx3Ao5/YCM1IKbpoWfEipkPtlrrn5HGqGx3vabZc2sHNm4rwgkC4qaOzRoLUPVy7txqZryhz9jM/q2+ht453MpMEbeN5lSySUaT8l1M6IuAuT185YbdoEl1Jz3MmkH8XHsK6V4wzZc/+i01/GbV/iWwYFnOTKYpAaeRdQfIdLXc7J7aI7OFJRGqRqHC6TaQV1eRD0J9jFWH6Vie0=">
       <TableDataSource Name="VW_TechnicianReport" DataType="System.Int32" Enabled="true" TableName="VW_TechnicianReport">
         <Column Name="UserId" DataType="System.Int64"/>
         <Column Name="Title" DataType="System.String"/>
@@ -29,7 +29,7 @@
       <TextObject Name="Text2" Left="198.45" Top="195.9" Width="283.5" Height="28.35" Text="ALİ OSMAN ÜNAL" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
       <TextObject Name="Text3" Top="132.3" Width="718.2" Height="47.25" Border.Lines="Top, Bottom" Text="TEKNİSYEN RAPORU" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 17.9999981pt, style=Bold" TextFill.Color="64, 64, 64"/>
     </ReportTitleBand>
-    <DataBand Name="Data1" Top="240.25" Width="718.2" Height="151.2" DataSource="VW_TechnicianReport">
+    <DataBand Name="Data1" Top="240.25" Width="718.2" Height="170.1" DataSource="VW_TechnicianReport">
       <TableObject Name="Table1" Width="737.1" Height="151.2" Border.Lines="All">
         <TableColumn Name="Column1" Width="138.6"/>
         <TableColumn Name="Column2" Width="119.7"/>
@@ -86,6 +86,7 @@
           <TableCell Name="Cell40" Font="Arial, 10pt"/>
         </TableRow>
       </TableObject>
+      <TextObject Name="Text4" Top="151.2" Width="718.2" Height="18.9" Font="Arial, 10pt"/>
     </DataBand>
   </ReportPage>
 </Report>

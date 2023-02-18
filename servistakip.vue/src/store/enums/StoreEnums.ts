@@ -37,6 +37,7 @@ enum Actions {
   UPDATE_ASSIGNTECHNICIANDEVICESERVICE = "updateAssignTechnicianDeviceService",
   UPDATE_TAKEDEVICESERVICEBACK = "updateTakeDeviceServiceBack",
   UPDATE_CANCELDEVICESERVICE = "updateCancelDeviceService",
+  UPDATE_SENDDEVICESERVICETOCLOSE = "updateSendDeviceServiceToClose",
   DELETE_DELETEDEVICESERVICE = "deleteDeleteDeviceService",
   GET_TECHNICIANDEVICESERVICEREPORT = "getTechnicianDeviceServiceReport",
 }

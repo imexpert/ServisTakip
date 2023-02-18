@@ -35,25 +35,22 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Queries
 
                 report.Dictionary.Report.RegisterData(deviceServices.ToDataSet("VW_TechnicianReport"), "VW_TechnicianReport", true);
 
+                DataBand band = report.FindObject("Data1") as DataBand; 
+                band.DataSource = report.GetDataSource("VW_TechnicianReport");
+
                 report.Prepare();
 
                 var export = new PDFExport();
 
-                using (MemoryStream ms = new MemoryStream())
+                using MemoryStream ms = new MemoryStream();
+                report.Export(export, ms);
+
+                TechnicianDeviceServiceReport rpr = new TechnicianDeviceServiceReport()
                 {
-                    report.Export(export, ms);
+                    Report = ms.ToArray()
+                };
 
-                    byte[] rp = ms.ToArray();
-
-                    string base64String = Convert.ToBase64String(rp, 0, rp.Length);
-
-                    TechnicianDeviceServiceReport rpr = new TechnicianDeviceServiceReport()
-                    {
-                        Report = ms.ToArray()
-                    };
-
-                    return ResponseMessage<TechnicianDeviceServiceReport>.Success(rpr);
-                }
+                return ResponseMessage<TechnicianDeviceServiceReport>.Success(rpr);
             }
         }
     }

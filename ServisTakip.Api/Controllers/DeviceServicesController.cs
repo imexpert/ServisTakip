@@ -64,6 +64,21 @@ namespace ServisTakip.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceServiceDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPut]
+        public async Task<IActionResult> SendDeviceServiceToCloseAsync([FromBody] DeviceServiceDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new SendDeviceServiceToCloseCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceServiceDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
         public async Task<IActionResult> CancelDeviceServiceAsync([FromBody] DeviceServiceDto model)
         {
             return CreateActionResult(await Mediator.Send(new CancelDeviceServiceCommand() { Model = model }));

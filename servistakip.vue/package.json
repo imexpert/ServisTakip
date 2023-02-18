@@ -18,7 +18,6 @@
     "@fullcalendar/timegrid": "^5.9.0",
     "@fullcalendar/vue3": "^5.9.0",
     "@popperjs/core": "2.11.5",
-    "@tato30/vue-pdf": "^1.3.4",
     "@tinymce/tinymce-vue": "^4.0.4",
     "@types/object-path": "^0.11.0",
     "@vue/eslint-config-standard": "^4.0.0",
@@ -37,6 +36,7 @@
     "moment": "^2.29.1",
     "nouislider": "^14.6.3",
     "object-path": "^0.11.8",
+    "pdf-viewer-vue": "^0.2.7",
     "prism-themes": "^1.9.0",
     "prismjs": "^1.25.0",
     "quill": "^1.3.6",
@@ -51,6 +51,7 @@
     "vue-router": "^4.0.3",
     "vue3-apexcharts": "^1.4.1",
     "vue3-loading-screen": "^1.0.3",
+    "vue3-pdfjs": "^0.1.6",
     "vuex": "^4.0.0",
     "yup": "^0.32.8"
   },
