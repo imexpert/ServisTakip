@@ -32,6 +32,19 @@ export default class DeviceServiceModule extends VuexModule {
   }
 
   @Action
+  [Actions.UPDATE_SENDDEVICESERVICETOCLOSE](deviceService) {
+    console.log(deviceService);
+    return ApiService.put("DeviceServices/SendDeviceServiceToClose", deviceService.value)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.DELETE_DELETEDEVICESERVICE](id) {
     return ApiService.delete("DeviceServices/DeleteDeviceService?id=" + id)
       .then(({ data }) => {
