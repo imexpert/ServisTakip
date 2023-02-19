@@ -1,5 +1,5 @@
 interface IDeviceTypeData {
-    name: string;
+    name?: string | '',
 }
 
 export { IDeviceTypeData };

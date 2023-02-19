@@ -15,7 +15,7 @@ const DocMenuConfig = [
       },
       {
         heading: "kapatilacakIsler",
-        route: "/builder",
+        route: "/closedServices",
         svgIcon: "media/icons/duotune/general/gen019.svg",
         fontIcon: "bi-layers",
       },

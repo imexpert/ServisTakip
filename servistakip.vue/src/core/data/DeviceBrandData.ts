@@ -1,7 +1,7 @@
 import { IDeviceTypeData } from "./DeviceTypeData";
 
 interface IDeviceBrandData {
-    name: string;
+    name?: string | '',
     deviceType: IDeviceTypeData;
 }
 

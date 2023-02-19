@@ -16,6 +16,7 @@ import BreadcrumbsModule from "@/store/modules/BreadcrumbsModule";
 import ConfigModule from "@/store/modules/ConfigModule";
 import ThemeModeModule from "@/store/modules/ThemeModeModule";
 import BootCodeModule from "@/store/modules/BootCodeModule";
+import DetectionCodeModule from "@/store/modules/DetectionCodeModule";
 
 config.rawError = true;
 
@@ -35,7 +36,8 @@ const store = createStore({
     AddressModule,
     BootCodeModule,
     UserModule,
-    DeviceServiceModule
+    DeviceServiceModule,
+    DetectionCodeModule
   },
   mutations: {
     setCustomerId(state, id) {

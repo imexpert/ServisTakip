@@ -1,5 +1,5 @@
 interface ICityData {
-    name: string;
+    name?: string | '',
 }
 
 export { ICityData };

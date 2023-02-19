@@ -1,7 +1,7 @@
 import { ICityData } from "./CityData";
 
 interface IDistrictData {
-    name: string;
+    name?: string | '',
     city: ICityData;
 }
 
