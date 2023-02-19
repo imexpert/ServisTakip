@@ -328,7 +328,7 @@
                   <el-option
                     v-for="item in technicianUserList"
                     :key="item.id"
-                    :label="item.firstname + item.lastname"
+                    :label="item.firstname + ' ' + item.lastname"
                     :value="item.id"
                   >
                     <div class="row">

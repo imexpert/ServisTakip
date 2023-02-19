@@ -122,6 +122,20 @@ namespace ServisTakip.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceServiceDto>>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpGet]
+        public async Task<IActionResult> GetClosedDeviceServicesListAsync()
+        {
+            return CreateActionResult(await Mediator.Send(new GetClosedDeviceServicesListQuery()));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceServiceDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
         public async Task<IActionResult> GetTechnicianAssignedDeviceServicesListAsync()
         {
             return CreateActionResult(await Mediator.Send(new GetTechnicianAssignedDeviceServicesListQuery()));

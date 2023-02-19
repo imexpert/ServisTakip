@@ -22,6 +22,8 @@ namespace ServisTakip.Entities.DTOs.DeviceServices
         public string ServiceResultCode { get; set; }
         public string CancelDescription { get; set; }
         public string ResultDescription { get; set; }
+        public string DetectionCode { get; set; }
+        public string DetectionDescription { get; set; }
         public int? WBCount { get; set; }
         public int? ColorCount { get; set; }
         public byte? Dr { get; set; }

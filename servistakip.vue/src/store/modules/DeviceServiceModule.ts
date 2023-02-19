@@ -95,6 +95,18 @@ export default class DeviceServiceModule extends VuexModule {
   }
 
   @Action
+  [Actions.GET_CLOSEDDEVICESERVICE]() {
+    return ApiService.get("DeviceServices/GetClosedDeviceServicesList")
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.GET_TECHNICIANASSINEDDEVICESERVICE]() {
     return ApiService.get("DeviceServices/GetTechnicianAssignedDeviceServicesList")
       .then(({ data }) => {
