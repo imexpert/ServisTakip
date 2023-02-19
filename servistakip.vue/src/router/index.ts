@@ -23,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "ReceivedServices",
         component: () => import("@/views/ReceivedServices.vue"),
       },
+      {
+        path: "/closedServices",
+        name: "closedServices",
+        component: () => import("@/views/ClosedServices.vue"),
+      },
     ],
   },
   {

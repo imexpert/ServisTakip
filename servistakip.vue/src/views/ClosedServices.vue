@@ -7,7 +7,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-2">
-                <h4>Alınan Servisler</h4>
+                <h4>Kapatılacak İşler</h4>
               </div>
               <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
@@ -100,7 +100,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-2">
-                <h4>Teknisyendeki İşler</h4>
+                <h4>Gönderilecek Teklifler</h4>
               </div>
               <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
@@ -214,7 +214,7 @@
       <el-card class="box-card" shadow="hover">
         <template #header>
           <div class="card-header">
-            <h4><span>Parça Değişim İşleri</span></h4>
+            <h4><span>Gönderilen Teklifler</span></h4>
           </div>
         </template>
         <div>
@@ -440,9 +440,119 @@ import { ErrorMessage } from 'vee-validate';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { hideModal } from '@/core/helpers/dom';
 import PDFViewer from 'pdf-viewer-vue';
-import { IDeviceServiceData } from '@/core/data/DeviceServiceData';
-import { IUserData } from '@/core/data/UserData';
-import { IAssignTechnicianData } from '@/core/data/AssignTechnicianData';
+
+interface ReceivedServiceData {
+  linkedDeviceServiceId: string;
+  deviceId: string;
+  userId: string;
+  userAssignDateString: string;
+  name: string;
+  phone: string;
+  failureDateString: string;
+  resultDateString: string;
+  serviceBootCode: string;
+  bootDescription: string;
+  serviceResultCode: string;
+  resultDescription: string;
+  wBCount: string;
+  colorCount: string;
+  user: UserData;
+  device: DeviceData;
+}
+
+interface UserData {
+  id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+}
+
+interface DeviceData {
+  addressId: string;
+  deviceModelId: string;
+  serialNumber: string;
+  assemblyDateString: string;
+  description: string;
+  status: string;
+  address: AddressData;
+  deviceModel: DeviceModelData;
+}
+
+interface AddressData {
+  customerId: string;
+  quarterId: string;
+  serialNumber: string;
+  addressTitle: string;
+  accountCode: string;
+  netAddress: string;
+  authorizedName: string;
+  authorizedTask: string;
+  authorizedPhone: string;
+  authorizedEmail: string;
+  description: string;
+  customer: CustomerData;
+  querter: QuerterData;
+  deviceModel: DeviceModelData;
+}
+
+interface CustomerData {
+  sectorId: string;
+  title: string;
+  sector: string;
+}
+
+interface SectorData {
+  Name: string;
+}
+
+interface QuerterData {
+  name: string;
+  quarterId: string;
+  serialNumber: string;
+  addressTitle: string;
+  accountCode: string;
+  netAddress: string;
+  authorizedName: string;
+  authorizedTask: string;
+  authorizedPhone: string;
+  authorizedEmail: string;
+  description: string;
+  district: DistrictData;
+}
+
+interface DistrictData {
+  name: string;
+  city: CityData;
+}
+
+interface CityData {
+  name: string;
+}
+
+interface DeviceModelData {
+  name: string;
+  deviceBrandId: string;
+  deviceBrand: DeviceBrandData;
+}
+
+interface DeviceBrandData {
+  name: string;
+  deviceType: DeviceTypeData;
+}
+
+interface DeviceTypeData {
+  name: string;
+}
+
+interface AssignTechnicianData {
+  id: string;
+  userId: string;
+  cancelDescription: string;
+}
+
+interface TakeBackData {
+  id: string;
+}
 
 export default defineComponent({
   components: {
@@ -458,14 +568,14 @@ export default defineComponent({
     const loading = ref<boolean>(false);
     var selectedDeviceServiceId = ref<string>('');
 
-    var receivedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
-    var technicianAssignedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
-    var partsExchangeDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
-    var technicianUserList = ref<Array<IUserData>>([]);
+    var receivedDeviceServiceList = ref<Array<ReceivedServiceData>>([]);
+    var technicianAssignedDeviceServiceList = ref<Array<ReceivedServiceData>>([]);
+    var partsExchangeDeviceServiceList = ref<Array<ReceivedServiceData>>([]);
+    var technicianUserList = ref<Array<UserData>>([]);
 
     const formAssignTechnicianRef = ref<null | HTMLFormElement>(null);
 
-    var assignTechnicianModel = ref<IAssignTechnicianData>({
+    var assignTechnicianModel = ref<AssignTechnicianData>({
       id: '',
       userId: '',
       cancelDescription: '',
