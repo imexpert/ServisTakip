@@ -11,6 +11,7 @@ interface IDeviceServiceData {
     phone?: string | '',
     failureDateString?: string | '',
     resultDateString?: string | '',
+    resultDate?: Date | '',
     serviceBootCode?: string | '',
     bootDescription?: string | '',
     detectionCode?: string | '',
@@ -18,7 +19,19 @@ interface IDeviceServiceData {
     serviceResultCode?: string | '',
     resultDescription?: string | '',
     wBCount?: string | '',
+    tonerType?:string|'',
+    blackCount?:string|'',
+    blueCount?:string|'',
+    redCount?:string|'',
+    yellowCount?:string|'',
     colorCount?: string | '',
+    dr?: string | '',
+    bc?: string | '',
+    pa?: string | '',
+    bk?: string | '',
+    dv?: string | '',
+    fs?: string | '',
+    ak?: string | '',
     user?: IUserData;
     device?: IDeviceData;
 }

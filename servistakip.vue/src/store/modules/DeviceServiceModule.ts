@@ -32,6 +32,32 @@ export default class DeviceServiceModule extends VuexModule {
   }
 
   @Action
+  [Actions.UPDATE_RETURNDEVICESERVICETOTECHNICIAN](deviceService) {
+    console.log(deviceService);
+    return ApiService.put("DeviceServices/ReturnDeviceServiceToTechnician", deviceService.value)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
+  [Actions.UPDATE_CLOSEDEVICESERVICE](deviceService) {
+    console.log(deviceService);
+    return ApiService.put("DeviceServices/CloseDeviceServices", deviceService)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.UPDATE_SENDDEVICESERVICETOCLOSE](deviceService) {
     console.log(deviceService);
     return ApiService.put("DeviceServices/SendDeviceServiceToClose", deviceService.value)
@@ -85,6 +111,18 @@ export default class DeviceServiceModule extends VuexModule {
   @Action
   [Actions.GET_RECEIVEDDEVICESERVICE]() {
     return ApiService.get("DeviceServices/GetReceivedDeviceServicesList")
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
+  [Actions.GET_DEVICESERVICEWITHID](id) {
+    return ApiService.getWithParamUrl("DeviceServices/GetDeviceServiceWithId?id=" + id)
       .then(({ data }) => {
         return data;
       })
