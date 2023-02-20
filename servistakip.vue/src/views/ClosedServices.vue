@@ -1,6 +1,6 @@
 <template>
-<!--begin::Row-->
-<div class="row g-5 g-xl-2">
+  <!--begin::Row-->
+  <div class="row g-5 g-xl-2">
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
       <el-card class="box-card" shadow="hover">
         <template #header>
@@ -9,14 +9,15 @@
               <div class="col-md-2">
                 <h4>Kapatılacak İşler</h4>
               </div>
-<div class="col-md-3">
+              <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ closedDeviceServiceList.length }}</span>)
+                <span style="color: red; font-weight: bold"> {{ closedDeviceServiceList.length }}</span
+                >)
               </div>
             </div>
           </div>
         </template>
-<div>
+        <div>
           <el-table :data="closedDeviceServiceList" style="width: 100%" max-height="150" height="150">
             <el-table-column label="C.No" width="90">
               <template #default="scope">
@@ -25,28 +26,28 @@
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Açılış Tarihi" width="170" sortable>
+            <el-table-column label="Açılış Tarihi" width="170" sortable>
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.failureDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Müşteri Unvan">
+            <el-table-column label="Müşteri Unvan">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.customer.title }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Teknisyen Veriliş Tarihi" width="210">
+            <el-table-column label="Teknisyen Veriliş Tarihi" width="210">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.userAssignDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Teknisyen" width="180">
+            <el-table-column label="Teknisyen" width="180">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.user.firstname }} {{ scope.row.user.lastname }}</span>
@@ -54,35 +55,35 @@
               </template>
             </el-table-column>
 
-<el-table-column label="Model" width="160">
+            <el-table-column label="Model" width="160">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.deviceModel.name }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Seri No" width="120">
+            <el-table-column label="Seri No" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.serialNumber }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Servis Kodu" width="120">
+            <el-table-column label="Servis Kodu" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.serviceBootCode }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Açıklama">
+            <el-table-column label="Açıklama">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.bootDescription }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="#" fixed="left" width="170">
+            <el-table-column label="#" fixed="left" width="170">
               <template #default="scope">
                 <el-dropdown size="small" type="danger">
                   <el-button type="primary">
@@ -93,19 +94,13 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="getClosedService(scope.row.id)">
-                        <el-icon>
-                          <ArrowRight />
-                        </el-icon>&nbsp; Talep Sonlandır
+                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Talep Sonlandır
                       </el-dropdown-item>
                       <el-dropdown-item @click="returnDeviceServiceToTechnician(scope.row.id)">
-                        <el-icon>
-                          <ArrowLeft />
-                        </el-icon>&nbsp; Teknisyene Gönder
+                        <el-icon> <ArrowLeft /> </el-icon>&nbsp; Teknisyene Gönder
                       </el-dropdown-item>
                       <el-dropdown-item @click="cancelDeviceService(scope.row.id)">
-                        <el-icon>
-                          <RemoveFilled />
-                        </el-icon>&nbsp; İptal Et
+                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -116,7 +111,7 @@
         </div>
       </el-card>
     </div>
-<div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
       <el-card class="box-card" shadow="hover">
         <template #header>
           <div class="card-header">
@@ -124,32 +119,40 @@
               <div class="col-md-2">
                 <h4>Gönderilecek Teklifler</h4>
               </div>
-<div class="col-md-3">
+              <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Teklif Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ technicianAssignedDeviceServiceList.length }}</span>)
+                <span style="color: red; font-weight: bold"> {{ technicianAssignedDeviceServiceList.length }}</span
+                >)
               </div>
             </div>
           </div>
         </template>
-<div></div>
+        <div></div>
       </el-card>
     </div>
-<div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
       <el-card class="box-card" shadow="hover">
         <template #header>
           <div class="card-header">
             <h4><span>Gönderilen Teklifler</span></h4>
           </div>
         </template>
-<div></div>
+        <div></div>
       </el-card>
     </div>
   </div>
 
-<el-dialog v-model="talepSonlandirDialogVisible" title="Talep Sonlandırma" width="50%" destroy-on-close align-top>
+  <el-dialog v-model="talepSonlandirDialogVisible" title="Talep Sonlandırma" width="50%" destroy-on-close align-top>
     <div class="row">
-      <el-form status-icon :rules="talepSonlandirRules" ref="talepSonlandirRef" :model="deviceServiceItem"
-        @submit.prevent="talepSonlandirSubmit()" label-width="120px" label-position="top">
+      <el-form
+        status-icon
+        :rules="talepSonlandirRules"
+        ref="talepSonlandirRef"
+        :model="deviceServiceItem"
+        @submit.prevent="talepSonlandirSubmit()"
+        label-width="120px"
+        label-position="top"
+      >
         <div class="row">
           <div class="col-md-3">
             <!--begin::Input group-->
@@ -314,8 +317,13 @@
               </label>
               <!--end::Label-->
               <el-form-item prop="resultDate">
-                <el-date-picker v-model="deviceServiceItem.resultDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                  placeholder="Select date and time" :shortcuts="shortcuts" />
+                <el-date-picker
+                  v-model="deviceServiceItem.resultDate"
+                  format="DD.MM.YYYY HH:mm:ss"
+                  type="datetime"
+                  placeholder="Select date and time"
+                  :shortcuts="shortcuts"
+                />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -694,40 +702,42 @@ export default defineComponent({
 
           description = value;
         },
-      }).then(async () => {
-        assignTechnicianModel.value.id = id;
-        assignTechnicianModel.value.cancelDescription = description;
-        await store
-          .dispatch(Actions.UPDATE_CANCELDEVICESERVICE, assignTechnicianModel)
-          .then(async result => {
-            if (result.isSuccess) {
-              Swal.fire({
-                text: 'Servis başarıyla iptal edildi.',
-                icon: 'success',
-                buttonsStyling: false,
-                confirmButtonText: 'Tamam',
-                customClass: {
-                  confirmButton: 'btn btn-primary',
-                },
-              }).then(async () => {
-                await getclosedDeviceServiceList();
-              });
-            } else {
-              Swal.fire({
-                title: 'Hata',
-                text: result.message,
-                icon: 'error',
-                buttonsStyling: false,
-                confirmButtonText: 'Tamam !',
-                customClass: {
-                  confirmButton: 'btn fw-bold btn-danger',
-                },
-              });
-            }
-          })
-          .catch(() => {
-            const [error] = Object.keys(store.getters.getErrors);
-          });
+      }).then(async confirm => {
+        if (confirm.value) {
+          assignTechnicianModel.value.id = id;
+          assignTechnicianModel.value.cancelDescription = description;
+          await store
+            .dispatch(Actions.UPDATE_CANCELDEVICESERVICE, assignTechnicianModel)
+            .then(async result => {
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Servis başarıyla iptal edildi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(async () => {
+                  await getclosedDeviceServiceList();
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        }
       });
     }
 
@@ -798,7 +808,7 @@ export default defineComponent({
       getclosedDeviceServiceList,
       getClosedService,
       returnDeviceServiceToTechnician,
-      cancelDeviceService
+      cancelDeviceService,
     };
   },
 });
