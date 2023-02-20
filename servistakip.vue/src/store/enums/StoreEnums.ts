@@ -29,14 +29,18 @@ enum Actions {
 
   GET_BOOTCODE_LIST = "getBootCodelist",
   GET_DETECTIONCODE_LIST = "getDetectionCodelist",
+  GET_RESULTCODE_LIST = "getResultCodelist",
 
   GET_TECHNICIAN_LIST = "getTechnicianlist",
 
   ADD_DEVICESERVICE = "addDeviceService",
   GET_RECEIVEDDEVICESERVICE = "getReceivedDeviceService",
+  GET_DEVICESERVICEWITHID = "getDeviceServiceWithId",
   GET_TECHNICIANASSINEDDEVICESERVICE = "getTechnicianAssignedDeviceService",
   GET_CLOSEDDEVICESERVICE = "getClosedDeviceService",
   UPDATE_ASSIGNTECHNICIANDEVICESERVICE = "updateAssignTechnicianDeviceService",
+  UPDATE_RETURNDEVICESERVICETOTECHNICIAN = "updateReturnDeviceServiceTechnician",
+  UPDATE_CLOSEDEVICESERVICE = "updateCloseDeviceService",
   UPDATE_TAKEDEVICESERVICEBACK = "updateTakeDeviceServiceBack",
   UPDATE_CANCELDEVICESERVICE = "updateCancelDeviceService",
   UPDATE_SENDDEVICESERVICETOCLOSE = "updateSendDeviceServiceToClose",

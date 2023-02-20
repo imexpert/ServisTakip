@@ -3,6 +3,7 @@ interface IUserData {
     firstname: string | '',
     lastname: string | '',
     email: string | '',
+    fullname:string |''
 }
 
 export { IUserData }

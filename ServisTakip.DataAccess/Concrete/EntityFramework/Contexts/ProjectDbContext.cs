@@ -65,8 +65,11 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                base.OnConfiguring(optionsBuilder.UseSqlServer(Configuration.GetConnectionString("ServisTakipContext"))
-                    .EnableSensitiveDataLogging());
+                optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("ServisTakipContext"))
+                    .EnableSensitiveDataLogging();
+
+                base.OnConfiguring(optionsBuilder);
             }
         }
 
