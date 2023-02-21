@@ -38,6 +38,7 @@ enum Actions {
   GET_DEVICESERVICEWITHID = "getDeviceServiceWithId",
   GET_TECHNICIANASSINEDDEVICESERVICE = "getTechnicianAssignedDeviceService",
   GET_CLOSEDDEVICESERVICE = "getClosedDeviceService",
+  GET_TOBEOFFEREDDEVICESERVICE = "getToBeOfferedDeviceService",
   UPDATE_ASSIGNTECHNICIANDEVICESERVICE = "updateAssignTechnicianDeviceService",
   UPDATE_RETURNDEVICESERVICETOTECHNICIAN = "updateReturnDeviceServiceTechnician",
   UPDATE_CLOSEDEVICESERVICE = "updateCloseDeviceService",

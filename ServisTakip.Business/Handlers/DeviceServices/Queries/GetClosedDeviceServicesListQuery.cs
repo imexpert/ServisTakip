@@ -19,7 +19,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Queries
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
                 var deviceServices =
-                    await deviceServiceRepo.GetDeviceServiceWithStatusCode((int)StatusCodes.KapatilacakIslereAtandi);
+                    await deviceServiceRepo.GetDeviceServiceWithStatusCode((int)StatusCodes.TalepKapatilacakIslereAtandi);
                 var result = mapper.Map<List<DeviceServiceDto>>(deviceServices);
                 return ResponseMessage<List<DeviceServiceDto>>.Success(result);
             }

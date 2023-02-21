@@ -58,7 +58,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     var lastContract = result.Contracts.MaxBy(s => s.EndDate);
                     result.ContractType = lastContract?.ContractCode;
 
-                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(device.DeviceServices.Where(s => s.StatusCode == (int)StatusCodes.ServisKaydiKapatildi));
+                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(device.DeviceServices.Where(s => s.StatusCode == (int)StatusCodes.TalepSonlandirildi));
                     result.DeviceServices = result.DeviceServices.OrderByDescending(s => s.ResultDate).ToList();
 
                     var service = result.DeviceServices.FirstOrDefault();

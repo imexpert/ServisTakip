@@ -20,7 +20,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
                 var deviceService = await deviceServiceRepo.GetAsync(s => s.Id == request.Model.Id);
-                deviceService.StatusCode = (int)StatusCodes.ServisKaydiIptalEdildi;
+                deviceService.StatusCode = (int)StatusCodes.TalepIptalEdildi;
                 deviceService.CancelDescription = request.Model.CancelDescription;
 
                 deviceServiceRepo.Update(deviceService);
