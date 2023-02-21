@@ -1,5 +1,5 @@
 <template>
-<!--begin::Row-->
+  <!--begin::Row-->
   <div class="row g-5 g-xl-2">
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
       <el-card class="box-card" shadow="hover">
@@ -11,7 +11,8 @@
               </div>
               <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ closedDeviceServiceList.length }}</span>)
+                <span style="color: red; font-weight: bold"> {{ closedDeviceServiceList.length }}</span
+                >)
               </div>
             </div>
           </div>
@@ -93,19 +94,13 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="getClosedService(scope.row.id)">
-                        <el-icon>
-                          <ArrowRight />
-                        </el-icon>&nbsp; Talep Sonlandır
+                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Talep Sonlandır
                       </el-dropdown-item>
                       <el-dropdown-item @click="returnDeviceServiceToTechnician(scope.row.id)">
-                        <el-icon>
-                          <ArrowLeft />
-                        </el-icon>&nbsp; Teknisyene Gönder
+                        <el-icon> <ArrowLeft /> </el-icon>&nbsp; Teknisyene Gönder
                       </el-dropdown-item>
                       <el-dropdown-item @click="cancelDeviceService(scope.row.id)">
-                        <el-icon>
-                          <RemoveFilled />
-                        </el-icon>&nbsp; İptal Et
+                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -126,7 +121,8 @@
               </div>
               <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Teklif Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ toBeOfferedDeviceServiceList.length }}</span>)
+                <span style="color: red; font-weight: bold"> {{ toBeOfferedDeviceServiceList.length }}</span
+                >)
               </div>
             </div>
           </div>
@@ -192,25 +188,17 @@
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item @click="parcaIslemDialogAc()">
-                        <el-icon>
-                          <Expand />
-                        </el-icon>&nbsp; Y.Parça
+                      <el-dropdown-item @click="parcaIslemDialogAc(scope.row.id)">
+                        <el-icon> <Expand /> </el-icon>&nbsp; Y.Parça
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon>
-                          <CreditCard />
-                        </el-icon>&nbsp; Teklif Gönder
+                        <el-icon> <CreditCard /> </el-icon>&nbsp; Teklif Gönder
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon>
-                          <Document />
-                        </el-icon>&nbsp; Servis Kaydı
+                        <el-icon> <Document /> </el-icon>&nbsp; Servis Kaydı
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon>
-                          <RemoveFilled />
-                        </el-icon>&nbsp; Sil
+                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; Sil
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -228,17 +216,22 @@
             <h4><span>Gönderilen Teklifler</span></h4>
           </div>
         </template>
-        <div>
-
-        </div>
+        <div></div>
       </el-card>
     </div>
   </div>
 
   <el-dialog v-model="talepSonlandirDialogVisible" title="Talep Sonlandırma" width="50%" destroy-on-close align-top>
     <div class="row">
-      <el-form status-icon :rules="talepSonlandirRules" ref="talepSonlandirRef" :model="deviceServiceItem"
-        @submit.prevent="talepSonlandirSubmit()" label-width="120px" label-position="top">
+      <el-form
+        status-icon
+        :rules="talepSonlandirRules"
+        ref="talepSonlandirRef"
+        :model="deviceServiceItem"
+        @submit.prevent="talepSonlandirSubmit()"
+        label-width="120px"
+        label-position="top"
+      >
         <div class="row">
           <div class="col-md-3">
             <!--begin::Input group-->
@@ -403,8 +396,13 @@
               </label>
               <!--end::Label-->
               <el-form-item prop="resultDate">
-                <el-date-picker v-model="deviceServiceItem.resultDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                  placeholder="Select date and time" :shortcuts="shortcuts" />
+                <el-date-picker
+                  v-model="deviceServiceItem.resultDate"
+                  format="DD.MM.YYYY HH:mm:ss"
+                  type="datetime"
+                  placeholder="Select date and time"
+                  :shortcuts="shortcuts"
+                />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -570,329 +568,103 @@
 
   <el-dialog v-model="parcaIslemleriDialogVisible" title="Parça İşlemleri" width="50%" destroy-on-close align-top>
     <div class="row">
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Servis Kodu</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="serviceBootCode">
-              <el-input v-model="deviceServiceItem.serviceBootCode" disabled></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
+      <div class="col-md-3">
+        <!--begin::Input group-->
+        <div class="d-flex flex-column fv-row">
+          <!--begin::Label-->
+          <label class="d-flex align-items-center fs-6 fw-bold">
+            <span>Cihaz No</span>
+          </label>
+          <!--end::Label-->
+          <el-form-item prop="serviceBootCode">
+            <el-input v-model="toBeOfferedDeviceServiceItem.deviceId" disabled></el-input>
+          </el-form-item>
         </div>
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Açılış Tarihi</span>
-            </label>
-            <!--end::Label-->
+        <!--end::Input group-->
+      </div>
+      <div class="col-md-9">
+        <!--begin::Input group-->
+        <div class="d-flex flex-column fv-row">
+          <!--begin::Label-->
+          <label class="d-flex align-items-center fs-6 fw-bold">
+            <span>Açılış Tarihi</span>
+          </label>
+          <!--end::Label-->
 
-            <el-form-item prop="failureDateString">
-              <el-input v-model="deviceServiceItem.failureDateString" disabled></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
+          <el-form-item prop="failureDateString">
+            <el-input v-model="toBeOfferedDeviceServiceItem.device.address.customer.title" disabled></el-input>
+          </el-form-item>
         </div>
-
-        <div class="col-md-6">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Açıklama</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="bootDescription">
-              <el-input v-model="deviceServiceItem.bootDescription" disabled></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Teknisyen Veriliş Tarihi</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="userAssignDateString">
-              <el-input v-model="deviceServiceItem.userAssignDateString" disabled></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Telefon</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="phone">
-              <el-input v-model="deviceServiceItem.phone" disabled></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-6">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Teknisyen</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="fullname">
-              <el-input v-model="technicianItem.fullname" disabled></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span class="required">Talep Bildiren</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="name">
-              <el-input v-model="deviceServiceItem.name" disabled></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span class="required">Tespit Kodu</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="detectionCode">
-              <el-select placeholder="Tespit Kodu" filterable clearable v-model="deviceServiceItem.detectionCode">
-                <el-option v-for="item in detectionCodeList" :key="item.code" :label="item.name" :value="item.code">
-                  <div class="row">
-                    <div class="col-md-9" style="font-size: 12px">{{ item.code }} {{ item.name }}</div>
-                  </div>
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-6">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Tespit Açıklama</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="detectionDescription">
-              <el-input v-model="deviceServiceItem.detectionDescription"></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span class="required">Sonuç Kodu</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="serviceResultCode">
-              <el-select placeholder="Sonuç Kodu" filterable clearable v-model="deviceServiceItem.serviceResultCode">
-                <el-option v-for="item in resultCodeList" :key="item.code" :label="item.name" :value="item.code">
-                  <div class="row">
-                    <div class="col-md-9" style="font-size: 12px">{{ item.code }} {{ item.name }}</div>
-                  </div>
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span class="required">Kapanış Tarihi</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="resultDate">
-              <el-date-picker v-model="deviceServiceItem.resultDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                placeholder="Select date and time" :shortcuts="shortcuts" />
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-6">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Kapanış Açıklama</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="resultDescription">
-              <el-input v-model="deviceServiceItem.resultDescription"></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>S/B Sayaç</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="wBCount">
-              <el-input v-model="deviceServiceItem.wBCount"></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Renkli Sayaç</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="colorCount">
-              <el-input v-model="deviceServiceItem.colorCount"></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
+        <!--end::Input group-->
       </div>
-      <div class="row">
-        <div class="col-md-3">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Toner Tipi</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="tonerType">
-              <el-select v-model="deviceServiceItem.tonerType" placeholder="Toner Tipi">
-                <el-option label="Orjinal" value="1" />
-                <el-option label="Muadil" value="2" />
-                <el-option label="Dolum" value="3" />
-              </el-select>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
+      <div class="col-md-3">
+        <!--begin::Input group-->
+        <div class="d-flex flex-column fv-row">
+          <!--begin::Label-->
+          <label class="d-flex align-items-center fs-6 fw-bold">
+            <span>Servis Kodu</span>
+          </label>
+          <!--end::Label-->
+          <el-form-item prop="bootDescription">
+            <el-input v-model="toBeOfferedDeviceServiceItem.serviceBootCode" disabled></el-input>
+          </el-form-item>
         </div>
-        <div class="col-md-2">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Siyah Adet</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="blackCount">
-              <el-input v-model="deviceServiceItem.blackCount"></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-2">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Mavi Adet</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="blueCount">
-              <el-input v-model="deviceServiceItem.blueCount"></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-2">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Sarı Adet</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="yellowCount">
-              <el-input v-model="deviceServiceItem.yellowCount"></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
-        <div class="col-md-2">
-          <!--begin::Input group-->
-          <div class="d-flex flex-column fv-row">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold">
-              <span>Kırmızı Adet</span>
-            </label>
-            <!--end::Label-->
-            <el-form-item prop="redCount">
-              <el-input v-model="deviceServiceItem.redCount"></el-input>
-            </el-form-item>
-          </div>
-          <!--end::Input group-->
-        </div>
+        <!--end::Input group-->
       </div>
-      <div class="row">
-        <div class="col-md-1">
-          <el-checkbox label="Dr" v-model="deviceServiceItem.dr" />
+      <div class="col-md-3">
+        <!--begin::Input group-->
+        <div class="d-flex flex-column fv-row">
+          <!--begin::Label-->
+          <label class="d-flex align-items-center fs-6 fw-bold">
+            <span>Teklif Konusu</span>
+          </label>
+          <!--end::Label-->
+          <el-form-item prop="userAssignDateString">
+            <el-select placeholder="Teklif konusu">
+              <el-option label="Parça Değişim" value="1" />
+              <el-option label="Toner Satış" value="2" />
+              <el-option label="Cihaz Satış" value="3" />
+              <el-option label="Sözleşme Teklifi" value="4" />
+            </el-select>
+          </el-form-item>
         </div>
-        <div class="col-md-1">
-          <el-checkbox label="Bc" v-model="deviceServiceItem.bc" />
-        </div>
-        <div class="col-md-1">
-          <el-checkbox label="Pa" v-model="deviceServiceItem.pa" />
-        </div>
-        <div class="col-md-1">
-          <el-checkbox label="Bk" v-model="deviceServiceItem.bk" />
-        </div>
-        <div class="col-md-1">
-          <el-checkbox label="Dv" v-model="deviceServiceItem.dv" />
-        </div>
-        <div class="col-md-1">
-          <el-checkbox label="Fs" v-model="deviceServiceItem.fs" />
-        </div>
-        <div class="col-md-1">
-          <el-checkbox label="Ak" v-model="deviceServiceItem.ak" />
-        </div>
+        <!--end::Input group-->
       </div>
-      <!--begin::Actions-->
-      <div class="text-center mt-2">
-        <!--begin::Button-->
-        <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
-          <span v-if="!loading" class="indicator-label"> Kaydet </span>
-          <span v-if="loading" class="indicator-progress">
-            Lütfen Bekleyiniz...
-            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-          </span>
-        </button>
-        <!--end::Button-->
+      <div class="col-md-3">
+        <!--begin::Input group-->
+        <div class="d-flex flex-column fv-row">
+          <!--begin::Label-->
+          <label class="d-flex align-items-center fs-6 fw-bold">
+            <span>İskonto Tutarı</span>
+          </label>
+          <!--end::Label-->
+          <el-form-item prop="phone">
+            <el-input v-model="deviceServiceItem.phone"></el-input>
+          </el-form-item>
+        </div>
+        <!--end::Input group-->
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <el-button-group>
+          <el-button type="primary">Parça Değişim İşlerine Gönder</el-button>
+          <el-button class="ml-2" type="primary"> Teklif Oluştur </el-button>
+        </el-button-group>
+      </div>
+    </div>
+    <!--begin::Actions-->
+    <div class="text-center mt-2">
+      <!--begin::Button-->
+      <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+        <span v-if="!loading" class="indicator-label"> Kaydet </span>
+        <span v-if="loading" class="indicator-progress">
+          Lütfen Bekleyiniz...
+          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
   </el-dialog>
 </template>
 
@@ -927,6 +699,7 @@ export default defineComponent({
     var closedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
     var toBeOfferedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
     var deviceServiceItem = ref<IDeviceServiceData>({});
+    var toBeOfferedDeviceServiceItem = ref<IDeviceServiceData>({});
     var technicianItem = ref<IUserData>({
       id: '',
       email: '',
@@ -1006,6 +779,8 @@ export default defineComponent({
           const [error] = Object.keys(store.getters.getErrors);
         });
     }
+
+    async function getToBeOfferedDeviceService(selectedId) {}
 
     const talepSonlandirSubmit = () => {
       if (!talepSonlandirRef.value) {
@@ -1203,8 +978,19 @@ export default defineComponent({
         });
     }
 
-    async function parcaIslemDialogAc() {
-      parcaIslemleriDialogVisible.value = true;
+    async function parcaIslemDialogAc(selectedId) {
+      await store
+        .dispatch(Actions.GET_DEVICESERVICEWITHID, selectedId)
+        .then(async result => {
+          if (result.isSuccess) {
+            selectedDeviceServiceId.value = selectedId;
+            toBeOfferedDeviceServiceItem.value = result.data;
+            parcaIslemleriDialogVisible.value = true;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
     }
     onMounted(async () => {
       await getclosedDeviceServiceList();
@@ -1238,7 +1024,9 @@ export default defineComponent({
       returnDeviceServiceToTechnician,
       cancelDeviceService,
       getToBeOfferedDeviceServiceList,
-      parcaIslemDialogAc
+      parcaIslemDialogAc,
+      getToBeOfferedDeviceService,
+      toBeOfferedDeviceServiceItem,
     };
   },
 });
