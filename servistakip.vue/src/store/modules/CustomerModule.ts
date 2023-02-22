@@ -44,6 +44,7 @@ export default class CustomerModule extends VuexModule {
 
   @Action
   [Actions.GET_CUSTOMER](customerId) {
+    console.log("action begin")
     return ApiService.getWithParamUrl("Customers/GetCustomerById?customerId=" + customerId)
       .then(({ data }) => {
         return data;

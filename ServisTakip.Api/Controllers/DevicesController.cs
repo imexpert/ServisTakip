@@ -22,6 +22,16 @@ namespace ServisTakip.Api.Controllers
             return CreateActionResult(await Mediator.Send(new GetDeviceByFilterQuery() { DeviceId = deviceId }));
         }
 
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<SearchCustomerDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetDevicesByAddressIdQueryAsync(long addressId)
+        {
+            return CreateActionResult(await Mediator.Send(new GetDeviceByAddressIdQuery() { AddressId = addressId }));
+        }
+
         /// <summary>
         /// 
         /// </summary>

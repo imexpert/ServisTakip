@@ -64,7 +64,31 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Cihaz İşlemleri">Cihaz İşlemleri</el-tab-pane>
+        <el-tab-pane label="Cihaz İşlemleri">
+          <div class="row">
+            <div class="col-md-2">
+              <el-button type="success" round @click="addCustomerAddress">
+                <el-icon>
+                  <Plus />
+                </el-icon>&nbsp;Yeni Cihaz Ekle</el-button>
+            </div>
+            <div class="col-md-12 mt-2">
+              <el-table :data="deviceList" style="width: 100%">
+                <el-table-column prop="deviceModelId" label="Cihaz Model Id" width="150px" />
+                <el-table-column prop="serialNumber" label="Seri Numarası" width="150px" />
+                <el-table-column prop="assemlyDate" label="Kurulum Tarihi" width="150px" />
+                <el-table-column prop="description" label="Açıklama" width="150px" />
+                <el-table-column prop="status" label="Durum" width="200px" />
+                <el-table-column fixed="right" label="İşlemler" width="200px">
+                  <template #default>
+                    <el-button link type="primary" size="small">Sil</el-button>
+                    <el-button link type="primary" size="small">Düzenle</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -329,6 +353,19 @@ interface CustomerAddressData {
   authorizedEmail: string,
   description: string,
 }
+interface DeviceData {
+  addressId: string;
+  deviceModelId: string;
+  serialNumber: string;
+  assemblyDateString: string;
+  description: string;
+  status: string;
+}
+interface CustomerData {
+  sectorId: string;
+  title: string;
+  sector: string;
+}
 export default defineComponent({
   components: {
     ErrorMessage
@@ -337,6 +374,7 @@ export default defineComponent({
     const store = useStore();
 
     var sectorList = ref<Array<SectorData>>([]);
+    var deviceList = ref<Array<DeviceData>>([]);
     var customerAdress = ref<CustomerAddressData>({
       id: '',
       customerId: store.state.customerId,
@@ -462,7 +500,8 @@ export default defineComponent({
       submit,
       loading,
       formRef,
-      kt_modal_new_customerRef
+      kt_modal_new_customerRef,
+      deviceList
     };
   },
   data() {
@@ -471,12 +510,20 @@ export default defineComponent({
         id: '',
         title: '',
         sectorId: 0,
-        addresses: [],
+        addresses: []
+      },
+      device: {
+        id: '',
+        title: '',
+        sectorId: 0,
+        addresses: []
       },
     };
   },
   async created() {
     await this.getCustomer();
+    await this.getAdresses();
+    //await this.getDevices(addressId);
     await this.getSectorList();
   },
   methods: {
@@ -548,12 +595,53 @@ export default defineComponent({
           path: '/dashboard',
         });
       }
-
+      console.log("getcustomer");
       await this.store
         .dispatch(Actions.GET_CUSTOMER, this.store.state.customerId)
         .then(result => {
           if (result.isSuccess) {
             this.customer = result.data;
+            console.log(result.data);
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(this.store.getters.getErrors);
+          console.log("hata customer"+this.store.getters.getErrors);
+        });
+    },
+    async getAdresses() {
+      if (this.store.state.customerId == undefined) {
+        this.$router.push({
+          name: 'dashboard',
+          path: '/dashboard',
+        });
+      }
+
+      await this.store
+        .dispatch(Actions.GET_ADRESSES_BYCID, this.store.state.customerId)
+        .then(result => {
+          if (result.isSuccess) {
+            this.customer.addresses = result.data;
+            console.log(result.data);
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(this.store.getters.getErrors);
+        });
+    },
+    async getDevices(addressId) {
+      if (this.store.state.customerId == undefined) {
+        this.$router.push({
+          name: 'dashboard',
+          path: '/dashboard',
+        });
+      }
+
+      await this.store
+        .dispatch(Actions.GET_DEVICES_BYAID, addressId)
+        .then(result => {
+          if (result.isSuccess) {
+            this.deviceList = result.data;
             console.log(result.data);
           }
         })

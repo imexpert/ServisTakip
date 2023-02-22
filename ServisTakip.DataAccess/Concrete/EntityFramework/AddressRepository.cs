@@ -25,5 +25,14 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<List<Address>> GetAddressInfoByCustomerId(long customerId,CancellationToken cancellationToken)
+        {
+            return await _context.Addresses                
+                .Include(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
+                .Where(s => s.CustomerId == customerId)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+        }
     }
 }
