@@ -6,7 +6,7 @@ interface IDeviceServicePartData {
     numberOfProduct?: string | '',
     unitPrice?: string | '',
     description?: string | '',
-    currencyType?: string | ''
+    currencyType?: string | '',
     totalPrice?: string | '',
 }
 
