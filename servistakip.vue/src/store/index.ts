@@ -18,6 +18,8 @@ import ThemeModeModule from "@/store/modules/ThemeModeModule";
 import BootCodeModule from "@/store/modules/BootCodeModule";
 import DetectionCodeModule from "@/store/modules/DetectionCodeModule";
 import ResultCodeModule from  "@/store/modules/ResultCodeModule";
+import DeviceServicePartModule from  "@/store/modules/DeviceServicePartModule";
+
 
 config.rawError = true;
 
@@ -39,7 +41,8 @@ const store = createStore({
     UserModule,
     DeviceServiceModule,
     DetectionCodeModule,
-    ResultCodeModule
+    ResultCodeModule,
+    DeviceServicePartModule
   },
   mutations: {
     setCustomerId(state, id) {

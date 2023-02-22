@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;

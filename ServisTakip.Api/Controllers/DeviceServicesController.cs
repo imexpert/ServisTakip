@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.DeviceServices.Commands;
 using ServisTakip.Business.Handlers.DeviceServices.Queries;
 using ServisTakip.Core.Utilities.Results;

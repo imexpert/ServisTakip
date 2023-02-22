@@ -18,6 +18,7 @@ using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Devices;
 using ServisTakip.Entities.DTOs.DeviceServices;
 using ServisTakip.Entities.DTOs.DetectionCodes;
+using ServisTakip.Entities.DTOs.DeviceServiceParts;
 
 namespace ServisTakip.Business.Helpers
 {
@@ -46,6 +47,8 @@ namespace ServisTakip.Business.Helpers
             CreateMap<DeviceServiceDto, DeviceService>().ReverseMap();
             CreateMap<CreateDeviceServiceDto, DeviceService>().ReverseMap();
             CreateMap<DetectionCodeDto, DetectionCode>().ReverseMap();
+            CreateMap<CreateDeviceServicePartDto, DeviceServicePart>().ReverseMap();
+            CreateMap<DeviceServicePartDto, DeviceServicePart>().ReverseMap();
         }
     }
 }

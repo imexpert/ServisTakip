@@ -47,6 +47,12 @@ enum Actions {
   UPDATE_SENDDEVICESERVICETOCLOSE = "updateSendDeviceServiceToClose",
   DELETE_DELETEDEVICESERVICE = "deleteDeleteDeviceService",
   GET_TECHNICIANDEVICESERVICEREPORT = "getTechnicianDeviceServiceReport",
+
+  ADD_DEVICESERVICEPART = "addDeviceServicePart",
+  UPDATE_DEVICESERVICEPART = "updateDeviceServicePart",
+  DELETE_DEVICESERVICEPART = "deleteDeviceServicePart",
+  GET_DEVICESERVICEPARTLIST = "getDeviceServicePartList",
+  GET_DEVICESERVICEPART = "getDeviceServicePart",
 }
 
 enum Mutations {

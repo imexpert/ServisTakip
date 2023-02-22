@@ -2,11 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using ServisTakip.Core.Utilities.Interceptors;
 using ServisTakip.Core.Utilities.IoC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace ServisTakip.Core.Aspects.Autofac.Transaction

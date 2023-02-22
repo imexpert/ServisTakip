@@ -1,5 +1,4 @@
-<template>
-  <!--begin::Row-->
+<template><!--begin::Row-->
   <div class="row g-5 g-xl-2">
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
       <el-card class="box-card" shadow="hover">
@@ -11,8 +10,7 @@
               </div>
               <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ closedDeviceServiceList.length }}</span
-                >)
+                <span style="color: red; font-weight: bold"> {{ closedDeviceServiceList.length }}</span>)
               </div>
             </div>
           </div>
@@ -94,13 +92,19 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="getClosedService(scope.row.id)">
-                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Talep Sonlandır
+                        <el-icon>
+                          <ArrowRight />
+                        </el-icon>&nbsp; Talep Sonlandır
                       </el-dropdown-item>
                       <el-dropdown-item @click="returnDeviceServiceToTechnician(scope.row.id)">
-                        <el-icon> <ArrowLeft /> </el-icon>&nbsp; Teknisyene Gönder
+                        <el-icon>
+                          <ArrowLeft />
+                        </el-icon>&nbsp; Teknisyene Gönder
                       </el-dropdown-item>
                       <el-dropdown-item @click="cancelDeviceService(scope.row.id)">
-                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
+                        <el-icon>
+                          <RemoveFilled />
+                        </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -112,102 +116,7 @@
       </el-card>
     </div>
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-      <el-card class="box-card" shadow="hover">
-        <template #header>
-          <div class="card-header">
-            <div class="row">
-              <div class="col-md-2">
-                <h4>Gönderilecek Teklifler</h4>
-              </div>
-              <div class="col-md-3">
-                (<span style="font-weight: 800; font-size: 14px"> Toplam Teklif Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ toBeOfferedDeviceServiceList.length }}</span
-                >)
-              </div>
-            </div>
-          </div>
-        </template>
-        <div>
-          <el-table :data="toBeOfferedDeviceServiceList" style="width: 100%" max-height="150" height="150">
-            <el-table-column label="C.No" width="90">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.deviceId }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Açılış Tarihi" width="170" sortable>
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.failureDateString }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Müşteri Unvan">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.device.address.customer.title }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Model" width="160">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.device.deviceModel.name }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Seri No" width="120">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.device.serialNumber }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Servis Kodu" width="120">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.serviceBootCode }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Açıklama">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.bootDescription }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="#" fixed="left" width="170">
-              <template #default="scope">
-                <el-dropdown size="small" type="danger">
-                  <el-button type="primary">
-                    İşlem Listesi<el-icon class="el-icon--right">
-                      <arrow-down />
-                    </el-icon>
-                  </el-button>
-                  <template #dropdown>
-                    <el-dropdown-menu>
-                      <el-dropdown-item @click="parcaIslemDialogAc(scope.row.id)">
-                        <el-icon> <Expand /> </el-icon>&nbsp; Y.Parça
-                      </el-dropdown-item>
-                      <el-dropdown-item>
-                        <el-icon> <CreditCard /> </el-icon>&nbsp; Teklif Gönder
-                      </el-dropdown-item>
-                      <el-dropdown-item>
-                        <el-icon> <Document /> </el-icon>&nbsp; Servis Kaydı
-                      </el-dropdown-item>
-                      <el-dropdown-item>
-                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; Sil
-                      </el-dropdown-item>
-                    </el-dropdown-menu>
-                  </template>
-                </el-dropdown>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-card>
+      
     </div>
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
       <el-card class="box-card" shadow="hover">
@@ -223,15 +132,8 @@
 
   <el-dialog v-model="talepSonlandirDialogVisible" title="Talep Sonlandırma" width="50%" destroy-on-close align-top>
     <div class="row">
-      <el-form
-        status-icon
-        :rules="talepSonlandirRules"
-        ref="talepSonlandirRef"
-        :model="deviceServiceItem"
-        @submit.prevent="talepSonlandirSubmit()"
-        label-width="120px"
-        label-position="top"
-      >
+      <el-form status-icon :rules="talepSonlandirRules" ref="talepSonlandirRef" :model="deviceServiceItem"
+        @submit.prevent="talepSonlandirSubmit()" label-width="120px" label-position="top">
         <div class="row">
           <div class="col-md-3">
             <!--begin::Input group-->
@@ -396,13 +298,8 @@
               </label>
               <!--end::Label-->
               <el-form-item prop="resultDate">
-                <el-date-picker
-                  v-model="deviceServiceItem.resultDate"
-                  format="DD.MM.YYYY HH:mm:ss"
-                  type="datetime"
-                  placeholder="Select date and time"
-                  :shortcuts="shortcuts"
-                />
+                <el-date-picker v-model="deviceServiceItem.resultDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
+                  placeholder="Select date and time" :shortcuts="shortcuts" />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -565,107 +462,6 @@
       </el-form>
     </div>
   </el-dialog>
-
-  <el-dialog v-model="parcaIslemleriDialogVisible" title="Parça İşlemleri" width="50%" destroy-on-close align-top>
-    <div class="row">
-      <div class="col-md-3">
-        <!--begin::Input group-->
-        <div class="d-flex flex-column fv-row">
-          <!--begin::Label-->
-          <label class="d-flex align-items-center fs-6 fw-bold">
-            <span>Cihaz No</span>
-          </label>
-          <!--end::Label-->
-          <el-form-item prop="serviceBootCode">
-            <el-input v-model="toBeOfferedDeviceServiceItem.deviceId" disabled></el-input>
-          </el-form-item>
-        </div>
-        <!--end::Input group-->
-      </div>
-      <div class="col-md-9">
-        <!--begin::Input group-->
-        <div class="d-flex flex-column fv-row">
-          <!--begin::Label-->
-          <label class="d-flex align-items-center fs-6 fw-bold">
-            <span>Açılış Tarihi</span>
-          </label>
-          <!--end::Label-->
-
-          <el-form-item prop="failureDateString">
-            <el-input v-model="toBeOfferedDeviceServiceItem.device.address.customer.title" disabled></el-input>
-          </el-form-item>
-        </div>
-        <!--end::Input group-->
-      </div>
-      <div class="col-md-3">
-        <!--begin::Input group-->
-        <div class="d-flex flex-column fv-row">
-          <!--begin::Label-->
-          <label class="d-flex align-items-center fs-6 fw-bold">
-            <span>Servis Kodu</span>
-          </label>
-          <!--end::Label-->
-          <el-form-item prop="bootDescription">
-            <el-input v-model="toBeOfferedDeviceServiceItem.serviceBootCode" disabled></el-input>
-          </el-form-item>
-        </div>
-        <!--end::Input group-->
-      </div>
-      <div class="col-md-3">
-        <!--begin::Input group-->
-        <div class="d-flex flex-column fv-row">
-          <!--begin::Label-->
-          <label class="d-flex align-items-center fs-6 fw-bold">
-            <span>Teklif Konusu</span>
-          </label>
-          <!--end::Label-->
-          <el-form-item prop="userAssignDateString">
-            <el-select placeholder="Teklif konusu">
-              <el-option label="Parça Değişim" value="1" />
-              <el-option label="Toner Satış" value="2" />
-              <el-option label="Cihaz Satış" value="3" />
-              <el-option label="Sözleşme Teklifi" value="4" />
-            </el-select>
-          </el-form-item>
-        </div>
-        <!--end::Input group-->
-      </div>
-      <div class="col-md-3">
-        <!--begin::Input group-->
-        <div class="d-flex flex-column fv-row">
-          <!--begin::Label-->
-          <label class="d-flex align-items-center fs-6 fw-bold">
-            <span>İskonto Tutarı</span>
-          </label>
-          <!--end::Label-->
-          <el-form-item prop="phone">
-            <el-input v-model="deviceServiceItem.phone"></el-input>
-          </el-form-item>
-        </div>
-        <!--end::Input group-->
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-5">
-        <el-button-group>
-          <el-button type="primary">Parça Değişim İşlerine Gönder</el-button>
-          <el-button class="ml-2" type="primary"> Teklif Oluştur </el-button>
-        </el-button-group>
-      </div>
-    </div>
-    <!--begin::Actions-->
-    <div class="text-center mt-2">
-      <!--begin::Button-->
-      <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
-        <span v-if="!loading" class="indicator-label"> Kaydet </span>
-        <span v-if="loading" class="indicator-progress">
-          Lütfen Bekleyiniz...
-          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-        </span>
-      </button>
-      <!--end::Button-->
-    </div>
-  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -695,10 +491,9 @@ export default defineComponent({
     var teknisyenRaporu = ref<string>('');
     const loading = ref<boolean>(false);
     var selectedDeviceServiceId = ref<string>('');
-
+      var deviceServiceItem = ref<IDeviceServiceData>({});
     var closedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
-    var toBeOfferedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
-    var deviceServiceItem = ref<IDeviceServiceData>({});
+    
     var toBeOfferedDeviceServiceItem = ref<IDeviceServiceData>({});
     var technicianItem = ref<IUserData>({
       id: '',
@@ -780,7 +575,7 @@ export default defineComponent({
         });
     }
 
-    async function getToBeOfferedDeviceService(selectedId) {}
+    async function getToBeOfferedDeviceService(selectedId) { }
 
     const talepSonlandirSubmit = () => {
       if (!talepSonlandirRef.value) {
@@ -811,7 +606,6 @@ export default defineComponent({
                 }).then(async () => {
                   talepSonlandirDialogVisible.value = false;
                   await getclosedDeviceServiceList();
-                  await getToBeOfferedDeviceServiceList();
                 });
               } else {
                 Swal.fire({
@@ -939,18 +733,7 @@ export default defineComponent({
         });
     }
 
-    async function getToBeOfferedDeviceServiceList() {
-      await store
-        .dispatch(Actions.GET_TOBEOFFEREDDEVICESERVICE)
-        .then(result => {
-          if (result.isSuccess) {
-            toBeOfferedDeviceServiceList.value = result.data;
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
-    }
+    
 
     async function getDetectionCodeList() {
       await store
@@ -978,23 +761,9 @@ export default defineComponent({
         });
     }
 
-    async function parcaIslemDialogAc(selectedId) {
-      await store
-        .dispatch(Actions.GET_DEVICESERVICEWITHID, selectedId)
-        .then(async result => {
-          if (result.isSuccess) {
-            selectedDeviceServiceId.value = selectedId;
-            toBeOfferedDeviceServiceItem.value = result.data;
-            parcaIslemleriDialogVisible.value = true;
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
-    }
+    
     onMounted(async () => {
       await getclosedDeviceServiceList();
-      await getToBeOfferedDeviceServiceList();
     });
 
     return {
@@ -1012,19 +781,16 @@ export default defineComponent({
       selectedDeviceServiceId,
       technicianUserList,
       teknisyenRaporu,
-      deviceServiceItem,
       detectionCodeList,
       technicianItem,
       resultCodeList,
       shortcuts,
-      toBeOfferedDeviceServiceList,
+      deviceServiceItem,
       talepSonlandirSubmit,
       getclosedDeviceServiceList,
       getClosedService,
       returnDeviceServiceToTechnician,
       cancelDeviceService,
-      getToBeOfferedDeviceServiceList,
-      parcaIslemDialogAc,
       getToBeOfferedDeviceService,
       toBeOfferedDeviceServiceItem,
     };
