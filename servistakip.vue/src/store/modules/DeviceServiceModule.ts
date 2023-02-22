@@ -121,6 +121,18 @@ export default class DeviceServiceModule extends VuexModule {
   }
 
   @Action
+  [Actions.GET_TOBEOFFEREDDEVICESERVICE]() {
+    return ApiService.get("DeviceServices/GetToBeOfferedDeviceServicesList")
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.GET_DEVICESERVICEWITHID](id) {
     return ApiService.getWithParamUrl("DeviceServices/GetDeviceServiceWithId?id=" + id)
       .then(({ data }) => {

@@ -1,7 +1,6 @@
 ﻿using ServisTakip.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using ServiceStack;
 
 namespace ServisTakip.Core.DataAccess.EntityFramework
 {

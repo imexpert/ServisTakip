@@ -1,7 +1,6 @@
 ﻿using ServisTakip.DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ServisTakip.Core.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Reports;
 
 namespace ServisTakip.DataAccess.Concrete.Configurations

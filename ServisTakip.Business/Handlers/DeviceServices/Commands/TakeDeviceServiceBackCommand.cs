@@ -21,7 +21,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 
                 var deviceService = await deviceServiceRepo.GetAsync(s => s.Id == request.Model.Id);
                 deviceService.UserId = null;
-                deviceService.StatusCode = (int)StatusCodes.ServisAcildi;
+                deviceService.StatusCode = (int)StatusCodes.ServisKaydiTeknisyensiz;
                 deviceService.UserAssignDate = null;
 
                 deviceServiceRepo.Update(deviceService);

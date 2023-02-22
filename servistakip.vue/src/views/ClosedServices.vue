@@ -1,6 +1,5 @@
-<template>
-<!--begin::Row-->
-<div class="row g-5 g-xl-2">
+<template><!--begin::Row-->
+  <div class="row g-5 g-xl-2">
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
       <el-card class="box-card" shadow="hover">
         <template #header>
@@ -9,14 +8,14 @@
               <div class="col-md-2">
                 <h4>Kapatılacak İşler</h4>
               </div>
-<div class="col-md-3">
+              <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
                 <span style="color: red; font-weight: bold"> {{ closedDeviceServiceList.length }}</span>)
               </div>
             </div>
           </div>
         </template>
-<div>
+        <div>
           <el-table :data="closedDeviceServiceList" style="width: 100%" max-height="150" height="150">
             <el-table-column label="C.No" width="90">
               <template #default="scope">
@@ -25,28 +24,28 @@
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Açılış Tarihi" width="170" sortable>
+            <el-table-column label="Açılış Tarihi" width="170" sortable>
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.failureDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Müşteri Unvan">
+            <el-table-column label="Müşteri Unvan">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.customer.title }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Teknisyen Veriliş Tarihi" width="210">
+            <el-table-column label="Teknisyen Veriliş Tarihi" width="210">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.userAssignDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Teknisyen" width="180">
+            <el-table-column label="Teknisyen" width="180">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.user.firstname }} {{ scope.row.user.lastname }}</span>
@@ -54,35 +53,35 @@
               </template>
             </el-table-column>
 
-<el-table-column label="Model" width="160">
+            <el-table-column label="Model" width="160">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.deviceModel.name }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Seri No" width="120">
+            <el-table-column label="Seri No" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.serialNumber }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Servis Kodu" width="120">
+            <el-table-column label="Servis Kodu" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.serviceBootCode }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="Açıklama">
+            <el-table-column label="Açıklama">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.bootDescription }}</span>
                 </div>
               </template>
             </el-table-column>
-<el-table-column label="#" fixed="left" width="170">
+            <el-table-column label="#" fixed="left" width="170">
               <template #default="scope">
                 <el-dropdown size="small" type="danger">
                   <el-button type="primary">
@@ -116,37 +115,22 @@
         </div>
       </el-card>
     </div>
-<div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-      <el-card class="box-card" shadow="hover">
-        <template #header>
-          <div class="card-header">
-            <div class="row">
-              <div class="col-md-2">
-                <h4>Gönderilecek Teklifler</h4>
-              </div>
-<div class="col-md-3">
-                (<span style="font-weight: 800; font-size: 14px"> Toplam Teklif Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ technicianAssignedDeviceServiceList.length }}</span>)
-              </div>
-            </div>
-          </div>
-        </template>
-<div></div>
-      </el-card>
+    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+      
     </div>
-<div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
       <el-card class="box-card" shadow="hover">
         <template #header>
           <div class="card-header">
             <h4><span>Gönderilen Teklifler</span></h4>
           </div>
         </template>
-<div></div>
+        <div></div>
       </el-card>
     </div>
   </div>
 
-<el-dialog v-model="talepSonlandirDialogVisible" title="Talep Sonlandırma" width="50%" destroy-on-close align-top>
+  <el-dialog v-model="talepSonlandirDialogVisible" title="Talep Sonlandırma" width="50%" destroy-on-close align-top>
     <div class="row">
       <el-form status-icon :rules="talepSonlandirRules" ref="talepSonlandirRef" :model="deviceServiceItem"
         @submit.prevent="talepSonlandirSubmit()" label-width="120px" label-position="top">
@@ -502,14 +486,15 @@ export default defineComponent({
   setup() {
     const store = useStore();
     var talepSonlandirDialogVisible = ref<boolean>(false);
-    var teknisyenRaporDialogVisible = ref<boolean>(false);
+    var parcaIslemleriDialogVisible = ref<boolean>(false);
     var raporDialogVisible = ref<boolean>(false);
     var teknisyenRaporu = ref<string>('');
     const loading = ref<boolean>(false);
     var selectedDeviceServiceId = ref<string>('');
-
+      var deviceServiceItem = ref<IDeviceServiceData>({});
     var closedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
-    var deviceServiceItem = ref<IDeviceServiceData>({});
+    
+    var toBeOfferedDeviceServiceItem = ref<IDeviceServiceData>({});
     var technicianItem = ref<IUserData>({
       id: '',
       email: '',
@@ -589,6 +574,8 @@ export default defineComponent({
           const [error] = Object.keys(store.getters.getErrors);
         });
     }
+
+    async function getToBeOfferedDeviceService(selectedId) { }
 
     const talepSonlandirSubmit = () => {
       if (!talepSonlandirRef.value) {
@@ -694,40 +681,42 @@ export default defineComponent({
 
           description = value;
         },
-      }).then(async () => {
-        assignTechnicianModel.value.id = id;
-        assignTechnicianModel.value.cancelDescription = description;
-        await store
-          .dispatch(Actions.UPDATE_CANCELDEVICESERVICE, assignTechnicianModel)
-          .then(async result => {
-            if (result.isSuccess) {
-              Swal.fire({
-                text: 'Servis başarıyla iptal edildi.',
-                icon: 'success',
-                buttonsStyling: false,
-                confirmButtonText: 'Tamam',
-                customClass: {
-                  confirmButton: 'btn btn-primary',
-                },
-              }).then(async () => {
-                await getclosedDeviceServiceList();
-              });
-            } else {
-              Swal.fire({
-                title: 'Hata',
-                text: result.message,
-                icon: 'error',
-                buttonsStyling: false,
-                confirmButtonText: 'Tamam !',
-                customClass: {
-                  confirmButton: 'btn fw-bold btn-danger',
-                },
-              });
-            }
-          })
-          .catch(() => {
-            const [error] = Object.keys(store.getters.getErrors);
-          });
+      }).then(async confirm => {
+        if (confirm.value) {
+          assignTechnicianModel.value.id = id;
+          assignTechnicianModel.value.cancelDescription = description;
+          await store
+            .dispatch(Actions.UPDATE_CANCELDEVICESERVICE, assignTechnicianModel)
+            .then(async result => {
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Servis başarıyla iptal edildi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(async () => {
+                  await getclosedDeviceServiceList();
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        }
       });
     }
 
@@ -743,6 +732,8 @@ export default defineComponent({
           const [error] = Object.keys(store.getters.getErrors);
         });
     }
+
+    
 
     async function getDetectionCodeList() {
       await store
@@ -770,6 +761,7 @@ export default defineComponent({
         });
     }
 
+    
     onMounted(async () => {
       await getclosedDeviceServiceList();
     });
@@ -780,7 +772,7 @@ export default defineComponent({
       technicianAssignedDeviceServiceList,
       partsExchangeDeviceServiceList,
       talepSonlandirDialogVisible,
-      teknisyenRaporDialogVisible,
+      parcaIslemleriDialogVisible,
       raporDialogVisible,
       talepSonlandirRules,
       closedServiceModel,
@@ -789,16 +781,18 @@ export default defineComponent({
       selectedDeviceServiceId,
       technicianUserList,
       teknisyenRaporu,
-      deviceServiceItem,
       detectionCodeList,
       technicianItem,
       resultCodeList,
       shortcuts,
+      deviceServiceItem,
       talepSonlandirSubmit,
       getclosedDeviceServiceList,
       getClosedService,
       returnDeviceServiceToTechnician,
-      cancelDeviceService
+      cancelDeviceService,
+      getToBeOfferedDeviceService,
+      toBeOfferedDeviceServiceItem,
     };
   },
 });

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ServisTakip.Entities.DTOs.Reports
+﻿namespace ServisTakip.Entities.DTOs.Reports
 {
     public class TechnicianDeviceServiceReportModel
     {

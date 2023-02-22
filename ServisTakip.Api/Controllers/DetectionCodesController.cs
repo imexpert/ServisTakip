@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.BootCodes.Queries;
 using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Entities.DTOs.BootCodes;
 using ServisTakip.Entities.DTOs.DetectionCodes;
 
 namespace ServisTakip.Api.Controllers

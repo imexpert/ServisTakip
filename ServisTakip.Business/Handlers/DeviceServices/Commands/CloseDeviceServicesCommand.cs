@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using ServisTakip.Core.Aspects.Autofac.Transaction;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
@@ -14,10 +15,12 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
         public DeviceServiceDto Model { get; set; }
         public class CloseDeviceServicesCommandHandler : IRequestHandler<CloseDeviceServicesCommand, ResponseMessage<DeviceServiceDto>>
         {
+            [TransactionScopeAspectAsync]
             public async Task<ResponseMessage<DeviceServiceDto>> Handle(CloseDeviceServicesCommand request, CancellationToken cancellationToken)
             {
                 var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
+                var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
 
                 var deviceService = await deviceServiceRepo.GetAsync(s => s.Id == request.Model.Id);
                 deviceService.DetectionCode = request.Model.DetectionCode;
@@ -39,10 +42,12 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                 deviceService.Dv = request.Model.Dv;
                 deviceService.Fs = request.Model.Fs;
                 deviceService.Ak = request.Model.Ak;
-                deviceService.StatusCode = (int)StatusCodes.ServisKaydiKapatildi;
+                deviceService.StatusCode = (int)StatusCodes.TalepSonlandirildi;
 
                 deviceServiceRepo.Update(deviceService);
                 await deviceServiceRepo.SaveChangesAsync();
+
+                await mediator.Send(new CreateOfferDeviceServicesCommand() { ClosedDeviceService = deviceService });
 
                 return ResponseMessage<DeviceServiceDto>.Success(request.Model);
             }

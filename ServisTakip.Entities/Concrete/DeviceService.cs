@@ -40,5 +40,6 @@ namespace ServisTakip.Entities.Concrete
         public DeviceService LinkedDeviceService { get; set; }
         public ICollection<DeviceService> DeviceServices { get; set; }
         public ICollection<ContractMaintenance> ContractMaintenances { get; set; }
+        public ICollection<DeviceServicePart> DeviceServiceParts { get; set; }
     }
 }

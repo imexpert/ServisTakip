@@ -722,42 +722,44 @@ export default defineComponent({
 
           description = value;
         },
-      }).then(async () => {
-        assignTechnicianModel.value.id = id;
-        assignTechnicianModel.value.cancelDescription = description;
-        await store
-          .dispatch(Actions.UPDATE_CANCELDEVICESERVICE, assignTechnicianModel)
-          .then(async result => {
-            if (result.isSuccess) {
-              Swal.fire({
-                text: 'Servis başarıyla iptal edildi.',
-                icon: 'success',
-                buttonsStyling: false,
-                confirmButtonText: 'Tamam',
-                customClass: {
-                  confirmButton: 'btn btn-primary',
-                },
-              }).then(async () => {
-                teknisyenAtaDialogVisible.value = false;
-                await getReceivedDeviceServiceList();
-                await getTechnicianAssignedDeviceServiceList();
-              });
-            } else {
-              Swal.fire({
-                title: 'Hata',
-                text: result.message,
-                icon: 'error',
-                buttonsStyling: false,
-                confirmButtonText: 'Tamam !',
-                customClass: {
-                  confirmButton: 'btn fw-bold btn-danger',
-                },
-              });
-            }
-          })
-          .catch(() => {
-            const [error] = Object.keys(store.getters.getErrors);
-          });
+      }).then(async confirm => {
+        if (confirm.value) {
+          assignTechnicianModel.value.id = id;
+          assignTechnicianModel.value.cancelDescription = description;
+          await store
+            .dispatch(Actions.UPDATE_CANCELDEVICESERVICE, assignTechnicianModel)
+            .then(async result => {
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Servis başarıyla iptal edildi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(async () => {
+                  teknisyenAtaDialogVisible.value = false;
+                  await getReceivedDeviceServiceList();
+                  await getTechnicianAssignedDeviceServiceList();
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        }
       });
     }
 
