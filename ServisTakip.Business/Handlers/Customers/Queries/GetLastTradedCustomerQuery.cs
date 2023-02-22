@@ -64,7 +64,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
 
                     var deviceServices = await deviceServicesRepo.GetDeviceServices(lastService.DeviceId);
 
-                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(deviceServices.Where(s => s.StatusCode == ((int)StatusCodes.ServisKaydiKapatildi)));
+                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(deviceServices.Where(s => s.StatusCode == ((int)StatusCodes.TalepSonlandirildi)));
                     var service = result.DeviceServices.MaxBy(s=>s.ResultDate);
                     result.WbCount = service.WBCount;
                     result.ColorCount = service.ColorCount;

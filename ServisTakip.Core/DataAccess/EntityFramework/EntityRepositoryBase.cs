@@ -33,7 +33,7 @@ namespace ServisTakip.Core.DataAccess.EntityFramework
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return await Context.Set<TEntity>().AsQueryable().FirstOrDefaultAsync(expression);
+            return await Context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(expression);
         }
 
         public IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> expression = null)
@@ -67,6 +67,8 @@ namespace ServisTakip.Core.DataAccess.EntityFramework
 
         public TEntity Update(TEntity entity)
         {
+            Context.ChangeTracker.Clear();
+
             Context.Update(entity);
             return entity;
         }

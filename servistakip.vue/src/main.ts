@@ -11,6 +11,7 @@ import i18n from "@/core/plugins/i18n";
 import loading from 'vue3-loading-screen'
 // if you're using CDN, please remove this line.
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import VuePdf from 'vue3-pdfjs'
 
 //imports for app initialization
 import ApiService from "@/core/services/ApiService";
@@ -29,6 +30,7 @@ app.use(store);
 app.use(router);
 app.use(ElementPlus);
 app.use(loading, /*{...}*/)
+app.use(VuePdf)
 
 ApiService.init(app);
 initApexCharts(app);

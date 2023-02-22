@@ -30,16 +30,31 @@ enum Actions {
   GET_MAIN_PAGE_CUSTOMER = "getMainPageCustomer",
 
   GET_BOOTCODE_LIST = "getBootCodelist",
+  GET_DETECTIONCODE_LIST = "getDetectionCodelist",
+  GET_RESULTCODE_LIST = "getResultCodelist",
 
   GET_TECHNICIAN_LIST = "getTechnicianlist",
 
   ADD_DEVICESERVICE = "addDeviceService",
   GET_RECEIVEDDEVICESERVICE = "getReceivedDeviceService",
+  GET_DEVICESERVICEWITHID = "getDeviceServiceWithId",
   GET_TECHNICIANASSINEDDEVICESERVICE = "getTechnicianAssignedDeviceService",
+  GET_CLOSEDDEVICESERVICE = "getClosedDeviceService",
+  GET_TOBEOFFEREDDEVICESERVICE = "getToBeOfferedDeviceService",
   UPDATE_ASSIGNTECHNICIANDEVICESERVICE = "updateAssignTechnicianDeviceService",
+  UPDATE_RETURNDEVICESERVICETOTECHNICIAN = "updateReturnDeviceServiceTechnician",
+  UPDATE_CLOSEDEVICESERVICE = "updateCloseDeviceService",
   UPDATE_TAKEDEVICESERVICEBACK = "updateTakeDeviceServiceBack",
   UPDATE_CANCELDEVICESERVICE = "updateCancelDeviceService",
+  UPDATE_SENDDEVICESERVICETOCLOSE = "updateSendDeviceServiceToClose",
   DELETE_DELETEDEVICESERVICE = "deleteDeleteDeviceService",
+  GET_TECHNICIANDEVICESERVICEREPORT = "getTechnicianDeviceServiceReport",
+
+  ADD_DEVICESERVICEPART = "addDeviceServicePart",
+  UPDATE_DEVICESERVICEPART = "updateDeviceServicePart",
+  DELETE_DEVICESERVICEPART = "deleteDeviceServicePart",
+  GET_DEVICESERVICEPARTLIST = "getDeviceServicePartList",
+  GET_DEVICESERVICEPART = "getDeviceServicePart",
 }
 
 enum Mutations {

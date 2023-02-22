@@ -22,7 +22,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 
                 var anyServices = await deviceServiceRepo
                     .Query()
-                    .Where(s => s.StatusCode != (int)StatusCodes.ServisKaydiKapatildi && s.DeviceId == request.Model.DeviceId)
+                    .Where(s => s.StatusCode != (int)StatusCodes.TalepSonlandirildi && s.DeviceId == request.Model.DeviceId)
                     .ToListAsync();
                 
                 if (anyServices.Any()) 
@@ -31,7 +31,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
                 var deviceService = mapper.Map<DeviceService>(request.Model);
-                deviceService.StatusCode = deviceService.UserId.HasValue ? (int)StatusCodes.TeknisyenAtandi : (int)StatusCodes.ServisAcildi;
+                deviceService.StatusCode = deviceService.UserId.HasValue ? (int)StatusCodes.TeknisyenAtandi : (int)StatusCodes.ServisKaydiTeknisyensiz;
 
                 deviceService.UserAssignDate = deviceService.UserId.HasValue ? DateTime.Now : null;
 

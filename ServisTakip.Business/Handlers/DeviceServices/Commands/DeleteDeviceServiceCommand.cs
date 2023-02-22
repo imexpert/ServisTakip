@@ -4,8 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.DeviceServices;
-using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 {

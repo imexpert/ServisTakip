@@ -5,7 +5,7 @@ using ServisTakip.Entities.DTOs.ResultCodes;
 
 namespace ServisTakip.Api.Controllers
 {
-    public class ResultCodeController : BaseApiController
+    public class ResultCodesController : BaseApiController
     {
         /// <summary>
         /// 
