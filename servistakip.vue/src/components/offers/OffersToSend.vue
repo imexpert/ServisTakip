@@ -130,7 +130,7 @@
                     <!--end::Label-->
 
                     <el-form-item prop="failureDateString">
-                        <el-input v-model="toBeOfferedDeviceServiceItem.device?.address?.customer?.title" disabled></el-input>
+                        <el-input v-model="toBeOfferedDeviceServiceItem.device.address.customer.title" disabled></el-input>
                     </el-form-item>
                 </div>
                 <!--end::Input group-->
@@ -298,7 +298,7 @@
                     </label>
                     <!--end::Label-->
                     <el-form-item prop="serviceBootCode">
-                        <el-input v-model="deviceServicePart?.productCode"></el-input>
+                        <el-input v-model="deviceServicePart.productCode"></el-input>
                     </el-form-item>
                 </div>
                 <!--end::Input group-->
@@ -312,7 +312,7 @@
                     </label>
                     <!--end::Label-->
                     <el-form-item prop="serviceBootCode">
-                        <el-input v-model="deviceServicePart?.productName"></el-input>
+                        <el-input v-model="deviceServicePart.productName"></el-input>
                     </el-form-item>
                 </div>
                 <!--end::Input group-->
@@ -326,7 +326,7 @@
                     </label>
                     <!--end::Label-->
                     <el-form-item prop="serviceBootCode">
-                        <el-input v-model="deviceServicePart?.numberOfProduct"></el-input>
+                        <el-input v-model="deviceServicePart.numberOfProduct"></el-input>
                     </el-form-item>
                 </div>
                 <!--end::Input group-->
@@ -340,7 +340,7 @@
                     </label>
                     <!--end::Label-->
                     <el-form-item prop="serviceBootCode">
-                        <el-input v-model="deviceServicePart?.unitPrice"></el-input>
+                        <el-input v-model="deviceServicePart.unitPrice"></el-input>
                     </el-form-item>
                 </div>
                 <!--end::Input group-->
@@ -354,7 +354,7 @@
                     </label>
                     <!--end::Label-->
                     <el-form-item prop="serviceBootCode">
-                        <el-input v-model="deviceServicePart?.currencyType"></el-input>
+                        <el-input v-model="deviceServicePart.currencyType"></el-input>
                     </el-form-item>
                 </div>
                 <!--end::Input group-->
@@ -368,7 +368,7 @@
                     </label>
                     <!--end::Label-->
                     <el-form-item prop="serviceBootCode">
-                        <el-input v-model="deviceServicePart?.description"></el-input>
+                        <el-input v-model="deviceServicePart.description"></el-input>
                     </el-form-item>
                 </div>
                 <!--end::Input group-->
@@ -390,7 +390,7 @@
 </template>
   
 <script lang="ts">
-import { defineComponent, onMounted, onActivated, ref } from 'vue';
+import { defineComponent, onMounted, onActivated,onUpdated, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { ErrorMessage } from 'vee-validate';
@@ -401,6 +401,7 @@ import { IDeviceServiceData } from '@/core/data/DeviceServiceData';
 import { IDeviceServicePartData } from '@/core/data/DeviceServicePartData';
 
 export default defineComponent({
+    name: 'ComponentOfferToSend',
     components: {
         ErrorMessage,
         PDFViewer,
@@ -434,6 +435,7 @@ export default defineComponent({
         }
 
         async function getToBeOfferedDeviceServiceList() {
+            alert("offer")
             await store
                 .dispatch(Actions.GET_TOBEOFFEREDDEVICESERVICE)
                 .then(result => {
@@ -461,9 +463,6 @@ export default defineComponent({
                 });
         }
 
-        onMounted(async () => {
-            await getToBeOfferedDeviceServiceList();
-        });
         return {
             loading,
             toBeOfferedDeviceServiceList,
