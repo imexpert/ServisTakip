@@ -23,6 +23,8 @@ namespace ServisTakip.Core.DataAccess.EntityFramework
 
         public void Delete(TEntity entity)
         {
+            Context.ChangeTracker.Clear();
+
             Context.Remove(entity);
         }
 
