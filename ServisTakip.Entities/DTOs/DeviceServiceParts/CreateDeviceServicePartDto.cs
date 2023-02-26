@@ -1,6 +1,4 @@
-﻿using ServisTakip.Entities.DTOs.DeviceServices;
-
-namespace ServisTakip.Entities.DTOs.DeviceServiceParts
+﻿namespace ServisTakip.Entities.DTOs.DeviceServiceParts
 {
     public class CreateDeviceServicePartDto
     {

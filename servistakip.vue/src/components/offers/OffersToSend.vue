@@ -151,11 +151,9 @@
           </label>
           <!--end::Label-->
           <el-form-item prop="userAssignDateString">
-            <el-select placeholder="Teklif konusu">
-              <el-option label="Parça Değişim" value="1" />
-              <el-option label="Toner Satış" value="2" />
-              <el-option label="Cihaz Satış" value="3" />
-              <el-option label="Sözleşme Teklifi" value="4" />
+            <el-select placeholder="Teklif konusu" filterable clearable v-model="offerItem.offerSubjectCodeId">
+              <el-option v-for="item in offerSubjectCodeList" :key="item.id" :label="item.name" :value="item.id">
+              </el-option>
             </el-select>
           </el-form-item>
         </div>
@@ -170,7 +168,7 @@
           </label>
           <!--end::Label-->
           <el-form-item prop="phone">
-            <el-input v-model="deviceServiceItem.phone"></el-input>
+            <el-input v-model="offerItem.discountRate"></el-input>
           </el-form-item>
         </div>
         <!--end::Input group-->
@@ -180,7 +178,7 @@
       <div class="col-md-5">
         <el-button-group>
           <el-button type="primary">Parça Değişim İşlerine Gönder</el-button>
-          <el-button class="ml-2" type="primary"> Teklif Oluştur </el-button>
+          <el-button class="ml-2" type="primary" @click="teklifFormDialogAc()"> Teklif Oluştur </el-button>
         </el-button-group>
       </div>
     </div>
@@ -250,7 +248,7 @@
                     <el-dropdown-item @click="parcaEkleDialogAc()">
                       <el-icon> <Plus /> </el-icon>&nbsp; Yeni Ekle
                     </el-dropdown-item>
-                    <el-dropdown-item @click="updateDeviceServicePart(scope.row.id)" divided>
+                    <el-dropdown-item @click="parcaDuzenleDialogAc(scope.row.id)" divided>
                       <el-icon> <ArrowRight /> </el-icon>&nbsp; Düzenle
                     </el-dropdown-item>
                     <el-dropdown-item @click="deleteDeviceServicePart(scope.row.id)">
@@ -278,7 +276,7 @@
     </div>
   </el-dialog>
 
-  <el-dialog v-model="parcaEkleDialogVisible" title="Parça Ekle/Düzenle" width="30%" destroy-on-close align-top>
+  <el-dialog v-model="parcaEkleDuzenleDialogVisible" title="Parça Ekle/Düzenle" width="30%" destroy-on-close align-top>
     <el-form
       status-icon
       :rules="parcaEkleRules"
@@ -392,6 +390,223 @@
       </div>
     </el-form>
   </el-dialog>
+
+  <el-dialog v-model="teklifFormDialogVisible" title="Teklif Formu" width="30%" destroy-on-close align-top>
+    <el-form
+      status-icon
+      :rules="teklifFormRules"
+      ref="teklifFormuRef"
+      :model="deviceServicePart"
+      @submit.prevent="teklifSubmit()"
+      label-width="120px"
+      label-position="top"
+    >
+      <div class="row">
+        <div class="col-md-12">
+          <el-collapse>
+            <el-collapse-item title="Teklif Gönderen Firma Bilgileri" name="1">
+              <div class="row">
+                <div class="col-md-8">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Firma Unvan</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="productCode">
+                      <el-input v-model="company.title" disabled></el-input>
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+                <div class="col-md-4">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Teklif Tarihi</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="productName">
+                      <el-date-picker
+                        format="DD.MM.YYYY HH:mm:ss"
+                        type="datetime"
+                        placeholder="Teklif tarihi seçiniz"
+                      />
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+                <div class="col-md-5">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Telefon</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="numberOfProduct">
+                      <el-input v-model="company.phone" disabled></el-input>
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+                <div class="col-md-5">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Faks</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="unitPrice">
+                      <el-input v-model="company.fax" disabled></el-input>
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+                <div class="col-md-12">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Firma Yetkilisi</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="currencyType">
+                      <el-input v-model="company.authorizeFullname" disabled></el-input>
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+                <div class="col-md-12">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Firma Adres</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="serviceBootCode">
+                      <el-input v-model="company.address" disabled></el-input>
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="Teklif Gönderilecek Firma Bilgileri" name="2">
+              <div class="row">
+                <div class="col-md-8">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Firma Unvan</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="productCode">
+                      <el-input v-model="company.title" disabled></el-input>
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+                <div class="col-md-4">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Teklif Tarihi</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="productName">
+                      <el-date-picker
+                        format="DD.MM.YYYY HH:mm:ss"
+                        type="datetime"
+                        placeholder="Teklif tarihi seçiniz"
+                      />
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+                <div class="col-md-5">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Telefon</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="numberOfProduct">
+                      <el-input v-model="company.phone" disabled></el-input>
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+                <div class="col-md-5">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Faks</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="unitPrice">
+                      <el-input v-model="company.fax" disabled></el-input>
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+                <div class="col-md-12">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Firma Yetkilisi</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="currencyType">
+                      <el-input v-model="company.authorizeFullname" disabled></el-input>
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+                <div class="col-md-12">
+                  <!--begin::Input group-->
+                  <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <label class="d-flex align-items-center fs-6 fw-bold">
+                      <span>Firma Adres</span>
+                    </label>
+                    <!--end::Label-->
+                    <el-form-item prop="serviceBootCode">
+                      <el-input v-model="company.address" disabled></el-input>
+                    </el-form-item>
+                  </div>
+                  <!--end::Input group-->
+                </div>
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="Teklif Sabit Bilgileri" name="3"> </el-collapse-item>
+          </el-collapse>
+        </div>
+      </div>
+
+      <!--begin::Actions-->
+      <div class="text-center mt-2">
+        <!--begin::Button-->
+        <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+          <span v-if="!loading" class="indicator-label"> Kaydet </span>
+          <span v-if="loading" class="indicator-progress">
+            Lütfen Bekleyiniz...
+            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+          </span>
+        </button>
+        <!--end::Button-->
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -404,6 +619,9 @@ import { hideModal } from '@/core/helpers/dom';
 import PDFViewer from 'pdf-viewer-vue';
 import { IDeviceServiceData } from '@/core/data/DeviceServiceData';
 import { IDeviceServicePartData } from '@/core/data/DeviceServicePartData';
+import { ICompanyData } from '@/core/data/CompanyData';
+import { IOfferSubjectCodeData } from '@/core/data/OfferSubjectCode';
+import { IOfferData } from '@/core/data/OfferData';
 
 interface ICustomInfo {
   deviceId?: string;
@@ -427,8 +645,10 @@ export default defineComponent({
       serviceFailureDate: '',
       customerTitle: '',
     });
+    var mode = ref<boolean>(false);
     var parcaIslemleriDialogVisible = ref<boolean>(false);
-    var parcaEkleDialogVisible = ref<boolean>(false);
+    var teklifFormDialogVisible = ref<boolean>(false);
+    var parcaEkleDuzenleDialogVisible = ref<boolean>(false);
     var toBeOfferedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
     var deviceServicePartList = ref<Array<IDeviceServicePartData>>([]);
     var deviceServicePart = ref<IDeviceServicePartData>({
@@ -440,11 +660,33 @@ export default defineComponent({
       totalPrice: '',
       unitPrice: '',
     });
+    var company = ref<ICompanyData>({});
+    var offerSubjectCodeList = ref<Array<IOfferSubjectCodeData>>([]);
+    var offerItem = ref<IOfferData>({
+      address: '',
+      authorizeFullname: '',
+      authorizeMail: '',
+      deviceServiceId: '',
+      fax: '',
+      id: '0',
+      offerAuthorizeFullname: '',
+      offerCompanyTitle: '',
+      offerDate: '',
+      offerPhone: '',
+      offerSendEmail: '',
+      offerStatus: '',
+      offerSubjectCodeId: '',
+      phone: '',
+      title: '',
+      discountRate: '',
+    });
     var toBeOfferedDeviceServiceItem = ref<IDeviceServiceData>({});
     var deviceServiceItem = ref<IDeviceServiceData>({});
     var selectedDeviceServiceId = ref<string>('');
 
     const parcaEkleRef = ref<null | HTMLFormElement>(null);
+
+    const teklifFormuRef = ref<null | HTMLFormElement>(null);
 
     const parcaEkleRules = ref({
       productCode: [
@@ -484,23 +726,48 @@ export default defineComponent({
       ],
     });
 
+    const teklifFormRules = ref({
+      productCode: [
+        {
+          required: true,
+          message: 'Ürün kodu seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+    });
+
     async function parcaEkleDialogAc() {
-      parcaEkleDialogVisible.value = true;
+      mode.value = false;
+      clearDeviceServicePartItem();
+      parcaEkleDuzenleDialogVisible.value = true;
+    }
+
+    async function clearDeviceServicePartItem() {
+      deviceServicePart.value.currencyType = '';
+      deviceServicePart.value.description = '';
+      deviceServicePart.value.numberOfProduct = '';
+      deviceServicePart.value.productCode = '';
+      deviceServicePart.value.productName = '';
+      deviceServicePart.value.totalPrice = '';
+      deviceServicePart.value.unitPrice = '';
+      deviceServicePart.value.id = '0';
     }
 
     async function parcaDuzenleDialogAc(id) {
+      mode.value = true;
+      clearDeviceServicePartItem();
       await store
         .dispatch(Actions.GET_DEVICESERVICEPART, id)
         .then(async result => {
           if (result.isSuccess) {
+            deviceServicePart.value = result.data;
+            parcaEkleDuzenleDialogVisible.value = true;
           }
         })
         .catch(() => {
           const [error] = Object.keys(store.getters.getErrors);
         });
     }
-
-    async function updateDeviceServicePart(id) {}
 
     async function deleteDeviceServicePart(id) {
       Swal.fire({
@@ -592,6 +859,38 @@ export default defineComponent({
             selectedDeviceServiceId.value = selectedId;
             console.log(customInfo.value);
             await getdeviceServicePartList(selectedId);
+            await getOfferSubjectCodes();
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function teklifFormDialogAc() {
+      await getCompany();
+      teklifFormDialogVisible.value = true;
+    }
+
+    async function getCompany() {
+      await store
+        .dispatch(Actions.GET_COMPANY)
+        .then(result => {
+          if (result.isSuccess) {
+            company.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getOfferSubjectCodes() {
+      await store
+        .dispatch(Actions.GET_OFFERSUBJECTCODE_LIST)
+        .then(result => {
+          if (result.isSuccess) {
+            offerSubjectCodeList.value = result.data;
           }
         })
         .catch(() => {
@@ -610,41 +909,163 @@ export default defineComponent({
 
           deviceServicePart.value.deviceServiceId = selectedDeviceServiceId.value;
 
-          await store
-            .dispatch(Actions.ADD_DEVICESERVICEPART, deviceServicePart.value)
-            .then(result => {
-              loading.value = false;
-              console.clear();
-              console.log(result);
-              if (result.isSuccess) {
-                Swal.fire({
-                  text: 'Parça başarıyla elkendi.',
-                  icon: 'success',
-                  buttonsStyling: false,
-                  confirmButtonText: 'Tamam',
-                  customClass: {
-                    confirmButton: 'btn btn-primary',
-                  },
-                }).then(async () => {
-                  parcaEkleDialogVisible.value = false;
-                  await getdeviceServicePartList(selectedDeviceServiceId.value);
-                });
-              } else {
-                Swal.fire({
-                  title: 'Hata',
-                  text: result.message,
-                  icon: 'error',
-                  buttonsStyling: false,
-                  confirmButtonText: 'Tamam !',
-                  customClass: {
-                    confirmButton: 'btn fw-bold btn-danger',
-                  },
-                });
-              }
-            })
-            .catch(() => {
-              const [error] = Object.keys(store.getters.getErrors);
-            });
+          if (!mode.value) {
+            await store
+              .dispatch(Actions.ADD_DEVICESERVICEPART, deviceServicePart.value)
+              .then(result => {
+                loading.value = false;
+                if (result.isSuccess) {
+                  Swal.fire({
+                    text: 'Parça başarıyla eklendi.',
+                    icon: 'success',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Tamam',
+                    customClass: {
+                      confirmButton: 'btn btn-primary',
+                    },
+                  }).then(async () => {
+                    parcaEkleDuzenleDialogVisible.value = false;
+                    await getdeviceServicePartList(selectedDeviceServiceId.value);
+                  });
+                } else {
+                  Swal.fire({
+                    title: 'Hata',
+                    text: result.message,
+                    icon: 'error',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Tamam !',
+                    customClass: {
+                      confirmButton: 'btn fw-bold btn-danger',
+                    },
+                  });
+                }
+              })
+              .catch(() => {
+                const [error] = Object.keys(store.getters.getErrors);
+              });
+          } else {
+            await store
+              .dispatch(Actions.UPDATE_DEVICESERVICEPART, deviceServicePart.value)
+              .then(result => {
+                loading.value = false;
+                console.clear();
+                console.log(result);
+                if (result.isSuccess) {
+                  Swal.fire({
+                    text: 'Parça başarıyla güncellendi.',
+                    icon: 'success',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Tamam',
+                    customClass: {
+                      confirmButton: 'btn btn-primary',
+                    },
+                  }).then(async () => {
+                    parcaEkleDuzenleDialogVisible.value = false;
+                    await getdeviceServicePartList(selectedDeviceServiceId.value);
+                  });
+                } else {
+                  Swal.fire({
+                    title: 'Hata',
+                    text: result.message,
+                    icon: 'error',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Tamam !',
+                    customClass: {
+                      confirmButton: 'btn fw-bold btn-danger',
+                    },
+                  });
+                }
+              })
+              .catch(() => {
+                const [error] = Object.keys(store.getters.getErrors);
+              });
+          }
+        }
+      });
+    };
+
+    const teklifSubmit = () => {
+      if (!teklifFormuRef.value) {
+        return;
+      }
+
+      teklifFormuRef.value.validate(async valid => {
+        if (valid) {
+          loading.value = true;
+
+          deviceServicePart.value.deviceServiceId = selectedDeviceServiceId.value;
+
+          if (!mode.value) {
+            await store
+              .dispatch(Actions.ADD_DEVICESERVICEPART, deviceServicePart.value)
+              .then(result => {
+                loading.value = false;
+                if (result.isSuccess) {
+                  Swal.fire({
+                    text: 'Parça başarıyla eklendi.',
+                    icon: 'success',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Tamam',
+                    customClass: {
+                      confirmButton: 'btn btn-primary',
+                    },
+                  }).then(async () => {
+                    parcaEkleDuzenleDialogVisible.value = false;
+                    await getdeviceServicePartList(selectedDeviceServiceId.value);
+                  });
+                } else {
+                  Swal.fire({
+                    title: 'Hata',
+                    text: result.message,
+                    icon: 'error',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Tamam !',
+                    customClass: {
+                      confirmButton: 'btn fw-bold btn-danger',
+                    },
+                  });
+                }
+              })
+              .catch(() => {
+                const [error] = Object.keys(store.getters.getErrors);
+              });
+          } else {
+            await store
+              .dispatch(Actions.UPDATE_DEVICESERVICEPART, deviceServicePart.value)
+              .then(result => {
+                loading.value = false;
+                console.clear();
+                console.log(result);
+                if (result.isSuccess) {
+                  Swal.fire({
+                    text: 'Parça başarıyla güncellendi.',
+                    icon: 'success',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Tamam',
+                    customClass: {
+                      confirmButton: 'btn btn-primary',
+                    },
+                  }).then(async () => {
+                    parcaEkleDuzenleDialogVisible.value = false;
+                    await getdeviceServicePartList(selectedDeviceServiceId.value);
+                  });
+                } else {
+                  Swal.fire({
+                    title: 'Hata',
+                    text: result.message,
+                    icon: 'error',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Tamam !',
+                    customClass: {
+                      confirmButton: 'btn fw-bold btn-danger',
+                    },
+                  });
+                }
+              })
+              .catch(() => {
+                const [error] = Object.keys(store.getters.getErrors);
+              });
+          }
         }
       });
     };
@@ -654,21 +1075,28 @@ export default defineComponent({
       toBeOfferedDeviceServiceList,
       parcaIslemleriDialogVisible,
       deviceServicePartList,
-      parcaEkleDialogVisible,
+      parcaEkleDuzenleDialogVisible,
       deviceServicePart,
       toBeOfferedDeviceServiceItem,
       deviceServiceItem,
       customInfo,
       parcaEkleRules,
       parcaEkleRef,
+      teklifFormDialogVisible,
+      teklifFormuRef,
+      teklifFormRules,
+      company,
+      offerSubjectCodeList,
+      offerItem,
       getToBeOfferedDeviceServiceList,
-      updateDeviceServicePart,
+      teklifSubmit,
       deleteDeviceServicePart,
       parcaEkleDialogAc,
       parcaDuzenleDialogAc,
       parcaIslemDialogAc,
       getdeviceServicePartList,
       parcaEkleSubmit,
+      teklifFormDialogAc,
     };
   },
 });

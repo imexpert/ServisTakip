@@ -4,12 +4,11 @@ import { Module, Action, VuexModule } from "vuex-module-decorators";
 import router from "@/router";
 
 @Module
-export default class DeviceServicePartModule extends VuexModule {
+export default class OfferModule extends VuexModule {
 
   @Action
-  [Actions.ADD_DEVICESERVICEPART](deviceServicePart) {
-    console.log(deviceServicePart);
-    return ApiService.post("DeviceServiceParts/CreateDeviceServicePart", deviceServicePart)
+  async [Actions.GET_OFFERNOTSENDLIST]() {
+    return await ApiService.get("Offers/GetNoSendOffer")
       .then(({ data }) => {
         return data;
       })
@@ -20,8 +19,8 @@ export default class DeviceServicePartModule extends VuexModule {
   }
 
   @Action
-  [Actions.UPDATE_DEVICESERVICEPART](deviceServicePart) {
-    return ApiService.put("DeviceServiceParts/UpdateDeviceServicePart", deviceServicePart)
+  [Actions.ADD_OFFER](offer) {
+    return ApiService.post("Offers/CreateOffer", offer)
       .then(({ data }) => {
         return data;
       })
@@ -32,8 +31,8 @@ export default class DeviceServicePartModule extends VuexModule {
   }
 
   @Action
-  [Actions.DELETE_DEVICESERVICEPART](id) {
-    return ApiService.delete("DeviceServiceParts/DeleteDeviceServicePart?id=" + id)
+  [Actions.UPDATE_SENDOFFER](offer) {
+    return ApiService.put("Offers/SendOffer", offer)
       .then(({ data }) => {
         return data;
       })
@@ -44,20 +43,8 @@ export default class DeviceServicePartModule extends VuexModule {
   }
 
   @Action
-  [Actions.GET_DEVICESERVICEPARTLIST](deviceServiceId) {
-    return ApiService.getWithParamUrl("DeviceServiceParts/GetDeviceServicePartList?deviceServiceId=" + deviceServiceId)
-      .then(({ data }) => {
-        return data;
-      })
-      .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
-      });
-  }
-
-  @Action
-  [Actions.GET_DEVICESERVICEPART](id) {
-    return ApiService.getWithParamUrl("DeviceServiceParts/GetDeviceServicePart?id=" + id)
+  [Actions.DELETE_OFFER](id) {
+    return ApiService.delete("Offers/DeleteOffer?id=" + id)
       .then(({ data }) => {
         return data;
       })
