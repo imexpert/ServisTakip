@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="02/27/2023 15:35:09" ReportInfo.Modified="02/27/2023 17:02:43" ReportInfo.CreatorVersion="2020.1.17.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/27/2023 15:35:09" ReportInfo.Modified="02/27/2023 22:51:09" ReportInfo.CreatorVersion="2020.1.17.0">
   <Styles>
     <Style Name="Style1" Fill.Color="235, 215, 42" Font="Arial, 10pt" ApplyBorder="false" ApplyTextFill="false" ApplyFont="false"/>
   </Styles>
   <Dictionary>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqnGnokm6M726K9MhodVs/+ShsgGVlx3Ao5/YCM1IKbpoWfEipkPtlrrn5HGqGx3vabZc2sHNm4rwgkC4qaOzRoLUPVy7txqZryhz9jM/q2+ht453MpMEbeN5lSySUaT8l1M6IuAuT185YbdoEl1Jz3MmkH8XHsK6V4wzZc/+i01/GbV/iWwYFnOTKYpAaeRdQfIdLXc7J7aI7OFJRGqRqHAyrbVSvjju0WYhm03V56kM=">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqnGnokm6M726K9MhodVs/+ShsgGVlx3Ao5/YCM1IKbpoWfEipkPtlrrn5HGqGx3vabZc2sHNm4rwgkC4qaOzRoLUPVy7txqZryhz9jM/q2+ht453MpMEbeN5lSySUaT8l1M6IuAuT185YbdoEl1Jz3MmkH8XHsK6V4wzZc/+i01/GbV/iWwYFnOTKYpAaeRdQfIdLXc7J7aI7OFJRGqRqHP8ejWvYvPiZeLN9WvpchsA=">
       <TableDataSource Name="DeviceServiceParts" DataType="System.Int32" Enabled="true" TableName="DeviceServiceParts">
         <Column Name="Id" DataType="System.Int64"/>
         <Column Name="DeviceServiceId" DataType="System.Int64"/>
@@ -83,29 +83,29 @@
         </TableRow>
       </TableObject>
     </ColumnHeaderBand>
-    <DataBand Name="Data1" Top="387.65" Width="718.2" Height="37.85" DataSource="DeviceServiceParts">
-      <TableObject Name="Table1" Width="718.2" Height="37.85" RepeatHeaders="false">
+    <DataBand Name="Data1" Top="387.65" Width="718.2" Height="28.4" DataSource="DeviceServiceParts">
+      <TableObject Name="Table1" Width="718.2" Height="28.4" RepeatHeaders="false">
         <TableColumn Name="Column1" Width="143.64"/>
         <TableColumn Name="Column2" Width="143.64"/>
         <TableColumn Name="Column3" Width="143.64"/>
         <TableColumn Name="Column4" Width="143.64"/>
         <TableColumn Name="Column5" Width="143.64"/>
-        <TableRow Name="Row1" Height="37.85">
+        <TableRow Name="Row1" Height="28.4">
           <TableCell Name="Cell1" Border.Lines="All" Border.Color="DimGray" Text="[DeviceServiceParts.ProductCode]" Padding="5, 1, 2, 1" VertAlign="Center" Font="Times New Roman, 10pt"/>
           <TableCell Name="Cell2" Border.Lines="All" Border.Color="DimGray" Text="[DeviceServiceParts.ProductName]" Padding="5, 1, 2, 1" VertAlign="Center" Font="Times New Roman, 10pt"/>
           <TableCell Name="Cell3" Border.Lines="All" Border.Color="DimGray" Text="[DeviceServiceParts.NumberOfProduct]" Padding="5, 1, 2, 1" VertAlign="Center" Font="Times New Roman, 10pt"/>
-          <TableCell Name="Cell4" Border.Lines="All" Border.Color="DimGray" Text="[DeviceServiceParts.UnitPrice]" Padding="5, 1, 5, 1" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 10pt"/>
-          <TableCell Name="Cell5" Border.Lines="All" Border.Color="DimGray" Text="[DeviceServiceParts.Total]" Padding="2, 1, 5, 1" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell4" Border.Lines="All" Border.Color="DimGray" Text="[DeviceServiceParts.UnitPrice] [DeviceServiceParts.CurrencyType]" Padding="5, 1, 5, 1" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 10pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Border.Color="DimGray" Text="[DeviceServiceParts.Total] [DeviceServiceParts.CurrencyType]" Padding="2, 1, 5, 1" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 10pt"/>
         </TableRow>
       </TableObject>
     </DataBand>
-    <ColumnFooterBand Name="ColumnFooter1" Top="428.7" Width="718.2" Height="113.4">
+    <ColumnFooterBand Name="ColumnFooter1" Top="419.25" Width="718.2" Height="217.35">
       <TableObject Name="Table3" Width="718.2" Height="113.4" Border.Lines="All" Fill.Color="White">
         <TableColumn Name="Column11" Width="574.56"/>
         <TableColumn Name="Column12" Width="143.64"/>
         <TableRow Name="Row4" Height="28.35">
           <TableCell Name="Cell16" Border.Lines="All" Border.Color="Silver" Text="TUTAR :" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 9pt, style=Bold"/>
-          <TableCell Name="Cell17" Border.Lines="All" Border.Color="Silver" Text="[Total]" Padding="2, 1, 5, 1" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell17" Border.Lines="All" Border.Color="Silver" Text="[Total] [DeviceServiceParts.CurrencyType]" Padding="2, 1, 5, 1" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
         </TableRow>
         <TableRow Name="Row5" Height="28.35">
           <TableCell Name="Cell21" Border.Lines="All" Border.Color="Silver" HorzAlign="Right" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
@@ -117,13 +117,18 @@
         </TableRow>
         <TableRow Name="Row7" Height="28.35">
           <TableCell Name="Cell31" Border.Lines="All" Border.Color="Silver" Text="TOPLAM :" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 9pt, style=Bold"/>
-          <TableCell Name="Cell32" Border.Lines="All" Border.Color="Silver" Text="[TotalPrice]" Padding="2, 1, 5, 1" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell32" Border.Lines="All" Border.Color="Silver" Text="[TotalPrice] [DeviceServiceParts.CurrencyType]" Padding="2, 1, 5, 1" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="1" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
         </TableRow>
       </TableObject>
+      <TextObject Name="Text10" Top="141.75" Width="85.05" Height="18.9" Text="Ödeme :" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="71, 65, 65"/>
+      <TextObject Name="Text11" Left="85.05" Top="141.75" Width="633.15" Height="18.9" Text="[Offers.PaymentText]" Padding="5, 0, 2, 0" VertAlign="Center" Font="Arial, 10pt" TextFill.Color="71, 65, 65"/>
+      <TextObject Name="Text12" Top="170.1" Width="85.05" Height="18.9" Text="Süre :" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="71, 65, 65"/>
+      <TextObject Name="Text13" Left="85.05" Top="170.1" Width="633.15" Height="18.9" Text="[Offers.DurationText]" Padding="5, 0, 2, 0" VertAlign="Center" Font="Arial, 10pt" TextFill.Color="71, 65, 65"/>
     </ColumnFooterBand>
-    <PageFooterBand Name="PageFooter1" Top="545.3" Width="718.2" Height="66.15">
-      <TextObject Name="Text10" Top="9.45" Width="122.85" Height="18.9" Text="Ödeme :" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="71, 65, 65"/>
-      <TextObject Name="Text11" Left="122.85" Top="9.45" Width="245.7" Height="18.9" Text="[Offers.OfferCompanyTitle]" Padding="5, 0, 2, 0" VertAlign="Center" Font="Arial, 10pt" TextFill.Color="71, 65, 65"/>
+    <PageFooterBand Name="PageFooter1" Top="639.8" Width="718.2" Height="213.8">
+      <TextObject Name="Text16" Left="505.95" Top="62.6" Width="207.9" Height="18.9" Text="[Offers.Phone]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text15" Left="505.95" Top="36.02" Width="207.9" Height="18.9" Text="[Offers.AuthorizeMail]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text14" Left="505.95" Top="9.45" Width="207.9" Height="18.9" Text="[Offers.AuthorizeFullname]" Font="Arial, 10pt, style=Bold"/>
     </PageFooterBand>
   </ReportPage>
 </Report>
