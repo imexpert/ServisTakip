@@ -1,4 +1,5 @@
-<template><!--begin::Row-->
+<template>
+  <!--begin::Row-->
   <div class="row g-5 g-xl-2">
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
       <el-card class="box-card" shadow="hover">
@@ -10,7 +11,8 @@
               </div>
               <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ closedDeviceServiceList.length }}</span>)
+                <span style="color: red; font-weight: bold"> {{ closedDeviceServiceList.length }}</span
+                >)
               </div>
             </div>
           </div>
@@ -92,19 +94,13 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="getClosedService(scope.row.id)">
-                        <el-icon>
-                          <ArrowRight />
-                        </el-icon>&nbsp; Talep Sonlandır
+                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Talep Sonlandır
                       </el-dropdown-item>
                       <el-dropdown-item @click="returnDeviceServiceToTechnician(scope.row.id)">
-                        <el-icon>
-                          <ArrowLeft />
-                        </el-icon>&nbsp; Teknisyene Gönder
+                        <el-icon> <ArrowLeft /> </el-icon>&nbsp; Teknisyene Gönder
                       </el-dropdown-item>
                       <el-dropdown-item @click="cancelDeviceService(scope.row.id)">
-                        <el-icon>
-                          <RemoveFilled />
-                        </el-icon>&nbsp; İptal Et
+                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -116,7 +112,7 @@
       </el-card>
     </div>
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-      
+      <OffersToSend ref="offerToSendRef"></OffersToSend>
     </div>
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
       <el-card class="box-card" shadow="hover">
@@ -132,8 +128,15 @@
 
   <el-dialog v-model="talepSonlandirDialogVisible" title="Talep Sonlandırma" width="50%" destroy-on-close align-top>
     <div class="row">
-      <el-form status-icon :rules="talepSonlandirRules" ref="talepSonlandirRef" :model="deviceServiceItem"
-        @submit.prevent="talepSonlandirSubmit()" label-width="120px" label-position="top">
+      <el-form
+        status-icon
+        :rules="talepSonlandirRules"
+        ref="talepSonlandirRef"
+        :model="deviceServiceItem"
+        @submit.prevent="talepSonlandirSubmit()"
+        label-width="120px"
+        label-position="top"
+      >
         <div class="row">
           <div class="col-md-3">
             <!--begin::Input group-->
@@ -298,8 +301,13 @@
               </label>
               <!--end::Label-->
               <el-form-item prop="resultDate">
-                <el-date-picker v-model="deviceServiceItem.resultDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                  placeholder="Select date and time" :shortcuts="shortcuts" />
+                <el-date-picker
+                  v-model="deviceServiceItem.resultDate"
+                  format="DD.MM.YYYY HH:mm:ss"
+                  type="datetime"
+                  placeholder="Select date and time"
+                  :shortcuts="shortcuts"
+                />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -477,11 +485,13 @@ import { IDeviceServiceData } from '@/core/data/DeviceServiceData';
 import { IUserData } from '@/core/data/UserData';
 import { IDetectionCodeData } from '@/core/data/DetectionCodeData';
 import { IResultCodeData } from '@/core/data/ResultCodeData';
+import OffersToSend from '@/components/offers/OffersToSend.vue';
 
 export default defineComponent({
   components: {
     ErrorMessage,
     PDFViewer,
+    OffersToSend,
   },
   setup() {
     const store = useStore();
@@ -491,9 +501,9 @@ export default defineComponent({
     var teknisyenRaporu = ref<string>('');
     const loading = ref<boolean>(false);
     var selectedDeviceServiceId = ref<string>('');
-      var deviceServiceItem = ref<IDeviceServiceData>({});
+    var deviceServiceItem = ref<IDeviceServiceData>({});
     var closedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
-    
+
     var toBeOfferedDeviceServiceItem = ref<IDeviceServiceData>({});
     var technicianItem = ref<IUserData>({
       id: '',
@@ -530,6 +540,7 @@ export default defineComponent({
     ];
 
     const talepSonlandirRef = ref<null | HTMLFormElement>(null);
+    const offerToSendRef = ref<null | HTMLFormElement>(null);
 
     var closedServiceModel = ref<IDeviceServiceData>();
 
@@ -575,7 +586,7 @@ export default defineComponent({
         });
     }
 
-    async function getToBeOfferedDeviceService(selectedId) { }
+    async function getToBeOfferedDeviceService(selectedId) {}
 
     const talepSonlandirSubmit = () => {
       if (!talepSonlandirRef.value) {
@@ -733,8 +744,6 @@ export default defineComponent({
         });
     }
 
-    
-
     async function getDetectionCodeList() {
       await store
         .dispatch(Actions.GET_DETECTIONCODE_LIST)
@@ -761,9 +770,9 @@ export default defineComponent({
         });
     }
 
-    
     onMounted(async () => {
       await getclosedDeviceServiceList();
+      await offerToSendRef.value?.getToBeOfferedDeviceServiceList();
     });
 
     return {
@@ -786,6 +795,7 @@ export default defineComponent({
       resultCodeList,
       shortcuts,
       deviceServiceItem,
+      offerToSendRef,
       talepSonlandirSubmit,
       getclosedDeviceServiceList,
       getClosedService,

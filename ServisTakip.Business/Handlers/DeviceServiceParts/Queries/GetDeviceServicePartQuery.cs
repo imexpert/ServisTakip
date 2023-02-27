@@ -18,7 +18,7 @@ namespace ServisTakip.Business.Handlers.DeviceServiceParts.Queries
                 var deviceServicePartRepo = ServiceTool.ServiceProvider.GetService<IDeviceServicePartRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
-                var deviceServicePartList = await deviceServicePartRepo.GetListAsync(s => s.Id == request.Id);
+                var deviceServicePartList = await deviceServicePartRepo.GetAsync(s => s.Id == request.Id);
                 var result = mapper.Map<DeviceServicePartDto>(deviceServicePartList);
                 return ResponseMessage<DeviceServicePartDto>.Success(result);
             }

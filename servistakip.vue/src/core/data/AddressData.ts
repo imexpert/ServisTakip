@@ -14,9 +14,9 @@ interface IAddressData {
     authorizedPhone?: string | '',
     authorizedEmail?: string | '',
     description?: string | '',
-    customer?: ICustomerData;
-    querter?: IQuerterData;
-    deviceModel?: IDeviceModelData;
+    customer?: ICustomerData | null;
+    querter?: IQuerterData | null;
+    deviceModel?: IDeviceModelData | null;
 }
 
 export { IAddressData };

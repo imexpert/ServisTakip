@@ -1,9 +1,10 @@
-﻿using ServisTakip.Core.Entities;
+﻿using ServisTakip.Entities.DTOs.Customers;
 
-namespace ServisTakip.Entities.Concrete
+namespace ServisTakip.Entities.DTOs.Companies
 {
-    public class Company : BaseEntity
+    public class CompanyDto
     {
+        public long Id { get; set; }
         public string Title { get; set; }
         public string Address { get; set; }
         public string AuthorizeFullname { get; set; }
@@ -12,6 +13,6 @@ namespace ServisTakip.Entities.Concrete
         public string Phone { get; set; }
         public string Fax { get; set; }
         public bool Status { get; set; }
-        public ICollection<Customer> Customers { get; set; }
+        public List<CustomerDto> Customers { get; set; }
     }
 }

@@ -8,8 +8,8 @@ interface IDeviceData {
     assemblyDateString?: string | '',
     description?: string | '',
     status?: string | '',
-    address?: IAddressData;
-    deviceModel?: IDeviceModelData;
+    address?: IAddressData | null;
+    deviceModel?: IDeviceModelData | null;
 }
 
 export { IDeviceData };

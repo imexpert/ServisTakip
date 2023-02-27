@@ -1,5 +1,7 @@
 enum Actions {
   // action types
+  GET_COMPANY = "getCompany",
+
   ADD_BODY_CLASSNAME = "addBodyClassName",
   REMOVE_BODY_CLASSNAME = "removeBodyClassName",
   ADD_BODY_ATTRIBUTE = "addBodyAttribute",
@@ -14,6 +16,7 @@ enum Actions {
   SET_BREADCRUMB_ACTION = "setBreadcrumbAction",
   SET_THEME_MODE_ACTION = "setThemeModeAction",
   GET_SECTOR_LIST = "getsectorlist",
+  GET_OFFERSUBJECTCODE_LIST = "getOfferSubjectCodelist",
   GET_CITY_LIST = "getCitylist",
   GET_DISTRICT_LIST = "getDistrictlist",
   GET_QUERTER_LIST = "getQuerterlist",
@@ -53,6 +56,12 @@ enum Actions {
   DELETE_DEVICESERVICEPART = "deleteDeviceServicePart",
   GET_DEVICESERVICEPARTLIST = "getDeviceServicePartList",
   GET_DEVICESERVICEPART = "getDeviceServicePart",
+
+  GET_OFFERNOTSEND = "getOfferNotSend",
+  ADD_OFFER = "addOffer",
+  UPDATE_OFFER = "updateOffer",
+  DELETE_OFFER = "deleteOffer",
+  UPDATE_SENDOFFER = "updateSendOffer"
 }
 
 enum Mutations {

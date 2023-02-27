@@ -18,11 +18,15 @@ namespace ServisTakip.Core.DataAccess.EntityFramework
 
         public TEntity Add(TEntity entity)
         {
+            Context.ChangeTracker.Clear();
+
             return Context.Add(entity).Entity;
         }
 
         public void Delete(TEntity entity)
         {
+            Context.ChangeTracker.Clear();
+
             Context.Remove(entity);
         }
 

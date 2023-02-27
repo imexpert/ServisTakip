@@ -32,8 +32,8 @@ interface IDeviceServiceData {
     dv?: string | '',
     fs?: string | '',
     ak?: string | '',
-    user?: IUserData;
-    device?: IDeviceData;
+    user?: IUserData | null;
+    device?: IDeviceData | null;
 }
 
 export { IDeviceServiceData };
