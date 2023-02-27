@@ -15,8 +15,8 @@
         public string OfferCompanyTitle { get; set; }
         public string OfferAuthorizeFullname { get; set; }
         public string OfferPhone { get; set; }
-        public string OfferDate { get; set; }
-        public string OfferStatus { get; set; }
-        public string DiscountRate { get; set; }
+        public DateTime? OfferDate { get; set; }
+        public int OfferStatus { get; set; }
+        public int? DiscountRate { get; set; }
     }
 }

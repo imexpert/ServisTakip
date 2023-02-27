@@ -57,8 +57,9 @@ enum Actions {
   GET_DEVICESERVICEPARTLIST = "getDeviceServicePartList",
   GET_DEVICESERVICEPART = "getDeviceServicePart",
 
-  GET_OFFERNOTSENDLIST = "getOfferNotSendList",
+  GET_OFFERNOTSEND = "getOfferNotSend",
   ADD_OFFER = "addOffer",
+  UPDATE_OFFER = "updateOffer",
   DELETE_OFFER = "deleteOffer",
   UPDATE_SENDOFFER = "updateSendOffer"
 }

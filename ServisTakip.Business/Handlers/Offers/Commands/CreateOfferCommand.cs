@@ -6,6 +6,7 @@ using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
 using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Offers;
+using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.Business.Handlers.Offers.Commands
 {
@@ -20,6 +21,7 @@ namespace ServisTakip.Business.Handlers.Offers.Commands
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
                 var offer = mapper.Map<Offer>(request.Model);
+                offer.OfferStatus = (int)OfferStatusCodes.Gonderilmedi;
                 offerRepo.Add(offer);
                 await offerRepo.SaveChangesAsync();
 

@@ -33,6 +33,21 @@ namespace ServisTakip.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateOfferDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPut]
+        public async Task<IActionResult> UpdateOfferAsync([FromBody] CreateOfferDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new UpdateOfferCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateOfferDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
         public async Task<IActionResult> SendOfferAsync([FromBody] CreateOfferDto model)
         {
             return CreateActionResult(await Mediator.Send(new SendOfferCommand() { Model = model }));

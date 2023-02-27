@@ -7,8 +7,8 @@ import router from "@/router";
 export default class OfferModule extends VuexModule {
 
   @Action
-  async [Actions.GET_OFFERNOTSENDLIST]() {
-    return await ApiService.get("Offers/GetNoSendOffer")
+  async [Actions.GET_OFFERNOTSEND](deviceServiceId) {
+    return await ApiService.getWithParamUrl("Offers/GetNoSendOffer?deviceServiceId=" + deviceServiceId)
       .then(({ data }) => {
         return data;
       })
@@ -21,6 +21,18 @@ export default class OfferModule extends VuexModule {
   @Action
   [Actions.ADD_OFFER](offer) {
     return ApiService.post("Offers/CreateOffer", offer)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
+  [Actions.UPDATE_OFFER](offer) {
+    return ApiService.put("Offers/UpdateOffer", offer)
       .then(({ data }) => {
         return data;
       })
