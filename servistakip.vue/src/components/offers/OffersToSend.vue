@@ -8,7 +8,8 @@
           </div>
           <div class="col-md-3">
             (<span style="font-weight: 800; font-size: 14px"> Toplam Teklif Sayısı :&nbsp;</span>
-            <span style="color: red; font-weight: bold"> {{ toBeOfferedDeviceServiceList.length }}</span>)
+            <span style="color: red; font-weight: bold"> {{ toBeOfferedDeviceServiceList.length }}</span
+            >)
           </div>
         </div>
       </div>
@@ -75,24 +76,16 @@
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item @click="parcaIslemDialogAc(scope.row.id)">
-                    <el-icon>
-                      <Expand />
-                    </el-icon>&nbsp; Y.Parça
+                    <el-icon> <Expand /> </el-icon>&nbsp; Y.Parça
+                  </el-dropdown-item>
+                  <el-dropdown-item @click="getOfferReport(scope.row.id)">
+                    <el-icon> <CreditCard /> </el-icon>&nbsp; Teklif Görüntüle
                   </el-dropdown-item>
                   <el-dropdown-item>
-                    <el-icon>
-                      <CreditCard />
-                    </el-icon>&nbsp; Teklif Gönder
+                    <el-icon> <Document /> </el-icon>&nbsp; Servis Kaydı
                   </el-dropdown-item>
                   <el-dropdown-item>
-                    <el-icon>
-                      <Document />
-                    </el-icon>&nbsp; Servis Kaydı
-                  </el-dropdown-item>
-                  <el-dropdown-item>
-                    <el-icon>
-                      <RemoveFilled />
-                    </el-icon>&nbsp; Sil
+                    <el-icon> <RemoveFilled /> </el-icon>&nbsp; Sil
                   </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
@@ -222,19 +215,13 @@
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item @click="parcaEkleDialogAc()">
-                      <el-icon>
-                        <Plus />
-                      </el-icon>&nbsp; Yeni Ekle
+                      <el-icon> <Plus /> </el-icon>&nbsp; Yeni Ekle
                     </el-dropdown-item>
                     <el-dropdown-item @click="parcaDuzenleDialogAc(scope.row.id)" divided>
-                      <el-icon>
-                        <ArrowRight />
-                      </el-icon>&nbsp; Düzenle
+                      <el-icon> <ArrowRight /> </el-icon>&nbsp; Düzenle
                     </el-dropdown-item>
                     <el-dropdown-item @click="deleteDeviceServicePart(scope.row.id)">
-                      <el-icon>
-                        <ArrowLeft />
-                      </el-icon>&nbsp; Sil
+                      <el-icon> <ArrowLeft /> </el-icon>&nbsp; Sil
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
@@ -259,8 +246,15 @@
   </el-dialog>
 
   <el-dialog v-model="parcaEkleDuzenleDialogVisible" title="Parça Ekle/Düzenle" width="30%" destroy-on-close align-top>
-    <el-form status-icon :rules="parcaEkleRules" ref="parcaEkleRef" :model="deviceServicePart"
-      @submit.prevent="parcaEkleSubmit()" label-width="120px" label-position="top">
+    <el-form
+      status-icon
+      :rules="parcaEkleRules"
+      ref="parcaEkleRef"
+      :model="deviceServicePart"
+      @submit.prevent="parcaEkleSubmit()"
+      label-width="120px"
+      label-position="top"
+    >
       <div class="row">
         <div class="col-md-4">
           <!--begin::Input group-->
@@ -367,8 +361,15 @@
   </el-dialog>
 
   <el-dialog v-model="teklifFormDialogVisible" title="Teklif Formu" width="40%" destroy-on-close align-top>
-    <el-form status-icon :rules="teklifFormRules" ref="teklifFormuRef" :model="offerItem" @submit.prevent="teklifSubmit()"
-      label-width="120px" label-position="top">
+    <el-form
+      status-icon
+      :rules="teklifFormRules"
+      ref="teklifFormuRef"
+      :model="offerItem"
+      @submit.prevent="teklifSubmit()"
+      label-width="120px"
+      label-position="top"
+    >
       <div class="row">
         <div class="col-md-12">
           <el-collapse>
@@ -518,9 +519,18 @@
                     </label>
                     <!--end::Label-->
                     <el-form-item prop="offerSubjectCodeId">
-                      <el-select placeholder="Teklif konusu" filterable clearable v-model="offerItem.offerSubjectCodeId">
-                        <el-option v-for="item in offerSubjectCodeList" :key="item.id" :label="item.name"
-                          :value="item.id">
+                      <el-select
+                        placeholder="Teklif konusu"
+                        filterable
+                        clearable
+                        v-model="offerItem.offerSubjectCodeId"
+                      >
+                        <el-option
+                          v-for="item in offerSubjectCodeList"
+                          :key="item.id"
+                          :label="item.name"
+                          :value="item.id"
+                        >
                         </el-option>
                       </el-select>
                     </el-form-item>
@@ -536,8 +546,12 @@
                     </label>
                     <!--end::Label-->
                     <el-form-item prop="offerDate">
-                      <el-date-picker format="DD.MM.YYYY HH:mm:ss" type="datetime" placeholder="Teklif tarihi seçiniz"
-                        v-model="offerItem.offerDate" />
+                      <el-date-picker
+                        format="DD.MM.YYYY HH:mm:ss"
+                        type="datetime"
+                        placeholder="Teklif tarihi seçiniz"
+                        v-model="offerItem.offerDate"
+                      />
                     </el-form-item>
                   </div>
                   <!--end::Input group-->
@@ -575,6 +589,23 @@
         <!--end::Button-->
       </div>
     </el-form>
+  </el-dialog>
+
+  <el-dialog
+    v-model="raporDialogVisible"
+    title="Teknisyen Raporu"
+    width="50%"
+    style="height: 700px"
+    destroy-on-close
+    center
+  >
+    <div class="row">
+      <div class="col-md-12">
+        <!-- <VuePdf :src="teknisyenRaporu" annotation-layer /> -->
+        <PDFViewer :source="teklifRaporu" style="height: 600px" @download="handleDownload" />
+        <!-- <pdf src="/sample.pdf" @error="error" style="overflow-y: auto; height: 500px"></pdf> -->
+      </div>
+    </div>
   </el-dialog>
 </template>
 
@@ -618,8 +649,10 @@ export default defineComponent({
     var parcaIslemleriDialogVisible = ref<boolean>(false);
     var teklifFormDialogVisible = ref<boolean>(false);
     var parcaEkleDuzenleDialogVisible = ref<boolean>(false);
+    var raporDialogVisible = ref<boolean>(false);
     var toBeOfferedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
     var deviceServicePartList = ref<Array<IDeviceServicePartData>>([]);
+    var teklifRaporu = ref<string>('');
     var deviceServicePart = ref<IDeviceServicePartData>({
       currencyType: '',
       description: '',
@@ -882,6 +915,20 @@ export default defineComponent({
         });
     }
 
+    async function getOfferReport(deviceServiceId) {
+      await store
+        .dispatch(Actions.GET_OFFERREPORT, deviceServiceId)
+        .then(result => {
+          if (result.isSuccess) {
+            raporDialogVisible.value = true;
+            teklifRaporu.value = 'data:application/pdf;base64,' + result.data.report;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
     const parcaEkleSubmit = () => {
       if (!parcaEkleRef.value) {
         return;
@@ -969,7 +1016,7 @@ export default defineComponent({
     };
 
     const teklifSubmit = () => {
-      console.log(offerItem.value)
+      console.log(offerItem.value);
       if (!teklifFormuRef.value) {
         return;
       }
@@ -1047,9 +1094,16 @@ export default defineComponent({
                 const [error] = Object.keys(store.getters.getErrors);
               });
           }
-
         }
       });
+    };
+
+    const handleDownload = value => {
+      var a = document.createElement('a'); //Create <a>
+      a.href = value.src;
+      a.download = 'TeklifRaporu.pdf'; //File name Here
+      a.click(); //Downloaded file
+      console.log(value);
     };
 
     return {
@@ -1070,6 +1124,8 @@ export default defineComponent({
       company,
       offerSubjectCodeList,
       offerItem,
+      raporDialogVisible,
+      teklifRaporu,
       getToBeOfferedDeviceServiceList,
       teklifSubmit,
       deleteDeviceServicePart,
@@ -1079,6 +1135,8 @@ export default defineComponent({
       getdeviceServicePartList,
       parcaEkleSubmit,
       teklifFormDialogAc,
+      handleDownload,
+      getOfferReport,
     };
   },
 });

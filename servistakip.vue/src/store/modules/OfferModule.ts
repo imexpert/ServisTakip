@@ -65,4 +65,16 @@ export default class OfferModule extends VuexModule {
         router.push({ name: 'sign-in' });
       });
   }
+
+  @Action
+  [Actions.GET_OFFERREPORT](deviceServiceId) {
+    return ApiService.getWithParamUrl("Offers/GetOfferReport?deviceServiceId=" + deviceServiceId)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
 }

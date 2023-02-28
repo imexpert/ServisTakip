@@ -61,7 +61,8 @@ enum Actions {
   ADD_OFFER = "addOffer",
   UPDATE_OFFER = "updateOffer",
   DELETE_OFFER = "deleteOffer",
-  UPDATE_SENDOFFER = "updateSendOffer"
+  UPDATE_SENDOFFER = "updateSendOffer",
+  GET_OFFERREPORT = "getOfferReport"
 }
 
 enum Mutations {
