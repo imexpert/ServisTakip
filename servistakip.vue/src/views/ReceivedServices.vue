@@ -667,6 +667,19 @@ export default defineComponent({
         });
     }
 
+    async function getPartsExchangeDeviceServiceList() {
+      await store
+        .dispatch(Actions.GET_PARTSEXCHANGEDEVICESERVICELIST)
+        .then(result => {
+          if (result.isSuccess) {
+            partsExchangeDeviceServiceList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
     async function takeDeviceServiceBack(id) {
       assignTechnicianModel.value.id = id;
       await store
@@ -814,6 +827,7 @@ export default defineComponent({
     onMounted(async () => {
       await getReceivedDeviceServiceList();
       await getTechnicianAssignedDeviceServiceList();
+      await getPartsExchangeDeviceServiceList();
     });
 
     return {
@@ -843,6 +857,7 @@ export default defineComponent({
       teknisyenRaporSubmit,
       handleDownload,
       kapatilacakIslereGonderSubmit,
+      getPartsExchangeDeviceServiceList,
     };
   },
 });

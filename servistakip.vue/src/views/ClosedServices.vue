@@ -486,7 +486,7 @@ export default defineComponent({
     ErrorMessage,
     PDFViewer,
     OffersToSend,
-    OffersSent
+    OffersSent,
   },
   setup() {
     const store = useStore();
@@ -536,6 +536,7 @@ export default defineComponent({
 
     const talepSonlandirRef = ref<null | HTMLFormElement>(null);
     const offerToSendRef = ref<null | HTMLFormElement>(null);
+    const offersSentRef = ref<null | HTMLFormElement>(null);
 
     var closedServiceModel = ref<IDeviceServiceData>();
 
@@ -768,6 +769,7 @@ export default defineComponent({
     onMounted(async () => {
       await getclosedDeviceServiceList();
       await offerToSendRef.value?.getToBeOfferedDeviceServiceList();
+      await offersSentRef.value?.getSentOfferedDeviceServiceList();
     });
 
     return {
@@ -791,6 +793,7 @@ export default defineComponent({
       shortcuts,
       deviceServiceItem,
       offerToSendRef,
+      offersSentRef,
       talepSonlandirSubmit,
       getclosedDeviceServiceList,
       getClosedService,

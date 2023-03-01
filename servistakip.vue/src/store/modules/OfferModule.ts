@@ -57,6 +57,20 @@ export default class OfferModule extends VuexModule {
   }
 
   @Action
+  [Actions.UPDATE_SENDOFFERAGAIN](offer) {
+    console.clear();
+    console.log(offer);
+    return ApiService.put("Offers/SendOfferAgain", offer.value)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.DELETE_OFFER](id) {
     return ApiService.delete("Offers/DeleteOffer?id=" + id)
       .then(({ data }) => {

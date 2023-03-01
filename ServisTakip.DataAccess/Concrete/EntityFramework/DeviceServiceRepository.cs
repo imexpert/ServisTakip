@@ -122,6 +122,32 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<List<DeviceService>> GetSentOfferedDeviceServiceWithStatusCode(CancellationToken cancellationToken)
+        {
+            return await _context.DeviceServices
+                .Include(s => s.User).AsNoTracking()
+                .Include(s => s.Device)
+                .ThenInclude(s => s.DeviceModel)
+                .ThenInclude(s => s.DeviceBrand)
+                .ThenInclude(s => s.DeviceType)
+                .AsNoTracking()
+                .Include(s => s.Device)
+                .ThenInclude(s => s.Address)
+                .ThenInclude(s => s.Customer)
+                .ThenInclude(s => s.Sector)
+                .AsNoTracking()
+                .Include(s => s.Device)
+                .ThenInclude(s => s.Address)
+                .ThenInclude(s => s.Querter)
+                .ThenInclude(s => s.District)
+                .ThenInclude(s => s.City)
+                .AsNoTracking()
+                .Where(s => (s.StatusCode == ((int)StatusCodes.TeklifGonderildi) || s.StatusCode == ((int)StatusCodes.TeklifGonderilecek)) && s.Device.Address.Customer.CompanyId == Utils.CompanyId)
+                .AsNoTracking()
+                .OrderByDescending(s => s.RecordDate)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<DeviceService> GetDeviceServiceWithId(long id, CancellationToken cancellationToken)
         {
             return await _context.DeviceServices

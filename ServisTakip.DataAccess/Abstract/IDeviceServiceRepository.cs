@@ -12,5 +12,6 @@ namespace ServisTakip.DataAccess.Abstract
         Task<List<TechnicianDeviceServiceReportModel>> GetTechnicianDeviceServiceListAsync(long userId, CancellationToken cancellationToken);
         Task<DeviceService> GetDeviceServiceWithId(long id, CancellationToken cancellationToken);
         Task<List<DeviceService>> GetToBeOfferedDeviceServiceWithStatusCode(CancellationToken cancellationToken);
+        Task<List<DeviceService>> GetSentOfferedDeviceServiceWithStatusCode(CancellationToken cancellationToken);
     }
 }

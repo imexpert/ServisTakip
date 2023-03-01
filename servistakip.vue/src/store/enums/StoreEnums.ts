@@ -38,10 +38,12 @@ enum Actions {
 
   ADD_DEVICESERVICE = "addDeviceService",
   GET_RECEIVEDDEVICESERVICE = "getReceivedDeviceService",
+  GET_PARTSEXCHANGEDEVICESERVICELIST = "getPartsExchangeDeviceServiceList",
   GET_DEVICESERVICEWITHID = "getDeviceServiceWithId",
   GET_TECHNICIANASSINEDDEVICESERVICE = "getTechnicianAssignedDeviceService",
   GET_CLOSEDDEVICESERVICE = "getClosedDeviceService",
   GET_TOBEOFFEREDDEVICESERVICE = "getToBeOfferedDeviceService",
+  GET_SENTOFFEREDDEVICESERVICE = "getSentOfferedDeviceService",
   UPDATE_ASSIGNTECHNICIANDEVICESERVICE = "updateAssignTechnicianDeviceService",
   UPDATE_RETURNDEVICESERVICETOTECHNICIAN = "updateReturnDeviceServiceTechnician",
   UPDATE_CLOSEDEVICESERVICE = "updateCloseDeviceService",
@@ -49,6 +51,7 @@ enum Actions {
   UPDATE_CANCELDEVICESERVICE = "updateCancelDeviceService",
   UPDATE_SENDDEVICESERVICETOCLOSE = "updateSendDeviceServiceToClose",
   DELETE_DELETEDEVICESERVICE = "deleteDeleteDeviceService",
+  UPDATE_APPROVEDEVICESERVICEOFFER = "updateApproveDeviceServiceOffer",
   GET_TECHNICIANDEVICESERVICEREPORT = "getTechnicianDeviceServiceReport",
 
   ADD_DEVICESERVICEPART = "addDeviceServicePart",
@@ -62,6 +65,7 @@ enum Actions {
   UPDATE_OFFER = "updateOffer",
   DELETE_OFFER = "deleteOffer",
   UPDATE_SENDOFFER = "updateSendOffer",
+  UPDATE_SENDOFFERAGAIN = "updateSendOfferAgain",
   GET_OFFERREPORT = "getOfferReport"
 }
 
