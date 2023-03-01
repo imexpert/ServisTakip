@@ -115,14 +115,7 @@
       <OffersToSend ref="offerToSendRef"></OffersToSend>
     </div>
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-      <el-card class="box-card" shadow="hover">
-        <template #header>
-          <div class="card-header">
-            <h4><span>Gönderilen Teklifler</span></h4>
-          </div>
-        </template>
-        <div></div>
-      </el-card>
+      <OffersSent ref="offersSentRef"></OffersSent>
     </div>
   </div>
 
@@ -486,12 +479,14 @@ import { IUserData } from '@/core/data/UserData';
 import { IDetectionCodeData } from '@/core/data/DetectionCodeData';
 import { IResultCodeData } from '@/core/data/ResultCodeData';
 import OffersToSend from '@/components/offers/OffersToSend.vue';
+import OffersSent from '@/components/offers/OffersSent.vue';
 
 export default defineComponent({
   components: {
     ErrorMessage,
     PDFViewer,
     OffersToSend,
+    OffersSent
   },
   setup() {
     const store = useStore();

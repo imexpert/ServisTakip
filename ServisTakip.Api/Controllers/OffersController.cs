@@ -51,7 +51,7 @@ namespace ServisTakip.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateOfferDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> SendOfferAsync([FromBody] CreateOfferDto model)
+        public async Task<IActionResult> SendOfferAsync([FromBody] OfferDto model)
         {
             return CreateActionResult(await Mediator.Send(new SendOfferCommand() { Model = model }));
         }

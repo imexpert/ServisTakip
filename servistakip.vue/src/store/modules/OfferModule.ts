@@ -44,7 +44,9 @@ export default class OfferModule extends VuexModule {
 
   @Action
   [Actions.UPDATE_SENDOFFER](offer) {
-    return ApiService.put("Offers/SendOffer", offer)
+    console.clear();
+    console.log(offer);
+    return ApiService.put("Offers/SendOffer", offer.value)
       .then(({ data }) => {
         return data;
       })

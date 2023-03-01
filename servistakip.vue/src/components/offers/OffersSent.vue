@@ -4,17 +4,17 @@
       <div class="card-header">
         <div class="row">
           <div class="col-md-2">
-            <h4>Gönderilecek Teklifler</h4>
+            <h4>Gönderilen Teklifler</h4>
           </div>
           <div class="col-md-3">
             (<span style="font-weight: 800; font-size: 14px"> Toplam Teklif Sayısı :&nbsp;</span>
-            <span style="color: red; font-weight: bold"> {{ toBeOfferedDeviceServiceList.length }}</span>)
+            <span style="color: red; font-weight: bold"> {{ toSentOfferedDeviceServiceList.length }}</span>)
           </div>
         </div>
       </div>
     </template>
     <div>
-      <el-table :data="toBeOfferedDeviceServiceList" style="width: 100%" max-height="150" height="150">
+      <el-table :data="toSentOfferedDeviceServiceList" style="width: 100%" max-height="150" height="150">
         <el-table-column label="C.No" width="90">
           <template #default="scope">
             <div style="display: flex; align-items: center">
@@ -636,7 +636,7 @@ export default defineComponent({
     var teklifFormDialogVisible = ref<boolean>(false);
     var parcaEkleDuzenleDialogVisible = ref<boolean>(false);
     var raporDialogVisible = ref<boolean>(false);
-    var toBeOfferedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
+    var toSentOfferedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
     var deviceServicePartList = ref<Array<IDeviceServicePartData>>([]);
     var teklifRaporu = ref<string>('');
     var deviceServicePart = ref<IDeviceServicePartData>({
@@ -819,13 +819,13 @@ export default defineComponent({
       });
     }
 
-    async function getToBeOfferedDeviceServiceList() {
+    async function gettoSentOfferedDeviceServiceList() {
       await store
         .dispatch(Actions.GET_TOBEOFFEREDDEVICESERVICE)
         .then(result => {
           if (result.isSuccess) {
             console.log(result.data);
-            toBeOfferedDeviceServiceList.value = result.data;
+            toSentOfferedDeviceServiceList.value = result.data;
           }
         })
         .catch(() => {
@@ -838,7 +838,7 @@ export default defineComponent({
         .dispatch(Actions.GET_DEVICESERVICEPARTLIST, deviceServiceId)
         .then(result => {
           if (result.isSuccess) {
-            var serviceItem = toBeOfferedDeviceServiceList.value.find(s => s.id === deviceServiceId);
+            var serviceItem = toSentOfferedDeviceServiceList.value.find(s => s.id === deviceServiceId);
             customInfo.value.customerTitle = serviceItem?.device?.address?.customer?.title;
             customInfo.value.deviceId = serviceItem?.deviceId;
             customInfo.value.serviceCode = serviceItem?.serviceBootCode;
@@ -1112,7 +1112,7 @@ export default defineComponent({
                     confirmButton: 'btn btn-primary',
                   },
                 }).then(async () => {
-                  await getToBeOfferedDeviceServiceList();
+                  await gettoSentOfferedDeviceServiceList();
                 });
               } else {
                 Swal.fire({
@@ -1145,7 +1145,7 @@ export default defineComponent({
 
     return {
       loading,
-      toBeOfferedDeviceServiceList,
+      toSentOfferedDeviceServiceList,
       parcaIslemleriDialogVisible,
       deviceServicePartList,
       parcaEkleDuzenleDialogVisible,
@@ -1163,7 +1163,7 @@ export default defineComponent({
       offerItem,
       raporDialogVisible,
       teklifRaporu,
-      getToBeOfferedDeviceServiceList,
+      gettoSentOfferedDeviceServiceList,
       teklifSubmit,
       deleteDeviceServicePart,
       parcaEkleDialogAc,
