@@ -133,6 +133,21 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<OfferReport>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPost]
+        public async Task<IActionResult> SendOrderReceiptReportAsync([FromBody] MailModel model)
+        {
+            return CreateActionResult(await Mediator.Send(new SendOrderReceiptAsMailCommand() { Model= model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

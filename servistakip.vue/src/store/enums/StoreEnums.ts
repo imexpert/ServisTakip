@@ -63,6 +63,7 @@ enum Actions {
   GET_OFFERNOTSEND = "getOfferNotSend",
   GET_ORDERRECEIPT = "getOrderReceipt",
   ADD_OFFER = "addOffer",
+  SEND_ORDERRECEIPT = "sendOrderReceipt",
   UPDATE_OFFER = "updateOffer",
   DELETE_OFFER = "deleteOffer",
   UPDATE_SENDOFFER = "updateSendOffer",
