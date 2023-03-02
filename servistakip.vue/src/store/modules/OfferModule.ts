@@ -43,6 +43,18 @@ export default class OfferModule extends VuexModule {
   }
 
   @Action
+  [Actions.SEND_ORDERRECEIPT](mailModel) {
+    return ApiService.post("Offers/SendOrderReceiptReport", mailModel)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.UPDATE_OFFER](offer) {
     return ApiService.put("Offers/UpdateOffer", offer)
       .then(({ data }) => {

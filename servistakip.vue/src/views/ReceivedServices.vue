@@ -11,7 +11,8 @@
               </div>
               <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ receivedDeviceServiceList.length }}</span>)
+                <span style="color: red; font-weight: bold"> {{ receivedDeviceServiceList.length }}</span
+                >)
               </div>
             </div>
           </div>
@@ -79,14 +80,10 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="teknisyenAtaAc(scope.row.id)">
-                        <el-icon>
-                          <ArrowRight />
-                        </el-icon>&nbsp; Teknisyen Ata
+                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Teknisyen Ata
                       </el-dropdown-item>
                       <el-dropdown-item @click="cancelDeviceService(scope.row.id)">
-                        <el-icon>
-                          <RemoveFilled />
-                        </el-icon>&nbsp; İptal Et
+                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -107,7 +104,8 @@
               </div>
               <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ technicianAssignedDeviceServiceList.length }}</span>)
+                <span style="color: red; font-weight: bold"> {{ technicianAssignedDeviceServiceList.length }}</span
+                >)
               </div>
             </div>
           </div>
@@ -189,29 +187,19 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="kapatilacakIslereGonderSubmit(scope.row.id)">
-                        <el-icon>
-                          <ArrowRight />
-                        </el-icon>&nbsp; Talebi Kapat
+                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Talebi Kapat
                       </el-dropdown-item>
                       <el-dropdown-item @click="takeDeviceServiceBack(scope.row.id)">
-                        <el-icon>
-                          <ArrowLeft />
-                        </el-icon>&nbsp; Geri
+                        <el-icon> <ArrowLeft /> </el-icon>&nbsp; Geri
                       </el-dropdown-item>
                       <el-dropdown-item @click="cancelDeviceService(scope.row.id)">
-                        <el-icon>
-                          <RemoveFilled />
-                        </el-icon>&nbsp; İptal Et
+                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                       <el-dropdown-item @click="deleteDeviceService(scope.row.id)">
-                        <el-icon>
-                          <DeleteFilled />
-                        </el-icon>&nbsp; Sil
+                        <el-icon> <DeleteFilled /> </el-icon>&nbsp; Sil
                       </el-dropdown-item>
                       <el-dropdown-item @click="teknisyenRaporAc()">
-                        <el-icon>
-                          <Share />
-                        </el-icon>&nbsp; Teknisyen Raporu
+                        <el-icon> <Share /> </el-icon>&nbsp; Teknisyen Raporu
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -292,24 +280,16 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item>
-                        <el-icon>
-                          <ArrowRight />
-                        </el-icon>&nbsp; Teknisyen Ata
+                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Teknisyen Ata
                       </el-dropdown-item>
                       <el-dropdown-item @click="getOrderReceipt(scope.row.id)">
-                        <el-icon>
-                          <Share />
-                        </el-icon>&nbsp; Sipariş Fişi
+                        <el-icon> <Share /> </el-icon>&nbsp; Sipariş Fişi
                       </el-dropdown-item>
                       <el-dropdown-item @click="parcaListesiDialogAc(scope.row.id)">
-                        <el-icon>
-                          <List />
-                        </el-icon>&nbsp; Parça Listesi
+                        <el-icon> <List /> </el-icon>&nbsp; Parça Listesi
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon>
-                          <RemoveFilled />
-                        </el-icon>&nbsp; İptal Et
+                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -324,8 +304,15 @@
 
   <el-dialog v-model="teknisyenAtaDialogVisible" title="Teknisyen Atama" width="40%" destroy-on-close center>
     <div class="row">
-      <el-form status-icon :rules="teknisyenAtaRules" ref="formAssignTechnicianRef" :model="assignTechnicianModel"
-        @submit.prevent="teknisyenAtaSubmit()" label-width="120px" label-position="top">
+      <el-form
+        status-icon
+        :rules="teknisyenAtaRules"
+        ref="formAssignTechnicianRef"
+        :model="assignTechnicianModel"
+        @submit.prevent="teknisyenAtaSubmit()"
+        label-width="120px"
+        label-position="top"
+      >
         <div class="row">
           <div class="col-md-12">
             <!--begin::Input group-->
@@ -338,8 +325,12 @@
 
               <el-form-item prop="userId">
                 <el-select placeholder="Teknisyen" filterable clearable v-model="assignTechnicianModel.userId">
-                  <el-option v-for="item in technicianUserList" :key="item.id"
-                    :label="item.firstname + ' ' + item.lastname" :value="item.id">
+                  <el-option
+                    v-for="item in technicianUserList"
+                    :key="item.id"
+                    :label="item.firstname + ' ' + item.lastname"
+                    :value="item.id"
+                  >
                     <div class="row">
                       <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
                     </div>
@@ -369,8 +360,15 @@
 
   <el-dialog v-model="teknisyenRaporDialogVisible" title="Teknisyen Raporu" width="40%" destroy-on-close center>
     <div class="row">
-      <el-form status-icon :rules="teknisyenAtaRules" ref="formAssignTechnicianRef" :model="assignTechnicianModel"
-        @submit.prevent="teknisyenRaporSubmit()" label-width="120px" label-position="top">
+      <el-form
+        status-icon
+        :rules="teknisyenAtaRules"
+        ref="formAssignTechnicianRef"
+        :model="assignTechnicianModel"
+        @submit.prevent="teknisyenRaporSubmit()"
+        label-width="120px"
+        label-position="top"
+      >
         <div class="row">
           <div class="col-md-12">
             <!--begin::Input group-->
@@ -383,8 +381,12 @@
 
               <el-form-item prop="userId">
                 <el-select placeholder="Teknisyen" filterable clearable v-model="assignTechnicianModel.userId">
-                  <el-option v-for="item in technicianUserList" :key="item.id" :label="item.firstname + item.lastname"
-                    :value="item.id">
+                  <el-option
+                    v-for="item in technicianUserList"
+                    :key="item.id"
+                    :label="item.firstname + item.lastname"
+                    :value="item.id"
+                  >
                     <div class="row">
                       <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
                     </div>
@@ -412,8 +414,14 @@
     </div>
   </el-dialog>
 
-  <el-dialog v-model="raporDialogVisible" title="Teknisyen Raporu" width="50%" style="height: 700px" destroy-on-close
-    center>
+  <el-dialog
+    v-model="raporDialogVisible"
+    title="Teknisyen Raporu"
+    width="50%"
+    style="height: 700px"
+    destroy-on-close
+    center
+  >
     <div class="row">
       <div class="col-md-12">
         <!-- <VuePdf :src="teknisyenRaporu" annotation-layer /> -->
@@ -423,8 +431,14 @@
     </div>
   </el-dialog>
 
-  <el-dialog v-model="parcaListesiDialogVisible" title="Parça Listesi" width="50%" style="height: 400px" destroy-on-close
-    center>
+  <el-dialog
+    v-model="parcaListesiDialogVisible"
+    title="Parça Listesi"
+    width="50%"
+    style="height: 400px"
+    destroy-on-close
+    center
+  >
     <div class="row">
       <div class="col-md-12">
         <el-table :data="deviceServicePartList" border style="width: 100%" max-height="300" height="300">
@@ -484,31 +498,60 @@
     </div>
   </el-dialog>
 
-  <el-dialog v-model="orderReceiptDialogVisible" title="Sipariş Fişi" width="60%" style="height: 800px" destroy-on-close
-    center>
-    <div class="row">
-      <div class="col-md-3">
-        <el-button type="primary">
-          <el-icon>
-            <Check />
-          </el-icon>&nbsp; Mail Gönder
-        </el-button>
+  <el-dialog
+    v-model="orderReceiptDialogVisible"
+    title="Sipariş Fişi"
+    width="60%"
+    style="height: 800px"
+    destroy-on-close
+    center
+  >
+    <el-form
+      status-icon
+      :rules="siparisFisGonderRules"
+      ref="siparisFisGonderRef"
+      :model="mailModel"
+      @submit.prevent="siparisFisiGonderSubmit()"
+      label-width="120px"
+      label-position="top"
+    >
+      <div class="row">
+        <div class="col-md-3 mt-2">
+          <!--begin::Button-->
+          <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+            <span v-if="!loading" class="indicator-label"> Mail Gönder </span>
+            <span v-if="loading" class="indicator-progress">
+              Lütfen Bekleyiniz...
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </button>
+        </div>
+        <div class="col-md-3">
+          <!--begin::Input group-->
+          <div class="d-flex flex-column fv-row">
+            <!--begin::Label-->
+            <label class="d-flex align-items-center fs-6 fw-bold">
+              <span>Mail Adresi</span>
+            </label>
+            <!--end::Label-->
+            <el-form-item prop="mailAddress">
+              <el-input v-model="mailModel.mailAddress"></el-input>
+            </el-form-item>
+          </div>
+          <!--end::Input group-->
+        </div>
+        <div class="col-md-12 mt-5" v-loading="loading">
+          <!-- <VuePdf :src="teknisyenRaporu" annotation-layer /> -->
+          <PDFViewer :source="orderReceiptReport" style="height: 600px" @download="handleOrderReceiptDownload" />
+          <!-- <pdf src="/sample.pdf" @error="error" style="overflow-y: auto; height: 500px"></pdf> -->
+        </div>
       </div>
-      <div class="col-md-3">
-        <el-input v-model="orderReceiptMailAddress"></el-input>
-      </div>
-      <div class="col-md-12 mt-5">
-        <!-- <VuePdf :src="teknisyenRaporu" annotation-layer /> -->
-        <PDFViewer :source="orderReceiptReport" style="height: 600px" @download="handleOrderReceiptDownload" />
-        <!-- <pdf src="/sample.pdf" @error="error" style="overflow-y: auto; height: 500px"></pdf> -->
-      </div>
-    </div>
+    </el-form>
   </el-dialog>
 </template>
 
 <script lang="ts">
-import type { ElTableColumn } from 'element-plus'
-import { defineComponent, onMounted, onActivated, ref } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { ErrorMessage } from 'vee-validate';
@@ -520,6 +563,10 @@ import { IUserData } from '@/core/data/UserData';
 import { IAssignTechnicianData } from '@/core/data/AssignTechnicianData';
 import { IDeviceServicePartData } from '@/core/data/DeviceServicePartData';
 
+interface IMailModel {
+  mailAddress: string;
+  deviceServiceId: string;
+}
 export default defineComponent({
   components: {
     ErrorMessage,
@@ -537,6 +584,10 @@ export default defineComponent({
     const loading = ref<boolean>(false);
     var selectedDeviceServiceId = ref<string>('');
     var orderReceiptMailAddress = ref<string>('');
+    var mailModel = ref<IMailModel>({
+      mailAddress: '',
+      deviceServiceId: '',
+    });
     var deviceServicePartList = ref<Array<IDeviceServicePartData>>([]);
 
     var receivedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
@@ -545,6 +596,7 @@ export default defineComponent({
     var technicianUserList = ref<Array<IUserData>>([]);
 
     const formAssignTechnicianRef = ref<null | HTMLFormElement>(null);
+    const siparisFisGonderRef = ref<null | HTMLFormElement>(null);
 
     var assignTechnicianModel = ref<IAssignTechnicianData>({
       id: '',
@@ -557,6 +609,16 @@ export default defineComponent({
         {
           required: true,
           message: 'Teknisyen seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+    });
+
+    const siparisFisGonderRules = ref({
+      mailAddress: [
+        {
+          required: true,
+          message: 'Mail adresi girilmedi.',
           trigger: 'blur',
         },
       ],
@@ -731,12 +793,15 @@ export default defineComponent({
     }
 
     async function getOrderReceipt(deviceServiceId) {
+      orderReceiptDialogVisible.value = true;
+      loading.value = true;
+      mailModel.value.deviceServiceId = deviceServiceId;
       await store
-        .dispatch(Actions.GET_ORDERRECEIPT,deviceServiceId)
+        .dispatch(Actions.GET_ORDERRECEIPT, deviceServiceId)
         .then(result => {
           if (result.isSuccess) {
-            orderReceiptDialogVisible.value = true;
-            orderReceiptReport.value ='data:application/pdf;base64,' +  result.data.report;
+            loading.value = false;
+            orderReceiptReport.value = 'data:application/pdf;base64,' + result.data.report;
           }
         })
         .catch(() => {
@@ -946,8 +1011,54 @@ export default defineComponent({
     }
 
     const indexMethod = (index: number) => {
-      return index + 1
-    }
+      return index + 1;
+    };
+
+    const siparisFisiGonderSubmit = () => {
+      if (!siparisFisGonderRef.value) {
+        return;
+      }
+
+      siparisFisGonderRef.value.validate(async valid => {
+        if (valid) {
+          loading.value = true;
+          await store
+            .dispatch(Actions.SEND_ORDERRECEIPT, mailModel.value)
+            .then(result => {
+              loading.value = false;
+              console.clear();
+              console.log(result);
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Sipariş fişi başarıyla gönderildi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(async () => {
+                  orderReceiptDialogVisible.value = false;
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        }
+      });
+    };
 
     onMounted(async () => {
       await getReceivedDeviceServiceList();
@@ -975,6 +1086,9 @@ export default defineComponent({
       orderReceiptDialogVisible,
       orderReceiptMailAddress,
       orderReceiptReport,
+      mailModel,
+      siparisFisGonderRules,
+      siparisFisGonderRef,
       teknisyenAtaSubmit,
       getTechnicianList,
       teknisyenAtaAc,
@@ -991,7 +1105,8 @@ export default defineComponent({
       parcaListesiDialogAc,
       indexMethod,
       handleOrderReceiptDownload,
-      getOrderReceipt
+      getOrderReceipt,
+      siparisFisiGonderSubmit,
     };
   },
 });
