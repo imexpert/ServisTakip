@@ -3,6 +3,7 @@ using ServisTakip.Business.Handlers.DeviceServices.Commands;
 using ServisTakip.Business.Handlers.DeviceServices.Queries;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Entities.DTOs.DeviceServices;
+using ServisTakip.Entities.DTOs.Offers;
 
 namespace ServisTakip.Api.Controllers
 {
@@ -34,6 +35,21 @@ namespace ServisTakip.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPut]
         public async Task<IActionResult> AssignTechnicianDeviceServiceAsync([FromBody] DeviceServiceDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new AssignTechnicianDeviceServicesCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceServiceDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
+        public async Task<IActionResult> GetAsync([FromBody] DeviceServiceDto model)
         {
             return CreateActionResult(await Mediator.Send(new AssignTechnicianDeviceServicesCommand() { Model = model }));
         }
@@ -105,6 +121,21 @@ namespace ServisTakip.Api.Controllers
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<OfferDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
+        public async Task<IActionResult> ApproveDeviceServiceOfferAsync([FromBody] OfferDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new ApproveDeviceServiceOfferCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceServiceDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPut]
@@ -154,6 +185,20 @@ namespace ServisTakip.Api.Controllers
         public async Task<IActionResult> GetToBeOfferedDeviceServicesListAsync()
         {
             return CreateActionResult(await Mediator.Send(new GetToBeOfferedDeviceServicesListQuery()));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceServiceDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetSentOfferedDeviceServicesListAsync()
+        {
+            return CreateActionResult(await Mediator.Send(new GetSentOfferedDeviceServicesListQuery()));
         }
 
         /// <summary>

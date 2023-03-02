@@ -19,6 +19,9 @@ namespace ServisTakip.Entities.Concrete
         public DateTime? OfferDate { get; set; }
         public int OfferStatus { get; set; }
         public int? DiscountRate { get; set; }
+        public string PaymentText { get; set; }
+        public string DurationText { get; set; }
+        public string ExtraNote { get; set; }
         public DeviceService DeviceService { get; set; }
     }
 }

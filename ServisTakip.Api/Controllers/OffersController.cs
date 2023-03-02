@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ServisTakip.Business.Handlers.DeviceServices.Queries;
 using ServisTakip.Business.Handlers.Offers.Commands;
 using ServisTakip.Business.Handlers.Offers.Queries;
 using ServisTakip.Core.Utilities.Results;
+using ServisTakip.Entities.DTOs.DeviceServices;
 using ServisTakip.Entities.DTOs.Offers;
+using ServisTakip.Entities.DTOs.Reports;
 
 namespace ServisTakip.Api.Controllers
 {
@@ -48,9 +51,24 @@ namespace ServisTakip.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateOfferDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> SendOfferAsync([FromBody] CreateOfferDto model)
+        public async Task<IActionResult> SendOfferAsync([FromBody] OfferDto model)
         {
             return CreateActionResult(await Mediator.Send(new SendOfferCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateOfferDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
+        public async Task<IActionResult> SendOfferAgainAsync([FromBody] OfferDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new SendOfferAgainCommand() { Model = model }));
         }
 
         /// <summary>
@@ -82,6 +100,48 @@ namespace ServisTakip.Api.Controllers
         {
             return CreateActionResult(await Mediator.Send(new GetNoSendOfferQuery()
                 { DeviceServiceId = deviceServiceId }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<OfferReport>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetOfferReportAsync(long deviceServiceId)
+        {
+            return CreateActionResult(await Mediator.Send(new DownloadOfferCommand() { DeviceServiceId = deviceServiceId }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<OfferReport>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetOrderReceiptReportAsync(long deviceServiceId)
+        {
+            return CreateActionResult(await Mediator.Send(new GetOrderReceiptReportQuery() { DeviceServiceId = deviceServiceId }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<OfferReport>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> SendOfferReportAsMailAsync(long deviceServiceId)
+        {
+            return CreateActionResult(await Mediator.Send(new SendOfferAsMailCommand() { DeviceServiceId = deviceServiceId }));
         }
     }
 }

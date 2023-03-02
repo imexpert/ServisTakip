@@ -11,8 +11,7 @@
               </div>
               <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ receivedDeviceServiceList.length }}</span
-                >)
+                <span style="color: red; font-weight: bold"> {{ receivedDeviceServiceList.length }}</span>)
               </div>
             </div>
           </div>
@@ -80,10 +79,14 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="teknisyenAtaAc(scope.row.id)">
-                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Teknisyen Ata
+                        <el-icon>
+                          <ArrowRight />
+                        </el-icon>&nbsp; Teknisyen Ata
                       </el-dropdown-item>
                       <el-dropdown-item @click="cancelDeviceService(scope.row.id)">
-                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
+                        <el-icon>
+                          <RemoveFilled />
+                        </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -104,8 +107,7 @@
               </div>
               <div class="col-md-3">
                 (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ technicianAssignedDeviceServiceList.length }}</span
-                >)
+                <span style="color: red; font-weight: bold"> {{ technicianAssignedDeviceServiceList.length }}</span>)
               </div>
             </div>
           </div>
@@ -187,19 +189,29 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="kapatilacakIslereGonderSubmit(scope.row.id)">
-                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Talebi Kapat
+                        <el-icon>
+                          <ArrowRight />
+                        </el-icon>&nbsp; Talebi Kapat
                       </el-dropdown-item>
                       <el-dropdown-item @click="takeDeviceServiceBack(scope.row.id)">
-                        <el-icon> <ArrowLeft /> </el-icon>&nbsp; Geri
+                        <el-icon>
+                          <ArrowLeft />
+                        </el-icon>&nbsp; Geri
                       </el-dropdown-item>
                       <el-dropdown-item @click="cancelDeviceService(scope.row.id)">
-                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
+                        <el-icon>
+                          <RemoveFilled />
+                        </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                       <el-dropdown-item @click="deleteDeviceService(scope.row.id)">
-                        <el-icon> <DeleteFilled /> </el-icon>&nbsp; Sil
+                        <el-icon>
+                          <DeleteFilled />
+                        </el-icon>&nbsp; Sil
                       </el-dropdown-item>
                       <el-dropdown-item @click="teknisyenRaporAc()">
-                        <el-icon> <Share /> </el-icon>&nbsp; Teknisyen Raporu
+                        <el-icon>
+                          <Share />
+                        </el-icon>&nbsp; Teknisyen Raporu
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -270,7 +282,7 @@
               </template>
             </el-table-column>
             <el-table-column label="#" fixed="left" width="170">
-              <template>
+              <template #default="scope">
                 <el-dropdown size="small" type="danger">
                   <el-button type="primary">
                     İşlem Listesi<el-icon class="el-icon--right">
@@ -280,16 +292,24 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item>
-                        <el-icon> <ArrowRight /> </el-icon>&nbsp; Teknisyen Ata
+                        <el-icon>
+                          <ArrowRight />
+                        </el-icon>&nbsp; Teknisyen Ata
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="getOrderReceipt(scope.row.id)">
+                        <el-icon>
+                          <Share />
+                        </el-icon>&nbsp; Sipariş Fişi
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="parcaListesiDialogAc(scope.row.id)">
+                        <el-icon>
+                          <List />
+                        </el-icon>&nbsp; Parça Listesi
                       </el-dropdown-item>
                       <el-dropdown-item>
-                        <el-icon> <Share /> </el-icon>&nbsp; Sipariş Fişi
-                      </el-dropdown-item>
-                      <el-dropdown-item>
-                        <el-icon> <List /> </el-icon>&nbsp; Parça Listesi
-                      </el-dropdown-item>
-                      <el-dropdown-item>
-                        <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
+                        <el-icon>
+                          <RemoveFilled />
+                        </el-icon>&nbsp; İptal Et
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -304,15 +324,8 @@
 
   <el-dialog v-model="teknisyenAtaDialogVisible" title="Teknisyen Atama" width="40%" destroy-on-close center>
     <div class="row">
-      <el-form
-        status-icon
-        :rules="teknisyenAtaRules"
-        ref="formAssignTechnicianRef"
-        :model="assignTechnicianModel"
-        @submit.prevent="teknisyenAtaSubmit()"
-        label-width="120px"
-        label-position="top"
-      >
+      <el-form status-icon :rules="teknisyenAtaRules" ref="formAssignTechnicianRef" :model="assignTechnicianModel"
+        @submit.prevent="teknisyenAtaSubmit()" label-width="120px" label-position="top">
         <div class="row">
           <div class="col-md-12">
             <!--begin::Input group-->
@@ -325,12 +338,8 @@
 
               <el-form-item prop="userId">
                 <el-select placeholder="Teknisyen" filterable clearable v-model="assignTechnicianModel.userId">
-                  <el-option
-                    v-for="item in technicianUserList"
-                    :key="item.id"
-                    :label="item.firstname + ' ' + item.lastname"
-                    :value="item.id"
-                  >
+                  <el-option v-for="item in technicianUserList" :key="item.id"
+                    :label="item.firstname + ' ' + item.lastname" :value="item.id">
                     <div class="row">
                       <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
                     </div>
@@ -360,15 +369,8 @@
 
   <el-dialog v-model="teknisyenRaporDialogVisible" title="Teknisyen Raporu" width="40%" destroy-on-close center>
     <div class="row">
-      <el-form
-        status-icon
-        :rules="teknisyenAtaRules"
-        ref="formAssignTechnicianRef"
-        :model="assignTechnicianModel"
-        @submit.prevent="teknisyenRaporSubmit()"
-        label-width="120px"
-        label-position="top"
-      >
+      <el-form status-icon :rules="teknisyenAtaRules" ref="formAssignTechnicianRef" :model="assignTechnicianModel"
+        @submit.prevent="teknisyenRaporSubmit()" label-width="120px" label-position="top">
         <div class="row">
           <div class="col-md-12">
             <!--begin::Input group-->
@@ -381,12 +383,8 @@
 
               <el-form-item prop="userId">
                 <el-select placeholder="Teknisyen" filterable clearable v-model="assignTechnicianModel.userId">
-                  <el-option
-                    v-for="item in technicianUserList"
-                    :key="item.id"
-                    :label="item.firstname + item.lastname"
-                    :value="item.id"
-                  >
+                  <el-option v-for="item in technicianUserList" :key="item.id" :label="item.firstname + item.lastname"
+                    :value="item.id">
                     <div class="row">
                       <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
                     </div>
@@ -414,14 +412,8 @@
     </div>
   </el-dialog>
 
-  <el-dialog
-    v-model="raporDialogVisible"
-    title="Teknisyen Raporu"
-    width="50%"
-    style="height: 700px"
-    destroy-on-close
-    center
-  >
+  <el-dialog v-model="raporDialogVisible" title="Teknisyen Raporu" width="50%" style="height: 700px" destroy-on-close
+    center>
     <div class="row">
       <div class="col-md-12">
         <!-- <VuePdf :src="teknisyenRaporu" annotation-layer /> -->
@@ -430,9 +422,92 @@
       </div>
     </div>
   </el-dialog>
+
+  <el-dialog v-model="parcaListesiDialogVisible" title="Parça Listesi" width="50%" style="height: 400px" destroy-on-close
+    center>
+    <div class="row">
+      <div class="col-md-12">
+        <el-table :data="deviceServicePartList" border style="width: 100%" max-height="300" height="300">
+          <el-table-column type="index" :index="indexMethod" />
+          <el-table-column label="Ürün Kodu" width="100">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.productCode }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Ürün Adı" width="170" sortable>
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.productName }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Adet" width="70">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.numberOfProduct }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Fiyat" width="80">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.unitPrice }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Toplam" width="100">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.totalPrice }}</span>
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="Para Birimi" width="100">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.currencyType }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Açıklama">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.description }}</span>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
+  </el-dialog>
+
+  <el-dialog v-model="orderReceiptDialogVisible" title="Sipariş Fişi" width="60%" style="height: 800px" destroy-on-close
+    center>
+    <div class="row">
+      <div class="col-md-3">
+        <el-button type="primary">
+          <el-icon>
+            <Check />
+          </el-icon>&nbsp; Mail Gönder
+        </el-button>
+      </div>
+      <div class="col-md-3">
+        <el-input v-model="orderReceiptMailAddress"></el-input>
+      </div>
+      <div class="col-md-12 mt-5">
+        <!-- <VuePdf :src="teknisyenRaporu" annotation-layer /> -->
+        <PDFViewer :source="orderReceiptReport" style="height: 600px" @download="handleOrderReceiptDownload" />
+        <!-- <pdf src="/sample.pdf" @error="error" style="overflow-y: auto; height: 500px"></pdf> -->
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script lang="ts">
+import type { ElTableColumn } from 'element-plus'
 import { defineComponent, onMounted, onActivated, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
@@ -443,6 +518,7 @@ import PDFViewer from 'pdf-viewer-vue';
 import { IDeviceServiceData } from '@/core/data/DeviceServiceData';
 import { IUserData } from '@/core/data/UserData';
 import { IAssignTechnicianData } from '@/core/data/AssignTechnicianData';
+import { IDeviceServicePartData } from '@/core/data/DeviceServicePartData';
 
 export default defineComponent({
   components: {
@@ -452,11 +528,16 @@ export default defineComponent({
   setup() {
     const store = useStore();
     var teknisyenAtaDialogVisible = ref<boolean>(false);
+    var parcaListesiDialogVisible = ref<boolean>(false);
     var teknisyenRaporDialogVisible = ref<boolean>(false);
     var raporDialogVisible = ref<boolean>(false);
+    var orderReceiptDialogVisible = ref<boolean>(false);
     var teknisyenRaporu = ref<string>('');
+    var orderReceiptReport = ref<string>('');
     const loading = ref<boolean>(false);
     var selectedDeviceServiceId = ref<string>('');
+    var orderReceiptMailAddress = ref<string>('');
+    var deviceServicePartList = ref<Array<IDeviceServicePartData>>([]);
 
     var receivedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
     var technicianAssignedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
@@ -617,6 +698,14 @@ export default defineComponent({
       console.log(value);
     };
 
+    const handleOrderReceiptDownload = value => {
+      var a = document.createElement('a'); //Create <a>
+      a.href = value.src;
+      a.download = 'SiparisFisi.pdf'; //File name Here
+      a.click(); //Downloaded file
+      console.log(value);
+    };
+
     async function teknisyenAtaAc(deviceServiceId) {
       selectedDeviceServiceId.value = deviceServiceId;
       await getTechnicianList();
@@ -634,6 +723,20 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             technicianUserList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getOrderReceipt(deviceServiceId) {
+      await store
+        .dispatch(Actions.GET_ORDERRECEIPT,deviceServiceId)
+        .then(result => {
+          if (result.isSuccess) {
+            orderReceiptDialogVisible.value = true;
+            orderReceiptReport.value ='data:application/pdf;base64,' +  result.data.report;
           }
         })
         .catch(() => {
@@ -660,6 +763,19 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             technicianAssignedDeviceServiceList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getPartsExchangeDeviceServiceList() {
+      await store
+        .dispatch(Actions.GET_PARTSEXCHANGEDEVICESERVICELIST)
+        .then(result => {
+          if (result.isSuccess) {
+            partsExchangeDeviceServiceList.value = result.data;
           }
         })
         .catch(() => {
@@ -811,9 +927,32 @@ export default defineComponent({
       });
     }
 
+    async function getdeviceServicePartList(deviceServiceId) {
+      await store
+        .dispatch(Actions.GET_DEVICESERVICEPARTLIST, deviceServiceId)
+        .then(result => {
+          if (result.isSuccess) {
+            deviceServicePartList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function parcaListesiDialogAc(deviceServiceId) {
+      await getdeviceServicePartList(deviceServiceId);
+      parcaListesiDialogVisible.value = true;
+    }
+
+    const indexMethod = (index: number) => {
+      return index + 1
+    }
+
     onMounted(async () => {
       await getReceivedDeviceServiceList();
       await getTechnicianAssignedDeviceServiceList();
+      await getPartsExchangeDeviceServiceList();
     });
 
     return {
@@ -831,6 +970,11 @@ export default defineComponent({
       selectedDeviceServiceId,
       technicianUserList,
       teknisyenRaporu,
+      parcaListesiDialogVisible,
+      deviceServicePartList,
+      orderReceiptDialogVisible,
+      orderReceiptMailAddress,
+      orderReceiptReport,
       teknisyenAtaSubmit,
       getTechnicianList,
       teknisyenAtaAc,
@@ -843,6 +987,11 @@ export default defineComponent({
       teknisyenRaporSubmit,
       handleDownload,
       kapatilacakIslereGonderSubmit,
+      getPartsExchangeDeviceServiceList,
+      parcaListesiDialogAc,
+      indexMethod,
+      handleOrderReceiptDownload,
+      getOrderReceipt
     };
   },
 });

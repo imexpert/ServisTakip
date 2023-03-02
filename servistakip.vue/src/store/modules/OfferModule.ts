@@ -19,6 +19,18 @@ export default class OfferModule extends VuexModule {
   }
 
   @Action
+  async [Actions.GET_ORDERRECEIPT](deviceServiceId) {
+    return await ApiService.getWithParamUrl("Offers/GetOrderReceiptReport?deviceServiceId=" + deviceServiceId)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.ADD_OFFER](offer) {
     return ApiService.post("Offers/CreateOffer", offer)
       .then(({ data }) => {
@@ -44,7 +56,23 @@ export default class OfferModule extends VuexModule {
 
   @Action
   [Actions.UPDATE_SENDOFFER](offer) {
-    return ApiService.put("Offers/SendOffer", offer)
+    console.clear();
+    console.log(offer);
+    return ApiService.put("Offers/SendOffer", offer.value)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
+  [Actions.UPDATE_SENDOFFERAGAIN](offer) {
+    console.clear();
+    console.log(offer);
+    return ApiService.put("Offers/SendOfferAgain", offer.value)
       .then(({ data }) => {
         return data;
       })
@@ -57,6 +85,18 @@ export default class OfferModule extends VuexModule {
   @Action
   [Actions.DELETE_OFFER](id) {
     return ApiService.delete("Offers/DeleteOffer?id=" + id)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
+  [Actions.GET_OFFERREPORT](deviceServiceId) {
+    return ApiService.getWithParamUrl("Offers/GetOfferReport?deviceServiceId=" + deviceServiceId)
       .then(({ data }) => {
         return data;
       })

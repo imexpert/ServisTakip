@@ -79,10 +79,10 @@
                       <Expand />
                     </el-icon>&nbsp; Y.Parça
                   </el-dropdown-item>
-                  <el-dropdown-item>
+                  <el-dropdown-item @click="getOfferReport(scope.row.id)">
                     <el-icon>
                       <CreditCard />
-                    </el-icon>&nbsp; Teklif Gönder
+                    </el-icon>&nbsp; Teklif Görüntüle
                   </el-dropdown-item>
                   <el-dropdown-item>
                     <el-icon>
@@ -576,6 +576,23 @@
       </div>
     </el-form>
   </el-dialog>
+
+  <el-dialog v-model="raporDialogVisible" title="Teklif Raporu" width="60%" style="height: 800px" destroy-on-close center>
+    <div class="row">
+      <div class="col-md-12">
+        <el-button type="primary" @click="teklifGonderSubmit()">
+          <el-icon>
+            <Check />
+          </el-icon>&nbsp; Teklifi Gönder
+        </el-button>
+      </div>
+      <div class="col-md-12 mt-5">
+        <!-- <VuePdf :src="teknisyenRaporu" annotation-layer /> -->
+        <PDFViewer :source="teklifRaporu" style="height: 600px" @download="handleDownload" />
+        <!-- <pdf src="/sample.pdf" @error="error" style="overflow-y: auto; height: 500px"></pdf> -->
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -618,8 +635,10 @@ export default defineComponent({
     var parcaIslemleriDialogVisible = ref<boolean>(false);
     var teklifFormDialogVisible = ref<boolean>(false);
     var parcaEkleDuzenleDialogVisible = ref<boolean>(false);
+    var raporDialogVisible = ref<boolean>(false);
     var toBeOfferedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
     var deviceServicePartList = ref<Array<IDeviceServicePartData>>([]);
+    var teklifRaporu = ref<string>('');
     var deviceServicePart = ref<IDeviceServicePartData>({
       currencyType: '',
       description: '',
@@ -649,6 +668,7 @@ export default defineComponent({
       title: '',
       discountRate: '',
     });
+    
     var toBeOfferedDeviceServiceItem = ref<IDeviceServiceData>({});
     var deviceServiceItem = ref<IDeviceServiceData>({});
     var selectedDeviceServiceId = ref<string>('');
@@ -882,6 +902,21 @@ export default defineComponent({
         });
     }
 
+    async function getOfferReport(deviceServiceId) {
+      await store
+        .dispatch(Actions.GET_OFFERREPORT, deviceServiceId)
+        .then(result => {
+          if (result.isSuccess) {
+            selectedDeviceServiceId.value = deviceServiceId;
+            raporDialogVisible.value = true;
+            teklifRaporu.value = 'data:application/pdf;base64,' + result.data.report;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
     const parcaEkleSubmit = () => {
       if (!parcaEkleRef.value) {
         return;
@@ -969,7 +1004,7 @@ export default defineComponent({
     };
 
     const teklifSubmit = () => {
-      console.log(offerItem.value)
+      console.log(offerItem.value);
       if (!teklifFormuRef.value) {
         return;
       }
@@ -1047,9 +1082,65 @@ export default defineComponent({
                 const [error] = Object.keys(store.getters.getErrors);
               });
           }
-
         }
       });
+    };
+
+    const teklifGonderSubmit = () => {
+      Swal.fire({
+        title: 'Teklif Gönderme Onayı',
+        html: 'İlgili teklif müşteriye gönderilecek.<br>Devam etmek istiyor musunuz ?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Gönder',
+        denyButtonText: `Vazgeç`,
+      }).then(async result => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          offerItem.value.deviceServiceId = selectedDeviceServiceId.value;
+          console.log(offerItem.value);
+          await store
+            .dispatch(Actions.UPDATE_SENDOFFER, offerItem)
+            .then(async result => {
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Teklif başarıyla müşteriye gönderildi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(async () => {
+                  await getToBeOfferedDeviceServiceList();
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        } else if (result.isDenied) {
+        }
+      });
+    };
+
+    const handleDownload = value => {
+      var a = document.createElement('a'); //Create <a>
+      a.href = value.src;
+      a.download = 'TeklifRaporu.pdf'; //File name Here
+      a.click(); //Downloaded file
+      console.log(value);
     };
 
     return {
@@ -1070,6 +1161,8 @@ export default defineComponent({
       company,
       offerSubjectCodeList,
       offerItem,
+      raporDialogVisible,
+      teklifRaporu,
       getToBeOfferedDeviceServiceList,
       teklifSubmit,
       deleteDeviceServicePart,
@@ -1079,6 +1172,9 @@ export default defineComponent({
       getdeviceServicePartList,
       parcaEkleSubmit,
       teklifFormDialogAc,
+      handleDownload,
+      getOfferReport,
+      teklifGonderSubmit
     };
   },
 });
