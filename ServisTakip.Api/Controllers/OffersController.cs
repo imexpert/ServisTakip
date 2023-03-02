@@ -125,6 +125,20 @@ namespace ServisTakip.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<OfferReport>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpGet]
+        public async Task<IActionResult> GetOrderReceiptReportAsync(long deviceServiceId)
+        {
+            return CreateActionResult(await Mediator.Send(new GetOrderReceiptReportQuery() { DeviceServiceId = deviceServiceId }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<OfferReport>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
         public async Task<IActionResult> SendOfferReportAsMailAsync(long deviceServiceId)
         {
             return CreateActionResult(await Mediator.Send(new SendOfferAsMailCommand() { DeviceServiceId = deviceServiceId }));

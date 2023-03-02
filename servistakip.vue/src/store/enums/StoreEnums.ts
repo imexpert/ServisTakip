@@ -61,6 +61,7 @@ enum Actions {
   GET_DEVICESERVICEPART = "getDeviceServicePart",
 
   GET_OFFERNOTSEND = "getOfferNotSend",
+  GET_ORDERRECEIPT = "getOrderReceipt",
   ADD_OFFER = "addOffer",
   UPDATE_OFFER = "updateOffer",
   DELETE_OFFER = "deleteOffer",

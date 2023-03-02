@@ -19,6 +19,18 @@ export default class OfferModule extends VuexModule {
   }
 
   @Action
+  async [Actions.GET_ORDERRECEIPT](deviceServiceId) {
+    return await ApiService.getWithParamUrl("Offers/GetOrderReceiptReport?deviceServiceId=" + deviceServiceId)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.ADD_OFFER](offer) {
     return ApiService.post("Offers/CreateOffer", offer)
       .then(({ data }) => {

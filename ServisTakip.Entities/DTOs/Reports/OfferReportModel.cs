@@ -21,5 +21,6 @@
         public string DurationText { get; set; }
         public string ExtraNote { get; set; }
         public string OfferSubject { get; set; }
+        public string UpdateUsername { get; set; }
     }
 }
