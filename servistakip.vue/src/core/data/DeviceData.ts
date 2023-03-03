@@ -9,6 +9,7 @@ interface IDeviceData {
     description?: string | '',
     status?: string | '',
     address?: IAddressData | null;
+    rowId?: IAddressData | null;
     deviceModel?: IDeviceModelData | null;
 }
 

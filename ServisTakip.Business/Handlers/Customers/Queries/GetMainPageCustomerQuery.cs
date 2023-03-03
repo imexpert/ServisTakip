@@ -62,9 +62,12 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.DeviceServices = result.DeviceServices.OrderByDescending(s => s.ResultDate).ToList();
 
                     var service = result.DeviceServices.FirstOrDefault();
-                    result.WbCount = service.WBCount;
-                    result.ColorCount = service.ColorCount;
-
+                    if (service != null)
+                    {
+                        result.WbCount = service.WBCount;
+                        result.ColorCount = service.ColorCount;
+                    }
+                    
                     result.Devices = mapper.Map<List<DeviceDto>>(await deviceRepo.GetAllDevices(result.CustomerId));
                     result.Devices.Select(c => { c.RowId = $"{result.CustomerId}|{c.AddressId}|{c.Id}"; return c; }).ToList();
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
