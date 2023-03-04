@@ -45,7 +45,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         DistrictName = lastService.Device.Address.Querter.District.Name,
                         QuarterName = lastService.Device.Address.Querter.Name,
                         RegionCode = lastService.Device.Address.Querter.RegionCode,
-                        DeviceDto = mapper.Map<DeviceDto>(lastService.Device),
+                        Device = mapper.Map<DeviceDto>(lastService.Device),
                         RowId = $"{lastService.Device.Address.Customer.Id}|{lastService.Device.Address.Id}|{lastService.DeviceId}"
                     };
 
@@ -94,7 +94,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         DistrictName = lastDevice.Address.Querter.District.Name,
                         QuarterName = lastDevice.Address.Querter.Name,
                         RegionCode = lastDevice.Address.Querter.RegionCode,
-                        DeviceDto = mapper.Map<DeviceDto>(lastDevice),
+                        Device = mapper.Map<DeviceDto>(lastDevice),
                         RowId = $"{lastDevice.Address.Customer.Id}|{lastDevice.Address.Id}|{lastDevice.Id}"
                     };
 

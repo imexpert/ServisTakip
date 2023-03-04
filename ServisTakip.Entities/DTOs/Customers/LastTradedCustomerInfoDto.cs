@@ -28,6 +28,6 @@ namespace ServisTakip.Entities.DTOs.Customers
         public List<DeviceDto> Devices { get; set; }
         public List<ContractDto> Contracts { get; set; }
         public List<DeviceServiceDto> DeviceServices { get; set; }
-        public DeviceDto DeviceDto { get; set; }
+        public DeviceDto Device { get; set; }
     }
 }

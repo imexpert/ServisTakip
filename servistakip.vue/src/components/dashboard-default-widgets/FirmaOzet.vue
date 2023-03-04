@@ -3,7 +3,7 @@
     <!--begin::Col-->
     <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6">
       <!--begin::List Widget 1-->
-      <div class="card" :class="widgetClasses">
+      <div class="card">
         <div class="card-header">
           <div class="d-flex align-items-center me-5">
             <el-dropdown split-button type="primary">
@@ -19,23 +19,17 @@
           <div class="d-flex align-items-center me-5">
             <el-button-group>
               <el-button type="primary" title="Önceki Cihaz" @click="cihazListesi()">
-                <el-icon>
-                  <Plus />
-                </el-icon>&nbsp; Hızlı Servis Aç
+                <el-icon> <Plus /> </el-icon>&nbsp; Hızlı Servis Aç
               </el-button>
               <el-button type="primary" title="Önceki Cihaz" @click="servisAc()">
-                <el-icon>
-                  <Plus />
-                </el-icon>&nbsp; Servis Aç
+                <el-icon> <Plus /> </el-icon>&nbsp; Servis Aç
               </el-button>
             </el-button-group>
           </div>
           <div class="d-flex align-items-center me-5">
             <el-button-group>
               <el-button type="danger" title="Önceki Cihaz" @click="cihazListesi()">
-                <el-icon>
-                  <List />
-                </el-icon>&nbsp; Cihaz Listesi
+                <el-icon> <List /> </el-icon>&nbsp; Cihaz Listesi
               </el-button>
             </el-button-group>
           </div>
@@ -47,17 +41,32 @@
             <!--begin::Modal body-->
             <div class="modal-body">
               <!--begin::Scroll-->
-              <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true"
-                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+              <div
+                class="scroll-y me-n7 pe-7"
+                id="kt_modal_new_address_scroll"
+                data-kt-scroll="true"
+                data-kt-scroll-activate="{default: false, lg: true}"
+                data-kt-scroll-max-height="auto"
                 data-kt-scroll-dependencies="#kt_modal_new_address_header"
-                data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
+                data-kt-scroll-wrappers="#kt_modal_new_address_scroll"
+                data-kt-scroll-offset="300px"
+              >
                 <!--begin::Input group-->
                 <div class="row mb-1">
                   <div class="col-md-4 fv-row">
                     <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
-                    <el-select @change="onDeviceNoChange()" filterable remote clearable placeholder="Cihaz no giriniz"
-                      reserve-keyword remote-show-suffix v-model="selectedDevice" :remote-method="remoteMethodCihazNo"
-                      :loading="loading">
+                    <el-select
+                      @change="onDeviceNoChange()"
+                      filterable
+                      remote
+                      clearable
+                      placeholder="Cihaz no giriniz"
+                      reserve-keyword
+                      remote-show-suffix
+                      v-model="selectedDevice"
+                      :remote-method="remoteMethodCihazNo"
+                      :loading="loading"
+                    >
                       <li class="el-select-dropdown__item">
                         <div class="row">
                           <div class="col-md-6">
@@ -74,19 +83,19 @@
                           </div>
                         </div>
                       </li>
-                      <el-option v-for="item in deviceList" :key="item.rowId" :label="item.deviceId" :value="item.rowId">
+                      <el-option v-for="item in deviceList" :key="item.rowId" :label="item.id" :value="item.rowId">
                         <div class="row">
                           <div class="col-md-6" style="font-size: 12px">
-                            {{ item.title }}
+                            {{ item.address.customer.title }}
                           </div>
                           <div class="col-md-2" style="font-size: 12px">
-                            {{ item.querter }}
+                            {{ item.address.querter.name }}
                           </div>
                           <div class="col-md-3" style="font-size: 12px">
-                            {{ item.model }}
+                            {{ item.deviceModel.name }}
                           </div>
                           <div class="col-md-1" style="font-size: 12px">
-                            {{ item.serialNo }}
+                            {{ item.serialNumber }}
                           </div>
                         </div>
                       </el-option>
@@ -117,9 +126,18 @@
                 <div class="row mb-1">
                   <div class="col-md-12 fv-row">
                     <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
-                    <el-select @change="onCustomerChange()" filterable remote clearable
-                      placeholder="Arama için en az 4 harf giriniz" reserve-keyword remote-show-suffix
-                      v-model="selectedCustomer" :remote-method="remoteMethod" :loading="loading">
+                    <el-select
+                      @change="onCustomerChange()"
+                      filterable
+                      remote
+                      clearable
+                      placeholder="Arama için en az 4 harf giriniz"
+                      reserve-keyword
+                      remote-show-suffix
+                      v-model="selectedCustomer"
+                      :remote-method="remoteMethod"
+                      :loading="loading"
+                    >
                       <li class="el-select-dropdown__item">
                         <div class="row">
                           <div class="col-md-6">
@@ -136,7 +154,12 @@
                           </div>
                         </div>
                       </li>
-                      <el-option v-for="item in customerList" :key="item.rowId" :label="item.title" :value="item.rowId">
+                      <el-option
+                        v-for="item in customerInfoList"
+                        :key="item.rowId"
+                        :label="item.title"
+                        :value="item.rowId"
+                      >
                         <div class="row">
                           <div class="col-md-6" style="font-size: 12px">
                             {{ item.title }}
@@ -271,8 +294,12 @@
               </div>
             </template>
             <div class="text item">
-              <el-table :data="contracts" style="width: 100%" max-height="147"
-                :default-sort="{ prop: 'startDate', order: 'descending' }">
+              <el-table
+                :data="contracts"
+                style="width: 100%"
+                max-height="147"
+                :default-sort="{ prop: 'startDate', order: 'descending' }"
+              >
                 <el-table-column label="Başlangıç Tarihi" width="160" sortable>
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
@@ -333,9 +360,18 @@
                 <label class="fs-5 fw-semobold">Model</label>
               </div>
               <div class="col-md-6">
-                <el-select @change="onModelNameChange()" filterable remote clearable placeholder="Model adı giriniz"
-                  reserve-keyword remote-show-suffix v-model="selectedModelName" :remote-method="remoteMethodModelName"
-                  :loading="loading">
+                <el-select
+                  @change="onModelNameChange()"
+                  filterable
+                  remote
+                  clearable
+                  placeholder="Model adı giriniz"
+                  reserve-keyword
+                  remote-show-suffix
+                  v-model="selectedModelName"
+                  :remote-method="remoteMethodModelName"
+                  :loading="loading"
+                >
                   <li class="el-select-dropdown__item">
                     <div class="row">
                       <div class="col-md-6">
@@ -374,9 +410,18 @@
                 <label class="fs-5 fw-semobold">Seri No</label>
               </div>
               <div class="col-md-6 mt-2">
-                <el-select @change="onSerialNoChange()" filterable remote clearable placeholder="Seri no giriniz"
-                  reserve-keyword remote-show-suffix v-model="selectedSerialNo" :remote-method="remoteMethodSerialNo"
-                  :loading="loading">
+                <el-select
+                  @change="onSerialNoChange()"
+                  filterable
+                  remote
+                  clearable
+                  placeholder="Seri no giriniz"
+                  reserve-keyword
+                  remote-show-suffix
+                  v-model="selectedSerialNo"
+                  :remote-method="remoteMethodSerialNo"
+                  :loading="loading"
+                >
                   <li class="el-select-dropdown__item">
                     <div class="row">
                       <div class="col-md-6">
@@ -415,13 +460,14 @@
                 <label class="fs-5 fw-semobold">Marka</label>
               </div>
               <div class="col-md-6 mt-2">
-                <el-input disabled v-model="deviceBrand.name" style="font-size: 12px"> </el-input>
+                <el-input disabled v-model="firmaOzet.device.deviceModel.deviceBrand.name" style="font-size: 12px">
+                </el-input>
               </div>
               <div class="col-md-6 mt-2">
                 <label class="fs-5 fw-semobold">Montaj Tarihi</label>
               </div>
               <div class="col-md-6 mt-2">
-                <el-input disabled v-model="device.assemblyDateString" style="font-size: 12px"> </el-input>
+                <el-input disabled v-model="firmaOzet.device.assemblyDateString" style="font-size: 12px"> </el-input>
               </div>
             </div>
           </el-card>
@@ -439,18 +485,29 @@
                 <label class="fs-5 fw-semobold mb-2">Cihaz Durumu</label>
               </div>
               <div class="col-md-6 mt-2">
-                <input type="text" disabled
-                  class="form-control form-control-sm form-control-solid border border-secondary" style="color: #a8abb2"
-                  :style="{ backgroundColor: backgroundColor }" name="row-name" v-model="firmaOzet.deviceStatus" />
+                <input
+                  type="text"
+                  disabled
+                  class="form-control form-control-sm form-control-solid border border-secondary"
+                  style="color: #a8abb2"
+                  :style="{ backgroundColor: firmaOzet.backgroundColor }"
+                  name="row-name"
+                  v-model="firmaOzet.deviceStatus"
+                />
               </div>
               <div class="col-md-6 pt-2 mt-2">
                 <label class="fs-5 fw-semobold mb-2">Bk. Durumu</label>
               </div>
               <div class="col-md-6 mt-2">
-                <input type="text" disabled
-                  class="form-control form-control-sm form-control-solid border border-secondary" style="color: #a8abb2"
-                  name="row-name" :style="{ backgroundColor: maintenanceBackgroundColor }"
-                  v-model="contractMaintenanceStatus" />
+                <input
+                  type="text"
+                  disabled
+                  class="form-control form-control-sm form-control-solid border border-secondary"
+                  style="color: #a8abb2"
+                  name="row-name"
+                  :style="{ backgroundColor: firmaOzet.maintenanceBackgroundColor }"
+                  v-model="firmaOzet.contractMaintenanceStatus"
+                />
               </div>
             </div>
           </el-card>
@@ -685,8 +742,13 @@
               </el-table-column>
               <el-table-column label="#" fixed="left">
                 <template #default="scope">
-                  <el-button size="small" type="primary" circle title="Cihaz Seç"
-                    @click="getMainPageCustomer(scope.row.rowId)">
+                  <el-button
+                    size="small"
+                    type="primary"
+                    circle
+                    title="Cihaz Seç"
+                    @click="getMainPageCustomer(scope.row.rowId)"
+                  >
                     <el-icon><Select /></el-icon>
                   </el-button>
                 </template>
@@ -700,8 +762,15 @@
 
   <el-dialog v-model="servisAcDialogVisible" title="Yeni Servis" width="40%" destroy-on-close center>
     <div class="row">
-      <el-form status-icon :rules="newServiceRules" ref="formServiceRef" :model="newService"
-        @submit.prevent="servicAcSubmit()" label-width="120px" label-position="top">
+      <el-form
+        status-icon
+        :rules="newServiceRules"
+        ref="formServiceRef"
+        :model="newService"
+        @submit.prevent="servicAcSubmit()"
+        label-width="120px"
+        label-position="top"
+      >
         <div class="row">
           <div class="col-md-12">
             <!--begin::Input group-->
@@ -727,8 +796,13 @@
               <!--end::Label-->
 
               <el-form-item prop="failureDate">
-                <el-date-picker v-model="newService.failureDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                  placeholder="Select date and time" :shortcuts="shortcuts" />
+                <el-date-picker
+                  v-model="newService.failureDate"
+                  format="DD.MM.YYYY HH:mm:ss"
+                  type="datetime"
+                  placeholder="Select date and time"
+                  :shortcuts="shortcuts"
+                />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -798,9 +872,13 @@
               <!--end::Label-->
 
               <el-form-item prop="phone">
-                <el-input v-model="newService.phone"
-                  :formatter="(value) => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')"
-                  placeholder="Talebi bildiren telefon giriniz" />
+                <el-input
+                  v-model="newService.phone"
+                  :formatter="
+                    value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
+                  "
+                  placeholder="Talebi bildiren telefon giriniz"
+                />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -816,8 +894,12 @@
 
               <el-form-item prop="technicianName">
                 <el-select placeholder="Teknisyen" filterable clearable v-model="newService.userId">
-                  <el-option v-for="item in technicianUserList" :key="item.id" :label="item.firstname + item.lastname"
-                    :value="item.id">
+                  <el-option
+                    v-for="item in technicianUserList"
+                    :key="item.id"
+                    :label="item.firstname + item.lastname"
+                    :value="item.id"
+                  >
                     <div class="row">
                       <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
                     </div>
@@ -837,8 +919,13 @@
               <!--end::Label-->
 
               <el-form-item prop="userAssignDate">
-                <el-date-picker v-model="newService.userAssignDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                  placeholder="Select date and time" :shortcuts="shortcuts" />
+                <el-date-picker
+                  v-model="newService.userAssignDate"
+                  format="DD.MM.YYYY HH:mm:ss"
+                  type="datetime"
+                  placeholder="Select date and time"
+                  :shortcuts="shortcuts"
+                />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -863,7 +950,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
@@ -881,7 +968,7 @@ import { ICustomerListData } from '@/core/data/CustomerListData';
 import { IDeviceBrandData } from '@/core/data/DeviceBrandData';
 import { IDeviceModelData } from '@/core/data/DeviceModelData';
 import { IContractData } from '@/core/data/ContractData';
-
+import { ICustomerData } from '@/core/data/CustomerData';
 
 export default defineComponent({
   name: 'default-dashboard-widget-2',
@@ -920,6 +1007,9 @@ export default defineComponent({
       totalCount: '',
       deviceStatus: '',
       maintenanceStatus: '-',
+      deviceModel: null,
+      deviceBrand: null,
+      device: null,
     });
 
     const shortcuts = [
@@ -948,10 +1038,15 @@ export default defineComponent({
       userAssignDate: '',
     });
 
+    var selectedDevice = ref<string>('');
+    var selectedCustomer = ref<string>('');
     var technicianUserList = ref<Array<IUserData>>([]);
+    var customerList = ref<Array<ICustomerData>>([]);
+    var deviceList = ref<Array<IDeviceData>>([]);
+    var deviceServices = ref<Array<IDeviceServiceData>>([]);
 
     var contracts = ref<Array<IContractData>>([]);
-      var device = ref<IDeviceData>();
+    var device = ref<IDeviceData>();
 
     var bootCodeList = ref<Array<IBootCodeData>>([]);
 
@@ -962,15 +1057,12 @@ export default defineComponent({
       },
     ];
 
-    var customerList = ref<Array<ICustomerListData>>([]);
+    var customerInfoList = ref<Array<ICustomerListData>>([]);
     var customerDeviceList = ref<Array<IDeviceData>>([]);
-      var deviceServices = ref<Array<IDeviceServiceData>>([]);
-    var deviceList = ref<Array<ICustomerListData>>([]);
+    var deviceServices = ref<Array<IDeviceServiceData>>([]);
     var modelList = ref<Array<ICustomerListData>>([]);
     var seriNoList = ref<Array<ICustomerListData>>([]);
     var deviceBrand = ref<IDeviceBrandData>();
-    var selectedCustomer = ref<string>();
-    var selectedDevice = ref<string>();
     var selectedSerialNo = ref<string>();
     var selectedModelName = ref<string>();
 
@@ -1163,6 +1255,9 @@ export default defineComponent({
         totalCount: '',
         deviceStatus: '',
         maintenanceStatus: '-',
+        deviceBrand: null,
+        deviceModel: null,
+        device: null,
       };
 
       contracts.value = [];
@@ -1172,122 +1267,99 @@ export default defineComponent({
       deviceBrand.value = {
         deviceType: null,
         companyId: '',
-        name: ''
-      };
-
-      this.deviceModel = {
-        colorType: '',
-        companyId: '',
-        deviceBrandId: '',
-        isScannerExist: '',
         name: '',
-        paperType: '',
-        status: false,
       };
 
-      this.device = {
-        addressId: '',
-        assemblyDate: '',
-        description: '',
-        deviceModelId: '',
-        serialNumber: '',
-        status: false,
-        assemblyDateString: '',
-      };
-
-      this.deviceServices = [];
-
-      //   this.selectedCustomer = '';
-      //   this.selectedDevice = '';
-    };
+      deviceServices.value = [];
+    }
     async function getBootCodeList() {
-      await this.store
+      await store
         .dispatch(Actions.GET_BOOTCODE_LIST)
         .then(result => {
           if (result.isSuccess) {
-            this.servisAcDialogVisible = true;
-            this.bootCodeList = result.data;
+            servisAcDialogVisible.value = true;
+            bootCodeList = result.data;
           }
         })
         .catch(() => {
-          const [error] = Object.keys(this.store.getters.getErrors);
+          const [error] = Object.keys(store.getters.getErrors);
         });
-    };
+    }
     async function getTechnicianList() {
-      await this.store
+      await store
         .dispatch(Actions.GET_TECHNICIAN_LIST)
         .then(result => {
           if (result.isSuccess) {
             console.clear();
             console.log(result.data);
-            this.technicianUserList = result.data;
+            technicianUserList = result.data;
           }
         })
         .catch(() => {
-          const [error] = Object.keys(this.store.getters.getErrors);
+          const [error] = Object.keys(store.getters.getErrors);
         });
-    };
+    }
     async function onCustomerChange() {
       console.clear();
-      this.clearPage();
-      console.log(this.selectedCustomer);
+      clearPage();
+      console.log(selectedCustomer);
 
-      if (!this.selectedCustomer) {
-        this.customerList = [];
-        this.selectedDevice = '';
+      if (!selectedCustomer) {
+        customerList.value = [];
+        selectedDevice.value = '';
         return;
       }
 
-      await this.getMainPageCustomer(this.selectedCustomer);
-    };
+      await getMainPageCustomer(selectedCustomer);
+    }
     async function onDeviceNoChange() {
       console.clear();
-      this.clearPage();
-      console.log(this.selectedDevice);
+      clearPage();
+      console.log(selectedDevice);
 
-      if (!this.selectedDevice) {
-        this.deviceList = [];
-        this.selectedCustomer = '';
+      if (!selectedDevice) {
+        deviceList.value = [];
+        selectedCustomer.value = '';
         return;
       }
 
-      await this.getMainPageCustomer(this.selectedDevice);
-    };
+      await getMainPageCustomer(selectedDevice);
+    }
     async function onSerialNoChange() {
       console.clear();
-      this.clearPage();
-      console.log(this.selectedSerialNo);
+      clearPage();
+      console.log(selectedSerialNo);
 
-      if (!this.selectedSerialNo) {
-        this.seriNoList = [];
-        this.selectedCustomer = '';
-        this.selectedDevice = '';
-        this.selectedModelName = '';
+      if (!selectedSerialNo) {
+        seriNoList.value = [];
+        selectedCustomer.value = '';
+        selectedDevice.value = '';
+        selectedModelName.value = '';
         return;
       }
 
-      await this.getMainPageCustomer(this.selectedSerialNo);
-    };
+      await getMainPageCustomer(selectedSerialNo);
+    }
     async function onModelNameChange() {
       console.clear();
-      this.clearPage();
-      console.log(this.selectedModelName);
+      clearPage();
+      console.log(selectedModelName);
 
-      if (!this.selectedModelName) {
-        this.modelList = [];
-        this.selectedCustomer = '';
-        this.selectedDevice = '';
-        this.selectedSerialNo = '';
+      if (!selectedModelName) {
+        modelList.value = [];
+        selectedCustomer.value = '';
+        selectedDevice.value = '';
+        selectedSerialNo.value = '';
         return;
       }
 
-      await this.getMainPageCustomer(this.selectedModelName);
-    };
+      await getMainPageCustomer(selectedModelName);
+    }
     async function getMainPageCustomer(rowId) {
       await store
         .dispatch(Actions.GET_MAIN_PAGE_CUSTOMER, rowId)
         .then(result => {
-          centerDialogVisible = false;
+          centerDialogVisible.value = false;
           console.clear();
           console.log(result.data);
           firmaOzet.value = result.data;
@@ -1296,81 +1368,83 @@ export default defineComponent({
           device.value = result.data.deviceDto;
           deviceServices.value = result.data.deviceServices;
           customerDeviceList.value = result.data.devices;
-          // this.selectedDevice = result.data.deviceId;
-          // this.selectedCustomer = result.data.customerTitle;
-          // this.selectedModelName = result.data.deviceDto.deviceModel.name;
-          // this.selectedSerialNo = result.data.deviceDto.serialNumber;
+          // selectedDevice = result.data.deviceId;
+          // selectedCustomer = result.data.customerTitle;
+          // selectedModelName = result.data.deviceDto.deviceModel.name;
+          // selectedSerialNo = result.data.deviceDto.serialNumber;
         })
         .catch(() => {
           const [error] = Object.keys(store.getters.getErrors);
         });
-    };
+    }
     function routeAddCustomer() {
       router.push({
         name: 'customer',
         path: '/customer',
       });
-    };
-    routeUpdateCustomer() {
-      this.store.commit('setCustomerId', this.firmaOzet.customerId);
+    }
+    function routeUpdateCustomer() {
+      store.commit('setCustomerId', firmaOzet.value.customerId);
 
-      this.$router.push({
+      router.push({
         name: 'customer',
         path: '/customer',
       });
-    };
+    }
 
     async function getLastTradedCustomer() {
       await store
         .dispatch(Actions.GET_LASTTRADED_CUSTOMER)
         .then(result => {
           if (result.isSuccess) {
-            this.firmaOzet = result.data;
-            this.contracts = result.data.contracts;
-            this.device = result.data.deviceDto;
-            this.deviceModel = result.data.deviceDto.deviceModel;
-            deviceBrand.value = result.data.deviceDto.deviceModel.deviceBrand;
-            this.selectedCustomer = result.data.customerTitle;
-            this.selectedDevice = result.data.deviceId;
-            this.deviceServices = result.data.deviceServices;
-            this.selectedModelName = result.data.deviceDto.deviceModel.name;
-            this.selectedSerialNo = result.data.deviceDto.serialNumber;
-            this.firmaOzet.deviceStatus = result.data.deviceDto.status ? 'Aktif' : 'Pasif';
-            this.backgroundColor = result.data.deviceDto.status ? '#ABEBC6' : '#F5B7B1';
-            this.maintenanceBackgroundColor = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
-            this.contractMaintenanceStatus = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
-
-            this.customerDeviceList = result.data.devices;
+            alert('sdf');
             console.log(result.data);
+            firmaOzet = result.data;
+            contracts = result.data.contracts;
+            device = result.data.deviceDto;
+            deviceBrand.value = result.data.deviceDto.deviceModel.deviceBrand;
+            selectedCustomer = result.data.customerTitle;
+            selectedDevice = result.data.deviceId;
+            deviceServices = result.data.deviceServices;
+            selectedModelName = result.data.deviceDto.deviceModel.name;
+            selectedSerialNo = result.data.deviceDto.serialNumber;
+            firmaOzet.value.deviceStatus = result.data.deviceDto.status ? 'Aktif' : 'Pasif';
+            firmaOzet.value.backgroundColor = result.data.deviceDto.status ? '#ABEBC6' : '#F5B7B1';
+            firmaOzet.value.maintenanceBackgroundColor = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+            firmaOzet.value.contractMaintenanceStatus = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
+            customerDeviceList = result.data.devices;
           }
         })
         .catch(() => {
-          const [error] = Object.keys(this.store.getters.getErrors);
+          const [error] = Object.keys(store.getters.getErrors);
         });
-    },
-    async cihazListesi() {
-      this.centerDialogVisible = true;
-    },
-    async servisAc() {
-      await this.getBootCodeList();
-      await this.getTechnicianList();
-    },
+    }
+
+    async function cihazListesi() {
+      centerDialogVisible.value = true;
+    }
+
+    async function servisAc() {
+      await getBootCodeList();
+      await getTechnicianList();
+    }
+
+    onMounted(async () => {
+      alert('234');
+      await getLastTradedCustomer();
+    });
 
     return {
       loading,
       sectorList,
       store,
       centerDialogVisible,
-      remoteMethod,
       customerList,
       selectedCustomer,
-      remoteMethodCihazNo,
       deviceList,
       selectedDevice,
       selectedSerialNo,
       selectedModelName,
-      remoteMethodSerialNo,
-      remoteMethodModelName,
       modelList,
       seriNoList,
       customerDeviceList,
@@ -1381,58 +1455,32 @@ export default defineComponent({
       technicianUserList,
       newServiceRules,
       formServiceRef,
-      servicAcSubmit,
       firmaOzet,
       deviceBrand,
-      contracts
+      contracts,
+      customerInfoList,
+      deviceServices,
+      remoteMethodSerialNo,
+      remoteMethodModelName,
+      onSerialNoChange,
+      onModelNameChange,
+      servicAcSubmit,
+      remoteMethod,
+      remoteMethodCihazNo,
+      routeAddCustomer,
+      routeUpdateCustomer,
+      cihazListesi,
+      servisAc,
+      onDeviceNoChange,
+      onCustomerChange,
+      getMainPageCustomer,
     };
-  },
-  props: {
-    widgetClasses: String,
-  },
-  data() {
-    return {
-      device: {
-        addressId: '',
-        assemblyDate: '',
-        description: '',
-        deviceModelId: '',
-        serialNumber: '',
-        status: false,
-        assemblyDateString: '',
-      },
-      deviceModel: {
-        colorType: '',
-        companyId: '',
-        deviceBrandId: '',
-        isScannerExist: '',
-        name: '',
-        paperType: '',
-        status: false,
-      },
-      deviceBrand: {
-        companyId: '',
-        name: '',
-        status: false,
-      },
-      deviceServices: [],
-      contracts: [],
-      backgroundColor: '#ABEBC6',
-      maintenanceBackgroundColor: '#ABEBC6',
-      contractMaintenanceStatus: '-',
-    };
-  },
-  async created() {
-    await this.getLastTradedCustomer();
-  },
-  methods: {
-
   },
 });
 </script>
 
 <style>
-.demo-tabs>.el-tabs__content {
+.demo-tabs > .el-tabs__content {
   padding: 32px;
   color: #6b778c;
   font-size: 32px;

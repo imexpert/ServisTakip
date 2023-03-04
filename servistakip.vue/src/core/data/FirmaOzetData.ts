@@ -1,4 +1,5 @@
 import { IDeviceBrandData } from "./DeviceBrandData";
+import { IDeviceData } from "./DeviceData";
 import { IDeviceModelData } from "./DeviceModelData";
 
 interface IFirmaOzetData {
@@ -24,6 +25,7 @@ interface IFirmaOzetData {
     maintenanceStatus?: string | '',
     deviceModel: IDeviceModelData | null,
     deviceBrand: IDeviceBrandData | null,
+    device: IDeviceData | null,
     backgroundColor?: string | '',
     maintenanceBackgroundColor?: string | '',
     contractMaintenanceStatus?: string | '',

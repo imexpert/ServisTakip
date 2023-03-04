@@ -48,7 +48,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         DistrictName = device.Address.Querter.District.Name,
                         QuarterName = device.Address.Querter.Name,
                         RegionCode = device.Address.Querter.RegionCode,
-                        DeviceDto = mapper.Map<DeviceDto>(device),
+                        Device = mapper.Map<DeviceDto>(device),
                         RowId = $"{device.Address.Customer.Id}|{device.Address.Id}|{device.Id}"
                     };
 
