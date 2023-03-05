@@ -37,5 +37,16 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
         }
+
+        public async Task<List<Customer>> GetCustomerListAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Customers
+                .Include(s => s.Addresses).ThenInclude(s => s.Devices).ThenInclude(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
+                .Include(s => s.Addresses).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
+                .Include(s => s.Sector)
+                .Where(s => s.CompanyId == Utils.CompanyId)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken: cancellationToken);
+        }
     }
 }

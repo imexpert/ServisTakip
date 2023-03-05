@@ -9,7 +9,7 @@ namespace ServisTakip.Entities.DTOs.Customers
         public long CustomerId { get; set; }
         public string CustomerTitle { get; set; }
         public string CustomerSector { get; set; }
-        public long DeviceId { get; set; }
+        public long? DeviceId { get; set; }
         public string AccountCode { get; set; }
         public string RegionCode { get; set; }
         public string CityName { get; set; }

@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <!--begin::Col-->
-    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6" v-loading="anaSayfaLoading">
       <!--begin::List Widget 1-->
       <div class="card">
         <div class="card-header">
@@ -63,7 +63,7 @@
                       placeholder="Cihaz no giriniz"
                       reserve-keyword
                       remote-show-suffix
-                      v-model="selectedDevice"
+                      v-model="firmaOzet.deviceId"
                       :remote-method="remoteMethodCihazNo"
                       :loading="loading"
                     >
@@ -134,7 +134,7 @@
                       placeholder="Arama için en az 4 harf giriniz"
                       reserve-keyword
                       remote-show-suffix
-                      v-model="selectedCustomer"
+                      v-model="firmaOzet.customerTitle"
                       :remote-method="remoteMethod"
                       :loading="loading"
                     >
@@ -267,435 +267,6 @@
         <!--end::Body-->
       </div>
       <!--end::List Widget 1-->
-    </div>
-    <!--begin::Col-->
-    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-      <div class="row">
-        <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-5">
-          <el-card class="box-card" style="height: 258px">
-            <template #header>
-              <div class="card-header">
-                <div class="row">
-                  <div class="col-md-9">
-                    <span style="color: #f56c6c; font-size: 13pt; font-weight: 700">Sözleşmeler</span>
-                  </div>
-                  <div class="col-md-3" style="text-align: right">
-                    <el-dropdown split-button type="success">
-                      Tam Ekran
-                      <template #dropdown>
-                        <el-dropdown-menu>
-                          <el-dropdown-item>Yeni Ekle</el-dropdown-item>
-                          <el-dropdown-item>Aktar - Excel</el-dropdown-item>
-                        </el-dropdown-menu>
-                      </template>
-                    </el-dropdown>
-                  </div>
-                </div>
-              </div>
-            </template>
-            <div class="text item">
-              <el-table
-                :data="contracts"
-                style="width: 100%"
-                max-height="147"
-                :default-sort="{ prop: 'startDate', order: 'descending' }"
-              >
-                <el-table-column label="Başlangıç Tarihi" width="160" sortable>
-                  <template #default="scope">
-                    <div style="display: flex; align-items: center">
-                      <span>{{ scope.row.startDateString }}</span>
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column label="Bitiş Tarihi" width="150" sortable>
-                  <template #default="scope">
-                    <div style="display: flex; align-items: center">
-                      <span>{{ scope.row.endDateString }}</span>
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column label="Sözleşme Kodu" width="160">
-                  <template #default="scope">
-                    <div style="display: flex; align-items: center">
-                      <span>{{ scope.row.contractCode }}</span>
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column label="Bakım Periyodu" width="160">
-                  <template #default="scope">
-                    <div style="display: flex; align-items: center">
-                      <span>{{ scope.row.maintenancePeriod }} Aylık</span>
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column label="Fiyat" width="120">
-                  <template>
-                    <div style="display: flex; align-items: center">
-                      <span>-</span>
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column label="#" fixed="right">
-                  <template>
-                    <el-button size="small" type="primary" circle>
-                      <el-icon>
-                        <Edit />
-                      </el-icon>
-                    </el-button>
-                    <el-button size="small" type="danger" circle>
-                      <el-icon>
-                        <Delete />
-                      </el-icon>
-                    </el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-          </el-card>
-        </div>
-        <div class="col-md-5 col-lg-5 col-xl-5 col-xxl-5">
-          <el-card class="box-card">
-            <div class="row align-items-center">
-              <div class="col-md-6 mx-auto">
-                <label class="fs-5 fw-semobold">Model</label>
-              </div>
-              <div class="col-md-6">
-                <el-select
-                  @change="onModelNameChange()"
-                  filterable
-                  remote
-                  clearable
-                  placeholder="Model adı giriniz"
-                  reserve-keyword
-                  remote-show-suffix
-                  v-model="selectedModelName"
-                  :remote-method="remoteMethodModelName"
-                  :loading="loading"
-                >
-                  <li class="el-select-dropdown__item">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <span style="font-weight: 900"> Unvan </span>
-                      </div>
-                      <div class="col-md-2">
-                        <span style="font-weight: 900"> Semt </span>
-                      </div>
-                      <div class="col-md-3">
-                        <span style="font-weight: 900"> Model </span>
-                      </div>
-                      <div class="col-md-1">
-                        <span style="font-weight: 900"> Seri No </span>
-                      </div>
-                    </div>
-                  </li>
-                  <el-option v-for="item in modelList" :key="item.rowId" :label="item.model" :value="item.rowId">
-                    <div class="row">
-                      <div class="col-md-6" style="font-size: 12px">
-                        {{ item.title }}
-                      </div>
-                      <div class="col-md-2" style="font-size: 12px">
-                        {{ item.querter }}
-                      </div>
-                      <div class="col-md-3" style="font-size: 12px">
-                        {{ item.model }}
-                      </div>
-                      <div class="col-md-1" style="font-size: 12px">
-                        {{ item.serialNo }}
-                      </div>
-                    </div>
-                  </el-option>
-                </el-select>
-              </div>
-              <div class="col-md-6 mt-2">
-                <label class="fs-5 fw-semobold">Seri No</label>
-              </div>
-              <div class="col-md-6 mt-2">
-                <el-select
-                  @change="onSerialNoChange()"
-                  filterable
-                  remote
-                  clearable
-                  placeholder="Seri no giriniz"
-                  reserve-keyword
-                  remote-show-suffix
-                  v-model="selectedSerialNo"
-                  :remote-method="remoteMethodSerialNo"
-                  :loading="loading"
-                >
-                  <li class="el-select-dropdown__item">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <span style="font-weight: 900"> Unvan </span>
-                      </div>
-                      <div class="col-md-2">
-                        <span style="font-weight: 900"> Semt </span>
-                      </div>
-                      <div class="col-md-3">
-                        <span style="font-weight: 900"> Model </span>
-                      </div>
-                      <div class="col-md-1">
-                        <span style="font-weight: 900"> Seri No </span>
-                      </div>
-                    </div>
-                  </li>
-                  <el-option v-for="item in seriNoList" :key="item.rowId" :label="item.serialNo" :value="item.rowId">
-                    <div class="row">
-                      <div class="col-md-6" style="font-size: 12px">
-                        {{ item.title }}
-                      </div>
-                      <div class="col-md-2" style="font-size: 12px">
-                        {{ item.querter }}
-                      </div>
-                      <div class="col-md-3" style="font-size: 12px">
-                        {{ item.model }}
-                      </div>
-                      <div class="col-md-1" style="font-size: 12px">
-                        {{ item.serialNo }}
-                      </div>
-                    </div>
-                  </el-option>
-                </el-select>
-              </div>
-              <div class="col-md-6 mt-2">
-                <label class="fs-5 fw-semobold">Marka</label>
-              </div>
-              <div class="col-md-6 mt-2">
-                <el-input disabled v-model="firmaOzet.device.deviceModel.deviceBrand.name" style="font-size: 12px">
-                </el-input>
-              </div>
-              <div class="col-md-6 mt-2">
-                <label class="fs-5 fw-semobold">Montaj Tarihi</label>
-              </div>
-              <div class="col-md-6 mt-2">
-                <el-input disabled v-model="firmaOzet.device.assemblyDateString" style="font-size: 12px"> </el-input>
-              </div>
-            </div>
-          </el-card>
-        </div>
-        <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-          <el-card class="box-card">
-            <div class="row">
-              <div class="col-md-6 pt-2">
-                <label class="fs-5 fw-semobold">Söz. Tipi</label>
-              </div>
-              <div class="col-md-6 pt-2">
-                <el-input disabled v-model="firmaOzet.contractType"></el-input>
-              </div>
-              <div class="col-md-6 pt-2 mt-2">
-                <label class="fs-5 fw-semobold mb-2">Cihaz Durumu</label>
-              </div>
-              <div class="col-md-6 mt-2">
-                <input
-                  type="text"
-                  disabled
-                  class="form-control form-control-sm form-control-solid border border-secondary"
-                  style="color: #a8abb2"
-                  :style="{ backgroundColor: firmaOzet.backgroundColor }"
-                  name="row-name"
-                  v-model="firmaOzet.deviceStatus"
-                />
-              </div>
-              <div class="col-md-6 pt-2 mt-2">
-                <label class="fs-5 fw-semobold mb-2">Bk. Durumu</label>
-              </div>
-              <div class="col-md-6 mt-2">
-                <input
-                  type="text"
-                  disabled
-                  class="form-control form-control-sm form-control-solid border border-secondary"
-                  style="color: #a8abb2"
-                  name="row-name"
-                  :style="{ backgroundColor: firmaOzet.maintenanceBackgroundColor }"
-                  v-model="firmaOzet.contractMaintenanceStatus"
-                />
-              </div>
-            </div>
-          </el-card>
-        </div>
-
-        <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-          <el-card class="box-card">
-            <div class="row">
-              <div class="col-md-6">
-                <label class="fs-5 fw-semobold mb-2">S/B Sayaç</label>
-              </div>
-              <div class="col-md-6">
-                <el-input disabled v-model="firmaOzet.wbCount"> </el-input>
-              </div>
-              <div class="col-md-6 mt-2">
-                <label class="fs-5 fw-semobold mb-2">R.Sayaç</label>
-              </div>
-              <div class="col-md-6 mt-2">
-                <el-input disabled v-model="firmaOzet.colorCount"> </el-input>
-              </div>
-              <div class="col-md-6 mt-2">
-                <label class="fs-5 fw-semobold mb-2">T.Sayaç</label>
-              </div>
-              <div class="col-md-6 mt-2">
-                <el-input disabled v-model="firmaOzet.totalCount"> </el-input>
-              </div>
-            </div>
-          </el-card>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-      <el-card class="box-card">
-        <template #header>
-          <div class="card-header">
-            <div class="row">
-              <div class="col-md-9">
-                <span style="color: #f56c6c; font-size: 14pt; font-weight: 700">Açılan Servis Kayıtları</span>
-              </div>
-              <div class="col-md-3" style="text-align: right">
-                <el-dropdown split-button type="success">
-                  Tam Ekran
-                  <template #dropdown>
-                    <el-dropdown-menu>
-                      <el-dropdown-item>Yeni Ekle</el-dropdown-item>
-                      <el-dropdown-item>Aktar - Excel</el-dropdown-item>
-                    </el-dropdown-menu>
-                  </template>
-                </el-dropdown>
-              </div>
-            </div>
-          </div>
-        </template>
-        <div class="text item">
-          <el-table :data="deviceServices" height="200" max-height="200" style="width: 100%; font-size: 12px">
-            <el-table-column label="Açılış Tarihi" width="145" sortable>
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.failureDateString }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Tek.Ver.Tarihi" width="145" sortable>
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.userAssignDateString }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Kapanış Tarihi" width="145">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.resultDateString }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="S/B" width="80">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.wbCount }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Renkli" width="80">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.colorCount }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Ser.Kod" width="80">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.serviceBootCode }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Tes.Kodu" width="80">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.detectionCode }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Son.Kodu" width="90">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.serviceResultCode }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Teknisyen" width="120">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.user.firstname }} {{ scope.row.user.lastname }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Dr" width="40">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.dr }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Dv" width="40">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.dv }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Bc" width="40">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.bc }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Fs" width="40">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.fs }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Pa" width="40">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.pa }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Bk" width="40">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.bk }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Ak" width="40">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.ak }}</span>
-                </div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-card>
-    </div>
-    <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-      <el-card class="box-card">
-        <div class="text item">
-          <el-tabs tab-position="left" style="height: 268px" class="demo-tabs">
-            <el-tab-pane label="Orjinal Toner">User</el-tab-pane>
-            <el-tab-pane label="Muadil Toner">Config</el-tab-pane>
-            <el-tab-pane label="Main Kit">Role</el-tab-pane>
-            <el-tab-pane label="Cihaz">Task</el-tab-pane>
-            <el-tab-pane label="K.Paneli">Task</el-tab-pane>
-            <el-tab-pane label="K.Kılavuzu">Task</el-tab-pane>
-            <el-tab-pane label="Teknik Bilgi">Task</el-tab-pane>
-            <el-tab-pane label="Aksesuar">Task</el-tab-pane>
-          </el-tabs>
-        </div>
-      </el-card>
     </div>
   </div>
 
@@ -955,7 +526,7 @@ import { ErrorMessage, Field, Form } from 'vee-validate';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { Plus, Search } from '@element-plus/icons-vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { hideModal } from '@/core/helpers/dom';
@@ -966,7 +537,6 @@ import { IBootCodeData } from '@/core/data/BootCodeData';
 import { IDeviceData } from '@/core/data/DeviceData';
 import { ICustomerListData } from '@/core/data/CustomerListData';
 import { IDeviceBrandData } from '@/core/data/DeviceBrandData';
-import { IDeviceModelData } from '@/core/data/DeviceModelData';
 import { IContractData } from '@/core/data/ContractData';
 import { ICustomerData } from '@/core/data/CustomerData';
 
@@ -983,33 +553,37 @@ export default defineComponent({
     const centerDialogVisible = ref(false);
     const servisAcDialogVisible = ref(false);
     const store = useStore();
+    const anaSayfaLoading = ref<boolean>(false);
     const loading = ref<boolean>(false);
     const router = useRouter();
 
     var firmaOzet = ref<IFirmaOzetData>({
-      customerId: '',
-      customerTitle: '',
-      customerSectorId: '',
-      customerSector: '',
+      device: null,
+      deviceBrand: null,
+      deviceId: '',
+      deviceModel: null,
       accountCode: '',
+      authorizedEmail: '',
       authorizedName: '',
       authorizedPhone: '',
       authorizedTask: '',
+      backgroundColor: '',
       cityName: '',
-      authorizedEmail: '',
-      deviceId: '',
+      colorCount: '',
+      contractMaintenanceStatus: '',
+      contractType: '',
+      customerId: '',
+      customerSector: '',
+      customerSectorId: '',
+      customerTitle: '',
+      deviceStatus: '',
       districtName: '',
+      maintenanceBackgroundColor: '',
+      maintenanceStatus: '',
       quarterName: '',
       regionCode: '',
-      contractType: '',
-      wbCount: '',
-      colorCount: '',
       totalCount: '',
-      deviceStatus: '',
-      maintenanceStatus: '-',
-      deviceModel: null,
-      deviceBrand: null,
-      device: null,
+      wbCount: '',
     });
 
     const shortcuts = [
@@ -1027,16 +601,7 @@ export default defineComponent({
       },
     ];
 
-    var newService = ref<IDeviceServiceData>({
-      deviceId: firmaOzet.value.deviceId,
-      failureDate: '',
-      serviceBootCode: '',
-      bootDescription: '',
-      name: '',
-      phone: '',
-      userId: '',
-      userAssignDate: '',
-    });
+    var newService = ref<IDeviceServiceData>();
 
     var selectedDevice = ref<string>('');
     var selectedCustomer = ref<string>('');
@@ -1159,14 +724,14 @@ export default defineComponent({
             loading.value = false;
 
             if (result.isSuccess) {
-              customerList.value = result.data;
+              customerInfoList.value = result.data;
             }
           })
           .catch(() => {
             const [error] = Object.keys(store.getters.getErrors);
           });
       } else {
-        customerList.value = [];
+        customerInfoList.value = [];
       }
     };
 
@@ -1272,6 +837,7 @@ export default defineComponent({
 
       deviceServices.value = [];
     }
+
     async function getBootCodeList() {
       await store
         .dispatch(Actions.GET_BOOTCODE_LIST)
@@ -1285,6 +851,7 @@ export default defineComponent({
           const [error] = Object.keys(store.getters.getErrors);
         });
     }
+
     async function getTechnicianList() {
       await store
         .dispatch(Actions.GET_TECHNICIAN_LIST)
@@ -1299,6 +866,7 @@ export default defineComponent({
           const [error] = Object.keys(store.getters.getErrors);
         });
     }
+
     async function onCustomerChange() {
       console.clear();
       clearPage();
@@ -1312,6 +880,7 @@ export default defineComponent({
 
       await getMainPageCustomer(selectedCustomer);
     }
+
     async function onDeviceNoChange() {
       console.clear();
       clearPage();
@@ -1325,6 +894,7 @@ export default defineComponent({
 
       await getMainPageCustomer(selectedDevice);
     }
+
     async function onSerialNoChange() {
       console.clear();
       clearPage();
@@ -1340,6 +910,7 @@ export default defineComponent({
 
       await getMainPageCustomer(selectedSerialNo);
     }
+
     async function onModelNameChange() {
       console.clear();
       clearPage();
@@ -1355,6 +926,7 @@ export default defineComponent({
 
       await getMainPageCustomer(selectedModelName);
     }
+
     async function getMainPageCustomer(rowId) {
       await store
         .dispatch(Actions.GET_MAIN_PAGE_CUSTOMER, rowId)
@@ -1377,12 +949,14 @@ export default defineComponent({
           const [error] = Object.keys(store.getters.getErrors);
         });
     }
+
     function routeAddCustomer() {
       router.push({
         name: 'customer',
         path: '/customer',
       });
     }
+
     function routeUpdateCustomer() {
       store.commit('setCustomerId', firmaOzet.value.customerId);
 
@@ -1393,26 +967,28 @@ export default defineComponent({
     }
 
     async function getLastTradedCustomer() {
+      anaSayfaLoading.value = true;
       await store
         .dispatch(Actions.GET_LASTTRADED_CUSTOMER)
         .then(result => {
+          anaSayfaLoading.value = false;
           if (result.isSuccess) {
-            alert('sdf');
-            console.log(result.data);
-            firmaOzet = result.data;
-            contracts = result.data.contracts;
-            device = result.data.deviceDto;
-            deviceBrand.value = result.data.deviceDto.deviceModel.deviceBrand;
-            selectedCustomer = result.data.customerTitle;
-            selectedDevice = result.data.deviceId;
-            deviceServices = result.data.deviceServices;
-            selectedModelName = result.data.deviceDto.deviceModel.name;
-            selectedSerialNo = result.data.deviceDto.serialNumber;
-            firmaOzet.value.deviceStatus = result.data.deviceDto.status ? 'Aktif' : 'Pasif';
-            firmaOzet.value.backgroundColor = result.data.deviceDto.status ? '#ABEBC6' : '#F5B7B1';
-            firmaOzet.value.maintenanceBackgroundColor = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
-            firmaOzet.value.contractMaintenanceStatus = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
-            customerDeviceList = result.data.devices;
+            firmaOzet.value = result.data;
+            console.clear();
+            console.log(firmaOzet.value);
+            // contracts = result.data.contracts;
+            // device = result.data.deviceDto;
+            // deviceBrand.value = result.data.deviceDto.deviceModel.deviceBrand;
+            // selectedCustomer = result.data.customerTitle;
+            // selectedDevice = result.data.deviceId;
+            // deviceServices = result.data.deviceServices;
+            // selectedModelName = result.data.deviceDto.deviceModel.name;
+            // selectedSerialNo = result.data.deviceDto.serialNumber;
+            // firmaOzet.value.deviceStatus = result.data.deviceDto.status ? 'Aktif' : 'Pasif';
+            // firmaOzet.value.backgroundColor = result.data.deviceDto.status ? '#ABEBC6' : '#F5B7B1';
+            // firmaOzet.value.maintenanceBackgroundColor = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+            // firmaOzet.value.contractMaintenanceStatus = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
+            // customerDeviceList = result.data.devices;
           }
         })
         .catch(() => {
@@ -1430,7 +1006,6 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      alert('234');
       await getLastTradedCustomer();
     });
 
@@ -1460,6 +1035,7 @@ export default defineComponent({
       contracts,
       customerInfoList,
       deviceServices,
+      anaSayfaLoading,
       remoteMethodSerialNo,
       remoteMethodModelName,
       onSerialNoChange,

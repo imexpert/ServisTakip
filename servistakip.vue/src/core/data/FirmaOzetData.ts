@@ -13,7 +13,7 @@ interface IFirmaOzetData {
     authorizedTask?: string | '',
     cityName?: string | '',
     authorizedEmail?: string | '',
-    deviceId?: string | '',
+    deviceId: string,
     districtName?: string | '',
     quarterName?: string | '',
     regionCode?: string | '',

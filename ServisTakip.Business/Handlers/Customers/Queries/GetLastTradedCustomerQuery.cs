@@ -23,10 +23,12 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
 
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
+                var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
                 var contractMaintenanceRepo = ServiceTool.ServiceProvider.GetService<IContractMaintenanceRepository>();
                 var deviceServicesRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
                 var deviceRepo = ServiceTool.ServiceProvider.GetService<IDeviceRepository>();
                 var contractRepo = ServiceTool.ServiceProvider.GetService<IContractRepository>();
+
                 var lastService = await deviceServicesRepo.GetLastTradedCustomerInfo();
                 if (lastService != null)
                 {
@@ -116,22 +118,28 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
-                var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
-                var lastCustomerList = await customerRepo.GetListAsync(s => s.RecordUsername == Utils.Email);
+                var customerList = await customerRepo.GetCustomerListAsync(cancellationToken);
 
-                var customerList = lastCustomerList.ToList();
-
-                if (!customerList.Any())
-                    return ResponseMessage<LastTradedCustomerInfoDto>.Fail("Son İşlem Bilgisi Alınamadı.");
+                var customer = customerList.FirstOrDefault(s => s.RecordUsername == Utils.Email);
+                if (customer != null)
                 {
-                    var lastCustomer = customerList.OrderByDescending(s => s.RecordDate).First();
-                    result.CustomerTitle = lastCustomer.Title;
-                    result.CustomerId = lastCustomer.Id;
-                    result.CustomerSector = lastCustomer.Sector.Name;
-                    result.RowId = $"{lastCustomer.Id}|{0}|{0}";
+                    result.CustomerTitle = customer.Title;
+                    result.CustomerId = customer.Id;
+                    result.CustomerSector = customer.Sector.Name;
+
+                    result.RowId = $"{customer.Id}|{0}|{0}";
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
+                if (!customerList.Any())
+                    return ResponseMessage<LastTradedCustomerInfoDto>.Fail("Son İşlem Bilgisi Alınamadı.");
+                customer = customerList.MaxBy(s => s.UpdateDate);
+                result.CustomerTitle = customer.Title;
+                result.CustomerId = customer.Id;
+                result.CustomerSector = customer.Sector.Name;
+                result.RowId = $"{customer.Id}|{0}|{0}";
+
+                return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
             }
         }
     }

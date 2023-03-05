@@ -40,7 +40,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     .AsNoTracking()
                 .Where(s => s.RecordUsername == Utils.Email)
                 .AsNoTracking()
-                .OrderByDescending(s=>s.RecordDate)
+                .OrderByDescending(s=>s.UpdateDate)
                 .FirstOrDefaultAsync();
         }
 
