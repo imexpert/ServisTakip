@@ -72,6 +72,12 @@
                   <Plus />
                 </el-icon>&nbsp;Yeni Cihaz Ekle</el-button>
             </div>
+          
+              <el-select placeholder="Adres seçiniz" @change="onAdressChange()" filterable clearable
+                v-model="customerAdress.id">
+                <el-option v-for="item in customer.addresses" :key="item.id" :label="item.addressTitle" :value="item.id" />
+              </el-select>
+        
             <div class="col-md-12 mt-2">
               <el-table :data="deviceList" style="width: 100%">
                 <el-table-column prop="deviceModelId" label="Cihaz Model Id" width="150px" />
@@ -543,6 +549,13 @@ export default defineComponent({
           const [error] = Object.keys(this.store.getters.getErrors);
         });
     },
+    async onAdressChange() {
+      
+        console.log(this.customerAdress);
+        await this.getDevices(this.customerAdress.id);
+
+      
+    },
     async onCityChange() {
       if (this.customerAdress?.cityId == '') {
         this.customerAdress.districtId = '';
@@ -622,7 +635,7 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             this.customer.addresses = result.data;
-            console.log(result.data);
+            console.log("----------------------------"+JSON.stringify(result.data) +"----------------------------");
           }
         })
         .catch(() => {

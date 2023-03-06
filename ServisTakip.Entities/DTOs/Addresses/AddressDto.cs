@@ -6,6 +6,7 @@ namespace ServisTakip.Entities.DTOs.Addresses
 {
     public class AddressDto
     {
+        public long Id { get; set; }
         public long CustomerId { get; set; }
         public long QuarterId { get; set; }
         public string AddressTitle { get; set; }

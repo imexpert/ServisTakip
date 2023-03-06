@@ -30,6 +30,23 @@ export default class DeviceModule extends VuexModule {
       });
   }
 
+  
+
+  @Action
+  [Actions.GET_DEVICES_BYAID](addressId) {
+    return ApiService.getWithParamUrl("Devices/GetDevicesByAddressIdQuery?addressId="+addressId)
+      .then(({ data }) => {
+        console.log("+++++++++++++++++++++++++++"+addressId);
+        console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+JSON.stringify(data));
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  
   @Action
   [Actions.GET_DEVICE_BY_MODEL_NAME_FILTER](filter) {
     return ApiService.getWithParamUrl("Devices/GetDeviceByModelNameFilter?filter=" + filter)
