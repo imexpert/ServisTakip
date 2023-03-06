@@ -5,7 +5,30 @@
       <!--begin::List Widget 1-->
       <div class="card">
         <div class="card-header">
-          <div class="d-flex align-items-center me-5">
+          <div class="row">
+
+          </div>
+          <el-button-group class="ml-4">
+            <el-dropdown>
+              <el-button type="primary">
+                Müşteri İşlemleri<el-icon class="el-icon--right"><arrow-down /></el-icon>
+              </el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item>Müşteri Ekle</el-dropdown-item>
+                  <el-dropdown-item>Müşteri Düzenle</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+            <!-- <el-button type="primary">
+              <ElIcon>
+                <Edit></Edit>
+              </ElIcon>
+            </el-button>
+            <el-button type="primary" :icon="Share" />
+            <el-button type="primary" :icon="Delete" /> -->
+          </el-button-group>
+          <!-- <div class="d-flex align-items-center me-5">
             <el-dropdown split-button type="primary">
               İşlemler
               <template #dropdown>
@@ -32,7 +55,7 @@
                 <el-icon> <List /> </el-icon>&nbsp; Cihaz Listesi
               </el-button>
             </el-button-group>
-          </div>
+          </div> -->
         </div>
         <!--begin::Body-->
         <div class="card-body">
@@ -41,32 +64,17 @@
             <!--begin::Modal body-->
             <div class="modal-body">
               <!--begin::Scroll-->
-              <div
-                class="scroll-y me-n7 pe-7"
-                id="kt_modal_new_address_scroll"
-                data-kt-scroll="true"
-                data-kt-scroll-activate="{default: false, lg: true}"
-                data-kt-scroll-max-height="auto"
+              <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true"
+                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
                 data-kt-scroll-dependencies="#kt_modal_new_address_header"
-                data-kt-scroll-wrappers="#kt_modal_new_address_scroll"
-                data-kt-scroll-offset="300px"
-              >
+                data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
                 <!--begin::Input group-->
                 <div class="row mb-1">
                   <div class="col-md-4 fv-row">
                     <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
-                    <el-select
-                      @change="onDeviceNoChange()"
-                      filterable
-                      remote
-                      clearable
-                      placeholder="Cihaz no giriniz"
-                      reserve-keyword
-                      remote-show-suffix
-                      v-model="firmaOzet.deviceId"
-                      :remote-method="remoteMethodCihazNo"
-                      :loading="loading"
-                    >
+                    <el-select @change="onDeviceNoChange()" filterable remote clearable placeholder="Cihaz no giriniz"
+                      reserve-keyword remote-show-suffix v-model="firmaOzet.deviceId" :remote-method="remoteMethodCihazNo"
+                      :loading="loading">
                       <li class="el-select-dropdown__item">
                         <div class="row">
                           <div class="col-md-6">
@@ -126,18 +134,9 @@
                 <div class="row mb-1">
                   <div class="col-md-12 fv-row">
                     <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
-                    <el-select
-                      @change="onCustomerChange()"
-                      filterable
-                      remote
-                      clearable
-                      placeholder="Arama için en az 4 harf giriniz"
-                      reserve-keyword
-                      remote-show-suffix
-                      v-model="firmaOzet.customerTitle"
-                      :remote-method="remoteMethod"
-                      :loading="loading"
-                    >
+                    <el-select @change="onCustomerChange()" filterable remote clearable
+                      placeholder="Arama için en az 4 harf giriniz" reserve-keyword remote-show-suffix
+                      v-model="firmaOzet.customerTitle" :remote-method="remoteMethod" :loading="loading">
                       <li class="el-select-dropdown__item">
                         <div class="row">
                           <div class="col-md-6">
@@ -154,12 +153,8 @@
                           </div>
                         </div>
                       </li>
-                      <el-option
-                        v-for="item in customerInfoList"
-                        :key="item.rowId"
-                        :label="item.title"
-                        :value="item.rowId"
-                      >
+                      <el-option v-for="item in customerInfoList" :key="item.rowId" :label="item.title"
+                        :value="item.rowId">
                         <div class="row">
                           <div class="col-md-6" style="font-size: 12px">
                             {{ item.title }}
@@ -313,13 +308,8 @@
               </el-table-column>
               <el-table-column label="#" fixed="left">
                 <template #default="scope">
-                  <el-button
-                    size="small"
-                    type="primary"
-                    circle
-                    title="Cihaz Seç"
-                    @click="getMainPageCustomer(scope.row.rowId)"
-                  >
+                  <el-button size="small" type="primary" circle title="Cihaz Seç"
+                    @click="getMainPageCustomer(scope.row.rowId)">
                     <el-icon><Select /></el-icon>
                   </el-button>
                 </template>
@@ -333,15 +323,8 @@
 
   <el-dialog v-model="servisAcDialogVisible" title="Yeni Servis" width="40%" destroy-on-close center>
     <div class="row">
-      <el-form
-        status-icon
-        :rules="newServiceRules"
-        ref="formServiceRef"
-        :model="newService"
-        @submit.prevent="servicAcSubmit()"
-        label-width="120px"
-        label-position="top"
-      >
+      <el-form status-icon :rules="newServiceRules" ref="formServiceRef" :model="newService"
+        @submit.prevent="servicAcSubmit()" label-width="120px" label-position="top">
         <div class="row">
           <div class="col-md-12">
             <!--begin::Input group-->
@@ -367,13 +350,8 @@
               <!--end::Label-->
 
               <el-form-item prop="failureDate">
-                <el-date-picker
-                  v-model="newService.failureDate"
-                  format="DD.MM.YYYY HH:mm:ss"
-                  type="datetime"
-                  placeholder="Select date and time"
-                  :shortcuts="shortcuts"
-                />
+                <el-date-picker v-model="newService.failureDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
+                  placeholder="Select date and time" :shortcuts="shortcuts" />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -443,13 +421,9 @@
               <!--end::Label-->
 
               <el-form-item prop="phone">
-                <el-input
-                  v-model="newService.phone"
-                  :formatter="
-                    value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
-                  "
-                  placeholder="Talebi bildiren telefon giriniz"
-                />
+                <el-input v-model="newService.phone" :formatter="
+                  value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
+                " placeholder="Talebi bildiren telefon giriniz" />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -465,12 +439,8 @@
 
               <el-form-item prop="technicianName">
                 <el-select placeholder="Teknisyen" filterable clearable v-model="newService.userId">
-                  <el-option
-                    v-for="item in technicianUserList"
-                    :key="item.id"
-                    :label="item.firstname + item.lastname"
-                    :value="item.id"
-                  >
+                  <el-option v-for="item in technicianUserList" :key="item.id" :label="item.firstname + item.lastname"
+                    :value="item.id">
                     <div class="row">
                       <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
                     </div>
@@ -490,13 +460,8 @@
               <!--end::Label-->
 
               <el-form-item prop="userAssignDate">
-                <el-date-picker
-                  v-model="newService.userAssignDate"
-                  format="DD.MM.YYYY HH:mm:ss"
-                  type="datetime"
-                  placeholder="Select date and time"
-                  :shortcuts="shortcuts"
-                />
+                <el-date-picker v-model="newService.userAssignDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
+                  placeholder="Select date and time" :shortcuts="shortcuts" />
               </el-form-item>
             </div>
             <!--end::Input group-->
