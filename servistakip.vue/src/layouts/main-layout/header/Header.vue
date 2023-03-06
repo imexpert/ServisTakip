@@ -18,7 +18,7 @@
             v-if="themeMode === 'light' && layout === 'light-header'"
             alt="Logo"
             src="media/logos/logo.png"
-            class="h-70px h-lg-70px app-sidebar-logo-default"
+            class="h-70px h-lg-70px h-sm-60px app-sidebar-logo-default"
           />
           <img
             v-if="layout === 'dark-header' || (themeMode === 'dark' && layout === 'light-header')"
