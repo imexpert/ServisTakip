@@ -57,12 +57,15 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     var lastContract = result.Contracts.MaxBy(s => s.EndDate);
                     result.ContractType = lastContract?.ContractCode;
 
-                    var contractMaintenances =
+                    if (lastContract != null)
+                    {
+                        var contractMaintenances =
                         await contractMaintenanceRepo.GetListAsync(s =>
                             s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
                             s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
 
-                    result.MaintenanceStatus = contractMaintenances.Any();
+                        result.MaintenanceStatus = contractMaintenances.Any();
+                    }
 
                     var deviceServices = await deviceServicesRepo.GetDeviceServices(lastService.DeviceId);
 
