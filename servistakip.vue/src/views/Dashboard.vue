@@ -14,13 +14,10 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item>
-                        <el-icon>
-                          <Plus></Plus>
-                        </el-icon>Yeni Ekle
+                        <el-icon> <Plus></Plus> </el-icon>Yeni Ekle
                       </el-dropdown-item>
-                      <el-dropdown-item><el-icon>
-                          <Edit></Edit>
-                        </el-icon>Düzenle
+                      <el-dropdown-item
+                        ><el-icon> <Edit></Edit> </el-icon>Düzenle
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -33,17 +30,14 @@
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item><el-icon>
-                          <Plus></Plus>
-                        </el-icon>Servis Aç
+                      <el-dropdown-item @click="servisAc()"
+                        ><el-icon> <Plus></Plus> </el-icon>Servis Aç
                       </el-dropdown-item>
-                      <el-dropdown-item><el-icon>
-                          <Edit></Edit>
-                        </el-icon>Hızlı Servis
+                      <el-dropdown-item
+                        ><el-icon> <Edit></Edit> </el-icon>Hızlı Servis
                       </el-dropdown-item>
-                      <el-dropdown-item><el-icon>
-                          <List />
-                        </el-icon>Cihaz Listesi
+                      <el-dropdown-item
+                        ><el-icon> <List /> </el-icon>Cihaz Listesi
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -57,46 +51,61 @@
           <!--begin::Modal body-->
           <div class="modal-body">
             <!--begin::Scroll-->
-            <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true"
-              data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+            <div
+              class="scroll-y me-n7 pe-7"
+              id="kt_modal_new_address_scroll"
+              data-kt-scroll="true"
+              data-kt-scroll-activate="{default: false, lg: true}"
+              data-kt-scroll-max-height="auto"
               data-kt-scroll-dependencies="#kt_modal_new_address_header"
-              data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
+              data-kt-scroll-wrappers="#kt_modal_new_address_scroll"
+              data-kt-scroll-offset="300px"
+            >
               <!--begin::Input group-->
               <div class="row mb-1">
                 <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
                   <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
-                  <el-select @change="onDeviceNoChange()" filterable remote clearable placeholder="Cihaz no giriniz"
-                    reserve-keyword remote-show-suffix v-model="selectedDevice" :remote-method="remoteMethodCihazNo"
-                    :loading="loading">
+                  <el-select
+                    @change="onDeviceNoChange()"
+                    filterable
+                    remote
+                    clearable
+                    placeholder="Cihaz no giriniz"
+                    reserve-keyword
+                    remote-show-suffix
+                    v-model="selectedDevice"
+                    :remote-method="remoteMethodCihazNo"
+                    :loading="loading"
+                  >
                     <li class="el-select-dropdown__item">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                           <span style="font-weight: 900"> Unvan </span>
                         </div>
-                        <div class="col-md-2">
+                        <!-- <div class="col-md-2">
                           <span style="font-weight: 900"> Semt </span>
-                        </div>
+                        </div> -->
                         <div class="col-md-3">
                           <span style="font-weight: 900"> Model </span>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                           <span style="font-weight: 900"> Seri No </span>
                         </div>
                       </div>
                     </li>
-                    <el-option v-for="item in deviceList" :key="item.rowId" :label="item.id" :value="item.rowId">
+                    <el-option v-for="item in deviceInfoList" :key="item.rowId" :label="item.id" :value="item.rowId">
                       <div class="row">
-                        <div class="col-md-6" style="font-size: 12px">
-                          {{ item.address.customer.title }}
+                        <div class="col-md-7" style="font-size: 12px">
+                          {{ item.title }}
+                        </div>
+                        <!-- <div class="col-md-2" style="font-size: 12px">
+                          {{ item.querter }}
+                        </div> -->
+                        <div class="col-md-3" style="font-size: 12px">
+                          {{ item.model }}
                         </div>
                         <div class="col-md-2" style="font-size: 12px">
-                          {{ item.address.querter.name }}
-                        </div>
-                        <div class="col-md-3" style="font-size: 12px">
-                          {{ item.deviceModel.name }}
-                        </div>
-                        <div class="col-md-1" style="font-size: 12px">
-                          {{ item.serialNumber }}
+                          {{ item.serialNo }}
                         </div>
                       </div>
                     </el-option>
@@ -115,8 +124,7 @@
 
                 <div class="col-md-4 col-lg-4 col-xl-4 col-sm-6 fv-row">
                   <label class="fs-5 fw-semobold mb-2">Sektör</label>
-                  <el-input readonly disabled v-model="firmaOzet.customerSector" class="input-with-select">
-                  </el-input>
+                  <el-input readonly disabled v-model="firmaOzet.customerSector" class="input-with-select"> </el-input>
                   <div class="fv-plugins-message-container">
                     <div class="fv-help-block">
                       <ErrorMessage name="sektor" />
@@ -127,9 +135,18 @@
               <div class="row mb-1">
                 <div class="col-md-12 fv-row">
                   <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
-                  <el-select @change="onCustomerChange()" filterable remote clearable
-                    placeholder="Arama için en az 4 harf giriniz" reserve-keyword remote-show-suffix
-                    v-model="firmaOzet.customerTitle" :remote-method="remoteMethod" :loading="loading">
+                  <el-select
+                    @change="onCustomerChange()"
+                    filterable
+                    remote
+                    clearable
+                    placeholder="Arama için en az 4 harf giriniz"
+                    reserve-keyword
+                    remote-show-suffix
+                    v-model="selectedCustomer"
+                    :remote-method="remoteMethod"
+                    :loading="loading"
+                  >
                     <li class="el-select-dropdown__item">
                       <div class="row">
                         <div class="col-md-6">
@@ -146,7 +163,12 @@
                         </div>
                       </div>
                     </li>
-                    <el-option v-for="item in customerInfoList" :key="item.rowId" :label="item.title" :value="item.rowId">
+                    <el-option
+                      v-for="item in customerInfoList"
+                      :key="item.rowId"
+                      :label="item.title"
+                      :value="item.rowId"
+                    >
                       <div class="row">
                         <div class="col-md-6" style="font-size: 12px">
                           {{ item.title }}
@@ -197,8 +219,7 @@
               <div class="row mb-1">
                 <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
                   <label class="fs-5 fw-semobold mb-2">Yetkili Ad Soyad</label>
-                  <el-input readonly disabled v-model="firmaOzet.authorizedName" class="input-with-select">
-                  </el-input>
+                  <el-input readonly disabled v-model="firmaOzet.authorizedName" class="input-with-select"> </el-input>
                   <div class="fv-plugins-message-container">
                     <div class="fv-help-block">
                       <ErrorMessage name="departman" />
@@ -207,8 +228,7 @@
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
                   <label class="fs-5 fw-semobold mb-2">Yetkili Görevi</label>
-                  <el-input readonly disabled v-model="firmaOzet.authorizedTask" class="input-with-select">
-                  </el-input>
+                  <el-input readonly disabled v-model="firmaOzet.authorizedTask" class="input-with-select"> </el-input>
                   <div class="fv-plugins-message-container">
                     <div class="fv-help-block">
                       <ErrorMessage name="departman" />
@@ -217,8 +237,7 @@
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
                   <label class="fs-5 fw-semobold mb-2">Yetkili E-Mail</label>
-                  <el-input readonly disabled v-model="firmaOzet.authorizedEmail" class="input-with-select">
-                  </el-input>
+                  <el-input readonly disabled v-model="firmaOzet.authorizedEmail" class="input-with-select"> </el-input>
                   <div class="fv-plugins-message-container">
                     <div class="fv-help-block">
                       <ErrorMessage name="departman" />
@@ -229,8 +248,7 @@
               <div class="row mb-1">
                 <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
                   <label class="fs-5 fw-semobold mb-2">Tel</label>
-                  <el-input readonly disabled v-model="firmaOzet.authorizedPhone" class="input-with-select">
-                  </el-input>
+                  <el-input readonly disabled v-model="firmaOzet.authorizedPhone" class="input-with-select"> </el-input>
                   <div class="fv-plugins-message-container">
                     <div class="fv-help-block">
                       <ErrorMessage name="departman" />
@@ -257,15 +275,22 @@
       <el-card class="box-card">
         <div class="row mb-2">
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-            <el-table :data="contracts" style="width: 100%" height="150" max-height="150px"
-              :default-sort="{ prop: 'startDate', order: 'descending' }">
+            <el-table
+              :data="contracts"
+              style="width: 100%"
+              height="150"
+              max-height="150px"
+              :default-sort="{ prop: 'startDate', order: 'descending' }"
+            >
               <template #empty>
-                  <div class="row">
-                    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-                      <el-button type="danger"><el-icon><Plus></Plus></el-icon>Yeni Ekle </el-button>
-                    </div>
+                <div class="row">
+                  <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
+                    <el-button type="danger"
+                      ><el-icon><Plus></Plus></el-icon>Yeni Ekle
+                    </el-button>
                   </div>
-                </template>
+                </div>
+              </template>
               <el-table-column label="Başlangıç T." width="140" sortable>
                 <template #default="scope">
                   <div style="display: flex; align-items: center">
@@ -306,55 +331,69 @@
                   Yeni Ekle
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item><el-icon>
+                      <el-dropdown-item
+                        ><el-icon>
                           <Edit></Edit>
-                        </el-icon> Düzenle</el-dropdown-item>
-                      <el-dropdown-item><el-icon><el-icon>
-                            <Delete />
-                          </el-icon></el-icon> Sil</el-dropdown-item>
+                        </el-icon>
+                        Düzenle</el-dropdown-item
+                      >
+                      <el-dropdown-item
+                        ><el-icon
+                          ><el-icon> <Delete /> </el-icon
+                        ></el-icon>
+                        Sil</el-dropdown-item
+                      >
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
               </el-table-column>
             </el-table>
-            
           </div>
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mt-3">
             <el-divider />
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
             <label class="required fs-5 fw-semobold mb-2">Model</label>
-            <el-select @change="onModelNameChange()" filterable remote clearable placeholder="Model adı giriniz"
-              reserve-keyword remote-show-suffix v-model="selectedModelName" :remote-method="remoteMethodModelName"
-              :loading="loading">
+            <el-select
+              @change="onModelNameChange()"
+              filterable
+              remote
+              clearable
+              placeholder="Model adı giriniz"
+              reserve-keyword
+              remote-show-suffix
+              v-model="selectedModelName"
+              :remote-method="remoteMethodModelName"
+              :loading="loading"
+            >
               <li class="el-select-dropdown__item">
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-7">
                     <span style="font-weight: 900"> Unvan </span>
                   </div>
-                  <div class="col-md-2">
+                  <!-- <div class="col-md-2">
                     <span style="font-weight: 900"> Semt </span>
-                  </div>
+                  </div> -->
                   <div class="col-md-3">
                     <span style="font-weight: 900"> Model </span>
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-md-2">
                     <span style="font-weight: 900"> Seri No </span>
                   </div>
                 </div>
               </li>
               <el-option v-for="item in modelList" :key="item.rowId" :label="item.model" :value="item.rowId">
                 <div class="row">
-                  <div class="col-md-6" style="font-size: 12px">
+                  <div class="col-md-7" style="font-size: 12px">
                     {{ item.title }}
                   </div>
-                  <div class="col-md-2" style="font-size: 12px">
+                  <!-- <div class="col-md-2" style="font-size: 12px">
                     {{ item.querter }}
-                  </div>
+                  </div> -->
                   <div class="col-md-3" style="font-size: 12px">
                     {{ item.model }}
                   </div>
-                  <div class="col-md-1" style="font-size: 12px">
+                  <div class="col-md-2" style="font-size: 12px">
                     {{ item.serialNo }}
                   </div>
                 </div>
@@ -363,37 +402,46 @@
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
             <label class="required fs-5 fw-semobold mb-2">Seri No</label>
-            <el-select @change="onSerialNoChange()" filterable remote clearable placeholder="Seri no giriniz"
-              reserve-keyword remote-show-suffix v-model="selectedSerialNo" :remote-method="remoteMethodSerialNo"
-              :loading="loading">
+            <el-select
+              @change="onSerialNoChange()"
+              filterable
+              remote
+              clearable
+              placeholder="Seri no giriniz"
+              reserve-keyword
+              remote-show-suffix
+              v-model="selectedSerialNo"
+              :remote-method="remoteMethodSerialNo"
+              :loading="loading"
+            >
               <li class="el-select-dropdown__item">
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-7">
                     <span style="font-weight: 900"> Unvan </span>
                   </div>
-                  <div class="col-md-2">
+                  <!-- <div class="col-md-2">
                     <span style="font-weight: 900"> Semt </span>
-                  </div>
+                  </div> -->
                   <div class="col-md-3">
                     <span style="font-weight: 900"> Model </span>
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-md-2">
                     <span style="font-weight: 900"> Seri No </span>
                   </div>
                 </div>
               </li>
               <el-option v-for="item in seriNoList" :key="item.rowId" :label="item.serialNo" :value="item.rowId">
                 <div class="row">
-                  <div class="col-md-6" style="font-size: 12px">
+                  <div class="col-md-7" style="font-size: 12px">
                     {{ item.title }}
                   </div>
-                  <div class="col-md-2" style="font-size: 12px">
+                  <!-- <div class="col-md-2" style="font-size: 12px">
                     {{ item.querter }}
-                  </div>
+                  </div> -->
                   <div class="col-md-3" style="font-size: 12px">
                     {{ item.model }}
                   </div>
-                  <div class="col-md-1" style="font-size: 12px">
+                  <div class="col-md-2" style="font-size: 12px">
                     {{ item.serialNo }}
                   </div>
                 </div>
@@ -402,8 +450,7 @@
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
             <label class="fs-5 fw-semobold mb-2">Marka</label>
-            <el-input disabled style="font-size: 12px" v-model="deviceBrand.name" >
-            </el-input>
+            <el-input disabled style="font-size: 12px" v-model="deviceBrand.name"> </el-input>
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Montaj Tarihi</label>
@@ -416,26 +463,26 @@
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Cihaz Durumu</label>
             <input
-                  type="text"
-                  disabled
-                  class="form-control form-control-sm form-control-solid border border-secondary"
-                  style="color: #a8abb2"
-                  :style="{ backgroundColor: backgroundColor }"
-                  name="row-name"
-                  v-model="deviceStatus"
-                />
+              type="text"
+              disabled
+              class="form-control form-control-sm form-control-solid border border-secondary"
+              style="color: #a8abb2"
+              :style="{ backgroundColor: backgroundColor }"
+              name="row-name"
+              v-model="deviceStatus"
+            />
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Bakım Durumu</label>
             <input
-                  type="text"
-                  disabled
-                  class="form-control form-control-sm form-control-solid border border-secondary"
-                  style="color: #a8abb2"
-                  :style="{ backgroundColor: maintenanceBackgroundColor  }"
-                  name="row-name"
-                  v-model="contractMaintenanceStatus"
-                />
+              type="text"
+              disabled
+              class="form-control form-control-sm form-control-solid border border-secondary"
+              style="color: #a8abb2"
+              :style="{ backgroundColor: maintenanceBackgroundColor }"
+              name="row-name"
+              v-model="contractMaintenanceStatus"
+            />
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">S/B Sayaç</label>
@@ -443,11 +490,146 @@
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Renkli Sayaç</label>
-            <el-input disabled style="font-size: 12px"  v-model="firmaOzet.colorCount"> </el-input>
+            <el-input disabled style="font-size: 12px" v-model="firmaOzet.colorCount"> </el-input>
           </div>
         </div>
       </el-card>
-
+    </div>
+    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-8 col-sm-12 mb-1" v-loading="anaSayfaLoading">
+      <el-card class="box-card">
+        <div class="text item">
+          <el-table :data="deviceServices" height="268" max-height="268" style="width: 100%; font-size: 12px">
+            <el-table-column label="Açılış Tarihi" width="145" sortable>
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.failureDateString }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Tek.Ver.Tarihi" width="145" sortable>
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.userAssignDateString }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Kapanış Tarihi" width="145">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.resultDateString }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="S/B" width="80">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.wbCount }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Renkli" width="80">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.colorCount }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Ser.Kod" width="80">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.serviceBootCode }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Tes.Kodu" width="80">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.detectionCode }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Son.Kodu" width="90">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.serviceResultCode }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Teknisyen" width="120">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.user.firstname }} {{ scope.row.user.lastname }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Dr" width="40">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.dr }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Dv" width="40">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.dv }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Bc" width="40">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.bc }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Fs" width="40">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.fs }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Pa" width="40">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.pa }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Bk" width="40">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.bk }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Ak" width="40">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.ak }}</span>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-card>
+    </div>
+    <div class="col-md-12 col-lg-12 col-xl-4 col-xxl-4">
+      <el-card class="box-card">
+        <div class="text item">
+          <el-tabs tab-position="left" style="height: 268px" class="demo-tabs">
+            <el-tab-pane label="Orjinal Toner">User</el-tab-pane>
+            <el-tab-pane label="Muadil Toner">Config</el-tab-pane>
+            <el-tab-pane label="Main Kit">Role</el-tab-pane>
+            <el-tab-pane label="Cihaz">Task</el-tab-pane>
+            <el-tab-pane label="K.Paneli">Task</el-tab-pane>
+            <el-tab-pane label="K.Kılavuzu">Task</el-tab-pane>
+            <el-tab-pane label="Teknik Bilgi">Task</el-tab-pane>
+            <el-tab-pane label="Aksesuar">Task</el-tab-pane>
+          </el-tabs>
+        </div>
+      </el-card>
     </div>
   </div>
 
@@ -494,8 +676,13 @@
               </el-table-column>
               <el-table-column label="#" fixed="left">
                 <template #default="scope">
-                  <el-button size="small" type="primary" circle title="Cihaz Seç"
-                    @click="getMainPageCustomer(scope.row.rowId)">
+                  <el-button
+                    size="small"
+                    type="primary"
+                    circle
+                    title="Cihaz Seç"
+                    @click="getMainPageCustomer(scope.row.rowId)"
+                  >
                     <el-icon><Select /></el-icon>
                   </el-button>
                 </template>
@@ -507,10 +694,24 @@
     </div>
   </el-dialog>
 
-  <el-dialog v-model="servisAcDialogVisible" title="Yeni Servis" width="40%" destroy-on-close center>
+  <el-dialog
+    v-loading="servisAcLoading"
+    v-model="servisAcDialogVisible"
+    title="Yeni Servis"
+    width="40%"
+    destroy-on-close
+    center
+  >
     <div class="row">
-      <el-form status-icon :rules="newServiceRules" ref="formServiceRef" :model="newService"
-        @submit.prevent="servicAcSubmit()" label-width="120px" label-position="top">
+      <el-form
+        status-icon
+        :rules="newServiceRules"
+        ref="formServiceRef"
+        :model="newService"
+        @submit.prevent="servicAcSubmit()"
+        label-width="120px"
+        label-position="top"
+      >
         <div class="row">
           <div class="col-md-12">
             <!--begin::Input group-->
@@ -536,8 +737,13 @@
               <!--end::Label-->
 
               <el-form-item prop="failureDate">
-                <el-date-picker v-model="newService.failureDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                  placeholder="Select date and time" :shortcuts="shortcuts" />
+                <el-date-picker
+                  v-model="newService.failureDate"
+                  format="DD.MM.YYYY HH:mm:ss"
+                  type="datetime"
+                  placeholder="Select date and time"
+                  :shortcuts="shortcuts"
+                />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -607,9 +813,13 @@
               <!--end::Label-->
 
               <el-form-item prop="phone">
-                <el-input v-model="newService.phone" :formatter="
-                  value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
-                " placeholder="Talebi bildiren telefon giriniz" />
+                <el-input
+                  v-model="newService.phone"
+                  :formatter="
+                    value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
+                  "
+                  placeholder="Talebi bildiren telefon giriniz"
+                />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -625,8 +835,12 @@
 
               <el-form-item prop="technicianName">
                 <el-select placeholder="Teknisyen" filterable clearable v-model="newService.userId">
-                  <el-option v-for="item in technicianUserList" :key="item.id" :label="item.firstname + item.lastname"
-                    :value="item.id">
+                  <el-option
+                    v-for="item in technicianUserList"
+                    :key="item.id"
+                    :label="item.firstname + item.lastname"
+                    :value="item.id"
+                  >
                     <div class="row">
                       <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
                     </div>
@@ -646,8 +860,13 @@
               <!--end::Label-->
 
               <el-form-item prop="userAssignDate">
-                <el-date-picker v-model="newService.userAssignDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                  placeholder="Select date and time" :shortcuts="shortcuts" />
+                <el-date-picker
+                  v-model="newService.userAssignDate"
+                  format="DD.MM.YYYY HH:mm:ss"
+                  type="datetime"
+                  placeholder="Select date and time"
+                  :shortcuts="shortcuts"
+                />
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -690,6 +909,7 @@ import { ICustomerListData } from '@/core/data/CustomerListData';
 import { IDeviceBrandData } from '@/core/data/DeviceBrandData';
 import { IContractData } from '@/core/data/ContractData';
 import { ICustomerData } from '@/core/data/CustomerData';
+import { IDeviceModelData } from '@/core/data/DeviceModelData';
 
 export default defineComponent({
   name: 'default-dashboard-widget-2',
@@ -705,6 +925,7 @@ export default defineComponent({
     const servisAcDialogVisible = ref(false);
     const store = useStore();
     const anaSayfaLoading = ref<boolean>(false);
+    const servisAcLoading = ref<boolean>(false);
     const loading = ref<boolean>(false);
     const router = useRouter();
 
@@ -738,33 +959,37 @@ export default defineComponent({
     });
 
     var device = ref<IDeviceData>({
-      address:null,
-      addressId:'',
-      assemblyDateString:'',
-      description:'',
-      deviceModel:null,
-      deviceModelId:'',
-      id:'',
-      rowId:'',
-      serialNumber:'',
-      status:false
+      address: null,
+      addressId: '',
+      assemblyDateString: '',
+      description: '',
+      deviceModel: null,
+      deviceModelId: '',
+      id: '',
+      rowId: '',
+      serialNumber: '',
+      status: false,
     });
 
-    var deviceBrand = ref<IDeviceBrandData>(
-      {
-        name:'',
-        companyId:'',
-        deviceType:null
-      }
-    );
+    var deviceBrand = ref<IDeviceBrandData>({
+      name: '',
+      companyId: '',
+      deviceType: null,
+    });
+
+    var deviceModel = ref<IDeviceModelData>({
+      deviceBrand: null,
+      deviceBrandId: '',
+      name: '',
+    });
 
     var deviceStatus = ref<string>('');
 
     var backgroundColor = ref<string>('#ABEBC6');
 
-    var maintenanceBackgroundColor  = ref<string>('#ABEBC6');
+    var maintenanceBackgroundColor = ref<string>('#ABEBC6');
 
-    var contractMaintenanceStatus= ref<string>('');
+    var contractMaintenanceStatus = ref<string>('');
 
     const shortcuts = [
       {
@@ -781,17 +1006,54 @@ export default defineComponent({
       },
     ];
 
-    var newService = ref<IDeviceServiceData>();
+    var newService = ref<IDeviceServiceData>({
+      ak: '',
+      bc: '',
+      bk: '',
+      blackCount: '',
+      blueCount: '',
+      bootDescription: '',
+      colorCount: '',
+      detectionCode: '',
+      detectionDescription: '',
+      device: null,
+      deviceId: '',
+      dr: '',
+      dv: '',
+      failureDate: '',
+      failureDateString: '',
+      fs: '',
+      id: '',
+      linkedDeviceServiceId: '',
+      name: '',
+      pa: '',
+      phone: '',
+      redCount: '',
+      resultDate: '',
+      resultDateString: '',
+      resultDescription: '',
+      serviceBootCode: '',
+      serviceResultCode: '',
+      tonerType: '',
+      user: null,
+      userAssignDate: '',
+      userAssignDateString: '',
+      userId: '',
+      wBCount: '',
+      yellowCount: '',
+    });
 
     var selectedDevice = ref<string>('');
     var selectedCustomer = ref<string>('');
+    var selectedSerialNo = ref<string>();
+    var selectedModelName = ref<string>();
+
     var technicianUserList = ref<Array<IUserData>>([]);
     var customerList = ref<Array<ICustomerData>>([]);
     var deviceList = ref<Array<IDeviceData>>([]);
     var deviceServices = ref<Array<IDeviceServiceData>>([]);
 
     var contracts = ref<Array<IContractData>>([]);
-    
 
     var bootCodeList = ref<Array<IBootCodeData>>([]);
 
@@ -803,13 +1065,11 @@ export default defineComponent({
     ];
 
     var customerInfoList = ref<Array<ICustomerListData>>([]);
+    var deviceInfoList = ref<Array<ICustomerListData>>([]);
     var customerDeviceList = ref<Array<IDeviceData>>([]);
     var deviceServices = ref<Array<IDeviceServiceData>>([]);
     var modelList = ref<Array<ICustomerListData>>([]);
     var seriNoList = ref<Array<ICustomerListData>>([]);
-    
-    var selectedSerialNo = ref<string>();
-    var selectedModelName = ref<string>();
 
     const formServiceRef = ref<null | HTMLFormElement>(null);
 
@@ -925,7 +1185,7 @@ export default defineComponent({
             console.log(result.data);
             loading.value = false;
             if (result.isSuccess) {
-              // deviceList.value = result.data;
+              deviceInfoList.value = result.data;
             }
           })
           .catch(() => {
@@ -1009,6 +1269,8 @@ export default defineComponent({
 
       customerDeviceList.value = [];
 
+      deviceInfoList.value = [];
+
       deviceBrand.value = {
         deviceType: null,
         companyId: '',
@@ -1016,6 +1278,11 @@ export default defineComponent({
       };
 
       deviceServices.value = [];
+
+      // selectedDevice.value = '';
+      // selectedCustomer.value = '';
+      // selectedSerialNo.value = '';
+      // selectedModelName.value = '';
     }
 
     async function getBootCodeList() {
@@ -1023,7 +1290,6 @@ export default defineComponent({
         .dispatch(Actions.GET_BOOTCODE_LIST)
         .then(result => {
           if (result.isSuccess) {
-            servisAcDialogVisible.value = true;
             bootCodeList = result.data;
           }
         })
@@ -1037,8 +1303,6 @@ export default defineComponent({
         .dispatch(Actions.GET_TECHNICIAN_LIST)
         .then(result => {
           if (result.isSuccess) {
-            console.clear();
-            console.log(result.data);
             technicianUserList = result.data;
           }
         })
@@ -1058,12 +1322,12 @@ export default defineComponent({
         return;
       }
 
-      await getMainPageCustomer(selectedCustomer);
+      await getMainPageCustomer(selectedCustomer.value);
     }
 
     async function onDeviceNoChange() {
       console.clear();
-      // clearPage();
+      clearPage();
       console.log(selectedDevice);
 
       if (!selectedDevice) {
@@ -1072,7 +1336,7 @@ export default defineComponent({
         return;
       }
 
-      // await getMainPageCustomer(selectedDevice);
+      await getMainPageCustomer(selectedDevice.value);
     }
 
     async function onSerialNoChange() {
@@ -1088,7 +1352,7 @@ export default defineComponent({
         return;
       }
 
-      await getMainPageCustomer(selectedSerialNo);
+      await getMainPageCustomer(selectedSerialNo.value);
     }
 
     async function onModelNameChange() {
@@ -1104,26 +1368,46 @@ export default defineComponent({
         return;
       }
 
-      await getMainPageCustomer(selectedModelName);
+      await getMainPageCustomer(selectedModelName.value);
     }
 
     async function getMainPageCustomer(rowId) {
+      anaSayfaLoading.value = true;
       await store
         .dispatch(Actions.GET_MAIN_PAGE_CUSTOMER, rowId)
         .then(result => {
-          centerDialogVisible.value = false;
-          console.clear();
-          console.log(result.data);
-          firmaOzet.value = result.data;
-          firmaOzet.value.deviceStatus = result.data.deviceDto.status ? 'Aktif' : 'Pasif';
-          contracts.value = result.data.contracts;
-          device.value = result.data.deviceDto;
-          deviceServices.value = result.data.deviceServices;
-          customerDeviceList.value = result.data.devices;
-          // selectedDevice = result.data.deviceId;
-          // selectedCustomer = result.data.customerTitle;
-          // selectedModelName = result.data.deviceDto.deviceModel.name;
-          // selectedSerialNo = result.data.deviceDto.serialNumber;
+          anaSayfaLoading.value = false;
+          if (result.isSuccess) {
+            console.clear();
+            console.log(result.data);
+            firmaOzet.value = result.data;
+            console.clear();
+            console.log(firmaOzet.value);
+            contracts.value = result.data.contracts;
+            device.value = result.data.device;
+            deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
+            deviceModel.value = result.data.device?.deviceModel;
+            deviceStatus.value = device.value.status == true ? 'Aktif' : 'Pasif';
+            contractMaintenanceStatus.value = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
+            maintenanceBackgroundColor.value = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+            deviceList.value = result.devices;
+            selectedDevice.value = result.data.deviceId;
+            selectedCustomer.value = result.data.customerTitle;
+            selectedSerialNo.value = device.value.serialNumber;
+            selectedModelName.value = deviceModel.value.name;
+            deviceServices.value = result.data.deviceServices;
+          } else {
+            Swal.fire({
+              title: 'Hata',
+              text: result.message,
+              icon: 'error',
+              buttonsStyling: false,
+              confirmButtonText: 'Tamam !',
+              customClass: {
+                confirmButton: 'btn fw-bold btn-danger',
+              },
+            });
+          }
         })
         .catch(() => {
           const [error] = Object.keys(store.getters.getErrors);
@@ -1159,22 +1443,30 @@ export default defineComponent({
             contracts.value = result.data.contracts;
             device.value = result.data.device;
             deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
+            deviceModel.value = result.data.device?.deviceModel;
             deviceStatus.value = device.value.status == true ? 'Aktif' : 'Pasif';
             contractMaintenanceStatus.value = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
             maintenanceBackgroundColor.value = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
             deviceList.value = result.devices;
             selectedDevice.value = result.data.deviceId;
 
-            // selectedCustomer = result.data.customerTitle;
-            
-            // deviceServices = result.data.deviceServices;
-            // selectedModelName = result.data.deviceDto.deviceModel.name;
-            // selectedSerialNo = result.data.deviceDto.serialNumber;
-            
-            // firmaOzet.value.backgroundColor = result.data.deviceDto.status ? '#ABEBC6' : '#F5B7B1';
-            
-            
-            // customerDeviceList = result.data.devices;
+            selectedDevice.value = result.data.deviceId;
+            selectedCustomer.value = result.data.customerTitle;
+            selectedSerialNo.value = device.value.serialNumber;
+            selectedModelName.value = deviceModel.value.name;
+
+            deviceServices.value = result.data.deviceServices;
+          } else {
+            Swal.fire({
+              title: 'Hata',
+              text: result.message,
+              icon: 'error',
+              buttonsStyling: false,
+              confirmButtonText: 'Tamam !',
+              customClass: {
+                confirmButton: 'btn fw-bold btn-danger',
+              },
+            });
           }
         })
         .catch(() => {
@@ -1187,8 +1479,13 @@ export default defineComponent({
     }
 
     async function servisAc() {
+      servisAcDialogVisible.value = true;
+      servisAcLoading.value = true;
+
       await getBootCodeList();
       await getTechnicianList();
+
+      servisAcLoading.value = false;
     }
 
     onMounted(async () => {
@@ -1221,12 +1518,14 @@ export default defineComponent({
       deviceBrand,
       contracts,
       customerInfoList,
+      deviceInfoList,
       deviceServices,
       anaSayfaLoading,
       deviceStatus,
       backgroundColor,
       contractMaintenanceStatus,
-      maintenanceBackgroundColor ,
+      maintenanceBackgroundColor,
+      servisAcLoading,
       remoteMethodSerialNo,
       remoteMethodModelName,
       onSerialNoChange,
@@ -1248,4 +1547,5 @@ export default defineComponent({
 <style>
 .flex-grow {
   flex-grow: 1;
-}</style>
+}
+</style>
