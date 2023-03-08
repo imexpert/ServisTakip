@@ -22,6 +22,7 @@ enum Actions {
   GET_QUERTER_LIST = "getQuerterlist",
   ADD_CUSTOMER = "addCustomer",
   ADD_ADDRESS = "addAddress",
+  GET_ADDRESSLISTBYCUSTOMERID = "getAddressListByCustomerId",
   GET_CUSTOMER = "getCustomer",
   GET_LASTTRADED_CUSTOMER = "getLastTradedCustomer",
   GET_CUSTOMER_BY_FILTER = "getCustomerByFilter",
@@ -68,7 +69,11 @@ enum Actions {
   DELETE_OFFER = "deleteOffer",
   UPDATE_SENDOFFER = "updateSendOffer",
   UPDATE_SENDOFFERAGAIN = "updateSendOfferAgain",
-  GET_OFFERREPORT = "getOfferReport"
+  GET_OFFERREPORT = "getOfferReport",
+
+  GET_DEVICETYPELIST = "getDeviceTypeList",
+  GET_DEVICEBRANDLIST = "getDeviceBrandList",
+  GET_DEVICEMODELLIST = "getDeviceModelList"
 }
 
 enum Mutations {

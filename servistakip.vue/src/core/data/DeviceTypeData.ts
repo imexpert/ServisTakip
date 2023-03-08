@@ -1,4 +1,5 @@
 interface IDeviceTypeData {
+    id?: string | '',
     name?: string | '',
 }
 

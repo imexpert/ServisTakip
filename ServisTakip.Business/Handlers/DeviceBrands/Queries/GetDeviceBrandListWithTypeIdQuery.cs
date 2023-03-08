@@ -9,16 +9,18 @@ using ServisTakip.Core.Extensions;
 
 namespace ServisTakip.Business.Handlers.DeviceBrands.Queries
 {
-    public class GetDeviceBrandListQuery : IRequest<ResponseMessage<List<DeviceBrandDto>>>
+    public class GetDeviceBrandListWithTypeIdQuery : IRequest<ResponseMessage<List<DeviceBrandDto>>>
     {
-        public class GetDeviceBrandListQueryHandler : IRequestHandler<GetDeviceBrandListQuery, ResponseMessage<List<DeviceBrandDto>>>
+        public long DeviceTypeId { get; set; }
+        public class GetDeviceBrandListWithTypeIdQueryHandler : IRequestHandler<GetDeviceBrandListWithTypeIdQuery, ResponseMessage<List<DeviceBrandDto>>>
         {
-            public async Task<ResponseMessage<List<DeviceBrandDto>>> Handle(GetDeviceBrandListQuery request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<List<DeviceBrandDto>>> Handle(GetDeviceBrandListWithTypeIdQuery request, CancellationToken cancellationToken)
             {
                 var deviceBrandRepo = ServiceTool.ServiceProvider.GetService<IDeviceBrandRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
-                var deviceBrandList = await deviceBrandRepo.GetListAsync(s=>s.CompanyId == Utils.CompanyId);
+                var deviceBrandList = await deviceBrandRepo.GetListAsync(s =>
+                    s.DeviceTypeId == request.DeviceTypeId && s.CompanyId == Utils.CompanyId);
                 var result = mapper.Map<List<DeviceBrandDto>>(deviceBrandList);
                 return ResponseMessage<List<DeviceBrandDto>>.Success(result);
             }

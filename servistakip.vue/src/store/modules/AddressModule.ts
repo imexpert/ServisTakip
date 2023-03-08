@@ -17,4 +17,16 @@ export default class AddressModule extends VuexModule {
         router.push({ name: 'sign-in' });
       });
   }
+
+  @Action
+  [Actions.GET_ADDRESSLISTBYCUSTOMERID](customerId) {
+    return ApiService.getWithParamUrl("Addresses/GetAddressListByCustomerId?customerId=" + customerId)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
 }

@@ -20,5 +20,20 @@ namespace ServisTakip.Api.Controllers
         {
             return CreateActionResult(await Mediator.Send(new GetDeviceBrandListQuery()));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceBrandDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetDeviceBrandListByTypeIdAsync(long deviceTypeId)
+        {
+            return CreateActionResult(await Mediator.Send(new GetDeviceBrandListWithTypeIdQuery()
+                { DeviceTypeId = deviceTypeId }));
+        }
     }
 }

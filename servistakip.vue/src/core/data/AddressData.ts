@@ -3,6 +3,7 @@ import { IDeviceModelData } from "./DeviceModelData";
 import { IQuerterData } from "./QuerterData";
 
 interface IAddressData {
+    id?: string | '',
     customerId?: string | '',
     quarterId?: string | '',
     serialNumber: string | '',

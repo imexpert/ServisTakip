@@ -22,6 +22,9 @@ import DeviceServicePartModule from "@/store/modules/DeviceServicePartModule";
 import CompanyModule from "@/store/modules/CompanyModule";
 import OfferModule from "@/store/modules/OfferModule";
 import OfferSubjectModule from "@/store/modules/OfferSubjectModule";
+import DeviceTypeModule from "@/store/modules/DeviceTypeModule";
+import DeviceBrandModule from "@/store/modules/DeviceBrandModule";
+import DeviceModelModule from "@/store/modules/DeviceModelModule";
 
 
 config.rawError = true;
@@ -48,7 +51,10 @@ const store = createStore({
     DeviceServicePartModule,
     CompanyModule,
     OfferModule,
-    OfferSubjectModule
+    OfferSubjectModule,
+    DeviceTypeModule,
+    DeviceBrandModule,
+    DeviceModelModule
   },
   mutations: {
     setCustomerId(state, id) {
