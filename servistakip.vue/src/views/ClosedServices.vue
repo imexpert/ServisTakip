@@ -328,7 +328,7 @@
               </label>
               <!--end::Label-->
               <el-form-item prop="wBCount">
-                <el-input v-model="deviceServiceItem.wBCount"></el-input>
+                <el-input v-model="deviceServiceItem.wbCount"></el-input>
               </el-form-item>
             </div>
             <!--end::Input group-->
