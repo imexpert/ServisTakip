@@ -7,6 +7,7 @@ namespace ServisTakip.Entities.DTOs.Customers
     public class LastTradedCustomerInfoDto
     {
         public long CustomerId { get; set; }
+        public long AddressId { get; set; }
         public string CustomerTitle { get; set; }
         public string CustomerSector { get; set; }
         public long? DeviceId { get; set; }

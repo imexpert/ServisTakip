@@ -13,6 +13,7 @@ interface IDeviceData {
     address?: IAddressData | null;
     rowId?: string | null;
     deviceModel?: IDeviceModelData | null;
+    maintenancePeriod?: string | null;
 }
 
 export { IDeviceData };

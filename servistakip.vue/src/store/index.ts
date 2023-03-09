@@ -12,7 +12,6 @@ import CityModule from "@/store/modules/CityModule";
 import DistrictModule from "@/store/modules/DistrictModule";
 import QuerterModule from "@/store/modules/QuerterModule";
 import BodyModule from "@/store/modules/BodyModule";
-import BreadcrumbsModule from "@/store/modules/BreadcrumbsModule";
 import ConfigModule from "@/store/modules/ConfigModule";
 import ThemeModeModule from "@/store/modules/ThemeModeModule";
 import BootCodeModule from "@/store/modules/BootCodeModule";
@@ -39,7 +38,6 @@ const store = createStore({
     DistrictModule,
     QuerterModule,
     BodyModule,
-    BreadcrumbsModule,
     ConfigModule,
     ThemeModeModule,
     AddressModule,

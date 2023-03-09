@@ -3,6 +3,7 @@ import { Actions, Mutations } from "@/store/enums/StoreEnums";
 import { Module, Action, VuexModule } from "vuex-module-decorators";
 import router from "@/router";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import utils from '@/core/plugins/Utils'
 
 @Module
 export default class DeviceModule extends VuexModule {
@@ -14,25 +15,7 @@ export default class DeviceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        console.log(response)
-        debugger;
-        if(response.status == 401){
-          this.context.commit(Mutations.PURGE_AUTH);
-          router.push({ name: 'sign-in' });
-        } else {
-          Swal.fire({
-            title:'Hata',
-            text: 'İşlem sırasında hata oluştu',
-            icon: 'error',
-            buttonsStyling: false,
-            confirmButtonText: 'Tamam',
-            customClass: {
-              confirmButton: 'btn btn-primary',
-            },
-          }).then(() => {
-            
-          });
-        }
+        utils.showError(response);
       });
   }
 
@@ -43,8 +26,7 @@ export default class DeviceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        utils.showError(response);
       });
   }
 
@@ -55,8 +37,7 @@ export default class DeviceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        utils.showError(response);
       });
   }
 
@@ -67,8 +48,8 @@ export default class DeviceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        utils.showError(response);
       });
   }
 }
+

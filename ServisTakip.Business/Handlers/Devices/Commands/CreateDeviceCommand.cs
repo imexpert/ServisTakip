@@ -40,7 +40,7 @@ namespace ServisTakip.Business.Handlers.Devices.Commands
                 #region Cihaz Sözleşme Ekleme
                 var contract = new Contract()
                 {
-                    ContractCode = request.Model.ContractCode,
+                    ContractCode = "GAR-MON",
                     MaintenancePeriod = request.Model.MaintenancePeriod,
                     DeviceId = device.Id,
                     EndDate = device.AssemblyDate.AddYears(2),

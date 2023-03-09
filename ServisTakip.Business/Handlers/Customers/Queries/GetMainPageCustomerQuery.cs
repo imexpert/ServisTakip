@@ -36,6 +36,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result = new LastTradedCustomerInfoDto()
                     {
                         CustomerTitle = device.Address.Customer.Title,
+                        AddressId = device.AddressId,
                         CustomerSector = device.Address.Customer.Sector.Name,
                         AccountCode = device.Address.AccountCode,
                         AuthorizedName = device.Address.AuthorizedName,
@@ -76,6 +77,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 {
                     var address = await addressRepo.GetAddressInfo(Convert.ToInt64(splitIds[1]));
                     result.AccountCode = address.AccountCode;
+                    result.AddressId = address.Id;
                     result.AuthorizedName = address.AuthorizedName;
                     result.AuthorizedPhone = address.AuthorizedPhone;
                     result.AuthorizedTask = address.AuthorizedTask;

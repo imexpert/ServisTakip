@@ -4,6 +4,7 @@ import { IDeviceModelData } from "./DeviceModelData";
 
 interface IFirmaOzetData {
     customerId?: string | '',
+    addressId?: string | '',
     customerTitle?: string | '',
     customerSectorId?: string | '',
     customerSector?: string | '',

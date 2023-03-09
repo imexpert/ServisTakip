@@ -13,13 +13,10 @@
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item>
-                        <el-icon>
-                          <Plus></Plus>
-                        </el-icon>Yeni Ekle
+                        <el-icon> <Plus></Plus> </el-icon>Yeni Ekle
                       </el-dropdown-item>
-                      <el-dropdown-item><el-icon>
-                          <Edit></Edit>
-                        </el-icon>Düzenle
+                      <el-dropdown-item
+                        ><el-icon> <Edit></Edit> </el-icon>Düzenle
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -32,23 +29,20 @@
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item @click="cihazDialogAc('I')"><el-icon>
-                          <Plus></Plus>
-                        </el-icon>Cihaz Ekle</el-dropdown-item>
-                      <el-dropdown-item @click="cihazDialogAc('U')"><el-icon>
-                          <Edit></Edit>
-                        </el-icon>Cihaz Düzenle</el-dropdown-item>
-                      <el-dropdown-item divided @click="servisAc()"><el-icon>
-                          <Plus></Plus>
-                        </el-icon>Servis Aç
+                      <el-dropdown-item @click="cihazDialogAc('I')"
+                        ><el-icon> <Plus></Plus> </el-icon>Cihaz Ekle</el-dropdown-item
+                      >
+                      <el-dropdown-item @click="cihazDialogAc('U')"
+                        ><el-icon> <Edit></Edit> </el-icon>Cihaz Düzenle</el-dropdown-item
+                      >
+                      <el-dropdown-item divided @click="servisAc()"
+                        ><el-icon> <Plus></Plus> </el-icon>Servis Aç
                       </el-dropdown-item>
-                      <el-dropdown-item><el-icon>
-                          <Edit></Edit>
-                        </el-icon>Hızlı Servis
+                      <el-dropdown-item
+                        ><el-icon> <Edit></Edit> </el-icon>Hızlı Servis
                       </el-dropdown-item>
-                      <el-dropdown-item @click="cihazListesi()"><el-icon>
-                          <List />
-                        </el-icon>Cihaz Listesi
+                      <el-dropdown-item @click="cihazListesi()"
+                        ><el-icon> <List /> </el-icon>Cihaz Listesi
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -62,17 +56,32 @@
           <!--begin::Modal body-->
           <div class="modal-body">
             <!--begin::Scroll-->
-            <div class="scroll-y me-n7 pe-7" id="kt_modal_new_address_scroll" data-kt-scroll="true"
-              data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+            <div
+              class="scroll-y me-n7 pe-7"
+              id="kt_modal_new_address_scroll"
+              data-kt-scroll="true"
+              data-kt-scroll-activate="{default: false, lg: true}"
+              data-kt-scroll-max-height="auto"
               data-kt-scroll-dependencies="#kt_modal_new_address_header"
-              data-kt-scroll-wrappers="#kt_modal_new_address_scroll" data-kt-scroll-offset="300px">
+              data-kt-scroll-wrappers="#kt_modal_new_address_scroll"
+              data-kt-scroll-offset="300px"
+            >
               <!--begin::Input group-->
               <div class="row mb-1">
                 <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
                   <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
-                  <el-select @change="onDeviceNoChange()" filterable remote clearable placeholder="Cihaz no giriniz"
-                    reserve-keyword remote-show-suffix v-model="selectedDevice" :remote-method="remoteMethodCihazNo"
-                    :loading="loading">
+                  <el-select
+                    @change="onDeviceNoChange()"
+                    filterable
+                    remote
+                    clearable
+                    placeholder="Cihaz no giriniz"
+                    reserve-keyword
+                    remote-show-suffix
+                    v-model="selectedDevice"
+                    :remote-method="remoteMethodCihazNo"
+                    :loading="loading"
+                  >
                     <li class="el-select-dropdown__item">
                       <div class="row">
                         <div class="col-md-7">
@@ -131,9 +140,18 @@
               <div class="row mb-1">
                 <div class="col-md-12 fv-row">
                   <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
-                  <el-select @change="onCustomerChange()" filterable remote clearable
-                    placeholder="Arama için en az 4 harf giriniz" reserve-keyword remote-show-suffix
-                    v-model="selectedCustomer" :remote-method="remoteMethod" :loading="loading">
+                  <el-select
+                    @change="onCustomerChange()"
+                    filterable
+                    remote
+                    clearable
+                    placeholder="Arama için en az 4 harf giriniz"
+                    reserve-keyword
+                    remote-show-suffix
+                    v-model="selectedCustomer"
+                    :remote-method="remoteMethod"
+                    :loading="loading"
+                  >
                     <li class="el-select-dropdown__item">
                       <div class="row">
                         <div class="col-md-6">
@@ -150,7 +168,12 @@
                         </div>
                       </div>
                     </li>
-                    <el-option v-for="item in customerInfoList" :key="item.rowId" :label="item.title" :value="item.rowId">
+                    <el-option
+                      v-for="item in customerInfoList"
+                      :key="item.rowId"
+                      :label="item.title"
+                      :value="item.rowId"
+                    >
                       <div class="row">
                         <div class="col-md-6" style="font-size: 12px">
                           {{ item.title }}
@@ -256,14 +279,18 @@
       <el-card class="box-card">
         <div class="row mb-2">
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-            <el-table :data="contracts" style="width: 100%" height="150" max-height="150px"
-              :default-sort="{ prop: 'startDate', order: 'descending' }">
+            <el-table
+              :data="contracts"
+              style="width: 100%"
+              height="150"
+              max-height="150px"
+              :default-sort="{ prop: 'startDate', order: 'descending' }"
+            >
               <template #empty>
                 <div class="row">
                   <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-                    <el-button type="danger"><el-icon>
-                        <Plus></Plus>
-                      </el-icon>Yeni Ekle
+                    <el-button type="danger"
+                      ><el-icon> <Plus></Plus> </el-icon>Yeni Ekle
                     </el-button>
                   </div>
                 </div>
@@ -308,14 +335,18 @@
                   Yeni Ekle
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item><el-icon>
+                      <el-dropdown-item
+                        ><el-icon>
                           <Edit></Edit>
                         </el-icon>
-                        Düzenle</el-dropdown-item>
-                      <el-dropdown-item><el-icon><el-icon>
-                            <Delete />
-                          </el-icon></el-icon>
-                        Sil</el-dropdown-item>
+                        Düzenle</el-dropdown-item
+                      >
+                      <el-dropdown-item
+                        ><el-icon
+                          ><el-icon> <Delete /> </el-icon
+                        ></el-icon>
+                        Sil</el-dropdown-item
+                      >
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -327,9 +358,18 @@
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
             <label class="required fs-5 fw-semobold mb-2">Model</label>
-            <el-select @change="onModelNameChange()" filterable remote clearable placeholder="Model adı giriniz"
-              reserve-keyword remote-show-suffix v-model="selectedModelName" :remote-method="remoteMethodModelName"
-              :loading="loading">
+            <el-select
+              @change="onModelNameChange()"
+              filterable
+              remote
+              clearable
+              placeholder="Model adı giriniz"
+              reserve-keyword
+              remote-show-suffix
+              v-model="selectedModelName"
+              :remote-method="remoteMethodModelName"
+              :loading="loading"
+            >
               <li class="el-select-dropdown__item">
                 <div class="row">
                   <div class="col-md-7">
@@ -366,9 +406,18 @@
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
             <label class="required fs-5 fw-semobold mb-2">Seri No</label>
-            <el-select @change="onSerialNoChange()" filterable remote clearable placeholder="Seri no giriniz"
-              reserve-keyword remote-show-suffix v-model="selectedSerialNo" :remote-method="remoteMethodSerialNo"
-              :loading="loading">
+            <el-select
+              @change="onSerialNoChange()"
+              filterable
+              remote
+              clearable
+              placeholder="Seri no giriniz"
+              reserve-keyword
+              remote-show-suffix
+              v-model="selectedSerialNo"
+              :remote-method="remoteMethodSerialNo"
+              :loading="loading"
+            >
               <li class="el-select-dropdown__item">
                 <div class="row">
                   <div class="col-md-7">
@@ -417,15 +466,27 @@
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Cihaz Durumu</label>
-            <input type="text" disabled class="form-control form-control-sm form-control-solid border border-secondary"
-              style="color: #a8abb2" :style="{ backgroundColor: backgroundColor }" name="row-name"
-              v-model="deviceStatus" />
+            <input
+              type="text"
+              disabled
+              class="form-control form-control-sm form-control-solid border border-secondary"
+              style="color: #a8abb2"
+              :style="{ backgroundColor: backgroundColor }"
+              name="row-name"
+              v-model="deviceStatus"
+            />
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Bakım Durumu</label>
-            <input type="text" disabled class="form-control form-control-sm form-control-solid border border-secondary"
-              style="color: #a8abb2" :style="{ backgroundColor: maintenanceBackgroundColor }" name="row-name"
-              v-model="contractMaintenanceStatus" />
+            <input
+              type="text"
+              disabled
+              class="form-control form-control-sm form-control-solid border border-secondary"
+              style="color: #a8abb2"
+              :style="{ backgroundColor: maintenanceBackgroundColor }"
+              name="row-name"
+              v-model="contractMaintenanceStatus"
+            />
           </div>
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">S/B Sayaç</label>
@@ -634,8 +695,13 @@
                 </el-table-column>
                 <el-table-column label="#" fixed="left">
                   <template #default="scope">
-                    <el-button size="small" type="primary" circle title="Cihaz Seç"
-                      @click="getMainPageCustomer(scope.row.rowId)">
+                    <el-button
+                      size="small"
+                      type="primary"
+                      circle
+                      title="Cihaz Seç"
+                      @click="getMainPageCustomer(scope.row.rowId)"
+                    >
                       <el-icon><Select /></el-icon>
                     </el-button>
                   </template>
@@ -649,8 +715,15 @@
 
     <el-dialog v-model="servisAcDialogVisible" title="Yeni Servis" width="40%" destroy-on-close center>
       <div class="row">
-        <el-form status-icon :rules="newServiceRules" ref="formServiceRef" :model="newService"
-          @submit.prevent="servicAcSubmit()" label-width="120px" label-position="top">
+        <el-form
+          status-icon
+          :rules="newServiceRules"
+          ref="formServiceRef"
+          :model="newService"
+          @submit.prevent="servicAcSubmit()"
+          label-width="120px"
+          label-position="top"
+        >
           <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
               <!--begin::Input group-->
@@ -676,8 +749,13 @@
                 <!--end::Label-->
 
                 <el-form-item prop="failureDate">
-                  <el-date-picker v-model="newService.failureDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                    placeholder="Select date and time" :shortcuts="shortcuts" />
+                  <el-date-picker
+                    v-model="newService.failureDate"
+                    format="DD.MM.YYYY HH:mm:ss"
+                    type="datetime"
+                    placeholder="Select date and time"
+                    :shortcuts="shortcuts"
+                  />
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -747,9 +825,13 @@
                 <!--end::Label-->
 
                 <el-form-item prop="phone">
-                  <el-input v-model="newService.phone" :formatter="
-                    value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
-                  " placeholder="Talebi bildiren telefon giriniz" />
+                  <el-input
+                    v-model="newService.phone"
+                    :formatter="
+                      value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
+                    "
+                    placeholder="Talebi bildiren telefon giriniz"
+                  />
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -765,8 +847,12 @@
 
                 <el-form-item prop="technicianName">
                   <el-select placeholder="Teknisyen" filterable clearable v-model="newService.userId">
-                    <el-option v-for="item in technicianUserList" :key="item.id" :label="item.firstname + item.lastname"
-                      :value="item.id">
+                    <el-option
+                      v-for="item in technicianUserList"
+                      :key="item.id"
+                      :label="item.firstname + item.lastname"
+                      :value="item.id"
+                    >
                       <div class="row">
                         <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
                       </div>
@@ -786,8 +872,13 @@
                 <!--end::Label-->
 
                 <el-form-item prop="userAssignDate">
-                  <el-date-picker v-model="newService.userAssignDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                    placeholder="Select date and time" :shortcuts="shortcuts" />
+                  <el-date-picker
+                    v-model="newService.userAssignDate"
+                    format="DD.MM.YYYY HH:mm:ss"
+                    type="datetime"
+                    placeholder="Select date and time"
+                    :shortcuts="shortcuts"
+                  />
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -1111,8 +1202,15 @@
 
     <el-dialog v-model="cihazDialogVisible" title="Cihaz Ekle / Düzenle" width="40%" destroy-on-close center>
       <div class="row">
-        <el-form status-icon :rules="newDeviceRules" ref="formDeviceRef" :model="newDevice"
-          @submit.prevent="deviceSubmit()" label-width="120px" label-position="top">
+        <el-form
+          status-icon
+          :rules="newDeviceRules"
+          ref="formDeviceRef"
+          :model="newDevice"
+          @submit.prevent="deviceSubmit()"
+          label-width="120px"
+          label-position="top"
+        >
           <div class="row" v-loading="deviceLoading">
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
               <!--begin::Input group-->
@@ -1154,8 +1252,13 @@
                 </label>
                 <!--end::Label-->
                 <el-form-item prop="selectedDeviceType">
-                  <el-select placeholder="Cihaz tip seçiniz" @change="onDeviceTypeChange()" filterable clearable
-                    v-model="selectedDeviceType">
+                  <el-select
+                    placeholder="Cihaz tip seçiniz"
+                    @change="onDeviceTypeChange()"
+                    filterable
+                    clearable
+                    v-model="selectedDeviceType"
+                  >
                     <el-option v-for="item in deviceTypeList" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                   </el-select>
@@ -1172,8 +1275,13 @@
                 </label>
                 <!--end::Label-->
                 <el-form-item prop="selectedDeviceBrand">
-                  <el-select @change="onDeviceBrandChange()" placeholder="Cihaz marka seçiniz" filterable clearable
-                    v-model="selectedDeviceBrand">
+                  <el-select
+                    @change="onDeviceBrandChange()"
+                    placeholder="Cihaz marka seçiniz"
+                    filterable
+                    clearable
+                    v-model="selectedDeviceBrand"
+                  >
                     <el-option v-for="item in deviceBrandList" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                   </el-select>
@@ -1221,8 +1329,13 @@
                 </label>
                 <!--end::Label-->
                 <el-form-item prop="assemblyDate">
-                  <el-date-picker v-model="newDevice.assemblyDate" format="DD.MM.YYYY HH:mm:ss" type="datetime"
-                    placeholder="Montaj tarihi seçiniz" :shortcuts="shortcuts" />
+                  <el-date-picker
+                    v-model="newDevice.assemblyDate"
+                    format="DD.MM.YYYY"
+                    type="datetime"
+                    placeholder="Montaj tarihi seçiniz"
+                    :shortcuts="shortcuts"
+                  />
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -1244,7 +1357,7 @@
               </div>
               <!--end::Input group-->
             </div>
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1254,6 +1367,38 @@
                 <!--end::Label-->
                 <el-form-item prop="description">
                   <el-input v-model="newDevice.description" placeholder="Cihaz açıklaması giriniz"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Bakım Periyodu</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="maintenancePeriod">
+                  <el-select
+                    placeholder="Cihaz bakım periyodu seçiniz"
+                    filterable
+                    clearable
+                    v-model="newDevice.maintenancePeriod"
+                  >
+                    <el-option label="1 Aylık" value="1"></el-option>
+                    <el-option label="2 Aylık" value="2"></el-option>
+                    <el-option label="3 Aylık" value="3"></el-option>
+                    <el-option label="4 Aylık" value="4"></el-option>
+                    <el-option label="5 Aylık" value="5"></el-option>
+                    <el-option label="6 Aylık" value="6"></el-option>
+                    <el-option label="7 Aylık" value="7"></el-option>
+                    <el-option label="8 Aylık" value="8"></el-option>
+                    <el-option label="9 Aylık" value="9"></el-option>
+                    <el-option label="10 Aylık" value="10"></el-option>
+                    <el-option label="11 Aylık" value="11"></el-option>
+                    <el-option label="12 Aylık" value="12"></el-option>
+                  </el-select>
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -1349,6 +1494,7 @@ export default defineComponent({
       regionCode: '',
       totalCount: '',
       wbCount: '',
+      addressId: '',
     });
 
     var device = ref<IDeviceData>({
@@ -1501,7 +1647,6 @@ export default defineComponent({
     var newDevice = ref<IDeviceData>({
       address: null,
       addressId: '',
-      assemblyDateString: '',
       description: '',
       deviceModel: null,
       deviceModelId: '',
@@ -1509,6 +1654,8 @@ export default defineComponent({
       rowId: '',
       serialNumber: '',
       status: null,
+      maintenancePeriod: '',
+      assemblyDate: '',
     });
     var deviceServices = ref<Array<IDeviceServiceData>>([]);
 
@@ -1660,40 +1807,8 @@ export default defineComponent({
         if (valid) {
           deviceLoading.value = true;
 
-          store
-            .dispatch(Actions.ADD_DEVICE, newDevice.value)
-            .then(result => {
-              deviceLoading.value = false;
-              console.clear();
-              console.log(result);
-              if (result.isSuccess) {
-                Swal.fire({
-                  text: 'Cihaz başarıyla eklendi.',
-                  icon: 'success',
-                  buttonsStyling: false,
-                  confirmButtonText: 'Tamam',
-                  customClass: {
-                    confirmButton: 'btn btn-primary',
-                  },
-                }).then(() => {
-                  servisAcDialogVisible.value = false;
-                });
-              } else {
-                Swal.fire({
-                  title: 'Hata',
-                  text: result.message,
-                  icon: 'error',
-                  buttonsStyling: false,
-                  confirmButtonText: 'Tamam !',
-                  customClass: {
-                    confirmButton: 'btn fw-bold btn-danger',
-                  },
-                });
-              }
-            })
-            .catch(() => {
-              const [error] = Object.keys(store.getters.getErrors);
-            });
+          // newDevice.value.addressId = firmaOzet.value.addressId;
+          console.log(newDevice.value);
         }
       });
     };
@@ -2122,8 +2237,8 @@ export default defineComponent({
     }
 
     async function onDeviceTypeChange() {
-      deviceBrandList.value = []
-      deviceModelList.value = []
+      deviceBrandList.value = [];
+      deviceModelList.value = [];
       selectedDeviceBrand.value = '';
       newDevice.value.deviceModelId = '';
 
@@ -2144,7 +2259,7 @@ export default defineComponent({
     }
 
     async function onDeviceBrandChange() {
-      deviceModelList.value = []
+      deviceModelList.value = [];
       newDevice.value.deviceModelId = '';
 
       if (selectedDeviceBrand.value) {
@@ -2321,7 +2436,7 @@ export default defineComponent({
       cihazDialogAc,
       deviceSubmit,
       onDeviceTypeChange,
-      onDeviceBrandChange
+      onDeviceBrandChange,
     };
   },
 });

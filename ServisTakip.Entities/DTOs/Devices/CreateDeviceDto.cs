@@ -11,8 +11,7 @@ namespace ServisTakip.Entities.DTOs.Devices
         public string SerialNumber { get; set; }
         public DateTime AssemblyDate { get; set; }
         public string Description { get; set; }
-        public string ContractCode { get; set; }
         public int MaintenancePeriod { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
     }
 }

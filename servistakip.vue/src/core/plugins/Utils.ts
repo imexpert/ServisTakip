@@ -1,28 +1,46 @@
-import { Actions, Mutations } from "@/store/enums/StoreEnums";
+import { Mutations } from "@/store/enums/StoreEnums";
 import router from "@/router";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { useStore } from 'vuex';
+import { defineComponent, onMounted, ref } from 'vue';
 
-const store = useStore();
+export default defineComponent({
+  setup() {
+    const store = useStore();
 
-const showError = async (response) => {
-    if(response.status == 401){
-        store.commit(Mutations.PURGE_AUTH);
+    export function showError(response) {
+      if (response.status == 401) {
+        Swal.fire({
+          title: 'Uyarı',
+          html: 'Oturum süreniz dolmuştur.<br>Lütfen yeniden giriş yapınız.',
+          icon: 'warning',
+          buttonsStyling: false,
+          confirmButtonText: 'Tamam',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        }).then(() => {
+          store.commit(Mutations.PURGE_AUTH);
+          router.push({ name: 'sign-in' });
+        });
+      } else {
+        Swal.fire({
+          title: 'Hata',
+          text: 'İşlem sırasında hata oluştu',
+          icon: 'error',
+          buttonsStyling: false,
+          confirmButtonText: 'Tamam',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        }).then(() => {
+
+        });
+      };
     }
-    Swal.fire({
-        title:'Hata',
-        text: 'İşlem sırasında hata oluştu',
-        icon: 'error',
-        buttonsStyling: false,
-        confirmButtonText: 'Tamam',
-        customClass: {
-          confirmButton: 'btn btn-primary',
-        },
-      }).then(() => {
-        
-      });
-  };
 
-  export default {
-    showError
-  };
+    return {
+      showError
+    }
+  }
+})

@@ -35,6 +35,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result = new LastTradedCustomerInfoDto()
                     {
                         CustomerTitle = lastService.Device.Address.Customer.Title,
+                        AddressId = lastService.Device.AddressId,
                         CustomerSector = lastService.Device.Address.Customer.Sector.Name,
                         AccountCode = lastService.Device.Address.AccountCode,
                         AuthorizedName = lastService.Device.Address.AuthorizedName,
@@ -87,6 +88,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result = new LastTradedCustomerInfoDto()
                     {
                         CustomerTitle = lastDevice.Address.Customer.Title,
+                        AddressId = lastDevice.AddressId,
                         CustomerSector = lastDevice.Address.Customer.Sector.Name,
                         AccountCode = lastDevice.Address.AccountCode,
                         AuthorizedName = lastDevice.Address.AuthorizedName,
@@ -130,19 +132,29 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.CustomerId = customer.Id;
                     result.CustomerSector = customer.Sector.Name;
 
-                    result.RowId = $"{customer.Id}|{0}|{0}";
+                    if (customer.Addresses is { Count: > 0 })
+                    {
+                        var address = customer.Addresses.MaxBy(s => s.UpdateDate);
+                        result.AddressId = address.Id;
+                        result.AccountCode = address.AccountCode;
+                        result.AuthorizedEmail = address.AuthorizedEmail;
+                        result.AuthorizedName = address.AuthorizedName;
+                        result.AuthorizedPhone = address.AuthorizedPhone;
+                        result.AuthorizedTask = address.AuthorizedTask;
+                        result.CityName = address.Querter.District.City.Name;
+                        result.DistrictName = address.Querter.District.Name;
+                        result.QuarterName = address.Querter.Name;
+                        result.RowId = $"{customer.Id}|{address.Id}|{0}";
+                    }
+                    else
+                    {
+                        result.RowId = $"{customer.Id}|{0}|{0}";
+                    }
+                    
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
-                if (!customerList.Any())
-                    return ResponseMessage<LastTradedCustomerInfoDto>.Fail("Son İşlem Bilgisi Alınamadı.");
-                customer = customerList.MaxBy(s => s.UpdateDate);
-                result.CustomerTitle = customer.Title;
-                result.CustomerId = customer.Id;
-                result.CustomerSector = customer.Sector.Name;
-                result.RowId = $"{customer.Id}|{0}|{0}";
-
-                return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
+                return ResponseMessage<LastTradedCustomerInfoDto>.Fail("Son İşlem Bilgisi Alınamadı.");
             }
         }
     }
