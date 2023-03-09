@@ -23,6 +23,12 @@ namespace ServisTakip.Core.DataAccess.EntityFramework
             return Context.Add(entity).Entity;
         }
 
+        public void AddRange(List<TEntity> entityList)
+        {
+            Context.ChangeTracker.Clear();
+            Context.AddRange(entityList);
+        }
+
         public void Delete(TEntity entity)
         {
             Context.ChangeTracker.Clear();

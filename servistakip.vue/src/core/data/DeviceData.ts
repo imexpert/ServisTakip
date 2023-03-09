@@ -6,9 +6,10 @@ interface IDeviceData {
     addressId?: string | '',
     deviceModelId?: string | '',
     serialNumber?: string | '',
+    assemblyDate?: string | '',
     assemblyDateString?: string | '',
     description?: string | '',
-    status?: boolean | false,
+    status?: boolean | null | undefined,
     address?: IAddressData | null;
     rowId?: string | null;
     deviceModel?: IDeviceModelData | null;

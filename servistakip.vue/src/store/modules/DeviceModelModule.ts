@@ -5,7 +5,7 @@ import router from "@/router";
 
 @Module
 export default class BootCodeModule extends VuexModule {
-
+  @Action
   async [Actions.GET_DEVICEMODELLIST](deviceBrandId) {
     return await ApiService.getWithParamUrl("DeviceModels/GetDeviceModelListWithBrandId?deviceBrandId=" + deviceBrandId)
       .then(({ data }) => {

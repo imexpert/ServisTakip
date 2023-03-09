@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ServisTakip.Business.Handlers.Devices.Commands;
 using ServisTakip.Business.Handlers.Devices.Queries;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Entities.DTOs.Customers;
+using ServisTakip.Entities.DTOs.Devices;
 
 namespace ServisTakip.Api.Controllers
 {
@@ -65,6 +67,21 @@ namespace ServisTakip.Api.Controllers
         public async Task<IActionResult> GetDeviceBySerialNoFilterAsync(string filter)
         {
             return CreateActionResult(await Mediator.Send(new GetDeviceBySerialNoFilterQuery() { Filter = filter }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateDeviceDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> AddDeviceAsync([FromBody] CreateDeviceDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new CreateDeviceCommand() { Model = model }));
         }
     }
 }

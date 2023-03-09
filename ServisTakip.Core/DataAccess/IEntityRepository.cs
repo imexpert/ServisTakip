@@ -7,6 +7,7 @@ namespace ServisTakip.Core.DataAccess
         where T : class, IEntity
     {
         T Add(T entity);
+        void AddRange(List<T> entityList);
         T Update(T entity);
         void Delete(T entity);
         IEnumerable<T> GetList(Expression<Func<T, bool>> expression = null);

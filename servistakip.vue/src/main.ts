@@ -18,6 +18,7 @@ import ApiService from "@/core/services/ApiService";
 import { initApexCharts } from "@/core/plugins/apexcharts";
 import { initInlineSvg } from "@/core/plugins/inline-svg";
 import { initVeeValidate } from "@/core/plugins/vee-validate";
+import utils from "@/core/plugins/Utils"
 
 import "@/core/plugins/prismjs";
 const app = createApp(App);
@@ -31,6 +32,7 @@ app.use(router);
 app.use(ElementPlus);
 app.use(loading, /*{...}*/)
 app.use(VuePdf)
+app.use(utils)
 
 ApiService.init(app);
 initApexCharts(app);
