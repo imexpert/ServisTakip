@@ -3,7 +3,7 @@ import { Actions, Mutations } from "@/store/enums/StoreEnums";
 import { Module, Action, VuexModule } from "vuex-module-decorators";
 import router from "@/router";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import utils from '@/core/plugins/Utils'
+import { showError } from "@/core/plugins/Utils";
 
 @Module
 export default class DeviceModule extends VuexModule {
@@ -15,7 +15,7 @@ export default class DeviceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -26,7 +26,7 @@ export default class DeviceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -37,7 +37,7 @@ export default class DeviceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -48,7 +48,7 @@ export default class DeviceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 }

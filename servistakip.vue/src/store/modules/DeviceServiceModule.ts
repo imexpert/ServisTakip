@@ -2,7 +2,7 @@ import ApiService from "@/core/services/ApiService";
 import { Actions, Mutations } from "@/store/enums/StoreEnums";
 import { Module, Action, VuexModule } from "vuex-module-decorators";
 import router from "@/router";
-import utils from '@/core/plugins/Utils'
+import { showError } from "@/core/plugins/Utils";
 
 @Module
 export default class DeviceServiceModule extends VuexModule {
@@ -14,7 +14,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -26,7 +26,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -38,7 +38,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -50,7 +50,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -62,7 +62,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -73,7 +73,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -85,7 +85,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -97,7 +97,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -109,7 +109,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -120,7 +120,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -131,7 +131,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -142,7 +142,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -153,7 +153,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -164,7 +164,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -175,7 +175,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -186,7 +186,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -197,7 +197,7 @@ export default class DeviceServiceModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 }

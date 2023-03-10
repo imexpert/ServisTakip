@@ -12,6 +12,7 @@ import loading from 'vue3-loading-screen'
 // if you're using CDN, please remove this line.
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import VuePdf from 'vue3-pdfjs'
+import Vue from 'vue'
 
 //imports for app initialization
 import ApiService from "@/core/services/ApiService";

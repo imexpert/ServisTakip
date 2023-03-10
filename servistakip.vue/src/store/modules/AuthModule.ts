@@ -3,7 +3,7 @@ import JwtService from "@/core/services/JwtService";
 import { Actions, Mutations } from "@/store/enums/StoreEnums";
 import { Module, Action, Mutation, VuexModule } from "vuex-module-decorators";
 import router from "@/router";
-import utils from '@/core/plugins/Utils'
+import { showError } from "@/core/plugins/Utils";
 
 export interface User {
   firstname: string;
@@ -87,7 +87,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
         return data;
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -111,7 +111,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
         this.context.commit(Mutations.SET_AUTH, data);
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -122,7 +122,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
         this.context.commit(Mutations.SET_ERROR, {});
       })
       .catch(({ response }) => {
-        utils.showError(response);
+        showError(response);
       });
   }
 
@@ -135,7 +135,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
 
         })
         .catch(({ response }) => {
-          utils.showError(response);
+          showError(response);
         });
     } else {
       this.context.commit(Mutations.PURGE_AUTH);
