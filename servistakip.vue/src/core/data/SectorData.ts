@@ -1,5 +1,6 @@
 interface ISectorData {
-    Name?: string | '',
+    id?: string | '',
+    name?: string | '',
 }
 
 export { ISectorData };

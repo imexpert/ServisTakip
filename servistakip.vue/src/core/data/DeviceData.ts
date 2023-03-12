@@ -6,7 +6,7 @@ interface IDeviceData {
     addressId?: string | '',
     deviceModelId?: string | '',
     serialNumber?: string | '',
-    assemblyDate?: string | '',
+    assemblyDate?: Date | '',
     assemblyDateString?: string | '',
     description?: string | '',
     status?: boolean | null | undefined,

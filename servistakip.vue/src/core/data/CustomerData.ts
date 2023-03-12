@@ -1,4 +1,5 @@
 interface ICustomerData {
+    id?: string | '',
     sectorId?: string | '',
     title?: string | '',
     sector?: string | '',

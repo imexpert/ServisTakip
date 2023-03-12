@@ -35,6 +35,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .Include(s => s.Address).ThenInclude(s => s.Customer).ThenInclude(s => s.Sector)
                 .Include(s => s.Address).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
                 .Include(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
+                .Include(s=>s.Contracts)
                 .Where(s => s.Id == deviceId && s.Address.Customer.CompanyId == Utils.CompanyId)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();

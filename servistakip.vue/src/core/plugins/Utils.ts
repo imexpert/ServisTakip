@@ -11,7 +11,7 @@ export const showError = (response: any): void => {
   } else {
     Swal.fire({
       title: 'Hata',
-      html: "İşlem sırasında hata oluştu",
+      html: response.status + "> İşlem sırasında hata oluştu",
       icon: 'error',
       buttonsStyling: false,
       confirmButtonText: 'Tamam',
@@ -19,8 +19,8 @@ export const showError = (response: any): void => {
         confirmButton: 'btn btn-primary',
       },
     })
-    .then(() => {
-    });
+      .then(() => {
+      });
   };
   return;
 };

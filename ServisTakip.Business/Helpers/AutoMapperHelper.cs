@@ -47,6 +47,7 @@ namespace ServisTakip.Business.Helpers
             CreateMap<CreateAddressDto, Address>().ReverseMap();
             CreateMap<Contract, ContractDto>().ReverseMap();
             CreateMap<Device, DeviceDto>().ReverseMap();
+            CreateMap<Device, CreateDeviceDto>().ReverseMap();
             CreateMap<ContractCode, ContractCodeDto>().ReverseMap();
             CreateMap<DeviceServiceDto, DeviceService>().ReverseMap();
             CreateMap<CreateDeviceServiceDto, DeviceService>().ReverseMap();

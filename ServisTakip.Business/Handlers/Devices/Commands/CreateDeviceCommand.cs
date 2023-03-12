@@ -54,7 +54,7 @@ namespace ServisTakip.Business.Handlers.Devices.Commands
                 #region Cihaz Sözleşme Bakım Ekleme
                 List<ContractMaintenance> contractMaintenances= new List<ContractMaintenance>();
 
-                DateTime dt = device.AssemblyDate;
+                DateTime dt = device.AssemblyDate.AddMonths(request.Model.MaintenancePeriod);
 
                 while (dt < contract.EndDate) 
                 {
@@ -65,7 +65,7 @@ namespace ServisTakip.Business.Handlers.Devices.Commands
                         EndDate = dt.AddMonths(request.Model.MaintenancePeriod),
                     };
                     contractMaintenances.Add(contractMaintenance);
-                    dt = contractMaintenance.EndDate;
+                    dt = contractMaintenance.EndDate.AddDays(1);
                 }
 
                 contractMaintenancesRepo.AddRange(contractMaintenances);

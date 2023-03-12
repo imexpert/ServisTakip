@@ -12,16 +12,16 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="deviceId"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<long>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<SearchCustomerDto>>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpGet]
-        public async Task<IActionResult> GetDeviceIdListAsync()
+        public async Task<IActionResult> GetDeviceByIdAsync(long deviceId)
         {
-            return CreateActionResult(await Mediator.Send(new GetDeviceIdListQuery()));
+            return CreateActionResult(await Mediator.Send(new GetDeviceByIdQuery() { DeviceId = deviceId }));
         }
 
         /// <summary>
@@ -78,10 +78,25 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateDeviceDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> AddDeviceAsync([FromBody] CreateDeviceDto model)
         {
             return CreateActionResult(await Mediator.Send(new CreateDeviceCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateDeviceDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
+        public async Task<IActionResult> UpdateDeviceAsync([FromBody] CreateDeviceDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new UpdateDeviceCommand() { Model = model }));
         }
     }
 }
