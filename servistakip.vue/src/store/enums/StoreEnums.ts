@@ -23,6 +23,8 @@ enum Actions {
   ADD_CUSTOMER = "addCustomer",
   UPDATE_CUSTOMER = "updateCustomer",
   ADD_ADDRESS = "addAddress",
+  UPDATE_ADDRESS = "updateAddress",
+  DELETE_ADDRESS = "deleteAddress",
   GET_ADDRESSLISTBYCUSTOMERID = "getAddressListByCustomerId",
   GET_ADDRESSBYID = "getAddressById",
   GET_CUSTOMER = "getCustomer",

@@ -71,13 +71,17 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     var deviceServices = await deviceServicesRepo.GetDeviceServices(lastService.DeviceId);
 
                     result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(deviceServices.Where(s => s.StatusCode == ((int)StatusCodes.TalepSonlandirildi)));
-                    var service = result.DeviceServices.MaxBy(s=>s.ResultDate);
-                    result.WbCount = service.WBCount;
-                    result.ColorCount = service.ColorCount;
 
-                    result.Devices = mapper.Map<List<DeviceDto>>(await deviceRepo.GetAllDevices(result.CustomerId));
+                    if (result.DeviceServices.Count > 0)
+                    {
+                        var service = result.DeviceServices.MaxBy(s => s.ResultDate);
+                        result.WbCount = service.WBCount;
+                        result.ColorCount = service.ColorCount;
 
-                    result.Devices.Select(c => { c.RowId = $"{result.CustomerId}|{c.AddressId}|{c.Id}"; return c; }).ToList();
+                        result.Devices = mapper.Map<List<DeviceDto>>(await deviceRepo.GetAllDevices(result.CustomerId));
+
+                        result.Devices.Select(c => { c.RowId = $"{result.CustomerId}|{c.AddressId}|{c.Id}"; return c; }).ToList();
+                    }
 
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
@@ -154,7 +158,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
-                return ResponseMessage<LastTradedCustomerInfoDto>.Fail("Son İşlem Bilgisi Alınamadı.");
+                return ResponseMessage<LastTradedCustomerInfoDto>.Fail("Henüz hiç kayıtlı müşteri yok.");
             }
         }
     }

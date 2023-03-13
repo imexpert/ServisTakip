@@ -17,13 +17,13 @@ using System.Threading.Tasks;
 
 namespace ServisTakip.Business.Handlers.Devices.Commands
 {
-    public class CreateDeviceCommand : IRequest<ResponseMessage<CreateDeviceDto>>
+    public class CreateDeviceCommand : IRequest<ResponseMessage<DeviceDto>>
     {
         public CreateDeviceDto Model { get; set; }
-        public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, ResponseMessage<CreateDeviceDto>>
+        public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, ResponseMessage<DeviceDto>>
         {
             [TransactionScopeAspectAsync]
-            public async Task<ResponseMessage<CreateDeviceDto>> Handle(CreateDeviceCommand request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<DeviceDto>> Handle(CreateDeviceCommand request, CancellationToken cancellationToken)
             {
                 var deviceRepo = ServiceTool.ServiceProvider.GetService<IDeviceRepository>();
                 var contractRepo = ServiceTool.ServiceProvider.GetService<IContractRepository>();
@@ -72,7 +72,8 @@ namespace ServisTakip.Business.Handlers.Devices.Commands
                 await contractMaintenancesRepo.SaveChangesAsync();
                 #endregion
 
-                return ResponseMessage<CreateDeviceDto>.Success();
+                var deviceDto = mapper.Map<DeviceDto>(device);
+                return ResponseMessage<DeviceDto>.Success(deviceDto);
             }
         }
     }

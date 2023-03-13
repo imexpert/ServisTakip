@@ -17,7 +17,7 @@
                       <el-dropdown-item @click="musteriDialogAc('I')">
                         <el-icon> <Plus></Plus> </el-icon>Yeni Ekle
                       </el-dropdown-item>
-                      <el-dropdown-item @click="musteriDialogAc('U')">
+                      <el-dropdown-item :disabled="firmaOzet.customerId == ''" @click="musteriDialogAc('U')">
                         <el-icon> <Edit></Edit> </el-icon>Düzenle
                       </el-dropdown-item>
                     </el-dropdown-menu>
@@ -25,7 +25,7 @@
                 </el-dropdown>
               </div>
               <div class="p-2">
-                <el-dropdown trigger="click">
+                <el-dropdown trigger="click" :disabled="firmaOzet.addressId == null">
                   <el-button type="danger">
                     Cihaz İşlemleri<el-icon class="el-icon--right">
                       <arrow-down />
@@ -33,19 +33,19 @@
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item @click="cihazDialogAc('I')">
+                      <el-dropdown-item @click="cihazDialogAc('I')" :disabled="firmaOzet.addressId == null">
                         <el-icon> <Plus></Plus> </el-icon>Cihaz Ekle
                       </el-dropdown-item>
-                      <el-dropdown-item @click="cihazDialogAc('U')">
+                      <el-dropdown-item @click="cihazDialogAc('U')" :disabled="firmaOzet.deviceId == null">
                         <el-icon> <Edit></Edit> </el-icon>Cihaz Düzenle
                       </el-dropdown-item>
-                      <el-dropdown-item divided @click="servisAc()">
+                      <el-dropdown-item divided @click="servisAc()" :disabled="firmaOzet.deviceId == null">
                         <el-icon> <Plus></Plus> </el-icon>Servis Aç
                       </el-dropdown-item>
-                      <el-dropdown-item>
+                      <el-dropdown-item :disabled="firmaOzet.deviceId == null">
                         <el-icon> <Edit></Edit> </el-icon>Hızlı Servis
                       </el-dropdown-item>
-                      <el-dropdown-item @click="cihazListesi()">
+                      <el-dropdown-item @click="cihazListesi()" :disabled="firmaOzet.deviceId == null">
                         <el-icon> <List /> </el-icon>Cihaz Listesi
                       </el-dropdown-item>
                     </el-dropdown-menu>
@@ -290,7 +290,7 @@
               max-height="150px"
               :default-sort="{ prop: 'startDate', order: 'descending' }"
             >
-              <template #empty>
+              <template #empty v-if="firmaOzet.deviceId != null">
                 <div class="row">
                   <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
                     <el-button type="danger">
@@ -759,7 +759,7 @@
                     v-model="newService.failureDate"
                     format="DD.MM.YYYY HH:mm:ss"
                     type="datetime"
-                    placeholder="Select date and time"
+                    placeholder="Servis açılış tarihini seçiniz"
                     :shortcuts="shortcuts"
                   />
                 </el-form-item>
@@ -882,7 +882,7 @@
                     v-model="newService.userAssignDate"
                     format="DD.MM.YYYY HH:mm:ss"
                     type="datetime"
-                    placeholder="Select date and time"
+                    placeholder="Teknisyen atama tarihini seçiniz"
                     :shortcuts="shortcuts"
                   />
                 </el-form-item>
@@ -1659,7 +1659,7 @@
                         </el-icon>
                         Düzenle
                       </el-dropdown-item>
-                      <el-dropdown-item>
+                      <el-dropdown-item @click="deleteAdres(scope.row.id)">
                         <el-icon>
                           <el-icon>
                             <Delete />
@@ -1678,7 +1678,7 @@
     </el-dialog>
 
     <el-dialog v-model="adresDialogVisible" title="Adres Ekle / Düzenle" width="40%" destroy-on-close center>
-      <div class="row">
+      <div class="row" v-loading="adresLoading">
         <el-form
           status-icon
           :rules="newAddressRules"
@@ -1688,7 +1688,7 @@
           label-width="120px"
           label-position="top"
         >
-          <div class="row" v-loading="adresLoading">
+          <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-8 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -2015,7 +2015,7 @@ export default defineComponent({
     var firmaOzet = ref<IFirmaOzetData>({
       device: null,
       deviceBrand: null,
-      deviceId: '',
+      deviceId: null,
       deviceModel: null,
       accountCode: '',
       authorizedEmail: '',
@@ -2039,7 +2039,7 @@ export default defineComponent({
       regionCode: '',
       totalCount: '',
       wbCount: '',
-      addressId: '',
+      addressId: null,
     });
 
     var device = ref<IDeviceData>({
@@ -2049,7 +2049,7 @@ export default defineComponent({
       description: '',
       deviceModel: null,
       deviceModelId: '',
-      id: '',
+      id: null,
       rowId: '',
       serialNumber: '',
       status: false,
@@ -2178,8 +2178,8 @@ export default defineComponent({
     var customerAddresses = ref<Array<IAddressData>>([]);
 
     var deviceStatus = ref<string>('');
-    var backgroundColor = ref<string>('#ABEBC6');
-    var maintenanceBackgroundColor = ref<string>('#ABEBC6');
+    var backgroundColor = ref<string>('');
+    var maintenanceBackgroundColor = ref<string>('');
     var contractMaintenanceStatus = ref<string>('');
     var selectedDevice = ref<string>('');
     var selectedDeviceType = ref<string>('');
@@ -2407,7 +2407,11 @@ export default defineComponent({
               .then(result => {
                 loading.value = false;
                 if (result.isSuccess) {
-                  showSuccessMessage('Cihaz başarıyla eklendi.').then(() => {
+                  showSuccessMessage('Cihaz başarıyla eklendi.').then(async () => {
+                    if (!firmaOzet.value.deviceId) {
+                      var rowId = firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + result.data.id;
+                      await getMainPageCustomer(rowId);
+                    }
                     deviceLoading.value = false;
                     cihazDialogVisible.value = false;
                   });
@@ -2504,66 +2508,6 @@ export default defineComponent({
           }
 
           musteriLoading.value = false;
-        }
-      });
-    };
-
-    const addressSubmit = () => {
-      if (!formAddressRef.value) {
-        return;
-      }
-
-      formAddressRef.value.validate(valid => {
-        if (valid) {
-          deviceLoading.value = true;
-          console.log(newAddress.value);
-
-          newAddress.value.customerId = newCustomer.value.id;
-
-          if (selectMode.value == 'I') {
-            store
-              .dispatch(Actions.ADD_ADDRESS, newAddress.value)
-              .then(result => {
-                loading.value = false;
-                if (result.isSuccess) {
-                  showSuccessMessage('Adres başarıyla eklendi.').then(() => {
-                    deviceLoading.value = false;
-                    cihazDialogVisible.value = false;
-                  });
-                } else {
-                  showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
-                    servisAcDialogVisible.value = false;
-                  });
-                }
-              })
-              .catch(({ response }) => {});
-          } else {
-            store
-              .dispatch(Actions.UPDATE_DEVICE, newDevice.value)
-              .then(result => {
-                loading.value = false;
-                if (result.isSuccess) {
-                  showSuccessMessage('Cihaz başarıyla güncellendi.').then(async () => {
-                    deviceLoading.value = false;
-                    cihazDialogVisible.value = false;
-                    if (firmaOzet.value.deviceId == newDevice.value.id) {
-                      var rowId =
-                        firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + firmaOzet.value.deviceId;
-                      await getMainPageCustomer(rowId);
-                    }
-                  });
-                } else {
-                  showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
-                    servisAcDialogVisible.value = false;
-                  });
-                }
-              })
-              .catch(({ response }) => {});
-          }
-
-          deviceLoading.value = false;
         }
       });
     };
@@ -2904,6 +2848,84 @@ export default defineComponent({
       await getMainPageCustomer(selectedSerialNo.value);
     }
 
+    async function onModelNameChange() {
+      console.clear();
+      clearPage();
+      console.log(selectedModelName);
+
+      if (!selectedModelName) {
+        modelList.value = [];
+        selectedCustomer.value = '';
+        selectedDevice.value = '';
+        selectedSerialNo.value = '';
+        return;
+      }
+
+      await getMainPageCustomer(selectedModelName.value);
+    }
+
+    // Adres Submit
+    const addressSubmit = () => {
+      if (!formAddressRef.value) {
+        return;
+      }
+
+      formAddressRef.value.validate(valid => {
+        if (valid) {
+          adresLoading.value = true;
+          console.log(newAddress.value);
+
+          newAddress.value.customerId = newCustomer.value.id;
+
+          if (selectAddressMode.value == 'I') {
+            store
+              .dispatch(Actions.ADD_ADDRESS, newAddress.value)
+              .then(result => {
+                loading.value = false;
+                if (result.isSuccess) {
+                  showSuccessMessage('Adres başarıyla eklendi.').then(async () => {
+                    await getAddressList(newCustomer.value.id);
+                    adresLoading.value = false;
+                    adresDialogVisible.value = false;
+                  });
+                } else {
+                  showErrorMessage(result.message).then(() => {
+                    deviceLoading.value = false;
+                    servisAcDialogVisible.value = false;
+                  });
+                }
+              })
+              .catch(({ response }) => {});
+          } else {
+            store
+              .dispatch(Actions.UPDATE_DEVICE, newDevice.value)
+              .then(result => {
+                loading.value = false;
+                if (result.isSuccess) {
+                  showSuccessMessage('Cihaz başarıyla güncellendi.').then(async () => {
+                    deviceLoading.value = false;
+                    cihazDialogVisible.value = false;
+                    if (firmaOzet.value.deviceId == newDevice.value.id) {
+                      var rowId =
+                        firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + firmaOzet.value.deviceId;
+                      await getMainPageCustomer(rowId);
+                    }
+                  });
+                } else {
+                  showErrorMessage(result.message).then(() => {
+                    deviceLoading.value = false;
+                    servisAcDialogVisible.value = false;
+                  });
+                }
+              })
+              .catch(({ response }) => {});
+          }
+
+          deviceLoading.value = false;
+        }
+      });
+    };
+
     async function onSehirChange() {
       selectedIlce.value = '';
       newAddress.value.quarterId = '';
@@ -2950,20 +2972,18 @@ export default defineComponent({
       adresLoading.value = false;
     }
 
-    async function onModelNameChange() {
-      console.clear();
-      clearPage();
-      console.log(selectedModelName);
-
-      if (!selectedModelName) {
-        modelList.value = [];
-        selectedCustomer.value = '';
-        selectedDevice.value = '';
-        selectedSerialNo.value = '';
-        return;
-      }
-
-      await getMainPageCustomer(selectedModelName.value);
+    async function getAddressById(id) {
+      await store
+        .dispatch(Actions.GET_ADDRESSBYID, id)
+        .then(result => {
+          if (result.isSuccess) {
+            console.clear();
+            console.log(result.data);
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
     }
 
     async function getMainPageCustomer(rowId) {
@@ -2980,13 +3000,18 @@ export default defineComponent({
             console.clear();
             console.log(firmaOzet.value);
             contracts.value = result.data.contracts;
-            device.value = result.data.device;
-            deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
-            deviceModel.value = result.data.device?.deviceModel;
-            deviceStatus.value = device.value.status == true ? 'Aktif' : 'Pasif';
-            contractMaintenanceStatus.value = result.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
-            maintenanceBackgroundColor.value = result.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
-            backgroundColor.value = device.value.status ? '#ABEBC6' : '#F5B7B1';
+
+            if (result.data.device) {
+              device.value = result.data.device;
+              deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
+              deviceModel.value = result.data.device?.deviceModel;
+              deviceStatus.value = device.value.status == true ? 'Aktif' : 'Pasif';
+              deviceList.value = result.data.devices;
+              contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
+              maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+              backgroundColor.value = device.value.status ? '#ABEBC6' : '#F5B7B1';
+            }
+
             deviceList.value = result.data.devices;
             selectedDevice.value = result.data.deviceId;
             selectedCustomer.value = result.data.customerTitle;
@@ -3022,21 +3047,6 @@ export default defineComponent({
           if (result.isSuccess) {
             talepDetayLoading.value = false;
             deviceServiceItem.value = result.data;
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
-    }
-
-    async function getAddressById(id) {
-      await store
-        .dispatch(Actions.GET_ADDRESSBYID, id)
-        .then(result => {
-          if (result.isSuccess) {
-            console.clear();
-            console.log(result.data);
-            
           }
         })
         .catch(() => {
@@ -3179,15 +3189,18 @@ export default defineComponent({
             console.clear();
             console.log(firmaOzet.value);
             contracts.value = result.data.contracts;
-            device.value = result.data.device;
-            deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
-            deviceModel.value = result.data.device?.deviceModel;
-            deviceStatus.value = device.value.status == true ? 'Aktif' : 'Pasif';
-            contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
-            maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
-            deviceList.value = result.data.devices;
-            selectedDevice.value = result.data.deviceId;
 
+            if (result.data.device) {
+              device.value = result.data.device;
+              deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
+              deviceModel.value = result.data.device?.deviceModel;
+              deviceStatus.value = device.value.status == true ? 'Aktif' : 'Pasif';
+              deviceList.value = result.data.devices;
+              contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
+              maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+            }
+
+            selectedDevice.value = result.data.deviceId;
             selectedDevice.value = result.data.deviceId;
             selectedCustomer.value = result.data.customerTitle;
             selectedSerialNo.value = device.value.serialNumber;
@@ -3195,16 +3208,7 @@ export default defineComponent({
 
             deviceServices.value = result.data.deviceServices;
           } else {
-            Swal.fire({
-              title: 'Hata',
-              text: result.message,
-              icon: 'error',
-              buttonsStyling: false,
-              confirmButtonText: 'Tamam !',
-              customClass: {
-                confirmButton: 'btn fw-bold btn-danger',
-              },
-            });
+            showWarningMessage(result.message);
           }
         })
         .catch(() => {
@@ -3240,11 +3244,60 @@ export default defineComponent({
       adresDialogVisible.value = true;
 
       if (id > 0) {
-        selectAddressMode.value = "U"
+        selectAddressMode.value = 'U';
         await getAddressById(newCustomer.value.id);
       } else {
-        selectAddressMode.value = "I"
+        selectAddressMode.value = 'I';
       }
+
+      adresLoading.value = false;
+    }
+
+    async function deleteAdres(id) {
+      Swal.fire({
+        title: 'Adres kaydı silinecek !!!',
+        text: 'Devam etmek istiyor musunuz ?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Sil',
+        denyButtonText: `Vazgeç`,
+      }).then(async result => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          await store
+            .dispatch(Actions.DELETE_ADDRESS, id)
+            .then(async result => {
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Adres başarıyla silindi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(async () => {
+                  await getAddressList(firmaOzet.value.customerId);
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        } else if (result.isDenied) {
+        }
+      });
     }
 
     async function cihazDialogAc(mode) {
@@ -3398,6 +3451,7 @@ export default defineComponent({
       adresDialogAc,
       onSehirChange,
       onIlceChange,
+      deleteAdres,
     };
   },
 });

@@ -76,7 +76,7 @@ namespace ServisTakip.Api.Controllers
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateDeviceDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPost]
         public async Task<IActionResult> AddDeviceAsync([FromBody] CreateDeviceDto model)

@@ -18,6 +18,28 @@ export default class AddressModule extends VuexModule {
   }
 
   @Action
+  [Actions.UPDATE_ADDRESS](addressData) {
+    return ApiService.put('Addresses/UpdateAddress', addressData)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  [Actions.DELETE_ADDRESS](id) {
+    return ApiService.delete('Addresses/DeleteAddress?id=' + id)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
   [Actions.GET_ADDRESSLISTBYCUSTOMERID](customerId) {
     return ApiService.getWithParamUrl('Addresses/GetAddressListByCustomerId?customerId=' + customerId)
       .then(({ data }) => {
