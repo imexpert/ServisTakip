@@ -3,7 +3,8 @@ import JwtService from "@/core/services/JwtService";
 import { Actions, Mutations } from "@/store/enums/StoreEnums";
 import { Module, Action, Mutation, VuexModule } from "vuex-module-decorators";
 import router from "@/router";
-import { showError } from "@/core/plugins/Utils";
+import { showError, showErrorMessage } from "@/core/plugins/Utils";
+import store from "@/store";
 
 export interface User {
   firstname: string;
@@ -87,7 +88,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
         return data;
       })
       .catch(({ response }) => {
-        showError(response);
+        showErrorMessage("Giriş yapma sırasında hata oluştu.");
       });
   }
 
@@ -135,7 +136,8 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
 
         })
         .catch(({ response }) => {
-          showError(response);
+          store.commit(Mutations.PURGE_AUTH);
+          router.push({ name: 'sign-in' });
         });
     } else {
       this.context.commit(Mutations.PURGE_AUTH);

@@ -34,6 +34,7 @@ namespace ServisTakip.Business.Helpers
             CreateMap<Sector, SectorDto>().ReverseMap();
             CreateMap<Company, CompanyDto>().ReverseMap();
             CreateMap<Customer, CreateCustomerDto>().ReverseMap();
+            CreateMap<Customer, UpdateCustomerDto>().ReverseMap();
             CreateMap<City, CityDto>().ReverseMap();
             CreateMap<District, DistrictDto>().ReverseMap();
             CreateMap<BootCode, BootCodeDto>().ReverseMap();

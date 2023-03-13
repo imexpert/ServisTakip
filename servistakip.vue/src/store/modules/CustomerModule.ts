@@ -19,6 +19,17 @@ export default class CustomerModule extends VuexModule {
   }
 
   @Action
+  [Actions.UPDATE_CUSTOMER](customerData) {
+    return ApiService.put("Customers/UpdateCustomer", customerData)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
   [Actions.GET_LASTTRADED_CUSTOMER]() {
     return ApiService.get("Customers/GetLastTradedCustomer")
       .then(({ data }) => {

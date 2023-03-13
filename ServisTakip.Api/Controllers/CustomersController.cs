@@ -15,12 +15,27 @@ namespace ServisTakip.Api.Controllers
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateCustomerDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CustomerDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPost]
         public async Task<IActionResult> CreateCustomerAsync([FromBody] CreateCustomerDto model)
         {
             return CreateActionResult(await Mediator.Send(new CreateCustomerCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CustomerDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
+        public async Task<IActionResult> UpdateCustomerAsync([FromBody] UpdateCustomerDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new UpdateCustomerCommand() { Model = model }));
         }
 
         /// <summary>

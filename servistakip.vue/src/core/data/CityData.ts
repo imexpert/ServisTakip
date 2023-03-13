@@ -1,4 +1,5 @@
 interface ICityData {
+    id?: string | '',
     name?: string | '',
 }
 

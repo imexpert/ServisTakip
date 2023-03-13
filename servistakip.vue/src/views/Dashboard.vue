@@ -8,15 +8,17 @@
               <div class="p-2">
                 <el-dropdown trigger="click">
                   <el-button type="danger">
-                    Müşteri İşlemleri<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                    Müşteri İşlemleri<el-icon class="el-icon--right">
+                      <arrow-down />
+                    </el-icon>
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="musteriDialogAc('I')">
                         <el-icon> <Plus></Plus> </el-icon>Yeni Ekle
                       </el-dropdown-item>
-                      <el-dropdown-item @click="musteriDialogAc('U')"
-                        ><el-icon> <Edit></Edit> </el-icon>Düzenle
+                      <el-dropdown-item @click="musteriDialogAc('U')">
+                        <el-icon> <Edit></Edit> </el-icon>Düzenle
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -25,24 +27,26 @@
               <div class="p-2">
                 <el-dropdown trigger="click">
                   <el-button type="danger">
-                    Cihaz İşlemleri<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                    Cihaz İşlemleri<el-icon class="el-icon--right">
+                      <arrow-down />
+                    </el-icon>
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item @click="cihazDialogAc('I')"
-                        ><el-icon> <Plus></Plus> </el-icon>Cihaz Ekle</el-dropdown-item
-                      >
-                      <el-dropdown-item @click="cihazDialogAc('U')"
-                        ><el-icon> <Edit></Edit> </el-icon>Cihaz Düzenle</el-dropdown-item
-                      >
-                      <el-dropdown-item divided @click="servisAc()"
-                        ><el-icon> <Plus></Plus> </el-icon>Servis Aç
+                      <el-dropdown-item @click="cihazDialogAc('I')">
+                        <el-icon> <Plus></Plus> </el-icon>Cihaz Ekle
                       </el-dropdown-item>
-                      <el-dropdown-item
-                        ><el-icon> <Edit></Edit> </el-icon>Hızlı Servis
+                      <el-dropdown-item @click="cihazDialogAc('U')">
+                        <el-icon> <Edit></Edit> </el-icon>Cihaz Düzenle
                       </el-dropdown-item>
-                      <el-dropdown-item @click="cihazListesi()"
-                        ><el-icon> <List /> </el-icon>Cihaz Listesi
+                      <el-dropdown-item divided @click="servisAc()">
+                        <el-icon> <Plus></Plus> </el-icon>Servis Aç
+                      </el-dropdown-item>
+                      <el-dropdown-item>
+                        <el-icon> <Edit></Edit> </el-icon>Hızlı Servis
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="cihazListesi()">
+                        <el-icon> <List /> </el-icon>Cihaz Listesi
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -289,8 +293,8 @@
               <template #empty>
                 <div class="row">
                   <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-                    <el-button type="danger"
-                      ><el-icon> <Plus></Plus> </el-icon>Yeni Ekle
+                    <el-button type="danger">
+                      <el-icon> <Plus></Plus> </el-icon>Yeni Ekle
                     </el-button>
                   </div>
                 </div>
@@ -335,18 +339,20 @@
                   Yeni Ekle
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item
-                        ><el-icon>
+                      <el-dropdown-item>
+                        <el-icon>
                           <Edit></Edit>
                         </el-icon>
-                        Düzenle</el-dropdown-item
-                      >
-                      <el-dropdown-item
-                        ><el-icon
-                          ><el-icon> <Delete /> </el-icon
-                        ></el-icon>
-                        Sil</el-dropdown-item
-                      >
+                        Düzenle
+                      </el-dropdown-item>
+                      <el-dropdown-item>
+                        <el-icon>
+                          <el-icon>
+                            <Delete />
+                          </el-icon>
+                        </el-icon>
+                        Sil
+                      </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -1434,7 +1440,7 @@
     </el-dialog>
 
     <el-dialog v-model="musteriDialogVisible" title="Müşteri İşlemleri" width="60%" destroy-on-close center>
-      <div class="row">
+      <div class="row" v-loading="musteriLoading">
         <el-form
           status-icon
           :rules="newCustomerRules"
@@ -1444,8 +1450,8 @@
           label-width="120px"
           label-position="top"
         >
-          <div class="row" v-loading="musteriLoading">
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-8 col-sm-12">
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1459,7 +1465,7 @@
               </div>
               <!--end::Input group-->
             </div>
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-2 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1482,38 +1488,67 @@
               </div>
               <!--end::Input group-->
             </div>
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-2 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                  <span>Müşteri Durumu</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="status">
+                  <el-select placeholder="Cihaz durumunu seçiniz" filterable clearable v-model="newCustomer.status">
+                    <el-option label="Aktif" :value="true"></el-option>
+                    <el-option label="Pasif" :value="false"></el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-2 col-sm-12">
+              <!--begin::Actions-->
+              <div class="text-center mt-8">
+                <!--begin::Button-->
+                <button
+                  v-if="selectMode == 'I'"
+                  :data-kt-indicator="loading ? 'on' : null"
+                  class="btn btn-lg btn-primary btn-sm"
+                  type="submit"
+                >
+                  <span v-if="!loading" class="indicator-label"> Kaydet </span>
+                  <span v-if="loading" class="indicator-progress">
+                    Lütfen Bekleyiniz...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                  </span>
+                </button>
+                <button
+                  v-else
+                  :data-kt-indicator="loading ? 'on' : null"
+                  class="btn btn-lg btn-primary btn-sm"
+                  type="submit"
+                >
+                  <span v-if="!loading" class="indicator-label"> Güncelle </span>
+                  <span v-if="loading" class="indicator-progress">
+                    Lütfen Bekleyiniz...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                  </span>
+                </button>
+                <!--end::Button-->
+              </div>
+              <!--end::Actions-->
+            </div>
           </div>
-          <!--begin::Actions-->
-          <div class="text-center">
-            <!--begin::Button-->
-            <button
-              v-if="selectMode == 'I'"
-              :data-kt-indicator="loading ? 'on' : null"
-              class="btn btn-lg btn-primary btn-sm"
-              type="submit"
-            >
-              <span v-if="!loading" class="indicator-label"> Kaydet </span>
-              <span v-if="loading" class="indicator-progress">
-                Lütfen Bekleyiniz...
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-              </span>
-            </button>
-            <button v-else :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
-              <span v-if="!loading" class="indicator-label"> Güncelle </span>
-              <span v-if="loading" class="indicator-progress">
-                Lütfen Bekleyiniz...
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-              </span>
-            </button>
-            <!--end::Button-->
-          </div>
-          <!--end::Actions-->
         </el-form>
       </div>
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <el-divider content-position="left">Adres Listesi</el-divider>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12 mb-1" v-loading="anaSayfaLoading">
+        <div v-if="adresTableVisible" class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12 mb-1">
           <el-table
-            :data="customerAddresses"
+            :data="addressList"
             style="width: 100%"
             height="250"
             max-height="250px"
@@ -1522,41 +1557,41 @@
             <template #empty>
               <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-                  <el-button type="danger" size="small"
-                    ><el-icon> <Plus></Plus> </el-icon>Yeni Ekle
+                  <el-button type="danger" size="small" @click="adresDialogAc()">
+                    <el-icon> <Plus></Plus> </el-icon>Yeni Ekle
                   </el-button>
                 </div>
               </div>
             </template>
-            <el-table-column label="Adres Başlık" width="100" sortable>
+            <el-table-column label="Adres Başlık" width="200" sortable>
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.addressTitle }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açık Adres" width="100" sortable>
+            <el-table-column label="Açık Adres" width="200" sortable>
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.netAddress }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Şehir" width="140" sortable>
+            <el-table-column label="Şehir" width="130" sortable>
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.querter.district.city.name }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="İlçe" width="160">
+            <el-table-column label="İlçe" width="130">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.querter.district.name }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Semt" width="160">
+            <el-table-column label="Semt" width="130">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.querter.name }}</span>
@@ -1577,7 +1612,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Yetkili Telefon" width="120">
+            <el-table-column label="Yetkili Telefon" width="130">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.authorizedPhone }}</span>
@@ -1591,14 +1626,14 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Yetkili Departman" width="120">
+            <el-table-column label="Departman" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.department }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Muhasebe Kodu" width="120">
+            <el-table-column label="Muhasebe Kodu" width="135">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.accountCode }}</span>
@@ -1613,25 +1648,29 @@
               </template>
             </el-table-column>
             <el-table-column label="#" fixed="left" width="140">
-              <el-dropdown size="small" split-button type="danger">
-                Yeni Ekle
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item
-                      ><el-icon>
-                        <Edit></Edit>
-                      </el-icon>
-                      Düzenle</el-dropdown-item
-                    >
-                    <el-dropdown-item
-                      ><el-icon
-                        ><el-icon> <Delete /> </el-icon
-                      ></el-icon>
-                      Sil</el-dropdown-item
-                    >
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
+              <template #default="scope">
+                <el-dropdown size="small" split-button type="danger" @click="adresDialogAc()">
+                  Yeni Ekle
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item @click="adresDialogAc(scope.row.id)">
+                        <el-icon>
+                          <Edit></Edit>
+                        </el-icon>
+                        Düzenle
+                      </el-dropdown-item>
+                      <el-dropdown-item>
+                        <el-icon>
+                          <el-icon>
+                            <Delete />
+                          </el-icon>
+                        </el-icon>
+                        Sil
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </template>
             </el-table-column>
           </el-table>
         </div>
@@ -1642,14 +1681,14 @@
       <div class="row">
         <el-form
           status-icon
-          :rules="newCustomerRules"
+          :rules="newAddressRules"
           ref="formAddressRef"
           :model="newAddress"
           @submit.prevent="addressSubmit()"
           label-width="120px"
           label-position="top"
         >
-          <div class="row" v-loading="musteriLoading">
+          <div class="row" v-loading="adresLoading">
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-8 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1664,11 +1703,12 @@
               </div>
               <!--end::Input group-->
             </div>
+
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                   <span>Muhasebe Kodu</span>
                 </label>
                 <!--end::Label-->
@@ -1678,6 +1718,7 @@
               </div>
               <!--end::Input group-->
             </div>
+
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1686,7 +1727,7 @@
                   <span>Şehir</span>
                 </label>
                 <!--end::Label-->
-                <el-form-item prop="selectedDeviceType">
+                <el-form-item prop="selectedSehir">
                   <el-select
                     placeholder="Şehir seçiniz"
                     @change="onSehirChange()"
@@ -1701,6 +1742,7 @@
               </div>
               <!--end::Input group-->
             </div>
+
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1709,34 +1751,150 @@
                   <span>İlçe</span>
                 </label>
                 <!--end::Label-->
-                <el-form-item prop="selectedDeviceBrand">
+                <el-form-item prop="selectedIlce">
                   <el-select
-                    @change="onDeviceBrandChange()"
+                    @change="onIlceChange()"
                     placeholder="İlçe seçiniz"
                     filterable
                     clearable
                     v-model="selectedIlce"
                   >
-                    <el-option v-for="item in deviceBrandList" :key="item.id" :label="item.name" :value="item.id">
-                    </el-option>
+                    <el-option v-for="item in ilceList" :key="item.id" :label="item.name" :value="item.id"> </el-option>
                   </el-select>
                 </el-form-item>
               </div>
               <!--end::Input group-->
             </div>
+
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
-                  <span>Model</span>
+                  <span>Semt</span>
                 </label>
                 <!--end::Label-->
-                <el-form-item prop="deviceModelId">
-                  <el-select placeholder="Cihaz model seçiniz" filterable clearable v-model="newDevice.deviceModelId">
-                    <el-option v-for="item in deviceModelList" :key="item.id" :label="item.name" :value="item.id">
-                    </el-option>
+                <el-form-item prop="quarterId">
+                  <el-select placeholder="Semt seçiniz" filterable clearable v-model="newAddress.quarterId">
+                    <el-option v-for="item in semtList" :key="item.id" :label="item.name" :value="item.id"> </el-option>
                   </el-select>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                  <span>Açık Adres</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="netAddress">
+                  <el-input v-model="newAddress.netAddress" placeholder="Açık adres giriniz"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Yetkili Ad Soyad</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="authorizedName">
+                  <el-input
+                    v-model="newAddress.authorizedName"
+                    placeholder="Yetkili ad soyad bilgisini giriniz"
+                  ></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Yetkili Görevi</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="authorizedTask">
+                  <el-input
+                    v-model="newAddress.authorizedTask"
+                    placeholder="Yetkili görev bilgisini giriniz"
+                  ></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Yetkili Mail</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="authorizedEmail">
+                  <el-input
+                    v-model="newAddress.authorizedEmail"
+                    placeholder="Yetkili mail bilgisini giriniz"
+                  ></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Yetkili Telefon</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="authorizedPhone">
+                  <el-input
+                    v-model="newAddress.authorizedPhone"
+                    placeholder="Yetkili telefon bilgisini giriniz"
+                  ></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Departman</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="department">
+                  <el-input v-model="newAddress.department" placeholder="Departman bilgisini giriniz"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Açıklama</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="description">
+                  <el-input v-model="newAddress.description" placeholder="Açıklama bilgisini giriniz"></el-input>
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -1746,7 +1904,7 @@
           <div class="text-center">
             <!--begin::Button-->
             <button
-              v-if="selectMode == 'I'"
+              v-if="selectAddressMode == 'I'"
               :data-kt-indicator="loading ? 'on' : null"
               class="btn btn-lg btn-primary btn-sm"
               type="submit"
@@ -1768,132 +1926,6 @@
           </div>
           <!--end::Actions-->
         </el-form>
-      </div>
-      <div class="row">
-        <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12 mb-1" v-loading="anaSayfaLoading">
-          <el-table
-            :data="customerAddresses"
-            style="width: 100%"
-            height="250"
-            max-height="250px"
-            :default-sort="{ prop: 'startDate', order: 'descending' }"
-          >
-            <template #empty>
-              <div class="row">
-                <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-                  <el-button type="danger" size="small"
-                    ><el-icon> <Plus></Plus> </el-icon>Yeni Ekle
-                  </el-button>
-                </div>
-              </div>
-            </template>
-            <el-table-column label="Adres Başlık" width="100" sortable>
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.addressTitle }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Açık Adres" width="100" sortable>
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.netAddress }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Şehir" width="140" sortable>
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.querter.district.city.name }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="İlçe" width="160">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.querter.district.name }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Semt" width="160">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.querter.name }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Yetkili Ad" width="120">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.authorizedName }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Yetkili Görev" width="120">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.authorizedTask }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Yetkili Telefon" width="120">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.authorizedPhone }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Yetkili Mail" width="120">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.authorizedEmail }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Yetkili Departman" width="120">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.department }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Muhasebe Kodu" width="120">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.accountCode }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="Açıklama" width="120">
-              <template #default="scope">
-                <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.Description }}</span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="#" fixed="left" width="140">
-              <el-dropdown size="small" split-button type="danger">
-                Yeni Ekle
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item
-                      ><el-icon>
-                        <Edit></Edit>
-                      </el-icon>
-                      Düzenle</el-dropdown-item
-                    >
-                    <el-dropdown-item
-                      ><el-icon
-                        ><el-icon> <Delete /> </el-icon
-                      ></el-icon>
-                      Sil</el-dropdown-item
-                    >
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </el-table-column>
-          </el-table>
-        </div>
       </div>
     </el-dialog>
   </div>
@@ -1936,20 +1968,25 @@ export default defineComponent({
     Plus,
   },
   setup() {
-    const cihazListesiDialogVisible = ref(false);
-    const musteriDialogVisible = ref(false);
-    const servisAcDialogVisible = ref(false);
+    const store = useStore();
+    const router = useRouter();
+
     const talepDialogVisible = ref(false);
     const cihazDialogVisible = ref(false);
     const adresDialogVisible = ref(false);
-    const store = useStore();
+    const cihazListesiDialogVisible = ref(false);
+    const musteriDialogVisible = ref(false);
+    const servisAcDialogVisible = ref(false);
+
+    const loading = ref<boolean>(false);
     const anaSayfaLoading = ref<boolean>(false);
     const servisAcLoading = ref<boolean>(false);
     const talepDetayLoading = ref<boolean>(false);
     const deviceLoading = ref<boolean>(false);
     const musteriLoading = ref<boolean>(false);
-    const loading = ref<boolean>(false);
-    const router = useRouter();
+    const adresLoading = ref<boolean>(false);
+
+    const adresTableVisible = ref<boolean>(false);
 
     var newCustomer = ref<ICustomerData>({
       sectorId: '',
@@ -2030,14 +2067,6 @@ export default defineComponent({
       name: '',
     });
 
-    var deviceStatus = ref<string>('');
-
-    var backgroundColor = ref<string>('#ABEBC6');
-
-    var maintenanceBackgroundColor = ref<string>('#ABEBC6');
-
-    var contractMaintenanceStatus = ref<string>('');
-
     var deviceServiceItem = ref<IDeviceServiceData>({
       ak: false,
       bc: false,
@@ -2080,21 +2109,6 @@ export default defineComponent({
       wbCount: '',
       yellowCount: '',
     });
-
-    const shortcuts = [
-      {
-        text: 'Bugün',
-        value: new Date(),
-      },
-      {
-        text: 'Dün',
-        value: () => {
-          const date = new Date();
-          date.setTime(date.getTime() - 3600 * 1000 * 24);
-          return date;
-        },
-      },
-    ];
 
     var newService = ref<IDeviceServiceData>({
       ak: false,
@@ -2139,22 +2153,6 @@ export default defineComponent({
       yellowCount: '',
     });
 
-    var selectedDevice = ref<string>('');
-    var selectedDeviceType = ref<string>('');
-    var selectedDeviceBrand = ref<string>('');
-    var selectedCustomer = ref<string>('');
-    var selectedSerialNo = ref<string>();
-    var selectedModelName = ref<string>();
-    var selectedSehir = ref<string>();
-    var selectedIlce = ref<string>();
-    var selectMode = ref<string>('I');
-
-    var technicianUserList = ref<Array<IUserData>>([]);
-    var customerList = ref<Array<ICustomerData>>([]);
-    var deviceTypeList = ref<Array<IDeviceTypeData>>([]);
-    var deviceBrandList = ref<Array<IDeviceBrandData>>([]);
-    var deviceModelList = ref<Array<IDeviceModelData>>([]);
-    var deviceList = ref<Array<IDeviceData>>([]);
     var newDevice = ref<IDeviceData>({
       address: null,
       addressId: '',
@@ -2168,10 +2166,46 @@ export default defineComponent({
       maintenancePeriod: '',
       assemblyDate: '',
     });
-    var deviceServices = ref<Array<IDeviceServiceData>>([]);
 
+    var technicianUserList = ref<Array<IUserData>>([]);
+    var customerList = ref<Array<ICustomerData>>([]);
+    var deviceTypeList = ref<Array<IDeviceTypeData>>([]);
+    var deviceBrandList = ref<Array<IDeviceBrandData>>([]);
+    var deviceModelList = ref<Array<IDeviceModelData>>([]);
+    var deviceList = ref<Array<IDeviceData>>([]);
+    var deviceServices = ref<Array<IDeviceServiceData>>([]);
     var contracts = ref<Array<IContractData>>([]);
     var customerAddresses = ref<Array<IAddressData>>([]);
+
+    var deviceStatus = ref<string>('');
+    var backgroundColor = ref<string>('#ABEBC6');
+    var maintenanceBackgroundColor = ref<string>('#ABEBC6');
+    var contractMaintenanceStatus = ref<string>('');
+    var selectedDevice = ref<string>('');
+    var selectedDeviceType = ref<string>('');
+    var selectedDeviceBrand = ref<string>('');
+    var selectedCustomer = ref<string>('');
+    var selectedSerialNo = ref<string>();
+    var selectedModelName = ref<string>();
+    var selectedSehir = ref<string>();
+    var selectedIlce = ref<string>();
+    var selectMode = ref<string>('I');
+    var selectAddressMode = ref<string>('I');
+
+    const shortcuts = [
+      {
+        text: 'Bugün',
+        value: new Date(),
+      },
+      {
+        text: 'Dün',
+        value: () => {
+          const date = new Date();
+          date.setTime(date.getTime() - 3600 * 1000 * 24);
+          return date;
+        },
+      },
+    ];
 
     var bootCodeList = ref<Array<IBootCodeData>>([]);
 
@@ -2182,7 +2216,6 @@ export default defineComponent({
     var seriNoList = ref<Array<ICustomerListData>>([]);
     var addressList = ref<Array<IAddressData>>([]);
     var sectorList = ref<Array<ISectorData>>([]);
-
     var sehirList = ref<Array<ICityData>>([]);
     var ilceList = ref<Array<IDistrictData>>([]);
     var semtList = ref<Array<IQuerterData>>([]);
@@ -2262,38 +2295,48 @@ export default defineComponent({
     });
 
     const newCustomerRules = ref({
-      addressId: [
+      title: [
         {
           required: true,
-          message: 'Adres seçilmedi.',
+          message: 'Unvan girilmedi.',
           trigger: 'blur',
         },
       ],
-      deviceModelId: [
+      sectorId: [
         {
           required: true,
-          message: 'Cihaz model seçilmedi.',
-          trigger: 'blur',
-        },
-      ],
-      serialNumber: [
-        {
-          required: true,
-          message: 'Cihaz seri no girilmedi.',
-          trigger: 'blur',
-        },
-      ],
-      assemblyDate: [
-        {
-          required: true,
-          message: 'Cihaz montaj tarihi girilmedi.',
+          message: 'Sektör seçilmedi.',
           trigger: 'blur',
         },
       ],
       status: [
         {
           required: true,
-          message: 'Cihaz durumu seçilmedi.',
+          message: 'Müşteri durumu seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+    });
+
+    const newAddressRules = ref({
+      addressTitle: [
+        {
+          required: true,
+          message: 'Adres başlığı girilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      quarterId: [
+        {
+          required: true,
+          message: 'Semt seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      netAddress: [
+        {
+          required: true,
+          message: 'Açık adres girilmedi.',
           trigger: 'blur',
         },
       ],
@@ -2411,20 +2454,21 @@ export default defineComponent({
         return;
       }
 
-      formCustomerRef.value.validate(valid => {
+      formCustomerRef.value.validate(async valid => {
         if (valid) {
-          deviceLoading.value = true;
+          musteriLoading.value = true;
           console.log(newDevice.value);
 
           if (selectMode.value == 'I') {
-            store
-              .dispatch(Actions.ADD_DEVICE, newDevice.value)
+            await store
+              .dispatch(Actions.ADD_CUSTOMER, newCustomer.value)
               .then(result => {
                 loading.value = false;
                 if (result.isSuccess) {
-                  showSuccessMessage('Cihaz başarıyla eklendi.').then(() => {
-                    deviceLoading.value = false;
-                    cihazDialogVisible.value = false;
+                  showSuccessMessage('Müşteri başarıyla eklendi.').then(() => {
+                    newCustomer.value = result.data;
+                    console.log(newCustomer.value);
+                    adresTableVisible.value = true;
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
@@ -2435,12 +2479,12 @@ export default defineComponent({
               })
               .catch(({ response }) => {});
           } else {
-            store
-              .dispatch(Actions.UPDATE_DEVICE, newDevice.value)
+            await store
+              .dispatch(Actions.UPDATE_CUSTOMER, newCustomer.value)
               .then(result => {
                 loading.value = false;
                 if (result.isSuccess) {
-                  showSuccessMessage('Cihaz başarıyla güncellendi.').then(async () => {
+                  showSuccessMessage('Müşteri başarıyla güncellendi.').then(async () => {
                     deviceLoading.value = false;
                     cihazDialogVisible.value = false;
                     if (firmaOzet.value.deviceId == newDevice.value.id) {
@@ -2459,28 +2503,30 @@ export default defineComponent({
               .catch(({ response }) => {});
           }
 
-          deviceLoading.value = false;
+          musteriLoading.value = false;
         }
       });
     };
 
     const addressSubmit = () => {
-      if (!formCustomerRef.value) {
+      if (!formAddressRef.value) {
         return;
       }
 
-      formCustomerRef.value.validate(valid => {
+      formAddressRef.value.validate(valid => {
         if (valid) {
           deviceLoading.value = true;
-          console.log(newDevice.value);
+          console.log(newAddress.value);
+
+          newAddress.value.customerId = newCustomer.value.id;
 
           if (selectMode.value == 'I') {
             store
-              .dispatch(Actions.ADD_DEVICE, newDevice.value)
+              .dispatch(Actions.ADD_ADDRESS, newAddress.value)
               .then(result => {
                 loading.value = false;
                 if (result.isSuccess) {
-                  showSuccessMessage('Cihaz başarıyla eklendi.').then(() => {
+                  showSuccessMessage('Adres başarıyla eklendi.').then(() => {
                     deviceLoading.value = false;
                     cihazDialogVisible.value = false;
                   });
@@ -2859,35 +2905,49 @@ export default defineComponent({
     }
 
     async function onSehirChange() {
-      console.clear();
-      clearPage();
-      console.log(selectedSerialNo);
+      selectedIlce.value = '';
+      newAddress.value.quarterId = '';
+      semtList.value = [];
+      ilceList.value = [];
 
-      if (!selectedSerialNo) {
-        seriNoList.value = [];
-        selectedCustomer.value = '';
-        selectedDevice.value = '';
-        selectedModelName.value = '';
-        return;
+      adresLoading.value = true;
+
+      if (selectedSehir.value) {
+        await store
+          .dispatch(Actions.GET_DISTRICT_LIST, selectedSehir.value)
+          .then(result => {
+            if (result.isSuccess) {
+              ilceList.value = result.data;
+            }
+          })
+          .catch(() => {
+            const [error] = Object.keys(store.getters.getErrors);
+          });
       }
 
-      await getMainPageCustomer(selectedSerialNo.value);
+      adresLoading.value = false;
     }
 
     async function onIlceChange() {
-      console.clear();
-      clearPage();
-      console.log(selectedSerialNo);
+      newAddress.value.quarterId = '';
+      semtList.value = [];
 
-      if (!selectedSerialNo) {
-        seriNoList.value = [];
-        selectedCustomer.value = '';
-        selectedDevice.value = '';
-        selectedModelName.value = '';
-        return;
+      adresLoading.value = true;
+
+      if (selectedIlce.value) {
+        await store
+          .dispatch(Actions.GET_QUERTER_LIST, selectedIlce.value)
+          .then(result => {
+            if (result.isSuccess) {
+              semtList.value = result.data;
+            }
+          })
+          .catch(() => {
+            const [error] = Object.keys(store.getters.getErrors);
+          });
       }
 
-      await getMainPageCustomer(selectedSerialNo.value);
+      adresLoading.value = false;
     }
 
     async function onModelNameChange() {
@@ -2969,13 +3029,39 @@ export default defineComponent({
         });
     }
 
-    async function getAddressList() {
+    async function getAddressById(id) {
       await store
-        .dispatch(Actions.GET_ADDRESSLISTBYCUSTOMERID, firmaOzet.value.customerId)
+        .dispatch(Actions.GET_ADDRESSBYID, id)
         .then(result => {
           if (result.isSuccess) {
             console.clear();
             console.log(result.data);
+            
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getCustomerById() {
+      await store
+        .dispatch(Actions.GET_CUSTOMER, firmaOzet.value.customerId)
+        .then(result => {
+          if (result.isSuccess) {
+            newCustomer.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getAddressList(customerId) {
+      await store
+        .dispatch(Actions.GET_ADDRESSLISTBYCUSTOMERID, customerId)
+        .then(result => {
+          if (result.isSuccess) {
             addressList.value = result.data;
           }
         })
@@ -3003,6 +3089,20 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             sectorList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getSehirList() {
+      await store
+        .dispatch(Actions.GET_CITY_LIST)
+        .then(result => {
+          if (result.isSuccess) {
+            sehirList.value = result.data;
+            adresLoading.value = false;
           }
         })
         .catch(() => {
@@ -3132,8 +3232,19 @@ export default defineComponent({
       talepDialogVisible.value = true;
     }
 
-    async function adresDialogAc() {
-      talepDialogVisible.value = true;
+    async function adresDialogAc(id = 0) {
+      // selectAddressMode.value = mode;
+      await getSehirList();
+
+      adresLoading.value = true;
+      adresDialogVisible.value = true;
+
+      if (id > 0) {
+        selectAddressMode.value = "U"
+        await getAddressById(newCustomer.value.id);
+      } else {
+        selectAddressMode.value = "I"
+      }
     }
 
     async function cihazDialogAc(mode) {
@@ -3141,7 +3252,7 @@ export default defineComponent({
       deviceLoading.value = true;
       cihazDialogVisible.value = true;
       clearDeviceModal();
-      await getAddressList();
+      await getAddressList(firmaOzet.value.customerId);
       await getDeviceTypeList();
 
       if (mode == 'U') {
@@ -3152,10 +3263,17 @@ export default defineComponent({
     }
 
     async function musteriDialogAc(mode) {
+      selectMode.value = mode;
       musteriLoading.value = true;
       musteriDialogVisible.value = true;
       await getSectorList();
 
+      if (mode == 'U') {
+        await getCustomerById();
+        await getAddressList(firmaOzet.value.customerId);
+        adresTableVisible.value = true;
+      } else {
+      }
       musteriLoading.value = false;
     }
 
@@ -3189,7 +3307,9 @@ export default defineComponent({
     });
 
     return {
+      selectAddressMode,
       newCustomerRules,
+      newAddressRules,
       newCustomer,
       selectMode,
       loading,
@@ -3239,10 +3359,19 @@ export default defineComponent({
       selectedDeviceType,
       selectedDeviceBrand,
       formDeviceRef,
+      formCustomerRef,
+      formAddressRef,
+      adresTableVisible,
       musteriLoading,
       customerAddresses,
       adresDialogVisible,
       newAddress,
+      selectedSehir,
+      sehirList,
+      selectedIlce,
+      ilceList,
+      semtList,
+      adresLoading,
       musteriDialogAc,
       customerSubmit,
       remoteMethodSerialNo,
@@ -3266,10 +3395,14 @@ export default defineComponent({
       onDeviceTypeChange,
       onDeviceBrandChange,
       addressSubmit,
+      adresDialogAc,
+      onSehirChange,
+      onIlceChange,
     };
   },
 });
 </script>
+
 <style>
 .flex-grow {
   flex-grow: 1;
