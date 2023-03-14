@@ -1,12 +1,10 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Business.Handlers.MailSenders.Commands;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
 using ServisTakip.Entities.DTOs.Offers;
-using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.Business.Handlers.Offers.Commands
 {

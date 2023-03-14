@@ -41,6 +41,19 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<Device> GetDeviceBySeriNo(string serialNumber)
+        {
+            return await _context.Devices
+                .Include(s => s.DeviceServices).ThenInclude(s => s.User)
+                .Include(s => s.Address).ThenInclude(s => s.Customer).ThenInclude(s => s.Sector)
+                .Include(s => s.Address).ThenInclude(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
+                .Include(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
+                .Include(s => s.Contracts)
+                .Where(s => s.SerialNumber == serialNumber && s.Address.Customer.CompanyId == Utils.CompanyId)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<List<Device>> GetAllDevices(long customerId)
         {
             return await _context.Devices

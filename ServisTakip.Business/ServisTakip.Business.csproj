@@ -15,7 +15,6 @@
   <ItemGroup>
     <Folder Include="Handlers\Companies\Commands\" />
     <Folder Include="Handlers\ContractMaintenances\Commands\" />
-    <Folder Include="Handlers\Contracts\Commands\" />
     <Folder Include="Handlers\OfferSubjectCodes\Commands\" />
     <Folder Include="ReportFiles\" />
   </ItemGroup>

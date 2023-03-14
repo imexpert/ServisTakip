@@ -36,6 +36,13 @@ namespace ServisTakip.Core.DataAccess.EntityFramework
             Context.Remove(entity);
         }
 
+        public void DeleteRange(List<TEntity> entityList)
+        {
+            Context.ChangeTracker.Clear();
+
+            Context.RemoveRange(entityList);
+        }
+
         public TEntity Get(Expression<Func<TEntity, bool>> expression)
         {
             return Context.Set<TEntity>().FirstOrDefault(expression);

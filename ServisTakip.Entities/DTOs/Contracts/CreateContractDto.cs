@@ -1,8 +1,6 @@
-﻿using ServisTakip.Core.Entities;
-
-namespace ServisTakip.Entities.Concrete
+﻿namespace ServisTakip.Entities.DTOs.Contracts
 {
-    public class Contract : BaseEntity
+    public class CreateContractDto
     {
         public long DeviceId { get; set; }
         public DateTime StartDate { get; set; }
@@ -12,7 +10,5 @@ namespace ServisTakip.Entities.Concrete
         public decimal? Price { get; set; }
         public string CurrencyType { get; set; }
         public bool Status { get; set; }
-        public Device Device { get; set; }
-        public ICollection<ContractMaintenance> ContractMaintenances { get; set; }
     }
 }

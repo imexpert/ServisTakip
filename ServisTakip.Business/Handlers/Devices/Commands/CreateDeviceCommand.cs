@@ -1,19 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Validations;
 using ServisTakip.Core.Aspects.Autofac.Transaction;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
-using ServisTakip.DataAccess.Concrete.EntityFramework;
 using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Devices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServisTakip.Business.Handlers.Devices.Commands
 {
@@ -32,6 +25,10 @@ namespace ServisTakip.Business.Handlers.Devices.Commands
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
                 #region Cihaz Ekleme
+                var isSerialNoExists = await deviceRepo.GetDeviceBySeriNo(request.Model.SerialNumber);
+                if (isSerialNoExists != null && isSerialNoExists.Id > 0)
+                    return ResponseMessage<DeviceDto>.Fail("Bu seri no'ya sahip cihaz daha önce eklenmiş.");
+                
                 var device = mapper.Map<Device>(request.Model);
                 deviceRepo.Add(device);
                 await deviceRepo.SaveChangesAsync();

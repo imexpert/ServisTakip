@@ -1,12 +1,10 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Extensions;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.Customers;
 
 namespace ServisTakip.Business.Handlers.Devices.Queries
 {

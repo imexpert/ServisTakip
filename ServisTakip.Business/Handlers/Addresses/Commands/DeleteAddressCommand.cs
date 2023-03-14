@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Addresses;
 
 namespace ServisTakip.Business.Handlers.Addresses.Commands

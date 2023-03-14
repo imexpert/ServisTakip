@@ -45,6 +45,7 @@ namespace ServisTakip.Business.Helpers
             CreateMap<CustomerDto, Customer>().ReverseMap();
             CreateMap<QuerterDto, Querter>().ReverseMap();
             CreateMap<AddressDto, Address>().ReverseMap();
+            CreateMap<UpdateAddressDto, Address>().ReverseMap();
             CreateMap<CreateAddressDto, Address>().ReverseMap();
             CreateMap<Contract, ContractDto>().ReverseMap();
             CreateMap<Device, DeviceDto>().ReverseMap();
@@ -58,6 +59,8 @@ namespace ServisTakip.Business.Helpers
             CreateMap<OfferSubjectCodeDto, OfferSubjectCode>().ReverseMap();
             CreateMap<Offer, OfferDto>().ReverseMap();
             CreateMap<Offer, CreateOfferDto>().ReverseMap();
+            CreateMap<Contract, CreateContractDto>().ReverseMap();
+            CreateMap<Contract, UpdateContractDto>().ReverseMap();
         }
     }
 }

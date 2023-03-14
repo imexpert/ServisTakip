@@ -6,7 +6,7 @@
           <div class="card-header">
             <div class="d-flex align-content-center flex-wrap">
               <div class="p-2">
-                <el-dropdown trigger="click">
+                <el-dropdown trigger="click" @command="handleCustomerMenuCommand">
                   <el-button type="danger">
                     Müşteri İşlemleri<el-icon class="el-icon--right">
                       <arrow-down />
@@ -14,10 +14,10 @@
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item @click="musteriDialogAc('I')">
+                      <el-dropdown-item command="MI">
                         <el-icon> <Plus></Plus> </el-icon>Yeni Ekle
                       </el-dropdown-item>
-                      <el-dropdown-item :disabled="firmaOzet.customerId == ''" @click="musteriDialogAc('U')">
+                      <el-dropdown-item command="MU" :disabled="firmaOzet.customerId == null">
                         <el-icon> <Edit></Edit> </el-icon>Düzenle
                       </el-dropdown-item>
                     </el-dropdown-menu>
@@ -25,7 +25,7 @@
                 </el-dropdown>
               </div>
               <div class="p-2">
-                <el-dropdown trigger="click" :disabled="firmaOzet.addressId == null">
+                <el-dropdown trigger="click" @command="handleDeviceMenuCommand">
                   <el-button type="danger">
                     Cihaz İşlemleri<el-icon class="el-icon--right">
                       <arrow-down />
@@ -33,19 +33,19 @@
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item @click="cihazDialogAc('I')" :disabled="firmaOzet.addressId == null">
+                      <el-dropdown-item command="CI" :disabled="firmaOzet.addressId == null">
                         <el-icon> <Plus></Plus> </el-icon>Cihaz Ekle
                       </el-dropdown-item>
-                      <el-dropdown-item @click="cihazDialogAc('U')" :disabled="firmaOzet.deviceId == null">
+                      <el-dropdown-item command="CU" :disabled="firmaOzet.deviceId == null">
                         <el-icon> <Edit></Edit> </el-icon>Cihaz Düzenle
                       </el-dropdown-item>
-                      <el-dropdown-item divided @click="servisAc()" :disabled="firmaOzet.deviceId == null">
+                      <el-dropdown-item command="S" divided :disabled="firmaOzet.deviceId == null">
                         <el-icon> <Plus></Plus> </el-icon>Servis Aç
                       </el-dropdown-item>
-                      <el-dropdown-item :disabled="firmaOzet.deviceId == null">
+                      <el-dropdown-item command="HS" :disabled="firmaOzet.deviceId == null">
                         <el-icon> <Edit></Edit> </el-icon>Hızlı Servis
                       </el-dropdown-item>
-                      <el-dropdown-item @click="cihazListesi()" :disabled="firmaOzet.deviceId == null">
+                      <el-dropdown-item command="CL" :disabled="firmaOzet.deviceId == null">
                         <el-icon> <List /> </el-icon>Cihaz Listesi
                       </el-dropdown-item>
                     </el-dropdown-menu>
@@ -55,228 +55,218 @@
             </div>
           </div>
         </template>
-        <!--begin::Form-->
-        <Form class="form" id="customerInfoForm">
-          <!--begin::Modal body-->
-          <div class="modal-body">
-            <!--begin::Scroll-->
-            <div
-              class="scroll-y me-n7 pe-7"
-              id="kt_modal_new_address_scroll"
-              data-kt-scroll="true"
-              data-kt-scroll-activate="{default: false, lg: true}"
-              data-kt-scroll-max-height="auto"
-              data-kt-scroll-dependencies="#kt_modal_new_address_header"
-              data-kt-scroll-wrappers="#kt_modal_new_address_scroll"
-              data-kt-scroll-offset="300px"
-            >
-              <!--begin::Input group-->
-              <div class="row mb-1">
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
-                  <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
-                  <el-select
-                    @change="onDeviceNoChange()"
-                    filterable
-                    remote
-                    clearable
-                    placeholder="Cihaz no giriniz"
-                    reserve-keyword
-                    remote-show-suffix
-                    v-model="selectedDevice"
-                    :remote-method="remoteMethodCihazNo"
-                    :loading="loading"
-                  >
-                    <li class="el-select-dropdown__item">
-                      <div class="row">
-                        <div class="col-md-7">
-                          <span style="font-weight: 900"> Unvan </span>
-                        </div>
-                        <!-- <div class="col-md-2">
+        <!--begin::Modal body-->
+        <div class="modal-body">
+          <div class="row mb-1">
+            <!-- Cihaz No -->
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
+              <label class="required fs-5 fw-semobold mb-2">Cihaz No</label>
+              <el-select
+                @change="onDeviceNoChange()"
+                class="arama"
+                filterable
+                remote
+                clearable
+                placeholder="Cihaz no giriniz"
+                reserve-keyword
+                remote-show-suffix
+                v-model="selectedDevice"
+                :remote-method="remoteMethodCihazNo"
+                :loading="loading"
+              >
+                <li class="el-select-dropdown__item">
+                  <div class="row">
+                    <div class="col-md-7">
+                      <span style="font-weight: 900"> Unvan </span>
+                    </div>
+                    <!-- <div class="col-md-2">
                           <span style="font-weight: 900"> Semt </span>
                         </div> -->
-                        <div class="col-md-3">
-                          <span style="font-weight: 900"> Model </span>
-                        </div>
-                        <div class="col-md-2">
-                          <span style="font-weight: 900"> Seri No </span>
-                        </div>
-                      </div>
-                    </li>
-                    <el-option v-for="item in deviceInfoList" :key="item.rowId" :label="item.id" :value="item.rowId">
-                      <div class="row">
-                        <div class="col-md-7" style="font-size: 12px">
-                          {{ item.title }}
-                        </div>
-                        <!-- <div class="col-md-2" style="font-size: 12px">
+                    <div class="col-md-3">
+                      <span style="font-weight: 900"> Model </span>
+                    </div>
+                    <div class="col-md-2">
+                      <span style="font-weight: 900"> Seri No </span>
+                    </div>
+                  </div>
+                </li>
+                <el-option
+                  style="font-weight: 900"
+                  v-for="item in deviceInfoList"
+                  :key="item.rowId"
+                  :label="item.id"
+                  :value="item.rowId"
+                >
+                  <div class="row">
+                    <div class="col-md-7" style="font-size: 12px">
+                      {{ item.title }}
+                    </div>
+                    <!-- <div class="col-md-2" style="font-size: 12px">
                           {{ item.querter }}
                         </div> -->
-                        <div class="col-md-3" style="font-size: 12px">
-                          {{ item.model }}
-                        </div>
-                        <div class="col-md-2" style="font-size: 12px">
-                          {{ item.serialNo }}
-                        </div>
-                      </div>
-                    </el-option>
-                  </el-select>
-                </div>
+                    <div class="col-md-3" style="font-size: 12px">
+                      {{ item.model }}
+                    </div>
+                    <div class="col-md-2" style="font-size: 12px">
+                      {{ item.serialNo }}
+                    </div>
+                  </div>
+                </el-option>
+              </el-select>
+            </div>
 
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-6 fv-row">
-                  <label class="fs-5 fw-semobold mb-2">Cari Kod</label>
-                  <el-input readonly disabled v-model="firmaOzet.accountCode" class="input-with-select"> </el-input>
-                  <div class="fv-plugins-message-container">
-                    <div class="fv-help-block">
-                      <ErrorMessage name="carikod" />
-                    </div>
-                  </div>
+            <!-- Cari Kod -->
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-6 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Cari Kod</label>
+              <el-input readonly disabled v-model="firmaOzet.accountCode" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="carikod" />
                 </div>
+              </div>
+            </div>
 
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-6 fv-row">
-                  <label class="fs-5 fw-semobold mb-2">Sektör</label>
-                  <el-input readonly disabled v-model="firmaOzet.customerSector" class="input-with-select"> </el-input>
-                  <div class="fv-plugins-message-container">
-                    <div class="fv-help-block">
-                      <ErrorMessage name="sektor" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-1">
-                <div class="col-md-12 fv-row">
-                  <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
-                  <el-select
-                    @change="onCustomerChange()"
-                    filterable
-                    remote
-                    clearable
-                    placeholder="Arama için en az 4 harf giriniz"
-                    reserve-keyword
-                    remote-show-suffix
-                    v-model="selectedCustomer"
-                    :remote-method="remoteMethod"
-                    :loading="loading"
-                  >
-                    <li class="el-select-dropdown__item">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <span style="font-weight: 900"> Unvan </span>
-                        </div>
-                        <div class="col-md-2">
-                          <span style="font-weight: 900"> Semt </span>
-                        </div>
-                        <div class="col-md-3">
-                          <span style="font-weight: 900"> Model </span>
-                        </div>
-                        <div class="col-md-1">
-                          <span style="font-weight: 900"> Seri No </span>
-                        </div>
-                      </div>
-                    </li>
-                    <el-option
-                      v-for="item in customerInfoList"
-                      :key="item.rowId"
-                      :label="item.title"
-                      :value="item.rowId"
-                    >
-                      <div class="row">
-                        <div class="col-md-6" style="font-size: 12px">
-                          {{ item.title }}
-                        </div>
-                        <div class="col-md-2" style="font-size: 12px">
-                          {{ item.querter }}
-                        </div>
-                        <div class="col-md-3" style="font-size: 12px">
-                          {{ item.model }}
-                        </div>
-                        <div class="col-md-1" style="font-size: 12px">
-                          {{ item.serialNo }}
-                        </div>
-                      </div>
-                    </el-option>
-                  </el-select>
-                </div>
-              </div>
-              <div class="row mb-1">
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
-                  <label class="fs-5 fw-semobold mb-2">Şehir</label>
-                  <el-input readonly disabled v-model="firmaOzet.cityName" class="input-with-select"> </el-input>
-                  <div class="fv-plugins-message-container">
-                    <div class="fv-help-block">
-                      <ErrorMessage name="departman" />
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
-                  <label class="fs-5 fw-semobold mb-2">İlçe</label>
-                  <el-input readonly disabled v-model="firmaOzet.districtName" class="input-with-select"> </el-input>
-                  <div class="fv-plugins-message-container">
-                    <div class="fv-help-block">
-                      <ErrorMessage name="departman" />
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
-                  <label class="fs-5 fw-semobold mb-2">Semt</label>
-                  <el-input readonly disabled v-model="firmaOzet.quarterName" class="input-with-select"> </el-input>
-                  <div class="fv-plugins-message-container">
-                    <div class="fv-help-block">
-                      <ErrorMessage name="departman" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-1">
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
-                  <label class="fs-5 fw-semobold mb-2">Yetkili Ad Soyad</label>
-                  <el-input readonly disabled v-model="firmaOzet.authorizedName" class="input-with-select"> </el-input>
-                  <div class="fv-plugins-message-container">
-                    <div class="fv-help-block">
-                      <ErrorMessage name="departman" />
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
-                  <label class="fs-5 fw-semobold mb-2">Yetkili Görevi</label>
-                  <el-input readonly disabled v-model="firmaOzet.authorizedTask" class="input-with-select"> </el-input>
-                  <div class="fv-plugins-message-container">
-                    <div class="fv-help-block">
-                      <ErrorMessage name="departman" />
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
-                  <label class="fs-5 fw-semobold mb-2">Yetkili E-Mail</label>
-                  <el-input readonly disabled v-model="firmaOzet.authorizedEmail" class="input-with-select"> </el-input>
-                  <div class="fv-plugins-message-container">
-                    <div class="fv-help-block">
-                      <ErrorMessage name="departman" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-1">
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
-                  <label class="fs-5 fw-semobold mb-2">Tel</label>
-                  <el-input readonly disabled v-model="firmaOzet.authorizedPhone" class="input-with-select"> </el-input>
-                  <div class="fv-plugins-message-container">
-                    <div class="fv-help-block">
-                      <ErrorMessage name="departman" />
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
-                  <label class="fs-5 fw-semobold mb-2">Bölge</label>
-                  <el-input readonly disabled v-model="firmaOzet.regionCode" class="input-with-select"> </el-input>
-                  <div class="fv-plugins-message-container">
-                    <div class="fv-help-block">
-                      <ErrorMessage name="bolge" />
-                    </div>
-                  </div>
+            <!-- Sektör -->
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-6 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Sektör</label>
+              <el-input readonly disabled v-model="firmaOzet.customerSector" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="sektor" />
                 </div>
               </div>
             </div>
           </div>
-        </Form>
+          <div class="row mb-1">
+            <div class="col-md-12 fv-row">
+              <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
+              <el-select
+                @change="onCustomerChange()"
+                filterable
+                class="arama"
+                remote
+                clearable
+                placeholder="Arama için en az 4 harf giriniz"
+                reserve-keyword
+                remote-show-suffix
+                v-model="selectedCustomer"
+                :remote-method="remoteMethod"
+                :loading="loading"
+              >
+                <li class="el-select-dropdown__item">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <span style="font-weight: 900"> Unvan </span>
+                    </div>
+                    <div class="col-md-2">
+                      <span style="font-weight: 900"> Semt </span>
+                    </div>
+                    <div class="col-md-3">
+                      <span style="font-weight: 900"> Model </span>
+                    </div>
+                    <div class="col-md-1">
+                      <span style="font-weight: 900"> Seri No </span>
+                    </div>
+                  </div>
+                </li>
+                <el-option v-for="item in customerInfoList" :key="item.rowId" :label="item.title" :value="item.rowId">
+                  <div class="row">
+                    <div class="col-md-6" style="font-size: 12px">
+                      {{ item.title }}
+                    </div>
+                    <div class="col-md-2" style="font-size: 12px">
+                      {{ item.querter }}
+                    </div>
+                    <div class="col-md-3" style="font-size: 12px">
+                      {{ item.model }}
+                    </div>
+                    <div class="col-md-1" style="font-size: 12px">
+                      {{ item.serialNo }}
+                    </div>
+                  </div>
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Şehir</label>
+              <el-input readonly disabled v-model="firmaOzet.cityName" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="departman" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
+              <label class="fs-5 fw-semobold mb-2">İlçe</label>
+              <el-input readonly disabled v-model="firmaOzet.districtName" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="departman" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Semt</label>
+              <el-input readonly disabled v-model="firmaOzet.quarterName" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="departman" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Yetkili Ad Soyad</label>
+              <el-input readonly disabled v-model="firmaOzet.authorizedName" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="departman" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Yetkili Görevi</label>
+              <el-input readonly disabled v-model="firmaOzet.authorizedTask" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="departman" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Yetkili E-Mail</label>
+              <el-input readonly disabled v-model="firmaOzet.authorizedEmail" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="departman" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Tel</label>
+              <el-input readonly disabled v-model="firmaOzet.authorizedPhone" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="departman" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Bölge</label>
+              <el-input readonly disabled v-model="firmaOzet.regionCode" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="bolge" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </el-card>
     </div>
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12 mb-1" v-loading="anaSayfaLoading">
@@ -335,7 +325,7 @@
                 </template>
               </el-table-column>
               <el-table-column label="#" fixed="left" width="140">
-                <el-dropdown size="small" split-button type="danger">
+                <el-dropdown @command="handleContractMenuCommand" size="small" split-button type="danger">
                   Yeni Ekle
                   <template #dropdown>
                     <el-dropdown-menu>
@@ -367,6 +357,7 @@
             <el-select
               @change="onModelNameChange()"
               filterable
+              class="arama"
               remote
               clearable
               placeholder="Model adı giriniz"
@@ -415,6 +406,7 @@
             <el-select
               @change="onSerialNoChange()"
               filterable
+              class="arama"
               remote
               clearable
               placeholder="Seri no giriniz"
@@ -731,6 +723,7 @@
           label-position="top"
         >
           <div class="row">
+            <!-- Müşteri Unvan -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -745,6 +738,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Arıza Tarihi -->
             <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -766,6 +761,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Servis Açılış Kodu -->
             <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -791,6 +788,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Açılış Açıklama -->
             <div class="col-md-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -806,6 +805,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Ad -->
             <div class="col-md-6">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -821,6 +822,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Telefon -->
             <div class="col-md-6">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -842,6 +845,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Teknisyen -->
             <div class="col-md-6">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -868,6 +873,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Teknisyen Atama Tarihi -->
             <div class="col-md-6">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1228,6 +1235,14 @@
                 <!--end::Label-->
                 <el-form-item prop="addressId">
                   <el-select placeholder="Adres seçiniz" filterable clearable v-model="newDevice.addressId">
+                    <li class="el-select-dropdown__item">
+                      <div class="row">
+                        <div class="col-md-3" style="font-size: 12px">Adres Başlığı</div>
+                        <div class="col-md-3" style="font-size: 12px">Şehir</div>
+                        <div class="col-md-3" style="font-size: 12px">İlçe</div>
+                        <div class="col-md-3" style="font-size: 12px">Semt</div>
+                      </div>
+                    </li>
                     <el-option v-for="item in addressList" :key="item.id" :label="item.addressTitle" :value="item.id">
                       <div class="row">
                         <div class="col-md-3" style="font-size: 12px">
@@ -1563,7 +1578,7 @@
                 </div>
               </div>
             </template>
-            <el-table-column label="Adres Başlık" width="200" sortable>
+            <el-table-column label="Adres Başlık" width="170" sortable>
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.addressTitle }}</span>
@@ -1577,7 +1592,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Şehir" width="130" sortable>
+            <el-table-column label="Şehir" width="120" sortable>
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.querter.district.city.name }}</span>
@@ -1591,14 +1606,14 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Semt" width="130">
+            <el-table-column label="Semt" width="140">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.querter.name }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Yetkili Ad" width="120">
+            <el-table-column label="Yetkili Ad" width="150">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.authorizedName }}</span>
@@ -1619,7 +1634,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Yetkili Mail" width="120">
+            <el-table-column label="Yetkili Mail" width="200">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.authorizedEmail }}</span>
@@ -1640,10 +1655,10 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açıklama" width="120">
+            <el-table-column label="Açıklama" width="170">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.Description }}</span>
+                  <span>{{ scope.row.description }}</span>
                 </div>
               </template>
             </el-table-column>
@@ -1689,6 +1704,7 @@
           label-position="top"
         >
           <div class="row">
+            <!-- Adres Başlık -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-8 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1704,6 +1720,7 @@
               <!--end::Input group-->
             </div>
 
+            <!-- Muhasebe Kodu -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1719,6 +1736,7 @@
               <!--end::Input group-->
             </div>
 
+            <!-- Şehir -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1743,6 +1761,7 @@
               <!--end::Input group-->
             </div>
 
+            <!-- İlçe -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1766,6 +1785,7 @@
               <!--end::Input group-->
             </div>
 
+            <!-- Semt -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1783,6 +1803,7 @@
               <!--end::Input group-->
             </div>
 
+            <!-- Açık Adres -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1798,6 +1819,7 @@
               <!--end::Input group-->
             </div>
 
+            <!-- Yetkili Ad -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1816,6 +1838,7 @@
               <!--end::Input group-->
             </div>
 
+            <!-- Yetkili Görev -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1834,6 +1857,7 @@
               <!--end::Input group-->
             </div>
 
+            <!-- Yetkili Mail -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1852,6 +1876,7 @@
               <!--end::Input group-->
             </div>
 
+            <!-- Yetkili Telefon -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1863,13 +1888,17 @@
                 <el-form-item prop="authorizedPhone">
                   <el-input
                     v-model="newAddress.authorizedPhone"
+                    :formatter="
+                      value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
+                    "
                     placeholder="Yetkili telefon bilgisini giriniz"
-                  ></el-input>
+                  />
                 </el-form-item>
               </div>
               <!--end::Input group-->
             </div>
 
+            <!-- Departman -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1885,6 +1914,7 @@
               <!--end::Input group-->
             </div>
 
+            <!-- Açıklama -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1928,6 +1958,172 @@
         </el-form>
       </div>
     </el-dialog>
+
+    <el-dialog v-model="sozlesmeDialogVisible" title="Sözleşme Ekle / Düzenle" width="40%" destroy-on-close center>
+      <div class="row" v-loading="sozlesmeLoading">
+        <el-form
+          status-icon
+          :rules="newContractRules"
+          ref="formContractRef"
+          :model="newContract"
+          @submit.prevent="contractSubmit()"
+          label-width="120px"
+          label-position="top"
+        >
+          <div class="row">
+            <!-- Sözleşme Başlangıç Tarihi -->
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Başlangıç Tarihi</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="startDate">
+                  <el-date-picker
+                    v-model="newContract.startDate"
+                    format="DD.MM.YYYY HH:mm:ss"
+                    type="datetime"
+                    placeholder="Sözleşme başlangıç tarihini seçiniz"
+                    :shortcuts="shortcuts"
+                  />
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Sözleşme Bitiş Tarihi -->
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Bitiş Tarihi</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="endDate">
+                  <el-date-picker
+                    v-model="newContract.endDate"
+                    format="DD.MM.YYYY HH:mm:ss"
+                    type="datetime"
+                    placeholder="Sözleşme başlangıç tarihini seçiniz"
+                    :shortcuts="shortcuts"
+                  />
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Sözleşme Kodu -->
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Sözleşme Kodu</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="contractCode">
+                  <el-select placeholder="Sözleşme Kodu" filterable clearable v-model="newContract.contractCode">
+                    <el-option v-for="item in contractCodeList" :key="item.code" :label="item.name" :value="item.code">
+                      <div class="row">
+                        <div class="col-md-3" style="font-size: 12px">
+                          {{ item.code }}
+                        </div>
+                        <div class="col-md-9" style="font-size: 12px">
+                          {{ item.name }}
+                        </div>
+                      </div>
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Bakım Periyodu -->
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Bakım Periyodu</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="maintenancePeriod">
+                  <el-select placeholder="Sözleşme Kodu" filterable clearable v-model="newContract.maintenancePeriod">
+                    <el-option v-for="item in contractCodeList" :key="item.code" :label="item.name" :value="item.code">
+                      <div class="row">
+                        <div class="col-md-3" style="font-size: 12px">
+                          {{ item.code }}
+                        </div>
+                        <div class="col-md-9" style="font-size: 12px">
+                          {{ item.name }}
+                        </div>
+                      </div>
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Sözleşme Ücreti -->
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Sözleşme Ücreti</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="price">
+                  <el-input v-model="newContract.price"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Ücret Tipi -->
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Ücret Tipi</span>
+                </label>
+                <!--end::Label-->
+                <!--end::Label-->
+                <el-form-item prop="currencyType">
+                  <el-select placeholder="Para birimi seçin" v-model="newContract.currencyType">
+                    <el-option label="TL" value="TL" />
+                    <el-option label="USD" value="USD" />
+                    <el-option label="EURO" value="EURO" />
+                  </el-select>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+          </div>
+          <!--begin::Actions-->
+          <div class="text-center">
+            <!--begin::Button-->
+            <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+              <span v-if="!loading" class="indicator-label"> Kaydet </span>
+              <span v-if="loading" class="indicator-progress">
+                Lütfen Bekleyiniz...
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+              </span>
+            </button>
+            <!--end::Button-->
+          </div>
+          <!--end::Actions-->
+        </el-form>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -1957,6 +2153,7 @@ import { ISectorData } from '@/core/data/SectorData';
 import { ICityData } from '@/core/data/CityData';
 import { IDistrictData } from '@/core/data/DistrictData';
 import { IQuerterData } from '@/core/data/QuerterData';
+import { IContractCodeData } from '@/core/data/ContractCodeData';
 
 export default defineComponent({
   name: 'default-dashboard-widget-2',
@@ -1977,6 +2174,7 @@ export default defineComponent({
     const cihazListesiDialogVisible = ref(false);
     const musteriDialogVisible = ref(false);
     const servisAcDialogVisible = ref(false);
+    const sozlesmeDialogVisible = ref(false);
 
     const loading = ref<boolean>(false);
     const anaSayfaLoading = ref<boolean>(false);
@@ -1985,6 +2183,7 @@ export default defineComponent({
     const deviceLoading = ref<boolean>(false);
     const musteriLoading = ref<boolean>(false);
     const adresLoading = ref<boolean>(false);
+    const sozlesmeLoading = ref<boolean>(false);
 
     const adresTableVisible = ref<boolean>(false);
 
@@ -2027,7 +2226,7 @@ export default defineComponent({
       colorCount: '',
       contractMaintenanceStatus: '',
       contractType: '',
-      customerId: '',
+      customerId: null,
       customerSector: '',
       customerSectorId: '',
       customerTitle: '',
@@ -2052,6 +2251,20 @@ export default defineComponent({
       id: null,
       rowId: '',
       serialNumber: '',
+      status: false,
+    });
+
+    var newContract = ref<IContractData>({
+      device: null,
+      contractCode: '',
+      currencyType: '',
+      deviceId: null,
+      endDate: '',
+      endDateString: '',
+      maintenancePeriod: '',
+      price: '',
+      startDate: '',
+      startDateString: '',
       status: false,
     });
 
@@ -2191,7 +2404,7 @@ export default defineComponent({
     var selectedIlce = ref<string>();
     var selectMode = ref<string>('I');
     var selectAddressMode = ref<string>('I');
-
+      var selectContractMode = ref<string>('I');
     const shortcuts = [
       {
         text: 'Bugün',
@@ -2216,6 +2429,7 @@ export default defineComponent({
     var seriNoList = ref<Array<ICustomerListData>>([]);
     var addressList = ref<Array<IAddressData>>([]);
     var sectorList = ref<Array<ISectorData>>([]);
+    var contractCodeList = ref<Array<IContractCodeData>>([]);
     var sehirList = ref<Array<ICityData>>([]);
     var ilceList = ref<Array<IDistrictData>>([]);
     var semtList = ref<Array<IQuerterData>>([]);
@@ -2224,6 +2438,7 @@ export default defineComponent({
     const formDeviceRef = ref<null | HTMLFormElement>(null);
     const formCustomerRef = ref<null | HTMLFormElement>(null);
     const formAddressRef = ref<null | HTMLFormElement>(null);
+    const formContractRef = ref<null | HTMLFormElement>(null);
 
     const newServiceRules = ref({
       failureDate: [
@@ -2292,6 +2507,13 @@ export default defineComponent({
           trigger: 'blur',
         },
       ],
+      maintenancePeriod: [
+        {
+          required: true,
+          message: 'Bakım periyodu seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
     });
 
     const newCustomerRules = ref({
@@ -2337,6 +2559,37 @@ export default defineComponent({
         {
           required: true,
           message: 'Açık adres girilmedi.',
+          trigger: 'blur',
+        },
+      ],
+    });
+
+    const newContractRules = ref({
+      startDate: [
+        {
+          required: true,
+          message: 'Başlangıç tarihi seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      endDate: [
+        {
+          required: true,
+          message: 'Bitiş tarihi seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      contractCode: [
+        {
+          required: true,
+          message: 'Sözleşme kodu seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      maintenancePeriod: [
+        {
+          required: true,
+          message: 'Bakım periyodu seçilmedi.',
           trigger: 'blur',
         },
       ],
@@ -2392,6 +2645,68 @@ export default defineComponent({
     };
 
     const deviceSubmit = () => {
+      if (!formDeviceRef.value) {
+        return;
+      }
+
+      formDeviceRef.value.validate(valid => {
+        if (valid) {
+          deviceLoading.value = true;
+          console.log(newDevice.value);
+
+          if (selectMode.value == 'I') {
+            store
+              .dispatch(Actions.ADD_DEVICE, newDevice.value)
+              .then(result => {
+                loading.value = false;
+                if (result.isSuccess) {
+                  showSuccessMessage('Cihaz başarıyla eklendi.').then(async () => {
+                    if (!firmaOzet.value.deviceId) {
+                      var rowId = firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + result.data.id;
+                      await getMainPageCustomer(rowId);
+                    }
+                    deviceLoading.value = false;
+                    cihazDialogVisible.value = false;
+                  });
+                } else {
+                  showErrorMessage(result.message).then(() => {
+                    deviceLoading.value = false;
+                    servisAcDialogVisible.value = false;
+                  });
+                }
+              })
+              .catch(({ response }) => {});
+          } else {
+            store
+              .dispatch(Actions.UPDATE_DEVICE, newDevice.value)
+              .then(result => {
+                loading.value = false;
+                if (result.isSuccess) {
+                  showSuccessMessage('Cihaz başarıyla güncellendi.').then(async () => {
+                    deviceLoading.value = false;
+                    cihazDialogVisible.value = false;
+                    if (firmaOzet.value.deviceId == newDevice.value.id) {
+                      var rowId =
+                        firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + firmaOzet.value.deviceId;
+                      await getMainPageCustomer(rowId);
+                    }
+                  });
+                } else {
+                  showErrorMessage(result.message).then(() => {
+                    deviceLoading.value = false;
+                    servisAcDialogVisible.value = false;
+                  });
+                }
+              })
+              .catch(({ response }) => {});
+          }
+
+          deviceLoading.value = false;
+        }
+      });
+    };
+
+    const contractSubmit = () => {
       if (!formDeviceRef.value) {
         return;
       }
@@ -2881,7 +3196,6 @@ export default defineComponent({
             store
               .dispatch(Actions.ADD_ADDRESS, newAddress.value)
               .then(result => {
-                loading.value = false;
                 if (result.isSuccess) {
                   showSuccessMessage('Adres başarıyla eklendi.').then(async () => {
                     await getAddressList(newCustomer.value.id);
@@ -2898,18 +3212,14 @@ export default defineComponent({
               .catch(({ response }) => {});
           } else {
             store
-              .dispatch(Actions.UPDATE_DEVICE, newDevice.value)
+              .dispatch(Actions.UPDATE_ADDRESS, newAddress.value)
               .then(result => {
                 loading.value = false;
                 if (result.isSuccess) {
-                  showSuccessMessage('Cihaz başarıyla güncellendi.').then(async () => {
-                    deviceLoading.value = false;
-                    cihazDialogVisible.value = false;
-                    if (firmaOzet.value.deviceId == newDevice.value.id) {
-                      var rowId =
-                        firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + firmaOzet.value.deviceId;
-                      await getMainPageCustomer(rowId);
-                    }
+                  showSuccessMessage('Adres başarıyla eklendi.').then(async () => {
+                    await getAddressList(newCustomer.value.id);
+                    adresLoading.value = false;
+                    adresDialogVisible.value = false;
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
@@ -2975,10 +3285,16 @@ export default defineComponent({
     async function getAddressById(id) {
       await store
         .dispatch(Actions.GET_ADDRESSBYID, id)
-        .then(result => {
+        .then(async result => {
           if (result.isSuccess) {
             console.clear();
             console.log(result.data);
+
+            selectedSehir.value = result.data.querter.district.city.id;
+            await onSehirChange();
+            selectedIlce.value = result.data.querter.district.id;
+            await onIlceChange();
+            newAddress.value = result.data;
           }
         })
         .catch(() => {
@@ -3099,6 +3415,19 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             sectorList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getContractCodeList() {
+      await store
+        .dispatch(Actions.GET_CONTRACTCODE_LIST)
+        .then(result => {
+          if (result.isSuccess) {
+            contractCodeList.value = result.data;
           }
         })
         .catch(() => {
@@ -3237,7 +3566,6 @@ export default defineComponent({
     }
 
     async function adresDialogAc(id = 0) {
-      // selectAddressMode.value = mode;
       await getSehirList();
 
       adresLoading.value = true;
@@ -3245,7 +3573,7 @@ export default defineComponent({
 
       if (id > 0) {
         selectAddressMode.value = 'U';
-        await getAddressById(newCustomer.value.id);
+        await getAddressById(id);
       } else {
         selectAddressMode.value = 'I';
       }
@@ -3355,11 +3683,77 @@ export default defineComponent({
         });
     }
 
+    const handleDeviceMenuCommand = (command: string | number | object) => {
+      switch (command) {
+        case 'CI':
+          cihazDialogAc('I');
+          break;
+        case 'CU':
+          cihazDialogAc('U');
+          break;
+        case 'S':
+          servisAc();
+          break;
+        case 'HS':
+          servisAc();
+          break;
+        case 'CL':
+          cihazListesi();
+          break;
+        default:
+          break;
+      }
+    };
+
+    const handleCustomerMenuCommand = (command: string | number | object) => {
+      switch (command) {
+        case 'MI':
+          musteriDialogAc('I');
+          break;
+        case 'MU':
+          musteriDialogAc('U');
+          break;
+        default:
+          break;
+      }
+    };
+
+    const handleContractMenuCommand = (command: string | number | object) => {
+      switch (command) {
+        case 'MI':
+          musteriDialogAc('I');
+          break;
+        case 'MU':
+          musteriDialogAc('U');
+          break;
+        default:
+          break;
+      }
+    };
+
+    async function sozlemeDialogAc(mode) {
+      selectContractMode.value = mode;
+      sozlesmeLoading.value = true;
+      sozlesmeDialogVisible.value = true;
+      await getContractCodeList();
+
+      if (mode == 'U') {
+        
+      } else {
+      }
+      sozlesmeLoading.value = false;
+    }
+
     onMounted(async () => {
       await getLastTradedCustomer();
     });
 
     return {
+      sozlesmeDialogVisible,
+      sozlesmeLoading,
+      newContractRules,
+      formContractRef,
+      newContract,
       selectAddressMode,
       newCustomerRules,
       newAddressRules,
@@ -3425,6 +3819,7 @@ export default defineComponent({
       ilceList,
       semtList,
       adresLoading,
+      contractCodeList,
       musteriDialogAc,
       customerSubmit,
       remoteMethodSerialNo,
@@ -3452,6 +3847,10 @@ export default defineComponent({
       onSehirChange,
       onIlceChange,
       deleteAdres,
+      handleDeviceMenuCommand,
+      handleCustomerMenuCommand,
+      contractSubmit,
+      handleContractMenuCommand
     };
   },
 });
@@ -3460,5 +3859,9 @@ export default defineComponent({
 <style>
 .flex-grow {
   flex-grow: 1;
+}
+.arama {
+  border: 1px solid #ebd72a;
+  border-radius: 5px;
 }
 </style>

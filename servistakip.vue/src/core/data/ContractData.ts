@@ -8,6 +8,8 @@ interface IContractData {
     endDateString?: string | '',
     contractCode?: string | '',
     maintenancePeriod?: string | '',
+    price?: string | '',
+    currencyType?: string | '',
     status?: boolean | false,
     device:IDeviceData
 }
