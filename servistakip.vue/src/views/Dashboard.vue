@@ -318,34 +318,36 @@
                 </template>
               </el-table-column>
               <el-table-column label="Fiyat" width="120">
-                <template>
+                <template #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span>-</span>
+                    <span>{{ scope.row.price }} {{ scope.row.currencyType }} </span>
                   </div>
                 </template>
               </el-table-column>
               <el-table-column label="#" fixed="left" width="140">
-                <el-dropdown @command="handleContractMenuCommand" size="small" split-button type="danger">
-                  Yeni Ekle
-                  <template #dropdown>
-                    <el-dropdown-menu>
-                      <el-dropdown-item>
-                        <el-icon>
-                          <Edit></Edit>
-                        </el-icon>
-                        Düzenle
-                      </el-dropdown-item>
-                      <el-dropdown-item>
-                        <el-icon>
+                <template #default="scope">
+                  <el-dropdown size="small" @click="sozlemeDialogAc()" split-button type="danger">
+                    Yeni Ekle
+                    <template #dropdown>
+                      <el-dropdown-menu>
+                        <el-dropdown-item @click="sozlemeDialogAc(scope.row.id)">
                           <el-icon>
-                            <Delete />
+                            <Edit></Edit>
                           </el-icon>
-                        </el-icon>
-                        Sil
-                      </el-dropdown-item>
-                    </el-dropdown-menu>
-                  </template>
-                </el-dropdown>
+                          Düzenle
+                        </el-dropdown-item>
+                        <el-dropdown-item @click="deleteConract(scope.row.id)">
+                          <el-icon>
+                            <el-icon>
+                              <Delete />
+                            </el-icon>
+                          </el-icon>
+                          Sil
+                        </el-dropdown-item>
+                      </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
+                </template>
               </el-table-column>
             </el-table>
           </div>
@@ -1984,7 +1986,7 @@
                 <el-form-item prop="startDate">
                   <el-date-picker
                     v-model="newContract.startDate"
-                    format="DD.MM.YYYY HH:mm:ss"
+                    format="DD.MM.YYYY"
                     type="datetime"
                     placeholder="Sözleşme başlangıç tarihini seçiniz"
                     :shortcuts="shortcuts"
@@ -2007,7 +2009,7 @@
                 <el-form-item prop="endDate">
                   <el-date-picker
                     v-model="newContract.endDate"
-                    format="DD.MM.YYYY HH:mm:ss"
+                    format="DD.MM.YYYY"
                     type="datetime"
                     placeholder="Sözleşme başlangıç tarihini seçiniz"
                     :shortcuts="shortcuts"
@@ -2054,17 +2056,24 @@
                 </label>
                 <!--end::Label-->
                 <el-form-item prop="maintenancePeriod">
-                  <el-select placeholder="Sözleşme Kodu" filterable clearable v-model="newContract.maintenancePeriod">
-                    <el-option v-for="item in contractCodeList" :key="item.code" :label="item.name" :value="item.code">
-                      <div class="row">
-                        <div class="col-md-3" style="font-size: 12px">
-                          {{ item.code }}
-                        </div>
-                        <div class="col-md-9" style="font-size: 12px">
-                          {{ item.name }}
-                        </div>
-                      </div>
-                    </el-option>
+                  <el-select
+                    placeholder="Cihaz bakım periyodu seçiniz"
+                    filterable
+                    clearable
+                    v-model="newContract.maintenancePeriod"
+                  >
+                    <el-option label="1 Aylık" :value="1"></el-option>
+                    <el-option label="2 Aylık" :value="2"></el-option>
+                    <el-option label="3 Aylık" :value="3"></el-option>
+                    <el-option label="4 Aylık" :value="4"></el-option>
+                    <el-option label="5 Aylık" :value="5"></el-option>
+                    <el-option label="6 Aylık" :value="6"></el-option>
+                    <el-option label="7 Aylık" :value="7"></el-option>
+                    <el-option label="8 Aylık" :value="8"></el-option>
+                    <el-option label="9 Aylık" :value="9"></el-option>
+                    <el-option label="10 Aylık" :value="10"></el-option>
+                    <el-option label="11 Aylık" :value="11"></el-option>
+                    <el-option label="12 Aylık" :value="12"></el-option>
                   </el-select>
                 </el-form-item>
               </div>
@@ -2081,7 +2090,12 @@
                 </label>
                 <!--end::Label-->
                 <el-form-item prop="price">
-                  <el-input v-model="newContract.price"></el-input>
+                  <input
+                    type="number"
+                    class="form-control form-control-sm border border-secondary"
+                    v-model="newContract.price"
+                    step="0.01"
+                  />
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -2154,6 +2168,7 @@ import { ICityData } from '@/core/data/CityData';
 import { IDistrictData } from '@/core/data/DistrictData';
 import { IQuerterData } from '@/core/data/QuerterData';
 import { IContractCodeData } from '@/core/data/ContractCodeData';
+import CurrencyInput from '@/components/custom/CurrencyInput.vue';
 
 export default defineComponent({
   name: 'default-dashboard-widget-2',
@@ -2163,6 +2178,7 @@ export default defineComponent({
     Form,
     Search,
     Plus,
+    CurrencyInput,
   },
   setup() {
     const store = useStore();
@@ -2257,12 +2273,12 @@ export default defineComponent({
     var newContract = ref<IContractData>({
       device: null,
       contractCode: '',
-      currencyType: '',
+      currencyType: 'TL',
       deviceId: null,
       endDate: '',
       endDateString: '',
       maintenancePeriod: '',
-      price: '',
+      price: '1234',
       startDate: '',
       startDateString: '',
       status: false,
@@ -2404,7 +2420,7 @@ export default defineComponent({
     var selectedIlce = ref<string>();
     var selectMode = ref<string>('I');
     var selectAddressMode = ref<string>('I');
-      var selectContractMode = ref<string>('I');
+    var selectContractMode = ref<string>('I');
     const shortcuts = [
       {
         text: 'Bugün',
@@ -2707,56 +2723,51 @@ export default defineComponent({
     };
 
     const contractSubmit = () => {
-      if (!formDeviceRef.value) {
+      if (!formContractRef.value) {
         return;
       }
 
-      formDeviceRef.value.validate(valid => {
+      formContractRef.value.validate(valid => {
         if (valid) {
-          deviceLoading.value = true;
-          console.log(newDevice.value);
+          sozlesmeLoading.value = true;
+          console.log(newContract.value);
 
-          if (selectMode.value == 'I') {
+          newContract.value.deviceId = firmaOzet.value.deviceId;
+
+          if (selectContractMode.value == 'I') {
             store
-              .dispatch(Actions.ADD_DEVICE, newDevice.value)
+              .dispatch(Actions.ADD_CONTRACT, newContract.value)
               .then(result => {
                 loading.value = false;
                 if (result.isSuccess) {
-                  showSuccessMessage('Cihaz başarıyla eklendi.').then(async () => {
-                    if (!firmaOzet.value.deviceId) {
-                      var rowId = firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + result.data.id;
-                      await getMainPageCustomer(rowId);
-                    }
-                    deviceLoading.value = false;
-                    cihazDialogVisible.value = false;
+                  showSuccessMessage('Sözleşme başarıyla eklendi.').then(async () => {
+                    await getContractList();
+                    sozlesmeLoading.value = false;
+                    sozlesmeDialogVisible.value = false;
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
-                    servisAcDialogVisible.value = false;
+                    sozlesmeLoading.value = false;
+                    sozlesmeDialogVisible.value = false;
                   });
                 }
               })
               .catch(({ response }) => {});
           } else {
             store
-              .dispatch(Actions.UPDATE_DEVICE, newDevice.value)
+              .dispatch(Actions.UPDATE_CONTRACT, newContract.value)
               .then(result => {
                 loading.value = false;
                 if (result.isSuccess) {
-                  showSuccessMessage('Cihaz başarıyla güncellendi.').then(async () => {
-                    deviceLoading.value = false;
-                    cihazDialogVisible.value = false;
-                    if (firmaOzet.value.deviceId == newDevice.value.id) {
-                      var rowId =
-                        firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + firmaOzet.value.deviceId;
-                      await getMainPageCustomer(rowId);
-                    }
+                  showSuccessMessage('Sözleşme başarıyla güncellendi.').then(async () => {
+                    await getContractList();
+                    sozlesmeLoading.value = false;
+                    sozlesmeDialogVisible.value = false;
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
-                    servisAcDialogVisible.value = false;
+                    sozlesmeLoading.value = false;
+                    sozlesmeDialogVisible.value = false;
                   });
                 }
               })
@@ -3449,6 +3460,21 @@ export default defineComponent({
         });
     }
 
+    async function getContractList() {
+      anaSayfaLoading.value = true;
+      await store
+        .dispatch(Actions.GET_CONTRACTLIST, firmaOzet.value.deviceId)
+        .then(result => {
+          if (result.isSuccess) {
+            contracts.value = result.data;
+            anaSayfaLoading.value = false;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
     async function onDeviceTypeChange() {
       deviceBrandList.value = [];
       deviceModelList.value = [];
@@ -3628,6 +3654,53 @@ export default defineComponent({
       });
     }
 
+    async function deleteConract(id) {
+      Swal.fire({
+        title: 'Sözleşme kaydı silinecek !!!',
+        text: 'Devam etmek istiyor musunuz ?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Sil',
+        denyButtonText: `Vazgeç`,
+      }).then(async result => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          await store
+            .dispatch(Actions.DELETE_CONTRACT, id)
+            .then(async result => {
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Sözleşme başarıyla silindi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(async () => {
+                  await getContractList();
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        } else if (result.isDenied) {
+        }
+      });
+    }
+
     async function cihazDialogAc(mode) {
       selectMode.value = mode;
       deviceLoading.value = true;
@@ -3683,6 +3756,22 @@ export default defineComponent({
         });
     }
 
+    async function getContractById(id) {
+      await store
+        .dispatch(Actions.GET_CONTRACTBYID, id)
+        .then(async result => {
+          if (result.isSuccess) {
+            console.clear();
+            console.log(result.data);
+
+            newContract.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
     const handleDeviceMenuCommand = (command: string | number | object) => {
       switch (command) {
         case 'CI':
@@ -3718,29 +3807,19 @@ export default defineComponent({
       }
     };
 
-    const handleContractMenuCommand = (command: string | number | object) => {
-      switch (command) {
-        case 'MI':
-          musteriDialogAc('I');
-          break;
-        case 'MU':
-          musteriDialogAc('U');
-          break;
-        default:
-          break;
-      }
-    };
-
-    async function sozlemeDialogAc(mode) {
-      selectContractMode.value = mode;
+    async function sozlemeDialogAc(id = 0) {
       sozlesmeLoading.value = true;
       sozlesmeDialogVisible.value = true;
+
       await getContractCodeList();
 
-      if (mode == 'U') {
-        
+      if (id > 0) {
+        selectContractMode.value = 'U';
+        await getContractById(id);
       } else {
+        selectContractMode.value = 'I';
       }
+
       sozlesmeLoading.value = false;
     }
 
@@ -3850,7 +3929,8 @@ export default defineComponent({
       handleDeviceMenuCommand,
       handleCustomerMenuCommand,
       contractSubmit,
-      handleContractMenuCommand
+      sozlemeDialogAc,
+      deleteConract,
     };
   },
 });

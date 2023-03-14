@@ -70,7 +70,11 @@ namespace ServisTakip.Api.Infrastructure
             {
                 options.AddPolicy(
                     "AllowOrigin",
-                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                    builder => 
+                        builder.WithOrigins("http://159.69.188.101:6002")
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader());
             });
 
             services.AddSwaggerGen();

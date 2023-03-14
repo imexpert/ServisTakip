@@ -81,7 +81,13 @@ enum Actions {
 
   GET_DEVICETYPELIST = "getDeviceTypeList",
   GET_DEVICEBRANDLIST = "getDeviceBrandList",
-  GET_DEVICEMODELLIST = "getDeviceModelList"
+  GET_DEVICEMODELLIST = "getDeviceModelList",
+
+  ADD_CONTRACT = "addContract",
+  UPDATE_CONTRACT = "updateContract",
+  DELETE_CONTRACT = "deleteContract",
+  GET_CONTRACTLIST = "getContractList",
+  GET_CONTRACTBYID = "getContractById",
 }
 
 enum Mutations {

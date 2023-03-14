@@ -17,7 +17,7 @@ namespace ServisTakip.Business.Handlers.Contracts.Commands
             [TransactionScopeAspectAsync]
             public async Task<ResponseMessage<ContractDto>> Handle(DeleteContractCommand request, CancellationToken cancellationToken)
             {
-                var contractRepo = ServiceTool.ServiceProvider.GetService<IContractCodeRepository>();
+                var contractRepo = ServiceTool.ServiceProvider.GetService<IContractRepository>();
                 var contractMaintenancesRepo = ServiceTool.ServiceProvider.GetService<IContractMaintenanceRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 

@@ -25,6 +25,7 @@ import DeviceTypeModule from "@/store/modules/DeviceTypeModule";
 import DeviceBrandModule from "@/store/modules/DeviceBrandModule";
 import DeviceModelModule from "@/store/modules/DeviceModelModule";
 import ContractCodeModule from "@/store/modules/ContractCodeModule";
+import ContractModule from "@/store/modules/ContractModule";
 
 
 config.rawError = true;
@@ -53,7 +54,9 @@ const store = createStore({
     OfferSubjectModule,
     DeviceTypeModule,
     DeviceBrandModule,
-    DeviceModelModule
+    DeviceModelModule,
+    ContractCodeModule,
+    ContractModule
   },
   mutations: {
     setCustomerId(state, id) {
