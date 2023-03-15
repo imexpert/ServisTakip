@@ -139,8 +139,6 @@ export default defineComponent({
             .dispatch(Actions.LOGIN, loginModel.value)
             .then(result => {
               loading.value = false;
-              console.clear();
-              console.log(result);
               if (result == null ) {
                 Swal.fire({
                     title: 'Hata',

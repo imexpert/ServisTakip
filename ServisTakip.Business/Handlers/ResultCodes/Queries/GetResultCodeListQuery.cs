@@ -5,6 +5,7 @@ using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
 using ServisTakip.Entities.DTOs.ResultCodes;
 using Microsoft.Extensions.DependencyInjection;
+using ServisTakip.Core.Extensions;
 
 namespace ServisTakip.Business.Handlers.ResultCodes.Queries
 {

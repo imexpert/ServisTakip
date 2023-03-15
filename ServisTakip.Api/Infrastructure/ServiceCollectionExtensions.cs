@@ -109,7 +109,7 @@ namespace ServisTakip.Api.Infrastructure
             services.AddSingleton<ICacheManager, RedisCacheManager>();
         }
 
-        public static void AddCarbonDbContext(this IServiceCollection services)
+        public static void AddServisTakipDbContext(this IServiceCollection services)
         {
             services.AddDbContext<ProjectDbContext, MsDbContext>();
         }

@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.ContractCodes.Queries;
-using ServisTakip.Business.Handlers.Sectors.Queries;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Entities.DTOs.ContractCodes;
-using ServisTakip.Entities.DTOs.Sectors;
 
 namespace ServisTakip.Api.Controllers
 {

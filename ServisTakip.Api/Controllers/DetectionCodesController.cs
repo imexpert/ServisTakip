@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.BootCodes.Queries;
+using ServisTakip.Business.Handlers.DetectionCodes.Queries;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Entities.DTOs.DetectionCodes;
 
@@ -18,7 +19,7 @@ namespace ServisTakip.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDetectionCodeListAsync()
         {
-            return CreateActionResult(await Mediator.Send(new GetBootCodeListQuery()));
+            return CreateActionResult(await Mediator.Send(new GetDetectionCodeListQuery()));
         }
     }
 }

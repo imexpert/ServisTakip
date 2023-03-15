@@ -3,14 +3,14 @@
     public static class SwaggerMessages
     {
         public static string Version => "v1";
-        public static string Title => "Carbon Calculator";
-        public static string TermsOfService => "https://https://CarbonCalculator.net/CarbonCalculator.zip";
-        public static string ContactName => "Carbon Calculator";
+        public static string Title => "Servis Takip";
+        public static string TermsOfService => "https://servisim.biz";
+        public static string ContactName => "Servis Takip";
         public static string LicenceName => "Use under LICX";
         public static string ContactEMail => "Use under LICX";
-        public static string ContactUrl => "https://CarbonCalculator.net";
-        public static string LicenceUrl => "https://CarbonCalculator.net/license";
+        public static string ContactUrl => "https://servisim.biz";
+        public static string LicenceUrl => "https://servisim.biz";
 
-        public static string Description => @"<b>Carbon Footprint Calculator App</b>";
+        public static string Description => @"<b>Servis Takip Api</b>";
     }
 }
