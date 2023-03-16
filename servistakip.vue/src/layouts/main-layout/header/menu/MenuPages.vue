@@ -13,128 +13,6 @@
         </div>
       </template>
     </template>
-    <div
-      v-if="item.heading"
-      data-kt-menu-trigger="click"
-      data-kt-menu-placement="bottom-start"
-      class="menu-item menu-lg-down-accordion me-lg-1"
-    >
-      <span
-        class="menu-link py-3"
-        :class="{ active: hasActiveChildren(item.route) }"
-      >
-        <span class="menu-title">{{ translate(item.heading) }}</span>
-        <span class="menu-arrow d-lg-none"></span>
-      </span>
-      <div
-        class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
-      >
-        <template v-for="(menuItem, j) in item.pages" :key="j">
-          <div
-            v-if="menuItem.sectionTitle"
-            data-kt-menu-trigger="{default:'click', lg: 'hover'}"
-            data-kt-menu-placement="right-start"
-            class="menu-item menu-lg-down-accordion"
-          >
-            <span
-              class="menu-link py-3"
-              :class="{ active: hasActiveChildren(menuItem.route) }"
-            >
-              <span class="menu-icon">
-                <i
-                  v-if="headerMenuIcons === 'font'"
-                  :class="menuItem.fontIcon"
-                  class="bi fs-3"
-                ></i>
-                <span
-                  v-if="headerMenuIcons === 'svg'"
-                  class="svg-icon svg-icon-2"
-                >
-                  <inline-svg :src="menuItem.svgIcon" />
-                </span>
-              </span>
-              <span class="menu-title">{{
-                translate(menuItem.sectionTitle)
-              }}</span>
-              <span class="menu-arrow"></span>
-            </span>
-            <div
-              class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px"
-            >
-              <template v-for="(menuItem1, k) in menuItem.sub" :key="k">
-                <div
-                  v-if="menuItem1.sectionTitle"
-                  data-kt-menu-trigger="{default:'click', lg: 'hover'}"
-                  data-kt-menu-placement="right-start"
-                  class="menu-item menu-lg-down-accordion"
-                >
-                  <span
-                    class="menu-link py-3"
-                    :class="{ active: hasActiveChildren(menuItem1.route) }"
-                  >
-                    <span class="menu-bullet">
-                      <span class="bullet bullet-dot"></span>
-                    </span>
-                    <span class="menu-title">{{
-                      translate(menuItem1.sectionTitle)
-                    }}</span>
-                    <span class="menu-arrow"></span>
-                  </span>
-                  <div
-                    class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px"
-                  >
-                    <template v-for="(menuItem2, l) in menuItem1.sub" :key="l">
-                      <div class="menu-item">
-                        <router-link
-                          class="menu-link py-3"
-                          active-class="active"
-                          :to="menuItem2.route"
-                        >
-                          <span class="menu-bullet">
-                            <span class="bullet bullet-dot"></span>
-                          </span>
-                          <span class="menu-title">{{
-                            translate(menuItem2.heading)
-                          }}</span>
-                        </router-link>
-                      </div>
-                    </template>
-                  </div>
-                </div>
-                <div v-if="menuItem1.heading" class="menu-item">
-                  <router-link
-                    class="menu-link"
-                    active-class="active"
-                    :to="menuItem1.route"
-                  >
-                    <span class="menu-bullet">
-                      <span class="bullet bullet-dot"></span>
-                    </span>
-                    <span class="menu-title">{{
-                      translate(menuItem1.heading)
-                    }}</span>
-                  </router-link>
-                </div>
-              </template>
-            </div>
-          </div>
-          <div v-if="menuItem.heading" class="menu-item">
-            <router-link
-              class="menu-link"
-              active-class="active"
-              :to="menuItem.route"
-            >
-              <span class="menu-icon">
-                <span class="svg-icon svg-icon-2">
-                  <inline-svg src="media/icons/duotune/layouts/lay009.svg" />
-                </span>
-              </span>
-              <span class="menu-title">{{ translate(menuItem.heading) }}</span>
-            </router-link>
-          </div>
-        </template>
-      </div>
-    </div>
   </template>
 
   <div
@@ -143,24 +21,24 @@
     class="menu-item menu-lg-down-accordion me-lg-1"
   >
     <span class="menu-link py-3">
-      <span class="menu-title">{{ translate("megaMenu") }}</span>
+      <span class="menu-title">{{ translate("reports") }}</span>
       <span class="menu-arrow d-lg-none"></span>
     </span>
     <div
-      class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown w-100 w-lg-600px p-5 p-lg-5"
+      class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown w-100 w-lg-250px p-5 p-lg-5"
       style=""
     >
       <!--begin:Row-->
       <div class="row" data-kt-menu-dismiss="true">
         <!--begin:Col-->
-        <div class="col-lg-4 border-left-lg-1">
+        <div class="col-lg-12 border-left-lg-1">
           <div class="menu-inline menu-column menu-active-bg">
             <div class="menu-item">
-              <a href="#" class="menu-link">
+              <a href="/sozlesmeBasim" class="menu-link">
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
+                <span class="menu-title">{{ translate("sozlesmeBasimRaporu") }}</span>
               </a>
             </div>
             <div class="menu-item">
@@ -168,7 +46,7 @@
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
+                <span class="menu-title">{{ translate("kopyabasiAnaliz") }}</span>
               </a>
             </div>
             <div class="menu-item">
@@ -176,7 +54,7 @@
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
+                <span class="menu-title">{{ translate("bakimRaporu") }}</span>
               </a>
             </div>
             <div class="menu-item">
@@ -184,7 +62,7 @@
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
+                <span class="menu-title">{{ translate("sozlesmeRaporu") }}</span>
               </a>
             </div>
             <div class="menu-item">
@@ -192,21 +70,7 @@
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        <!--end:Col-->
-        <!--begin:Col-->
-        <div class="col-lg-4 border-left-lg-1">
-          <div class="menu-inline menu-column menu-active-bg">
-            <div class="menu-item">
-              <a href="#" class="menu-link">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
+                <span class="menu-title">{{ translate("musteriRaporu") }}</span>
               </a>
             </div>
             <div class="menu-item">
@@ -214,7 +78,7 @@
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
+                <span class="menu-title">{{ translate("kitDegisimRaporu") }}</span>
               </a>
             </div>
             <div class="menu-item">
@@ -222,7 +86,7 @@
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
+                <span class="menu-title">{{ translate("tonerDegisimRaporu") }}</span>
               </a>
             </div>
             <div class="menu-item">
@@ -230,61 +94,7 @@
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a href="#" class="menu-link">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        <!--end:Col-->
-        <!--begin:Col-->
-        <div class="col-lg-4 border-left-lg-1">
-          <div class="menu-inline menu-column menu-active-bg">
-            <div class="menu-item">
-              <a href="#" class="menu-link">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a href="#" class="menu-link">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a href="#" class="menu-link">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a href="#" class="menu-link">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
-              </a>
-            </div>
-            <div class="menu-item">
-              <a href="#" class="menu-link">
-                <span class="menu-bullet">
-                  <span class="bullet bullet-dot"></span>
-                </span>
-                <span class="menu-title">{{ translate("exampleLink") }}</span>
+                <span class="menu-title">{{ translate("teknisyenAnalizDegisimRaporu") }}</span>
               </a>
             </div>
           </div>

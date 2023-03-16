@@ -81,6 +81,7 @@ enum Actions {
 
   GET_DEVICETYPELIST = "getDeviceTypeList",
   GET_DEVICEBRANDLIST = "getDeviceBrandList",
+  GET_DEVICEMODELBYBRANDIDLIST = "getDeviceModelByBrandList",
   GET_DEVICEMODELLIST = "getDeviceModelList",
 
   ADD_CONTRACT = "addContract",
@@ -88,6 +89,8 @@ enum Actions {
   DELETE_CONTRACT = "deleteContract",
   GET_CONTRACTLIST = "getContractList",
   GET_CONTRACTBYID = "getContractById",
+
+  GET_MODEL_BY_NAME_FILTER = "getModelByNameFilter"
 }
 
 enum Mutations {

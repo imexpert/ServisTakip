@@ -2168,7 +2168,6 @@ import { ICityData } from '@/core/data/CityData';
 import { IDistrictData } from '@/core/data/DistrictData';
 import { IQuerterData } from '@/core/data/QuerterData';
 import { IContractCodeData } from '@/core/data/ContractCodeData';
-import CurrencyInput from '@/components/custom/CurrencyInput.vue';
 
 export default defineComponent({
   name: 'default-dashboard-widget-2',
@@ -2178,7 +2177,6 @@ export default defineComponent({
     Form,
     Search,
     Plus,
-    CurrencyInput,
   },
   setup() {
     const store = useStore();
@@ -3504,7 +3502,7 @@ export default defineComponent({
       if (selectedDeviceBrand.value) {
         deviceLoading.value = true;
         await store
-          .dispatch(Actions.GET_DEVICEMODELLIST, selectedDeviceBrand.value)
+          .dispatch(Actions.GET_DEVICEMODELBYBRANDIDLIST, selectedDeviceBrand.value)
           .then(result => {
             deviceLoading.value = false;
             if (result.isSuccess) {

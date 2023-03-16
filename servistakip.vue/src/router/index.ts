@@ -28,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "closedServices",
         component: () => import("@/views/ClosedServices.vue"),
       },
+      {
+        path: "/sozlesmeBasim",
+        name: "sozlesmeBasim",
+        component: () => import("@/views/reports/SozlesmeBasim.vue"),
+      },
     ],
   },
   {

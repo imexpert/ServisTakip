@@ -24,6 +24,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "ReceivedServices",
         component: () => import("@/views/ReceivedServices.vue"),
       },
+      {
+        path: "/sozlesmeBasim",
+        name: "sozlesmeBasim",
+        component: () => import("@/views/reports/SozlesmeBasim.vue"),
+      },
     ],
   },
   {
