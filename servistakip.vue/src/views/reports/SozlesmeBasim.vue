@@ -2,203 +2,380 @@
   <div class="row" v-loading="loading">
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12 mb-2">
       <el-card class="box-card">
+        <template #header>
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+                <span class="mx-1" style="color: red; font-size: large"> SÖZLEŞME BASIM RAPORU </span>
+              </div>
+            </div>
+          </div>
+        </template>
         <div class="modal-body">
+          <el-form
+            status-icon
+            :rules="newSorgulaRules"
+            ref="formSorgulaRef"
+            :model="filter"
+            @submit.prevent="sorgulaSubmit()"
+            label-width="120px"
+            label-position="top"
+          >
+            <div class="row mb-3">
+              <div class="col-md-12 col-lg-12 col-xl-4 col-xxl-4 col-sm-12 mb-2">
+                <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
+                <el-select
+                  filterable
+                  class="arama"
+                  remote
+                  clearable
+                  placeholder="Arama için en az 4 harf giriniz"
+                  reserve-keyword
+                  remote-show-suffix
+                  v-model="filter.customerId"
+                  :remote-method="remoteMusteriAramaMethod"
+                  :loading="loading"
+                >
+                  <li class="el-select-dropdown__item">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <span style="font-weight: 900"> Unvan </span>
+                      </div>
+                      <div class="col-md-2">
+                        <span style="font-weight: 900"> Semt </span>
+                      </div>
+                      <div class="col-md-3">
+                        <span style="font-weight: 900"> Model </span>
+                      </div>
+                      <div class="col-md-1">
+                        <span style="font-weight: 900"> Seri No </span>
+                      </div>
+                    </div>
+                  </li>
+                  <el-option v-for="item in customerInfoList" :key="item.rowId" :label="item.title" :value="item.rowId">
+                    <div class="row">
+                      <div class="col-md-6" style="font-size: 12px">
+                        {{ item.title }}
+                      </div>
+                      <div class="col-md-2" style="font-size: 12px">
+                        {{ item.querter }}
+                      </div>
+                      <div class="col-md-3" style="font-size: 12px">
+                        {{ item.model }}
+                      </div>
+                      <div class="col-md-1" style="font-size: 12px">
+                        {{ item.serialNo }}
+                      </div>
+                    </div>
+                  </el-option>
+                </el-select>
+              </div>
+              <!-- Şehir -->
+              <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-1 fv-row">
+                  <!--begin::Label-->
+                  <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                    <span>Şehir</span>
+                  </label>
+                  <!--end::Label-->
+                  <el-form-item prop="selectedSehir">
+                    <el-select
+                      placeholder="Şehir seçiniz"
+                      @change="onSehirChange()"
+                      filterable
+                      clearable
+                      v-model="filter.sehirId"
+                    >
+                      <el-option v-for="item in sehirList" :key="item.id" :label="item.name" :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
+                <!--end::Input group-->
+              </div>
+
+              <!-- İlçe -->
+              <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-1 fv-row">
+                  <!--begin::Label-->
+                  <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                    <span>İlçe</span>
+                  </label>
+                  <!--end::Label-->
+                  <el-form-item prop="selectedIlce">
+                    <el-select
+                      @change="onIlceChange()"
+                      placeholder="İlçe seçiniz"
+                      filterable
+                      clearable
+                      v-model="filter.ilceId"
+                    >
+                      <el-option v-for="item in ilceList" :key="item.id" :label="item.name" :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
+                <!--end::Input group-->
+              </div>
+
+              <!-- Semt -->
+              <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-1 fv-row">
+                  <!--begin::Label-->
+                  <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                    <span>Semt</span>
+                  </label>
+                  <!--end::Label-->
+                  <el-form-item prop="quarterId">
+                    <el-select placeholder="Semt seçiniz" filterable clearable v-model="filter.semtId">
+                      <el-option v-for="item in semtList" :key="item.id" :label="item.name" :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
+                <!--end::Input group-->
+              </div>
+            </div>
+            <div class="row mb-3">
+              <!-- Model -->
+              <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-1 fv-row">
+                  <!--begin::Label-->
+                  <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                    <span>Model</span>
+                  </label>
+                  <!--end::Label-->
+                  <el-form-item prop="model">
+                    <el-select
+                      filterable
+                      class="arama"
+                      remote
+                      clearable
+                      placeholder="Model adı giriniz"
+                      reserve-keyword
+                      remote-show-suffix
+                      v-model="filter.model"
+                      :remote-method="remoteMethodModelName"
+                      :loading="loading"
+                    >
+                      <li class="el-select-dropdown__item">
+                        <div class="row">
+                          <div class="col-md-7">
+                            <span style="font-weight: 900"> Unvan </span>
+                          </div>
+                        </div>
+                      </li>
+                      <el-option v-for="item in deviceModelList" :key="item.id" :label="item.name" :value="item.id">
+                        <div class="row">
+                          <div class="col-md-7" style="font-size: 12px">
+                            {{ item.name }}
+                          </div>
+                        </div>
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
+                <!--end::Input group-->
+              </div>
+
+              <!-- Seri No -->
+              <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-1 fv-row">
+                  <!--begin::Label-->
+                  <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                    <span>Seri No</span>
+                  </label>
+                  <!--end::Label-->
+                  <el-form-item prop="serialNo">
+                    <el-input v-model="filter.serialNo" class="input-with-select"> </el-input>
+                  </el-form-item>
+                </div>
+                <!--end::Input group-->
+              </div>
+
+              <!-- Başlangıç Tarihi -->
+              <div class="col-md-12 col-lg-6 col-xl-2 col-xxl-2 col-sm-12">
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-1 fv-row">
+                  <!--begin::Label-->
+                  <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                    <span>Başlangıç Tarihi</span>
+                  </label>
+                  <!--end::Label-->
+                  <el-form-item prop="baslangicTarihi">
+                    <el-date-picker
+                      v-model="filter.baslangicTarihi"
+                      format="DD.MM.YYYY"
+                      type="datetime"
+                      placeholder="Başlangıç tarihini seçiniz"
+                      :shortcuts="shortcuts"
+                    />
+                  </el-form-item>
+                </div>
+                <!--end::Input group-->
+              </div>
+
+              <!-- Bitiş Tarihi -->
+              <div class="col-md-12 col-lg-6 col-xl-2 col-xxl-2 col-sm-12">
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-1 fv-row">
+                  <!--begin::Label-->
+                  <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                    <span>Bitiş Tarihi</span>
+                  </label>
+                  <!--end::Label-->
+                  <el-form-item prop="quarterId">
+                    <el-date-picker
+                      v-model="filter.bitisTarihi"
+                      format="DD.MM.YYYY HH:mm:ss"
+                      type="datetime"
+                      placeholder="Bitiş tarihini seçiniz"
+                      :shortcuts="shortcuts"
+                    />
+                  </el-form-item>
+                </div>
+                <!--end::Input group-->
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+                <!--begin::Input group-->
+                <div class="d-flex flex-column mb-1 fv-row">
+                  <!--begin::Label-->
+                  <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                    <span>Sözleşme Kodları</span>
+                  </label>
+                  <!--end::Label-->
+                  <el-form-item prop="quarterId">
+                    <el-checkbox-group v-model="filter.sozlesmeKodlari">
+                      <el-checkbox
+                        border
+                        :title="soz.name"
+                        class="p-2 m-2"
+                        v-for="soz in sozlesmeKodList"
+                        :key="soz.code"
+                        :label="soz.name"
+                        >{{ soz.code }}</el-checkbox
+                      >
+                    </el-checkbox-group>
+                  </el-form-item>
+                </div>
+                <!--end::Input group-->
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+                <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+                  Sorgula
+                </button>
+              </div>
+            </div>
+          </el-form>
           <div class="row mb-3">
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12 mb-2">
-              <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
-              <el-select
-                filterable
-                class="arama"
-                remote
-                clearable
-                placeholder="Arama için en az 4 harf giriniz"
-                reserve-keyword
-                remote-show-suffix
-                v-model="filter.customerId"
-                :remote-method="remoteMusteriAramaMethod"
-                :loading="loading"
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+              <el-table
+                :data="sozlesmeList"
+                style="width: 100%"
+                height="150"
+                max-height="150px"
+                :default-sort="{ prop: 'startDate', order: 'descending' }"
               >
-                <li class="el-select-dropdown__item">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <span style="font-weight: 900"> Unvan </span>
+                <el-table-column label="Firma Unvan" width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.device.address.customer.title }}</span>
                     </div>
-                    <div class="col-md-2">
-                      <span style="font-weight: 900"> Semt </span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Şehir" width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.device.address.querter.district.city.name }}</span>
                     </div>
-                    <div class="col-md-3">
-                      <span style="font-weight: 900"> Model </span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="İlçe" width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.device.address.querter.district.name }}</span>
                     </div>
-                    <div class="col-md-1">
-                      <span style="font-weight: 900"> Seri No </span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Semt" width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.device.address.querter.name }}</span>
                     </div>
-                  </div>
-                </li>
-                <el-option v-for="item in customerInfoList" :key="item.rowId" :label="item.title" :value="item.rowId">
-                  <div class="row">
-                    <div class="col-md-6" style="font-size: 12px">
-                      {{ item.title }}
+                  </template>
+                </el-table-column>
+                <el-table-column label="Tip Adı" width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.device.deviceModel.deviceBrand.deviceType.name }}</span>
                     </div>
-                    <div class="col-md-2" style="font-size: 12px">
-                      {{ item.querter }}
+                  </template>
+                </el-table-column>
+                <el-table-column label="Marka Adı" width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.device.deviceModel.deviceBrand.name }}</span>
                     </div>
-                    <div class="col-md-3" style="font-size: 12px">
-                      {{ item.model }}
+                  </template>
+                </el-table-column>
+                <el-table-column label="Model Adı" width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.device.deviceModel.name }}</span>
                     </div>
-                    <div class="col-md-1" style="font-size: 12px">
-                      {{ item.serialNo }}
+                  </template>
+                </el-table-column>
+                <el-table-column label="Seri No" width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.device.serialNo }}</span>
                     </div>
-                  </div>
-                </el-option>
-              </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Montaj T." width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.device.assemblyDateString }}</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Sözleşme Kodu" width="160">
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.contractCode }}</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Başlangıç T." width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.startDateString }}</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Bitiş T." width="140" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.endDateString }}</span>
+                    </div>
+                  </template>
+                </el-table-column>
+              </el-table>
             </div>
-          </div>
-          <div class="row mb-3">
-            <!-- Şehir -->
-            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span>Şehir</span>
-                </label>
-                <!--end::Label-->
-                <el-form-item prop="selectedSehir">
-                  <el-select
-                    placeholder="Şehir seçiniz"
-                    @change="onSehirChange()"
-                    filterable
-                    clearable
-                    v-model="filter.sehirId"
-                  >
-                    <el-option v-for="item in sehirList" :key="item.id" :label="item.name" :value="item.id">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
+            <div class="demo-pagination-block mt-2">
+              <el-pagination
+                layout="prev, pager, next, jumper"
+                :total="totalCount" />
             </div>
-
-            <!-- İlçe -->
-            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span>İlçe</span>
-                </label>
-                <!--end::Label-->
-                <el-form-item prop="selectedIlce">
-                  <el-select
-                    @change="onIlceChange()"
-                    placeholder="İlçe seçiniz"
-                    filterable
-                    clearable
-                    v-model="filter.ilceId"
-                  >
-                    <el-option v-for="item in ilceList" :key="item.id" :label="item.name" :value="item.id"> </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-
-            <!-- Semt -->
-            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span>Semt</span>
-                </label>
-                <!--end::Label-->
-                <el-form-item prop="quarterId">
-                  <el-select placeholder="Semt seçiniz" filterable clearable v-model="filter.semtId">
-                    <el-option v-for="item in semtList" :key="item.id" :label="item.name" :value="item.id"> </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span>Model</span>
-                </label>
-                <!--end::Label-->
-                <el-form-item prop="quarterId">
-                  <el-select
-                    filterable
-                    class="arama"
-                    remote
-                    clearable
-                    placeholder="Model adı giriniz"
-                    reserve-keyword
-                    remote-show-suffix
-                    v-model="filter.model"
-                    :remote-method="remoteMethodModelName"
-                    :loading="loading"
-                  >
-                    <li class="el-select-dropdown__item">
-                      <div class="row">
-                        <div class="col-md-7">
-                          <span style="font-weight: 900"> Unvan </span>
-                        </div>
-                      </div>
-                    </li>
-                    <el-option v-for="item in deviceModelList" :key="item.id" :label="item.name" :value="item.id">
-                      <div class="row">
-                        <div class="col-md-7" style="font-size: 12px">
-                          {{ item.name }}
-                        </div>
-                      </div>
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span>Seri No</span>
-                </label>
-                <!--end::Label-->
-                <el-form-item prop="quarterId">
-                  <el-input v-model="filter.serialNo" class="input-with-select"> </el-input>
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-md-12 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span>Sözleşme Kodları</span>
-                </label>
-                <!--end::Label-->
-                <el-form-item prop="quarterId">
-                  <el-checkbox-group v-model="filter.sozlesmeKodlari" >
-                    <el-checkbox border class="p-2 m-2" v-for="soz in sozlesmeKodList" :key="soz.code" :label="soz.name">{{
-                      soz.code
-                    }}</el-checkbox>
-                  </el-checkbox-group>
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-          </div>
-          <div class="row mb-3">
-            
           </div>
         </div>
       </el-card>
@@ -208,7 +385,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
-import { ErrorMessage, Field, Form } from 'vee-validate';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { useRouter } from 'vue-router';
@@ -221,8 +397,9 @@ import { IDistrictData } from '@/core/data/DistrictData';
 import { IQuerterData } from '@/core/data/QuerterData';
 import { IDeviceModelData } from '@/core/data/DeviceModelData';
 import { IContractCodeData } from '@/core/data/ContractCodeData';
+import { IContractData } from '@/core/data/ContractData';
 
-interface ISozlesmeBasimRapor {
+interface ISozlesmeBasimRaporFilter {
   customerId: string | null;
   sehirId: string | null;
   ilceId: string | null;
@@ -230,7 +407,10 @@ interface ISozlesmeBasimRapor {
   model: string | null;
   serialNo: string | null;
   sozlesmeKodlari: Array<string> | null;
+  baslangicTarihi: Date | null;
+  bitisTarihi: Date | null;
 }
+
 export default defineComponent({
   name: 'sozlesmeBasimRapor',
 
@@ -240,14 +420,35 @@ export default defineComponent({
 
     const loading = ref<boolean>(false);
 
+    var totalCount = ref<number>(0);
     var customerInfoList = ref<Array<ICustomerListData>>([]);
     var sehirList = ref<Array<ICityData>>([]);
     var ilceList = ref<Array<IDistrictData>>([]);
     var semtList = ref<Array<IQuerterData>>([]);
     var deviceModelList = ref<Array<IDeviceModelData>>([]);
     var sozlesmeKodList = ref<Array<IContractCodeData>>([]);
+    var sozlesmeList = ref<Array<IContractData>>([]);
 
-    var filter = ref<ISozlesmeBasimRapor>({
+    const formSorgulaRef = ref<null | HTMLFormElement>(null);
+
+    const newSorgulaRules = ref({});
+
+    const shortcuts = [
+      {
+        text: 'Bugün',
+        value: new Date(),
+      },
+      {
+        text: 'Dün',
+        value: () => {
+          const date = new Date();
+          date.setTime(date.getTime() - 3600 * 1000 * 24);
+          return date;
+        },
+      },
+    ];
+
+    var filter = ref<ISozlesmeBasimRaporFilter>({
       customerId: null,
       ilceId: null,
       sehirId: null,
@@ -255,6 +456,8 @@ export default defineComponent({
       model: null,
       serialNo: null,
       sozlesmeKodlari: [],
+      baslangicTarihi: null,
+      bitisTarihi: null,
     });
 
     async function getSehirList() {
@@ -397,6 +600,33 @@ export default defineComponent({
       loading.value = false;
     }
 
+    const sorgulaSubmit = () => {
+      if (!formSorgulaRef.value) {
+        return;
+      }
+
+      formSorgulaRef.value.validate(async valid => {
+        if (valid) {
+          loading.value = true;
+
+          await store
+            .dispatch(Actions.GET_SOZLESMEBASIM, filter.value)
+            .then(result => {
+              loading.value = false;
+              console.clear();
+              console.log(result);
+              if (result.isSuccess) {
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+
+          loading.value = false;
+        }
+      });
+    };
+
     onMounted(async () => {
       loading.value = true;
       await getSehirList();
@@ -414,10 +644,16 @@ export default defineComponent({
       sehirList,
       deviceModelList,
       sozlesmeKodList,
+      shortcuts,
+      sozlesmeList,
+      formSorgulaRef,
+      newSorgulaRules,
+      totalCount,
       remoteMusteriAramaMethod,
       remoteMethodModelName,
       onIlceChange,
       onSehirChange,
+      sorgulaSubmit,
     };
   },
 });

@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.DeviceModels;
 
 namespace ServisTakip.Business.Handlers.DeviceModels.Queries

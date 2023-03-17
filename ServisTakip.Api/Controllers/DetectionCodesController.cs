@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServisTakip.Business.Handlers.BootCodes.Queries;
 using ServisTakip.Business.Handlers.DetectionCodes.Queries;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Entities.DTOs.DetectionCodes;

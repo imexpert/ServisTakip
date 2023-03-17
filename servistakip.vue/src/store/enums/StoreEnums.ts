@@ -90,7 +90,9 @@ enum Actions {
   GET_CONTRACTLIST = "getContractList",
   GET_CONTRACTBYID = "getContractById",
 
-  GET_MODEL_BY_NAME_FILTER = "getModelByNameFilter"
+  GET_MODEL_BY_NAME_FILTER = "getModelByNameFilter",
+
+  GET_SOZLESMEBASIM = "getSozlesmeBasim",
 }
 
 enum Mutations {

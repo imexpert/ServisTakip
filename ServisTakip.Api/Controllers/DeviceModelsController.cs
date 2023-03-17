@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.DeviceModels.Queries;
-using ServisTakip.Business.Handlers.Devices.Queries;
 using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.DeviceModels;
 
 namespace ServisTakip.Api.Controllers

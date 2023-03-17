@@ -38,7 +38,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     .ThenInclude(s=>s.District)
                     .ThenInclude(s=>s.City)
                     .AsNoTracking()
-                .Where(s => s.RecordUsername == Utils.Email)
+                .Where(s => s.RecordUsername == Utils.Email && s.Device.Address.Customer.CompanyId == Utils.CompanyId)
                 .AsNoTracking()
                 .OrderByDescending(s=>s.UpdateDate)
                 .FirstOrDefaultAsync();
