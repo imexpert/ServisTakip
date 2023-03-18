@@ -24,9 +24,10 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .ToListAsync();
         }
 
-        public async Task<List<Contract>> GetSozlesmeBasimListAsync(SozlesmeBasimRaporFilter filter, CancellationToken cancellationToken)
+        public IQueryable<Contract> GetSozlesmeBasimQuery(SozlesmeBasimRaporFilter filter)
         {
-            return await _context.Contracts
+
+            return _context.Contracts
                 .Include(s => s.Device)
                     .ThenInclude(s => s.DeviceModel)
                     .ThenInclude(s => s.DeviceBrand)
@@ -39,8 +40,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .Include(s => s.Device)
                     .ThenInclude(s => s.Address)
                     .ThenInclude(s => s.Customer)
-                .Where(s => s.Device.Status)
-                .ToListAsync(cancellationToken);
+                .Where(s => s.Device.Status);
         }
     }
 }

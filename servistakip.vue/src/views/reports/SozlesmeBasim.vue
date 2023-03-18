@@ -52,7 +52,7 @@
                       </div>
                     </div>
                   </li>
-                  <el-option v-for="item in customerInfoList" :key="item.rowId" :label="item.title" :value="item.rowId">
+                  <el-option v-for="item in customerInfoList" :key="item.id" :label="item.title" :value="item.id">
                     <div class="row">
                       <div class="col-md-6" style="font-size: 12px">
                         {{ item.title }}
@@ -259,7 +259,8 @@
                         class="p-2 m-2"
                         v-for="soz in sozlesmeKodList"
                         :key="soz.code"
-                        :label="soz.name"
+                        :value="soz.code"
+                        :label="soz.code"
                         >{{ soz.code }}</el-checkbox
                       >
                     </el-checkbox-group>
@@ -280,12 +281,13 @@
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
               <el-table
                 :data="sozlesmeList"
-                style="width: 100%"
-                height="150"
-                max-height="150px"
+                style="width: 100%; font-size: 12px"
+                height="330"
+                max-height="330px"
                 :default-sort="{ prop: 'startDate', order: 'descending' }"
               >
-                <el-table-column label="Firma Unvan" width="140" sortable>
+                <el-table-column type="index" width="50" />
+                <el-table-column label="Firma Unvan" width="440" sortable>
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
                       <span>{{ scope.row.device.address.customer.title }}</span>
@@ -337,7 +339,7 @@
                 <el-table-column label="Seri No" width="140" sortable>
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
-                      <span>{{ scope.row.device.serialNo }}</span>
+                      <span>{{ scope.row.device.serialNumber }}</span>
                     </div>
                   </template>
                 </el-table-column>
@@ -371,10 +373,16 @@
                 </el-table-column>
               </el-table>
             </div>
-            <div class="demo-pagination-block mt-2">
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12 mt-5">
               <el-pagination
-                layout="prev, pager, next, jumper"
-                :total="totalCount" />
+                v-model:current-page="filter.currentPage"
+                background
+                :page-sizes="[10, 20, 50, 100]"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="totalCount"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+              />
             </div>
           </div>
         </div>
@@ -409,6 +417,9 @@ interface ISozlesmeBasimRaporFilter {
   sozlesmeKodlari: Array<string> | null;
   baslangicTarihi: Date | null;
   bitisTarihi: Date | null;
+  currentPage: number | null;
+  pageSize: number | null;
+  rowCount: number | null;
 }
 
 export default defineComponent({
@@ -458,6 +469,9 @@ export default defineComponent({
       sozlesmeKodlari: [],
       baslangicTarihi: null,
       bitisTarihi: null,
+      currentPage: 1,
+      pageSize: 10,
+      rowCount: 0,
     });
 
     async function getSehirList() {
@@ -479,6 +493,7 @@ export default defineComponent({
         .dispatch(Actions.GET_CONTRACTCODE_LIST)
         .then(result => {
           if (result.isSuccess) {
+            console.log(result.data);
             sozlesmeKodList.value = result.data;
             loading.value = false;
           }
@@ -600,6 +615,16 @@ export default defineComponent({
       loading.value = false;
     }
 
+    const handleCurrentChange = async (val: number) => {
+      filter.value.currentPage = val;
+      await getSozlesmeBasimList();
+    };
+
+    const handleSizeChange = async (val: number) => {
+      filter.value.pageSize = val;
+      await getSozlesmeBasimList();
+    };
+
     const sorgulaSubmit = () => {
       if (!formSorgulaRef.value) {
         return;
@@ -609,23 +634,31 @@ export default defineComponent({
         if (valid) {
           loading.value = true;
 
-          await store
-            .dispatch(Actions.GET_SOZLESMEBASIM, filter.value)
-            .then(result => {
-              loading.value = false;
-              console.clear();
-              console.log(result);
-              if (result.isSuccess) {
-              }
-            })
-            .catch(() => {
-              const [error] = Object.keys(store.getters.getErrors);
-            });
+          filter.value.currentPage = 1;
+          filter.value.pageSize = 10;
+          await getSozlesmeBasimList();
 
           loading.value = false;
         }
       });
     };
+
+    async function getSozlesmeBasimList() {
+      await store
+        .dispatch(Actions.GET_SOZLESMEBASIM, filter.value)
+        .then(result => {
+          loading.value = false;
+          console.clear();
+          console.log(result);
+          if (result.isSuccess) {
+            totalCount.value = result.pageCount;
+            sozlesmeList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
 
     onMounted(async () => {
       loading.value = true;
@@ -654,6 +687,8 @@ export default defineComponent({
       onIlceChange,
       onSehirChange,
       sorgulaSubmit,
+      handleSizeChange,
+      handleCurrentChange,
     };
   },
 });
