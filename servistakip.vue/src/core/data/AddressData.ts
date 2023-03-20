@@ -12,6 +12,7 @@ interface IAddressData {
     netAddress?: string | '',
     authorizedName?: string | '',
     authorizedTask?: string | '',
+    authorizedWorkPhone?: string | '',
     authorizedPhone?: string | '',
     authorizedEmail?: string | '',
     description?: string | '',

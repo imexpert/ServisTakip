@@ -76,6 +76,13 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column label="Departman">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.device.address.department }}</span>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column label="Açıklama">
               <template #default="scope">
                 <div style="display: flex; align-items: center">

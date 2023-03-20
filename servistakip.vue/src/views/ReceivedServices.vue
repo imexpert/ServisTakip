@@ -62,6 +62,13 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column label="Departman">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.device.address.department }}</span>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column label="Açıklama">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
@@ -69,6 +76,7 @@
                 </div>
               </template>
             </el-table-column>
+            
             <el-table-column label="#" fixed="left" width="170">
               <template #default="scope">
                 <el-dropdown size="small" type="danger">
@@ -169,6 +177,13 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column label="Departman">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.device.address.department }}</span>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column label="Açıklama">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
@@ -259,6 +274,13 @@
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.serviceBootCode }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="Departman">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.device.address.department }}</span>
                 </div>
               </template>
             </el-table-column>

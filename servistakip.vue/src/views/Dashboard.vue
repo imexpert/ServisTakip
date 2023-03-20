@@ -20,6 +20,9 @@
                       <el-dropdown-item command="MU" :disabled="firmaOzet.customerId == null">
                         <el-icon> <Edit></Edit> </el-icon>Düzenle
                       </el-dropdown-item>
+                      <el-dropdown-item command="MD" :disabled="firmaOzet.customerId == null">
+                        <el-icon> <Delete></Delete> </el-icon>Sil
+                      </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -1216,7 +1219,7 @@
     </el-dialog>
 
     <el-dialog v-model="cihazDialogVisible" title="Cihaz Ekle / Düzenle" width="40%" destroy-on-close center>
-      <div class="row">
+      <div class="row" v-loading="createDeviceLoading">
         <el-form
           status-icon
           :rules="newDeviceRules"
@@ -1226,7 +1229,24 @@
           label-width="120px"
           label-position="top"
         >
-          <div class="row" v-loading="deviceLoading">
+          <div class="row">
+            <!-- Firma Unvan -->
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                  <span>Firma Unvanı</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="customerTitle">
+                  <el-input v-model="firmaOzet.customerTitle" disabled></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Adres Başlık -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1266,6 +1286,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Cihaz Tip -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1289,6 +1311,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Cihaz Marka -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1312,6 +1336,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Cihaz Model -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1329,6 +1355,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Seri No -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1343,6 +1371,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Montaj Tarihi -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1363,6 +1393,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Cihaz Durumu -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1380,6 +1412,8 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Açıklama -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
@@ -1394,11 +1428,13 @@
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Bakım Periyodu -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
                   <span>Bakım Periyodu</span>
                 </label>
                 <!--end::Label-->
@@ -1432,19 +1468,24 @@
             <!--begin::Button-->
             <button
               v-if="selectMode == 'I'"
-              :data-kt-indicator="loading ? 'on' : null"
+              :data-kt-indicator="createDeviceLoading ? 'on' : null"
               class="btn btn-lg btn-primary"
               type="submit"
             >
-              <span v-if="!loading" class="indicator-label"> Kaydet </span>
-              <span v-if="loading" class="indicator-progress">
+              <span v-if="!createDeviceLoading" class="indicator-label"> Kaydet </span>
+              <span v-if="createDeviceLoading" class="indicator-progress">
                 Lütfen Bekleyiniz...
                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
               </span>
             </button>
-            <button v-else :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
-              <span v-if="!loading" class="indicator-label"> Güncelle </span>
-              <span v-if="loading" class="indicator-progress">
+            <button
+              v-else
+              :data-kt-indicator="createDeviceLoading ? 'on' : null"
+              class="btn btn-lg btn-primary"
+              type="submit"
+            >
+              <span v-if="!createDeviceLoading" class="indicator-label"> Güncelle </span>
+              <span v-if="createDeviceLoading" class="indicator-progress">
                 Lütfen Bekleyiniz...
                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
               </span>
@@ -1636,6 +1677,13 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column label="Yetkili Telefon (İş)" width="130">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.authorizedWorkPhone }}</span>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column label="Yetkili Mail" width="200">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
@@ -1822,7 +1870,7 @@
             </div>
 
             <!-- Yetkili Ad -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+            <div class="col-md-12 col-lg-4 col-xl-4 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1841,7 +1889,7 @@
             </div>
 
             <!-- Yetkili Görev -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+            <div class="col-md-12 col-lg-4 col-xl-4 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1860,7 +1908,7 @@
             </div>
 
             <!-- Yetkili Mail -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+            <div class="col-md-12 col-lg-4 col-xl-4 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1879,7 +1927,7 @@
             </div>
 
             <!-- Yetkili Telefon -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+            <div class="col-md-12 col-lg-4 col-xl-4 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1900,8 +1948,30 @@
               <!--end::Input group-->
             </div>
 
+            <!-- Yetkili Telefon -->
+            <div class="col-md-12 col-lg-4 col-xl-4 col-xxl-4 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Yetkili Telefon (İş)</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="authorizedWorkPhone">
+                  <el-input
+                    v-model="newAddress.authorizedWorkPhone"
+                    :formatter="
+                      value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
+                    "
+                    placeholder="Yetkili telefon bilgisini giriniz"
+                  />
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
             <!-- Departman -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+            <div class="col-md-12 col-lg-4 col-xl-4 col-xxl-4 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1917,7 +1987,7 @@
             </div>
 
             <!-- Açıklama -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12">
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -2195,6 +2265,7 @@ export default defineComponent({
     const servisAcLoading = ref<boolean>(false);
     const talepDetayLoading = ref<boolean>(false);
     const deviceLoading = ref<boolean>(false);
+    const createDeviceLoading = ref<boolean>(false);
     const musteriLoading = ref<boolean>(false);
     const adresLoading = ref<boolean>(false);
     const sozlesmeLoading = ref<boolean>(false);
@@ -2205,6 +2276,7 @@ export default defineComponent({
       sectorId: '',
       title: '',
       id: '',
+      status: true,
     });
 
     var newAddress = ref<IAddressData>({
@@ -2214,6 +2286,7 @@ export default defineComponent({
       authorizedEmail: '',
       authorizedName: '',
       authorizedPhone: '',
+      authorizedWorkPhone: '',
       authorizedTask: '',
       customerId: '',
       description: '',
@@ -2284,7 +2357,6 @@ export default defineComponent({
 
     var deviceBrand = ref<IDeviceBrandData>({
       name: '',
-      companyId: '',
       deviceType: null,
     });
 
@@ -2389,7 +2461,7 @@ export default defineComponent({
       id: '',
       rowId: '',
       serialNumber: '',
-      status: null,
+      status: true,
       maintenancePeriod: '',
       assemblyDate: '',
     });
@@ -2663,13 +2735,13 @@ export default defineComponent({
         return;
       }
 
-      formDeviceRef.value.validate(valid => {
+      formDeviceRef.value.validate(async valid => {
         if (valid) {
-          deviceLoading.value = true;
+          createDeviceLoading.value = true;
           console.log(newDevice.value);
 
           if (selectMode.value == 'I') {
-            store
+            await store
               .dispatch(Actions.ADD_DEVICE, newDevice.value)
               .then(result => {
                 loading.value = false;
@@ -2679,19 +2751,19 @@ export default defineComponent({
                       var rowId = firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + result.data.id;
                       await getMainPageCustomer(rowId);
                     }
-                    deviceLoading.value = false;
+                    createDeviceLoading.value = false;
                     cihazDialogVisible.value = false;
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
+                    createDeviceLoading.value = false;
                     servisAcDialogVisible.value = false;
                   });
                 }
               })
               .catch(({ response }) => {});
           } else {
-            store
+            await store
               .dispatch(Actions.UPDATE_DEVICE, newDevice.value)
               .then(result => {
                 loading.value = false;
@@ -2707,7 +2779,7 @@ export default defineComponent({
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
+                    createDeviceLoading.value = false;
                     servisAcDialogVisible.value = false;
                   });
                 }
@@ -2715,7 +2787,7 @@ export default defineComponent({
               .catch(({ response }) => {});
           }
 
-          deviceLoading.value = false;
+          createDeviceLoading.value = false;
         }
       });
     };
@@ -2954,6 +3026,30 @@ export default defineComponent({
       }
     };
 
+    function clearAddressData() {
+
+        newAddress.value.accountCode='';
+        newAddress.value.addressTitle='';
+        newAddress.value.serialNumber='';
+        newAddress.value.authorizedEmail='';
+        newAddress.value.authorizedName='';
+        newAddress.value.authorizedPhone='';
+        newAddress.value.authorizedWorkPhone='';
+        newAddress.value.authorizedTask='';
+        newAddress.value.customerId='';
+        newAddress.value.description='';
+        newAddress.value.id='';
+        newAddress.value.customer= null,
+        newAddress.value.deviceModel= null,
+        newAddress.value.netAddress='';
+        newAddress.value.quarterId='';
+        newAddress.value.querter= null;
+        newAddress.value.department='';
+
+        selectedSehir.value = null;
+        selectedIlce.value = null;
+    }
+
     function clearPage() {
       firmaOzet.value = {
         customerId: '',
@@ -2987,7 +3083,6 @@ export default defineComponent({
 
       deviceBrand.value = {
         deviceType: null,
-        companyId: '',
         name: '',
       };
 
@@ -3052,7 +3147,7 @@ export default defineComponent({
         id: '',
         rowId: '',
         serialNumber: '',
-        status: null,
+        status: true,
         maintenancePeriod: '',
         assemblyDate: '',
       };
@@ -3225,7 +3320,7 @@ export default defineComponent({
               .then(result => {
                 loading.value = false;
                 if (result.isSuccess) {
-                  showSuccessMessage('Adres başarıyla eklendi.').then(async () => {
+                  showSuccessMessage('Adres başarıyla güncellendi.').then(async () => {
                     await getAddressList(newCustomer.value.id);
                     adresLoading.value = false;
                     adresDialogVisible.value = false;
@@ -3292,6 +3387,7 @@ export default defineComponent({
     }
 
     async function getAddressById(id) {
+      
       await store
         .dispatch(Actions.GET_ADDRESSBYID, id)
         .then(async result => {
@@ -3590,6 +3686,8 @@ export default defineComponent({
     }
 
     async function adresDialogAc(id = 0) {
+      await clearAddressData();
+
       await getSehirList();
 
       adresLoading.value = true;
@@ -3792,13 +3890,49 @@ export default defineComponent({
       }
     };
 
+    async function deleteCustomerById() {
+      Swal.fire({
+        title: 'Müşteri kaydı silinecek !!!',
+        text: 'Devam etmek istiyor musunuz ?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Sil',
+        denyButtonText: `Vazgeç`,
+      }).then(async result => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          anaSayfaLoading.value = true;
+          await store
+            .dispatch(Actions.DELETE_CUSTOMER, firmaOzet.value.customerId)
+            .then(async result => {
+              if (result.isSuccess) {
+                await getLastTradedCustomer();
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+          anaSayfaLoading.value = false;
+        } else if (result.isDenied) {
+        }
+      });
+    }
+
     const handleCustomerMenuCommand = (command: string | number | object) => {
+      newCustomer.value.title = '';
+      newCustomer.value.sectorId = '';
+      newCustomer.value.status = true;
+      addressList.value = [];
+
       switch (command) {
         case 'MI':
           musteriDialogAc('I');
           break;
         case 'MU':
           musteriDialogAc('U');
+          break;
+        case 'MD':
+          deleteCustomerById();
           break;
         default:
           break;
@@ -3880,6 +4014,7 @@ export default defineComponent({
       deviceBrandList,
       deviceModelList,
       deviceLoading,
+      createDeviceLoading,
       selectedDeviceType,
       selectedDeviceBrand,
       formDeviceRef,

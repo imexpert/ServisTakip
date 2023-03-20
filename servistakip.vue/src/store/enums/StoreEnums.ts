@@ -23,6 +23,7 @@ enum Actions {
   GET_QUERTER_LIST = "getQuerterlist",
   ADD_CUSTOMER = "addCustomer",
   UPDATE_CUSTOMER = "updateCustomer",
+  DELETE_CUSTOMER = "deleteCustomer",
   ADD_ADDRESS = "addAddress",
   UPDATE_ADDRESS = "updateAddress",
   DELETE_ADDRESS = "deleteAddress",

@@ -18,7 +18,7 @@ namespace ServisTakip.Business.Handlers.DeviceTypes.Queries
                 var deviceTypeRepo = ServiceTool.ServiceProvider.GetService<IDeviceTypeRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
-                var deviceTypeList = await deviceTypeRepo.GetListAsync(s => s.CompanyId == Utils.CompanyId);
+                var deviceTypeList = await deviceTypeRepo.GetListAsync();
                 var result = mapper.Map<List<DeviceTypeDto>>(deviceTypeList);
                 return ResponseMessage<List<DeviceTypeDto>>.Success(result);
             }

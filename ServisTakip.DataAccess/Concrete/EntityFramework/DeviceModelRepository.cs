@@ -19,7 +19,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
         public async Task<List<DeviceModel>> GetModelByFilterAsync(string filter, CancellationToken cancellationToken)
         {
             return await _context.DeviceModels
-                .Where(s => EF.Functions.Like(s.Name, $"%{filter}%") && s.CompanyId == Utils.CompanyId)
+                .Where(s => EF.Functions.Like(s.Name, $"%{filter}%"))
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
         }

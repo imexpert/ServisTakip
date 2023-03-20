@@ -20,7 +20,7 @@ namespace ServisTakip.Business.Handlers.DeviceBrands.Queries
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
                 var deviceBrandList = await deviceBrandRepo.GetListAsync(s =>
-                    s.DeviceTypeId == request.DeviceTypeId && s.CompanyId == Utils.CompanyId);
+                    s.DeviceTypeId == request.DeviceTypeId);
                 var result = mapper.Map<List<DeviceBrandDto>>(deviceBrandList);
                 return ResponseMessage<List<DeviceBrandDto>>.Success(result);
             }

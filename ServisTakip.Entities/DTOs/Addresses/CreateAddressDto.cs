@@ -9,6 +9,7 @@
         public string NetAddress { get; set; }
         public string AuthorizedName { get; set; }
         public string AuthorizedTask { get; set; }
+        public string AuthorizedWorkPhone { get; set; }
         public string AuthorizedPhone { get; set; }
         public string AuthorizedEmail { get; set; }
         public string Department { get; set; }

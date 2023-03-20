@@ -18,7 +18,7 @@ namespace ServisTakip.Business.Handlers.DeviceBrands.Queries
                 var deviceBrandRepo = ServiceTool.ServiceProvider.GetService<IDeviceBrandRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
-                var deviceBrandList = await deviceBrandRepo.GetListAsync(s=>s.CompanyId == Utils.CompanyId);
+                var deviceBrandList = await deviceBrandRepo.GetListAsync();
                 var result = mapper.Map<List<DeviceBrandDto>>(deviceBrandList);
                 return ResponseMessage<List<DeviceBrandDto>>.Success(result);
             }

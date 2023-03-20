@@ -41,6 +41,21 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CustomerDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCustomerAsync(long id)
+        {
+            return CreateActionResult(await Mediator.Send(new DeleteCustomerCommand() { Id = id }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
