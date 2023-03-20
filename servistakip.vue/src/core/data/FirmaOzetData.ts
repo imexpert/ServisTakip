@@ -16,6 +16,7 @@ interface IFirmaOzetData {
     authorizedEmail?: string | '',
     deviceId: string,
     districtName?: string | '',
+    department?: string | '',
     quarterName?: string | '',
     regionCode?: string | '',
     contractType?: string | '',

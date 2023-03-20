@@ -45,6 +45,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         CityName = device.Address.Querter.District.City.Name,
                         CustomerId = device.Address.Customer.Id,
                         AuthorizedEmail = device.Address.AuthorizedEmail,
+                        Department = device.Address.Department,
                         DeviceId = device.Id,
                         DistrictName = device.Address.Querter.District.Name,
                         QuarterName = device.Address.Querter.Name,
@@ -82,6 +83,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.AuthorizedPhone = address.AuthorizedPhone;
                     result.AuthorizedTask = address.AuthorizedTask;
                     result.AuthorizedEmail = address.AuthorizedEmail;
+                    result.Department = address.Department;
                     result.CityName = address.Querter.District.City.Name;
                     result.DistrictName = address.Querter.District.Name;
                     result.QuarterName = address.Querter.Name;

@@ -12,5 +12,6 @@
         public string Model { get; set; }
         public string SerialNo { get; set; }
         public string Querter { get; set; }
+        public string Department { get; set; }
     }
 }

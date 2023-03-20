@@ -47,6 +47,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                                     cst.DeviceId = device.Id;
                                     cst.Model = device.DeviceModel.Name;
                                     cst.SerialNo = device.SerialNumber;
+                                    cst.Department = address.Department;
 
                                     result.Add(cst.Clone());
 
@@ -54,9 +55,14 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                             }
                             else
                             {
+                                cst.Querter = null;
+                                cst.DeviceId = 0;
+                                cst.Model = null;
+                                cst.SerialNo = null;
                                 cst.AddressId = address.Id;
                                 cst.Address = address.AddressTitle;
                                 cst.Querter = address.Querter.Name;
+                                cst.Department = address.Department;
                                 result.Add(cst.Clone());
                             }
                         }

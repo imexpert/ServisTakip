@@ -33,7 +33,8 @@ namespace ServisTakip.Business.Handlers.Devices.Queries
                         Address = device.Address.AddressTitle,
                         Querter = device.Address.Querter.Name,
                         Model = device.DeviceModel.Name,
-                        SerialNo = device.SerialNumber
+                        SerialNo = device.SerialNumber,
+                        Department = device.Address.Department
                     };
 
                     result.Add(cst);

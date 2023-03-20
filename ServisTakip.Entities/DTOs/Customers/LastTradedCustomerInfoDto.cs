@@ -15,6 +15,7 @@ namespace ServisTakip.Entities.DTOs.Customers
         public string RegionCode { get; set; }
         public string CityName { get; set; }
         public string DistrictName { get; set; }
+        public string Department { get; set; }
         public string QuarterName { get; set; }
         public string AuthorizedName { get; set; }
         public string AuthorizedTask { get; set; }

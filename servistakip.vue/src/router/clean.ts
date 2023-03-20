@@ -29,6 +29,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "sozlesmeBasim",
         component: () => import("@/views/reports/SozlesmeBasim.vue"),
       },
+      {
+        path: "/bakimRaporu",
+        name: "bakimRaporu",
+        component: () => import("@/views/reports/BakimRaporu.vue"),
+      },
     ],
   },
   {

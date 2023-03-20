@@ -157,9 +157,12 @@
                 :loading="loading"
               >
                 <li class="el-select-dropdown__item">
-                  <div class="row">
-                    <div class="col-md-6">
+                  <div class="row" style="width: 100%">
+                    <div class="col-md-4">
                       <span style="font-weight: 900"> Unvan </span>
+                    </div>
+                    <div class="col-md-2">
+                      <span style="font-weight: 900"> Departman </span>
                     </div>
                     <div class="col-md-2">
                       <span style="font-weight: 900"> Semt </span>
@@ -173,9 +176,12 @@
                   </div>
                 </li>
                 <el-option v-for="item in customerInfoList" :key="item.rowId" :label="item.title" :value="item.rowId">
-                  <div class="row">
-                    <div class="col-md-6" style="font-size: 12px">
+                  <div class="row" style="width: 100%">
+                    <div class="col-md-4" style="font-size: 12px">
                       {{ item.title }}
+                    </div>
+                    <div class="col-md-2" style="font-size: 12px">
+                      {{ item.department }}
                     </div>
                     <div class="col-md-2" style="font-size: 12px">
                       {{ item.querter }}
@@ -268,6 +274,15 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Departman</label>
+              <el-input readonly disabled v-model="firmaOzet.department" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="bolge" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </el-card>
@@ -275,6 +290,7 @@
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12 mb-1" v-loading="anaSayfaLoading">
       <el-card class="box-card">
         <div class="row mb-2">
+          <!-- Sözleşmeler -->
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
             <el-table
               :data="contracts"
@@ -354,9 +370,13 @@
               </el-table-column>
             </el-table>
           </div>
+
+          <!-- Divider -->
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mt-3">
             <el-divider />
           </div>
+
+          <!-- Model -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
             <label class="required fs-5 fw-semobold mb-2">Model</label>
             <el-select
@@ -374,13 +394,13 @@
             >
               <li class="el-select-dropdown__item">
                 <div class="row">
-                  <div class="col-md-7">
+                  <div class="col-md-6">
                     <span style="font-weight: 900"> Unvan </span>
                   </div>
-                  <!-- <div class="col-md-2">
-                    <span style="font-weight: 900"> Semt </span>
-                  </div> -->
-                  <div class="col-md-3">
+                  <div class="col-md-2">
+                    <span style="font-weight: 900"> Departman </span>
+                  </div>
+                  <div class="col-md-2">
                     <span style="font-weight: 900"> Model </span>
                   </div>
                   <div class="col-md-2">
@@ -390,13 +410,13 @@
               </li>
               <el-option v-for="item in modelList" :key="item.rowId" :label="item.model" :value="item.rowId">
                 <div class="row">
-                  <div class="col-md-7" style="font-size: 12px">
+                  <div class="col-md-6" style="font-size: 12px">
                     {{ item.title }}
                   </div>
-                  <!-- <div class="col-md-2" style="font-size: 12px">
-                    {{ item.querter }}
-                  </div> -->
-                  <div class="col-md-3" style="font-size: 12px">
+                  <div class="col-md-2" style="font-size: 12px">
+                    {{ item.department }}
+                  </div>
+                  <div class="col-md-2" style="font-size: 12px">
                     {{ item.model }}
                   </div>
                   <div class="col-md-2" style="font-size: 12px">
@@ -406,6 +426,8 @@
               </el-option>
             </el-select>
           </div>
+
+          <!-- Seri No -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
             <label class="required fs-5 fw-semobold mb-2">Seri No</label>
             <el-select
@@ -423,13 +445,13 @@
             >
               <li class="el-select-dropdown__item">
                 <div class="row">
-                  <div class="col-md-7">
+                  <div class="col-md-6">
                     <span style="font-weight: 900"> Unvan </span>
                   </div>
-                  <!-- <div class="col-md-2">
-                    <span style="font-weight: 900"> Semt </span>
-                  </div> -->
-                  <div class="col-md-3">
+                  <div class="col-md-2">
+                    <span style="font-weight: 900"> Departman </span>
+                  </div>
+                  <div class="col-md-2">
                     <span style="font-weight: 900"> Model </span>
                   </div>
                   <div class="col-md-2">
@@ -439,13 +461,13 @@
               </li>
               <el-option v-for="item in seriNoList" :key="item.rowId" :label="item.serialNo" :value="item.rowId">
                 <div class="row">
-                  <div class="col-md-7" style="font-size: 12px">
+                  <div class="col-md-6" style="font-size: 12px">
                     {{ item.title }}
                   </div>
-                  <!-- <div class="col-md-2" style="font-size: 12px">
-                    {{ item.querter }}
-                  </div> -->
-                  <div class="col-md-3" style="font-size: 12px">
+                  <div class="col-md-2" style="font-size: 12px">
+                    {{ item.department }}
+                  </div>
+                  <div class="col-md-2" style="font-size: 12px">
                     {{ item.model }}
                   </div>
                   <div class="col-md-2" style="font-size: 12px">
@@ -455,18 +477,26 @@
               </el-option>
             </el-select>
           </div>
+
+          <!-- Marka -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
             <label class="fs-5 fw-semobold mb-2">Marka</label>
             <el-input disabled style="font-size: 12px" v-model="deviceBrand.name"> </el-input>
           </div>
+
+          <!-- Montaj Tarihi -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Montaj Tarihi</label>
             <el-input disabled style="font-size: 12px" v-model="device.assemblyDateString"> </el-input>
           </div>
+
+          <!-- Sözleşme Tipi -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Sözleşme Tipi</label>
             <el-input disabled style="font-size: 12px" v-model="firmaOzet.contractType"> </el-input>
           </div>
+
+          <!-- Cihaz Durumu -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Cihaz Durumu</label>
             <input
@@ -479,6 +509,8 @@
               v-model="deviceStatus"
             />
           </div>
+
+          <!-- Bakım Durumu -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Bakım Durumu</label>
             <input
@@ -491,10 +523,14 @@
               v-model="contractMaintenanceStatus"
             />
           </div>
+
+          <!-- SB Sayaç -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">S/B Sayaç</label>
             <el-input disabled style="font-size: 12px" v-model="firmaOzet.wbCount"> </el-input>
           </div>
+
+          <!-- Renkli Sayaç -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Renkli Sayaç</label>
             <el-input disabled style="font-size: 12px" v-model="firmaOzet.colorCount"> </el-input>
@@ -2326,6 +2362,7 @@ export default defineComponent({
       totalCount: '',
       wbCount: '',
       addressId: null,
+      department: '',
     });
 
     var device = ref<IDeviceData>({
@@ -3027,27 +3064,24 @@ export default defineComponent({
     };
 
     function clearAddressData() {
+      newAddress.value.accountCode = '';
+      newAddress.value.addressTitle = '';
+      newAddress.value.serialNumber = '';
+      newAddress.value.authorizedEmail = '';
+      newAddress.value.authorizedName = '';
+      newAddress.value.authorizedPhone = '';
+      newAddress.value.authorizedWorkPhone = '';
+      newAddress.value.authorizedTask = '';
+      newAddress.value.customerId = '';
+      newAddress.value.description = '';
+      newAddress.value.id = '';
+      (newAddress.value.customer = null), (newAddress.value.deviceModel = null), (newAddress.value.netAddress = '');
+      newAddress.value.quarterId = '';
+      newAddress.value.querter = null;
+      newAddress.value.department = '';
 
-        newAddress.value.accountCode='';
-        newAddress.value.addressTitle='';
-        newAddress.value.serialNumber='';
-        newAddress.value.authorizedEmail='';
-        newAddress.value.authorizedName='';
-        newAddress.value.authorizedPhone='';
-        newAddress.value.authorizedWorkPhone='';
-        newAddress.value.authorizedTask='';
-        newAddress.value.customerId='';
-        newAddress.value.description='';
-        newAddress.value.id='';
-        newAddress.value.customer= null,
-        newAddress.value.deviceModel= null,
-        newAddress.value.netAddress='';
-        newAddress.value.quarterId='';
-        newAddress.value.querter= null;
-        newAddress.value.department='';
-
-        selectedSehir.value = null;
-        selectedIlce.value = null;
+      selectedSehir.value = null;
+      selectedIlce.value = null;
     }
 
     function clearPage() {
@@ -3077,6 +3111,27 @@ export default defineComponent({
         device: null,
       };
 
+      device.value = {
+        address: null,
+        addressId: '',
+        assemblyDateString: '',
+        description: '',
+        deviceModel: null,
+        deviceModelId: '',
+        id: null,
+        rowId: '',
+        serialNumber: '',
+        status: false,
+      };
+
+      selectedModelName.value = '';
+
+      selectedSerialNo.value = '';
+
+      contractMaintenanceStatus.value = '';
+
+      deviceStatus.value = '';
+
       contracts.value = [];
 
       deviceInfoList.value = [];
@@ -3087,6 +3142,9 @@ export default defineComponent({
       };
 
       deviceServices.value = [];
+
+      backgroundColor.value = '';
+      maintenanceBackgroundColor.value = '';
     }
 
     function clearSevicAcModal() {
@@ -3225,10 +3283,6 @@ export default defineComponent({
     }
 
     async function onCustomerChange() {
-      console.clear();
-      clearPage();
-      console.log(selectedCustomer);
-
       if (!selectedCustomer) {
         customerList.value = [];
         selectedDevice.value = '';
@@ -3239,10 +3293,6 @@ export default defineComponent({
     }
 
     async function onDeviceNoChange() {
-      console.clear();
-      clearPage();
-      console.log(selectedDevice);
-
       if (!selectedDevice) {
         selectedCustomer.value = '';
         return;
@@ -3252,10 +3302,6 @@ export default defineComponent({
     }
 
     async function onSerialNoChange() {
-      console.clear();
-      clearPage();
-      console.log(selectedSerialNo);
-
       if (!selectedSerialNo) {
         seriNoList.value = [];
         selectedCustomer.value = '';
@@ -3268,10 +3314,6 @@ export default defineComponent({
     }
 
     async function onModelNameChange() {
-      console.clear();
-      clearPage();
-      console.log(selectedModelName);
-
       if (!selectedModelName) {
         modelList.value = [];
         selectedCustomer.value = '';
@@ -3387,7 +3429,6 @@ export default defineComponent({
     }
 
     async function getAddressById(id) {
-      
       await store
         .dispatch(Actions.GET_ADDRESSBYID, id)
         .then(async result => {
@@ -3408,6 +3449,7 @@ export default defineComponent({
     }
 
     async function getMainPageCustomer(rowId) {
+      clearPage();
       anaSayfaLoading.value = true;
       cihazListesiDialogVisible.value = false;
       await store
@@ -3431,13 +3473,13 @@ export default defineComponent({
               contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
               maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
               backgroundColor.value = device.value.status ? '#ABEBC6' : '#F5B7B1';
+              selectedModelName.value = deviceModel.value.name;
+              selectedSerialNo.value = device.value.serialNumber;
             }
 
             deviceList.value = result.data.devices;
             selectedDevice.value = result.data.deviceId;
             selectedCustomer.value = result.data.customerTitle;
-            selectedSerialNo.value = device.value.serialNumber;
-            selectedModelName.value = deviceModel.value.name;
             deviceServices.value = result.data.deviceServices;
           } else {
             Swal.fire({
@@ -4076,5 +4118,9 @@ export default defineComponent({
 .arama {
   border: 1px solid #ebd72a;
   border-radius: 5px;
+}
+
+.el-popper {
+  width: 1100px;
 }
 </style>

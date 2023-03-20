@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory , RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import store from "@/store";
 import { Actions } from "@/store/enums/StoreEnums";
 
@@ -32,6 +32,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/sozlesmeBasim",
         name: "sozlesmeBasim",
         component: () => import("@/views/reports/SozlesmeBasim.vue"),
+      },
+      {
+        path: "/bakimRaporu",
+        name: "bakimRaporu",
+        component: () => import("@/views/reports/BakimRaporu.vue"),
       },
     ],
   },
