@@ -11,6 +11,7 @@ interface IFirmaOzetData {
     accountCode?: string | '',
     authorizedName?: string | '',
     authorizedPhone?: string | '',
+    authorizedWorkPhone?: string | '',
     authorizedTask?: string | '',
     cityName?: string | '',
     authorizedEmail?: string | '',

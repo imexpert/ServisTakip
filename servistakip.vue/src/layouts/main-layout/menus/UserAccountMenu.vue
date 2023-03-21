@@ -16,14 +16,10 @@
         <!--begin::Username-->
         <div class="d-flex flex-column">
           <div class="fw-bold d-flex align-items-center fs-5">
-            Max Smith
-            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2"
-              >Pro</span
-            >
+            {{ fullName }}
+            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Admin</span>
           </div>
-          <a href="#" class="fw-semobold text-muted text-hover-primary fs-7"
-            >max@kt.com</a
-          >
+          <a href="#" class="fw-semobold text-muted text-hover-primary fs-7">{{ email }}</a>
         </div>
         <!--end::Username-->
       </div>
@@ -36,9 +32,7 @@
 
     <!--begin::Menu item-->
     <div class="menu-item px-5">
-      <router-link to="/pages/profile/overview" class="menu-link px-5">
-        Profilim
-      </router-link>
+      <router-link to="/pages/profile/overview" class="menu-link px-5"> Profilim </router-link>
     </div>
     <!--end::Menu item-->
 
@@ -47,9 +41,7 @@
       <router-link to="/pages/profile/overview" class="menu-link px-5">
         <span class="menu-text">Üzerimdeki İşler</span>
         <span class="menu-badge">
-          <span class="badge badge-light-danger badge-circle fw-bold fs-7"
-            >3</span
-          >
+          <span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
         </span>
       </router-link>
     </div>
@@ -57,9 +49,7 @@
 
     <!--begin::Menu item-->
     <div class="menu-item px-5">
-      <router-link to="/pages/profile/overview" class="menu-link px-5">
-        Mesajlarım
-      </router-link>
+      <router-link to="/pages/profile/overview" class="menu-link px-5"> Mesajlarım </router-link>
     </div>
     <!--end::Menu item-->
 
@@ -77,59 +67,60 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
-import { useI18n } from "vue-i18n";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { Actions } from "@/store/enums/StoreEnums";
+import { defineComponent, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { Actions } from '@/store/enums/StoreEnums';
+import JwtService from '@/core/services/JwtService';
 
 export default defineComponent({
-  name: "kt-user-menu",
-  components: {},
+  name: 'kt-user-menu',
+  components: {
+  },
   setup() {
     const router = useRouter();
     const i18n = useI18n();
     const store = useStore();
 
-    i18n.locale.value = localStorage.getItem("lang")
-      ? (localStorage.getItem("lang") as string)
-      : "en";
+    const fullName = JwtService.getFullName();
+    const email = JwtService.getEmail();
+
+    i18n.locale.value = localStorage.getItem('lang') ? (localStorage.getItem('lang') as string) : 'en';
 
     const countries = {
       en: {
-        flag: "media/flags/united-states.svg",
-        name: "English",
+        flag: 'media/flags/united-states.svg',
+        name: 'English',
       },
       es: {
-        flag: "media/flags/spain.svg",
-        name: "Spanish",
+        flag: 'media/flags/spain.svg',
+        name: 'Spanish',
       },
       de: {
-        flag: "media/flags/germany.svg",
-        name: "German",
+        flag: 'media/flags/germany.svg',
+        name: 'German',
       },
       ja: {
-        flag: "media/flags/japan.svg",
-        name: "Japanese",
+        flag: 'media/flags/japan.svg',
+        name: 'Japanese',
       },
       fr: {
-        flag: "media/flags/france.svg",
-        name: "French",
+        flag: 'media/flags/france.svg',
+        name: 'French',
       },
     };
 
     const signOut = () => {
-      store
-        .dispatch(Actions.LOGOUT)
-        .then(() => router.push({ name: "sign-in" }));
+      store.dispatch(Actions.LOGOUT).then(() => router.push({ name: 'sign-in' }));
     };
 
-    const setLang = (lang) => {
-      localStorage.setItem("lang", lang);
+    const setLang = lang => {
+      localStorage.setItem('lang', lang);
       i18n.locale.value = lang;
     };
 
-    const currentLanguage = (lang) => {
+    const currentLanguage = lang => {
       return i18n.locale.value === lang;
     };
 
@@ -143,6 +134,9 @@ export default defineComponent({
       currentLanguage,
       currentLangugeLocale,
       countries,
+      store,
+      fullName,
+      email
     };
   },
 });

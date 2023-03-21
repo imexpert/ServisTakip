@@ -1,6 +1,6 @@
 {
-  "name": "demo1",
-  "version": "8.1.2",
+  "name": "servistakip",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",

@@ -40,6 +40,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         AccountCode = lastService.Device.Address.AccountCode,
                         AuthorizedName = lastService.Device.Address.AuthorizedName,
                         AuthorizedPhone = lastService.Device.Address.AuthorizedPhone,
+                        AuthorizedWorkPhone = lastService.Device.Address.AuthorizedWorkPhone,
                         AuthorizedTask = lastService.Device.Address.AuthorizedTask,
                         CityName = lastService.Device.Address.Querter.District.City.Name,
                         CustomerId = lastService.Device.Address.Customer.Id,
@@ -98,6 +99,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         AccountCode = lastDevice.Address.AccountCode,
                         AuthorizedName = lastDevice.Address.AuthorizedName,
                         AuthorizedPhone = lastDevice.Address.AuthorizedPhone,
+                        AuthorizedWorkPhone = lastDevice.Address.AuthorizedWorkPhone,
                         AuthorizedTask = lastDevice.Address.AuthorizedTask,
                         CityName = lastDevice.Address.Querter.District.City.Name,
                         CustomerId = lastDevice.Address.Customer.Id,
@@ -146,6 +148,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         result.AuthorizedEmail = address.AuthorizedEmail;
                         result.AuthorizedName = address.AuthorizedName;
                         result.AuthorizedPhone = address.AuthorizedPhone;
+                        result.AuthorizedWorkPhone = address.AuthorizedWorkPhone;
                         result.AuthorizedTask = address.AuthorizedTask;
                         result.Department = address.Department;
                         result.CityName = address.Querter.District.City.Name;

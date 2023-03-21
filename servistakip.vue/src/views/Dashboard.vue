@@ -141,7 +141,7 @@
             </div>
           </div>
           <div class="row mb-1">
-            <div class="col-md-12 fv-row">
+            <div class="col-md-10 fv-row">
               <label class="required fs-5 fw-semobold mb-2">Firma Unvan</label>
               <el-select
                 @change="onCustomerChange()"
@@ -195,6 +195,15 @@
                   </div>
                 </el-option>
               </el-select>
+            </div>
+            <div class="col-md-2 col-lg-2 col-xl-2 col-sm-2 fv-row">
+              <label class="fs-5 fw-semobold mb-2">Bölge</label>
+              <el-input readonly disabled v-model="firmaOzet.regionCode" class="input-with-select"> </el-input>
+              <div class="fv-plugins-message-container">
+                <div class="fv-help-block">
+                  <ErrorMessage name="bolge" />
+                </div>
+              </div>
             </div>
           </div>
           <div class="row mb-1">
@@ -266,14 +275,15 @@
               </div>
             </div>
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
-              <label class="fs-5 fw-semobold mb-2">Bölge</label>
-              <el-input readonly disabled v-model="firmaOzet.regionCode" class="input-with-select"> </el-input>
+              <label class="fs-5 fw-semobold mb-2">Tel (İş)</label>
+              <el-input readonly disabled v-model="firmaOzet.authorizedWorkPhone" class="input-with-select"> </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
-                  <ErrorMessage name="bolge" />
+                  <ErrorMessage name="departman" />
                 </div>
               </div>
             </div>
+            
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">Departman</label>
               <el-input readonly disabled v-model="firmaOzet.department" class="input-with-select"> </el-input>
@@ -2343,6 +2353,7 @@ export default defineComponent({
       authorizedEmail: '',
       authorizedName: '',
       authorizedPhone: '',
+      authorizedWorkPhone:'',
       authorizedTask: '',
       backgroundColor: '',
       cityName: '',
@@ -3093,6 +3104,7 @@ export default defineComponent({
         accountCode: '',
         authorizedName: '',
         authorizedPhone: '',
+        authorizedWorkPhone:'',
         authorizedTask: '',
         cityName: '',
         authorizedEmail: '',
@@ -3999,6 +4011,7 @@ export default defineComponent({
 
     onMounted(async () => {
       await getLastTradedCustomer();
+      console.log(store.getters.currentUser);
     });
 
     return {

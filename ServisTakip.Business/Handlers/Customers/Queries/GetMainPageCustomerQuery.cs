@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
+using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Devices;
@@ -41,6 +42,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         AccountCode = device.Address.AccountCode,
                         AuthorizedName = device.Address.AuthorizedName,
                         AuthorizedPhone = device.Address.AuthorizedPhone,
+                        AuthorizedWorkPhone = device.Address.AuthorizedWorkPhone,
                         AuthorizedTask = device.Address.AuthorizedTask,
                         CityName = device.Address.Querter.District.City.Name,
                         CustomerId = device.Address.Customer.Id,
@@ -81,6 +83,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.AddressId = address.Id;
                     result.AuthorizedName = address.AuthorizedName;
                     result.AuthorizedPhone = address.AuthorizedPhone;
+                    result.AuthorizedWorkPhone = address.AuthorizedWorkPhone;
                     result.AuthorizedTask = address.AuthorizedTask;
                     result.AuthorizedEmail = address.AuthorizedEmail;
                     result.Department = address.Department;

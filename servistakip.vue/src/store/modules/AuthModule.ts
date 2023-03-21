@@ -60,6 +60,8 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
     this.user = user;
     this.errors = {};
     JwtService.saveToken(user.token);
+    JwtService.saveFullName(user.fullname);
+    JwtService.saveEmail(user.email);
   }
 
   @Mutation
