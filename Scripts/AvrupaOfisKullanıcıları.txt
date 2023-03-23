@@ -1,0 +1,208 @@
+{
+  "companyId": 1,
+  "firstname": "UGUR",
+  "lastname": "OSMANLI",
+  "email": "ugur@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "ABDULSELAM",
+  "lastname": "DOĞMUŞ",
+  "email": "teknisyen@gmail.com",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "OSMAN",
+  "lastname": "ÖZHANCI",
+  "email": "osman.ozhanci@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "İDRİS",
+  "lastname": "KAYMAK",
+  "email": "idris.kaymak@gmail.com",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "MUSTAFA",
+  "lastname": "KAYA",
+  "email": "mustafa.kaya@gmail.com",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "Teknik",
+  "lastname": "Servis",
+  "email": "teknik@avruofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "TAYFUN",
+  "lastname": "SUBAŞI",
+  "email": "tayfun@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "KAYA",
+  "lastname": "PALANCIOĞLU",
+  "email": "kaya.palancioglu@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "YASİN",
+  "lastname": "DÖNMEZER",
+  "email": "yasin.donmezler@gmail.com",
+  "password": "Avrupa1"
+}
+
+
+{
+  "companyId": 1,
+  "firstname": "BURCİN",
+  "lastname": "PİRİNCİOĞLU",
+  "email": "burcin@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "SERKAN",
+  "lastname": "KARASU",
+  "email": "serkan.karasu@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "DİLAVER",
+  "lastname": "DİLAVER",
+  "email": "dilaver@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "TUFAN",
+  "lastname": "TALAY",
+  "email": "tufan@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "CAN",
+  "lastname": "AYDIN",
+  "email": "can.aydin@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "ZİYA",
+  "lastname": "ARAS",
+  "email": "ziya.aras@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "Esra",
+  "lastname": "ARAT",
+  "email": "esra.arat@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+{
+  "companyId": 1,
+  "firstname": "RECEP",
+  "lastname": "EREN",
+  "email": "recep.eren@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+
+
+{
+  "companyId": 1,
+  "firstname": "ERCÜMENT",
+  "lastname": "SIRAY",
+  "email": "ercument.siray@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+{
+  "companyId": 1,
+  "firstname": "Bilinmeyen",
+  "lastname": "Bilinmeyen",
+  "email": "bilinmeyen@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+{
+  "companyId": 1,
+  "firstname": "YÜCEL",
+  "lastname": "İSLAMOĞLU",
+  "email": "yucel@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+{
+  "companyId": 1,
+  "firstname": "ERSİN",
+  "lastname": "YAKIN",
+  "email": "ersin@servisim.biz",
+  "password": "Avrupa1"
+}
+{
+  "companyId": 1,
+  "firstname": "SADULLAH",
+  "lastname": "PALANCIOĞLU",
+  "email": "sadullah@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+{
+  "companyId": 1,
+  "firstname": "BURAK",
+  "lastname": "GÜNER",
+  "email": "burak.guner@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+{
+  "companyId": 1,
+  "firstname": "ZAFER",
+  "lastname": "ÖNDER",
+  "email": "zafer@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+{
+  "companyId": 1,
+  "firstname": "KADİR",
+  "lastname": "AYVAZ",
+  "email": "kadir@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+{
+  "companyId": 1,
+  "firstname": "ÜMİT",
+  "lastname": "GÜNGÖR",
+  "email": "umit.gungor@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
+{
+  "companyId": 1,
+  "firstname": "SUPHİ",
+  "lastname": "AKARLAR",
+  "email": "suphi@avrupaofis.com.tr",
+  "password": "Avrupa1"
+}
