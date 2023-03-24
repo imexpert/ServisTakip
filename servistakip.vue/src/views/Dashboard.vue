@@ -13,7 +13,7 @@
                     </el-icon>
                   </el-button>
                   <template #dropdown>
-                    <el-dropdown-menu>
+                    <el-dropdown-menu class="dropdownMenu">
                       <el-dropdown-item command="MI">
                         <el-icon> <Plus></Plus> </el-icon>Yeni Ekle
                       </el-dropdown-item>
@@ -35,7 +35,7 @@
                     </el-icon>
                   </el-button>
                   <template #dropdown>
-                    <el-dropdown-menu>
+                    <el-dropdown-menu class="dropdownMenu">
                       <el-dropdown-item command="CI" :disabled="firmaOzet.addressId == null">
                         <el-icon> <Plus></Plus> </el-icon>Cihaz Ekle
                       </el-dropdown-item>
@@ -94,6 +94,7 @@
                   </div>
                 </li>
                 <el-option
+                  class="aramaDropdownMenu"
                   style="font-weight: 900"
                   v-for="item in deviceInfoList"
                   :key="item.rowId"
@@ -283,7 +284,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">Departman</label>
               <el-input readonly disabled v-model="firmaOzet.department" class="input-with-select"> </el-input>
@@ -1317,13 +1318,13 @@
                           {{ item.addressTitle }}
                         </div>
                         <div class="col-md-3" style="font-size: 12px">
-                          {{ item.querter.district.city.name }}
+                          {{ item.district.city.name }}
                         </div>
                         <div class="col-md-3" style="font-size: 12px">
-                          {{ item.querter.district.name }}
+                          {{ item.district.name }}
                         </div>
                         <div class="col-md-3" style="font-size: 12px">
-                          {{ item.querter.name }}
+                          {{ item.querterName }}
                         </div>
                       </div>
                     </el-option>
@@ -1684,21 +1685,21 @@
             <el-table-column label="Şehir" width="120" sortable>
               <template #default="scope">
                 <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.querter.district.city.name }}</span>
+                  <span>{{ scope.row.district.city.name }}</span>
                 </div>
               </template>
             </el-table-column>
             <el-table-column label="İlçe" width="130">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.querter.district.name }}</span>
+                  <span>{{ scope.row.district.name }}</span>
                 </div>
               </template>
             </el-table-column>
             <el-table-column label="Semt" width="140">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
-                  <span>{{ scope.row.querter.name }}</span>
+                  <span>{{ scope.row.querterName }}</span>
                 </div>
               </template>
             </el-table-column>
@@ -1867,13 +1868,7 @@
                 </label>
                 <!--end::Label-->
                 <el-form-item prop="selectedIlce">
-                  <el-select
-                    @change="onIlceChange()"
-                    placeholder="İlçe seçiniz"
-                    filterable
-                    clearable
-                    v-model="selectedIlce"
-                  >
+                  <el-select placeholder="İlçe seçiniz" filterable clearable v-model="selectedIlce">
                     <el-option v-for="item in ilceList" :key="item.id" :label="item.name" :value="item.id"> </el-option>
                   </el-select>
                 </el-form-item>
@@ -1890,10 +1885,8 @@
                   <span>Semt</span>
                 </label>
                 <!--end::Label-->
-                <el-form-item prop="quarterId">
-                  <el-select placeholder="Semt seçiniz" filterable clearable v-model="newAddress.quarterId">
-                    <el-option v-for="item in semtList" :key="item.id" :label="item.name" :value="item.id"> </el-option>
-                  </el-select>
+                <el-form-item prop="querterName">
+                  <el-input v-model="newAddress.querterName" placeholder="Semt giriniz"></el-input>
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -2340,8 +2333,8 @@ export default defineComponent({
       customer: null,
       deviceModel: null,
       netAddress: '',
-      quarterId: '',
-      querter: null,
+      querterName: '',
+      regionCode: '',
     });
 
     var firmaOzet = ref<IFirmaOzetData>({
@@ -2353,7 +2346,7 @@ export default defineComponent({
       authorizedEmail: '',
       authorizedName: '',
       authorizedPhone: '',
-      authorizedWorkPhone:'',
+      authorizedWorkPhone: '',
       authorizedTask: '',
       backgroundColor: '',
       cityName: '',
@@ -2682,10 +2675,10 @@ export default defineComponent({
           trigger: 'blur',
         },
       ],
-      quarterId: [
+      districtId: [
         {
           required: true,
-          message: 'Semt seçilmedi.',
+          message: 'İlçe seçilmedi.',
           trigger: 'blur',
         },
       ],
@@ -3087,8 +3080,7 @@ export default defineComponent({
       newAddress.value.description = '';
       newAddress.value.id = '';
       (newAddress.value.customer = null), (newAddress.value.deviceModel = null), (newAddress.value.netAddress = '');
-      newAddress.value.quarterId = '';
-      newAddress.value.querter = null;
+      newAddress.value.querterName = '';
       newAddress.value.department = '';
 
       selectedSehir.value = null;
@@ -3104,7 +3096,7 @@ export default defineComponent({
         accountCode: '',
         authorizedName: '',
         authorizedPhone: '',
-        authorizedWorkPhone:'',
+        authorizedWorkPhone: '',
         authorizedTask: '',
         cityName: '',
         authorizedEmail: '',
@@ -3396,7 +3388,6 @@ export default defineComponent({
 
     async function onSehirChange() {
       selectedIlce.value = '';
-      newAddress.value.quarterId = '';
       semtList.value = [];
       ilceList.value = [];
 
@@ -3418,28 +3409,6 @@ export default defineComponent({
       adresLoading.value = false;
     }
 
-    async function onIlceChange() {
-      newAddress.value.quarterId = '';
-      semtList.value = [];
-
-      adresLoading.value = true;
-
-      if (selectedIlce.value) {
-        await store
-          .dispatch(Actions.GET_QUERTER_LIST, selectedIlce.value)
-          .then(result => {
-            if (result.isSuccess) {
-              semtList.value = result.data;
-            }
-          })
-          .catch(() => {
-            const [error] = Object.keys(store.getters.getErrors);
-          });
-      }
-
-      adresLoading.value = false;
-    }
-
     async function getAddressById(id) {
       await store
         .dispatch(Actions.GET_ADDRESSBYID, id)
@@ -3448,10 +3417,9 @@ export default defineComponent({
             console.clear();
             console.log(result.data);
 
-            selectedSehir.value = result.data.querter.district.city.id;
+            selectedSehir.value = result.data.district.city.id;
             await onSehirChange();
-            selectedIlce.value = result.data.querter.district.id;
-            await onIlceChange();
+            selectedIlce.value = result.data.district.id;
             newAddress.value = result.data;
           }
         })
@@ -3547,6 +3515,7 @@ export default defineComponent({
         .dispatch(Actions.GET_ADDRESSLISTBYCUSTOMERID, customerId)
         .then(result => {
           if (result.isSuccess) {
+            console.log(result.data);
             addressList.value = result.data;
           }
         })
@@ -4112,7 +4081,6 @@ export default defineComponent({
       addressSubmit,
       adresDialogAc,
       onSehirChange,
-      onIlceChange,
       deleteAdres,
       handleDeviceMenuCommand,
       handleCustomerMenuCommand,
@@ -4133,7 +4101,10 @@ export default defineComponent({
   border-radius: 5px;
 }
 
-.el-popper {
+.dropdownMenu {
+  width: 150px;
+}
+.aramaDropdownMenu {
   width: 1100px;
 }
 </style>

@@ -43,7 +43,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                                 {
                                     cst.AddressId = address.Id;
                                     cst.Address = address.AddressTitle;
-                                    cst.Querter = address.Querter.Name;
+                                    cst.District = address.District.Name;
                                     cst.DeviceId = device.Id;
                                     cst.Model = device.DeviceModel.Name;
                                     cst.SerialNo = device.SerialNumber;
@@ -55,13 +55,13 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                             }
                             else
                             {
-                                cst.Querter = null;
+                                cst.District = null;
                                 cst.DeviceId = 0;
                                 cst.Model = null;
                                 cst.SerialNo = null;
                                 cst.AddressId = address.Id;
                                 cst.Address = address.AddressTitle;
-                                cst.Querter = address.Querter.Name;
+                                cst.District = address.District.Name;
                                 cst.Department = address.Department;
                                 result.Add(cst.Clone());
                             }

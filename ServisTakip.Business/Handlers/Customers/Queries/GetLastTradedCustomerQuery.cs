@@ -42,14 +42,14 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         AuthorizedPhone = lastService.Device.Address.AuthorizedPhone,
                         AuthorizedWorkPhone = lastService.Device.Address.AuthorizedWorkPhone,
                         AuthorizedTask = lastService.Device.Address.AuthorizedTask,
-                        CityName = lastService.Device.Address.Querter.District.City.Name,
+                        CityName = lastService.Device.Address.District.City.Name,
                         CustomerId = lastService.Device.Address.Customer.Id,
                         AuthorizedEmail = lastService.Device.Address.AuthorizedEmail,
                         DeviceId = lastService.DeviceId,
-                        DistrictName = lastService.Device.Address.Querter.District.Name,
-                        QuarterName = lastService.Device.Address.Querter.Name,
+                        DistrictName = lastService.Device.Address.District.Name,
+                        QuarterName = lastService.Device.Address.QuerterName,
                         Department = lastService.Device.Address.Department,
-                        RegionCode = lastService.Device.Address.Querter.RegionCode,
+                        RegionCode = lastService.Device.Address.RegionCode,
                         Device = mapper.Map<DeviceDto>(lastService.Device),
                         RowId = $"{lastService.Device.Address.Customer.Id}|{lastService.Device.Address.Id}|{lastService.DeviceId}"
                     };
@@ -101,14 +101,14 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         AuthorizedPhone = lastDevice.Address.AuthorizedPhone,
                         AuthorizedWorkPhone = lastDevice.Address.AuthorizedWorkPhone,
                         AuthorizedTask = lastDevice.Address.AuthorizedTask,
-                        CityName = lastDevice.Address.Querter.District.City.Name,
+                        CityName = lastDevice.Address.District.City.Name,
                         CustomerId = lastDevice.Address.Customer.Id,
                         AuthorizedEmail = lastDevice.Address.AuthorizedEmail,
                         Department = lastDevice.Address.Department,
                         DeviceId = lastDevice.Id,
-                        DistrictName = lastDevice.Address.Querter.District.Name,
-                        QuarterName = lastDevice.Address.Querter.Name,
-                        RegionCode = lastDevice.Address.Querter.RegionCode,
+                        DistrictName = lastDevice.Address.District.Name,
+                        QuarterName = lastDevice.Address.QuerterName,
+                        RegionCode = lastDevice.Address.RegionCode,
                         Device = mapper.Map<DeviceDto>(lastDevice),
                         RowId = $"{lastDevice.Address.Customer.Id}|{lastDevice.Address.Id}|{lastDevice.Id}"
                     };
@@ -151,9 +151,9 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         result.AuthorizedWorkPhone = address.AuthorizedWorkPhone;
                         result.AuthorizedTask = address.AuthorizedTask;
                         result.Department = address.Department;
-                        result.CityName = address.Querter.District.City.Name;
-                        result.DistrictName = address.Querter.District.Name;
-                        result.QuarterName = address.Querter.Name;
+                        result.CityName = address.District.City.Name;
+                        result.DistrictName = address.District.Name;
+                        result.QuarterName = address.QuerterName;
                         result.RowId = $"{customer.Id}|{address.Id}|{0}";
                     }
                     else

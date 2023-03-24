@@ -1,6 +1,6 @@
 ﻿using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Devices;
-using ServisTakip.Entities.DTOs.Querters;
+using ServisTakip.Entities.DTOs.Districts;
 
 namespace ServisTakip.Entities.DTOs.Addresses
 {
@@ -22,7 +22,7 @@ namespace ServisTakip.Entities.DTOs.Addresses
         public bool Status { get; set; }
         public CustomerDto Customer { get; set; }
         public List<DeviceDto> Devices { get; set; }
-        public QuerterDto Querter { get; set; }
+        public DistrictDto District { get; set; }
 
     }
 }

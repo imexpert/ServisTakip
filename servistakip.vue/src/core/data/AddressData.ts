@@ -1,11 +1,14 @@
 import { ICustomerData } from "./CustomerData";
 import { IDeviceModelData } from "./DeviceModelData";
+import { IDistrictData } from "./DistrictData";
 import { IQuerterData } from "./QuerterData";
 
 interface IAddressData {
     id?: string | '',
     customerId?: string | '',
-    quarterId?: string | '',
+    districtId?: string | '',
+    querterName: string | '',
+    regionCode: string | '',
     serialNumber: string | '',
     addressTitle: string | '',
     accountCode: string | '',
@@ -18,7 +21,7 @@ interface IAddressData {
     description?: string | '',
     department?: string | '',
     customer?: ICustomerData | null;
-    querter?: IQuerterData | null;
+    district?: IDistrictData | null;
     deviceModel?: IDeviceModelData | null;
 }
 

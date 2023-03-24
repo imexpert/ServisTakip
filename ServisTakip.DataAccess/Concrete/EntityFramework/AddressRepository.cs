@@ -20,7 +20,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
         {
             return await _context.Addresses
                 .Include(s => s.Customer).ThenInclude(s=>s.Sector)
-                .Include(s=>s.Querter).ThenInclude(s=>s.District).ThenInclude(s=>s.City)
+                .Include(s=>s.District).ThenInclude(s=>s.City)
                 .Where(s => s.Id == addressId && s.Customer.CompanyId == Utils.CompanyId)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
@@ -30,7 +30,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
         {
             return await _context.Addresses
                 .Include(s => s.Customer).ThenInclude(s => s.Sector)
-                .Include(s => s.Querter).ThenInclude(s => s.District).ThenInclude(s => s.City)
+                .Include(s => s.District).ThenInclude(s => s.City)
                 .Where(s => s.CustomerId == customerId && s.Customer.CompanyId == Utils.CompanyId)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);

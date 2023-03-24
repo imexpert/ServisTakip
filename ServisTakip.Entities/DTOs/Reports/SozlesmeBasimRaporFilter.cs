@@ -5,7 +5,7 @@
         public long? CustomerId { get; set; }
         public long? SehirId { get; set; }
         public long? IlceId { get; set; }
-        public long? SemtId { get; set; }
+        public string SemtId { get; set; }
         public long? Model { get; set; }
         public string SerialNo { get; set; }
         public List<string> SozlesmeKodlari { get; set; }

@@ -58,6 +58,7 @@
     "yup": "^0.32.8"
   },
   "devDependencies": {
+    "@volar-plugins/vetur": "latest",
     "@types/array-sort": "^1.0.0",
     "@types/prismjs": "^1.16.2",
     "@typescript-eslint/eslint-plugin": "^5.4.0",

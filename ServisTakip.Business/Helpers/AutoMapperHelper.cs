@@ -11,7 +11,6 @@ using ServisTakip.Entities.DTOs.DeviceBrands;
 using ServisTakip.Entities.DTOs.DeviceModels;
 using ServisTakip.Entities.DTOs.DeviceTypes;
 using ServisTakip.Entities.DTOs.ResultCodes;
-using ServisTakip.Entities.DTOs.Querters;
 using ServisTakip.Entities.DTOs.Addresses;
 using ServisTakip.Entities.DTOs.ContractCodes;
 using ServisTakip.Entities.DTOs.Contracts;
@@ -43,7 +42,6 @@ namespace ServisTakip.Business.Helpers
             CreateMap<DeviceType, DeviceTypeDto>().ReverseMap();
             CreateMap<ResultCode, ResultCodeDto>().ReverseMap();
             CreateMap<CustomerDto, Customer>().ReverseMap();
-            CreateMap<QuerterDto, Querter>().ReverseMap();
             CreateMap<AddressDto, Address>().ReverseMap();
             CreateMap<UpdateAddressDto, Address>().ReverseMap();
             CreateMap<CreateAddressDto, Address>().ReverseMap();

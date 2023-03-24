@@ -5,7 +5,9 @@ namespace ServisTakip.Entities.Concrete
     public class Address: BaseEntity
     {
         public long CustomerId { get; set; }
-        public long QuarterId { get; set; }
+        public long DistrictId { get; set; }
+        public string QuerterName { get; set; }
+        public string RegionCode { get; set; }
         public string AddressTitle { get; set; }
         public string AccountCode { get; set; }
         public string NetAddress { get; set; }
@@ -19,6 +21,6 @@ namespace ServisTakip.Entities.Concrete
         public bool Status { get; set; }
         public ICollection<Device> Devices { get; set; }
         public Customer Customer { get; set; }
-        public Querter Querter { get; set; }
+        public District District { get; set; }
     }
 }

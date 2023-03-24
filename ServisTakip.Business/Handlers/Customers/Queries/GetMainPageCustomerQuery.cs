@@ -44,14 +44,14 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         AuthorizedPhone = device.Address.AuthorizedPhone,
                         AuthorizedWorkPhone = device.Address.AuthorizedWorkPhone,
                         AuthorizedTask = device.Address.AuthorizedTask,
-                        CityName = device.Address.Querter.District.City.Name,
+                        CityName = device.Address.District.City.Name,
                         CustomerId = device.Address.Customer.Id,
                         AuthorizedEmail = device.Address.AuthorizedEmail,
                         Department = device.Address.Department,
                         DeviceId = device.Id,
-                        DistrictName = device.Address.Querter.District.Name,
-                        QuarterName = device.Address.Querter.Name,
-                        RegionCode = device.Address.Querter.RegionCode,
+                        DistrictName = device.Address.District.Name,
+                        QuarterName = device.Address.QuerterName,
+                        RegionCode = device.Address.RegionCode,
                         Device = mapper.Map<DeviceDto>(device),
                         RowId = $"{device.Address.Customer.Id}|{device.Address.Id}|{device.Id}"
                     };
@@ -87,10 +87,10 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.AuthorizedTask = address.AuthorizedTask;
                     result.AuthorizedEmail = address.AuthorizedEmail;
                     result.Department = address.Department;
-                    result.CityName = address.Querter.District.City.Name;
-                    result.DistrictName = address.Querter.District.Name;
-                    result.QuarterName = address.Querter.Name;
-                    result.RegionCode = address.Querter.RegionCode;
+                    result.CityName = address.District.City.Name;
+                    result.DistrictName = address.District.Name;
+                    result.QuarterName = address.QuerterName;
+                    result.RegionCode = address.RegionCode;
                     result.CustomerTitle = address.Customer.Title;
                     result.CustomerId = address.Customer.Id;
                     result.CustomerSector = address.Customer.Sector.Name;

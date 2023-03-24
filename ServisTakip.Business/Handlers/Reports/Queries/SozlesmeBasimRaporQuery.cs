@@ -28,13 +28,13 @@ namespace ServisTakip.Business.Handlers.Reports.Queries
                     contractQuery = contractQuery.Where(s => s.Device.Address.CustomerId == request.Model.CustomerId);
 
                 if (request.Model.SehirId.HasValue)
-                    contractQuery = contractQuery.Where(s => s.Device.Address.Querter.District.CityId == request.Model.SehirId);
+                    contractQuery = contractQuery.Where(s => s.Device.Address.District.CityId == request.Model.SehirId);
 
                 if (request.Model.IlceId.HasValue)
-                    contractQuery = contractQuery.Where(s => s.Device.Address.Querter.DistrictId == request.Model.IlceId);
+                    contractQuery = contractQuery.Where(s => s.Device.Address.DistrictId == request.Model.IlceId);
 
-                if (request.Model.SemtId.HasValue)
-                    contractQuery = contractQuery.Where(s => s.Device.Address.QuarterId == request.Model.SemtId);
+                if (!string.IsNullOrEmpty(request.Model.SemtId))
+                    contractQuery = contractQuery.Where(s => s.Device.Address.QuerterName == request.Model.SemtId);
 
                 if (request.Model.Model.HasValue)
                     contractQuery = contractQuery.Where(s => s.Device.DeviceModelId == request.Model.Model);

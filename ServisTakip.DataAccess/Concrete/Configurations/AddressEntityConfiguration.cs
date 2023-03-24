@@ -13,7 +13,7 @@ namespace ServisTakip.DataAccess.Concrete.Configurations
             builder.HasKey(x => x.Id);
 
             builder.HasOne(s => s.Customer).WithMany(s => s.Addresses).HasForeignKey(s => s.CustomerId);
-            builder.HasOne(s => s.Querter).WithMany(s => s.Addresses).HasForeignKey(s => s.QuarterId);
+            builder.HasOne(s => s.District).WithMany(s => s.Addresses).HasForeignKey(s => s.DistrictId);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace ServisTakip.Business.Handlers.Devices.Queries
                         AddressId = device.Address.Id,
                         DeviceId = device.Id,
                         Address = device.Address.AddressTitle,
-                        Querter = device.Address.Querter.Name,
+                        District = device.Address.District.Name,
                         Model = device.DeviceModel.Name,
                         SerialNo = device.SerialNumber,
                         Department = device.Address.Department

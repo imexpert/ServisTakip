@@ -34,7 +34,6 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     .ThenInclude(s => s.DeviceType)
                 .Include(s => s.Device)
                     .ThenInclude(s => s.Address)
-                    .ThenInclude(s => s.Querter)
                     .ThenInclude(s => s.District)
                     .ThenInclude(s => s.City)
                 .Include(s => s.Device)
