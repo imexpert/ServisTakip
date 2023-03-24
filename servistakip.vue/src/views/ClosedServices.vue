@@ -76,6 +76,13 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column label="Departman">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.device.address.department }}</span>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column label="Açıklama">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
@@ -328,7 +335,7 @@
               </label>
               <!--end::Label-->
               <el-form-item prop="wBCount">
-                <el-input v-model="deviceServiceItem.wBCount"></el-input>
+                <el-input v-model="deviceServiceItem.wbCount"></el-input>
               </el-form-item>
             </div>
             <!--end::Input group-->

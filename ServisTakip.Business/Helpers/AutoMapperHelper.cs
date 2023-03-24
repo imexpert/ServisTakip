@@ -11,7 +11,6 @@ using ServisTakip.Entities.DTOs.DeviceBrands;
 using ServisTakip.Entities.DTOs.DeviceModels;
 using ServisTakip.Entities.DTOs.DeviceTypes;
 using ServisTakip.Entities.DTOs.ResultCodes;
-using ServisTakip.Entities.DTOs.Querters;
 using ServisTakip.Entities.DTOs.Addresses;
 using ServisTakip.Entities.DTOs.ContractCodes;
 using ServisTakip.Entities.DTOs.Contracts;
@@ -34,6 +33,7 @@ namespace ServisTakip.Business.Helpers
             CreateMap<Sector, SectorDto>().ReverseMap();
             CreateMap<Company, CompanyDto>().ReverseMap();
             CreateMap<Customer, CreateCustomerDto>().ReverseMap();
+            CreateMap<Customer, UpdateCustomerDto>().ReverseMap();
             CreateMap<City, CityDto>().ReverseMap();
             CreateMap<District, DistrictDto>().ReverseMap();
             CreateMap<BootCode, BootCodeDto>().ReverseMap();
@@ -42,11 +42,12 @@ namespace ServisTakip.Business.Helpers
             CreateMap<DeviceType, DeviceTypeDto>().ReverseMap();
             CreateMap<ResultCode, ResultCodeDto>().ReverseMap();
             CreateMap<CustomerDto, Customer>().ReverseMap();
-            CreateMap<QuerterDto, Querter>().ReverseMap();
             CreateMap<AddressDto, Address>().ReverseMap();
+            CreateMap<UpdateAddressDto, Address>().ReverseMap();
             CreateMap<CreateAddressDto, Address>().ReverseMap();
             CreateMap<Contract, ContractDto>().ReverseMap();
             CreateMap<Device, DeviceDto>().ReverseMap();
+            CreateMap<Device, CreateDeviceDto>().ReverseMap();
             CreateMap<ContractCode, ContractCodeDto>().ReverseMap();
             CreateMap<DeviceServiceDto, DeviceService>().ReverseMap();
             CreateMap<CreateDeviceServiceDto, DeviceService>().ReverseMap();
@@ -56,6 +57,8 @@ namespace ServisTakip.Business.Helpers
             CreateMap<OfferSubjectCodeDto, OfferSubjectCode>().ReverseMap();
             CreateMap<Offer, OfferDto>().ReverseMap();
             CreateMap<Offer, CreateOfferDto>().ReverseMap();
+            CreateMap<Contract, CreateContractDto>().ReverseMap();
+            CreateMap<Contract, UpdateContractDto>().ReverseMap();
         }
     }
 }

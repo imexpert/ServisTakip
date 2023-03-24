@@ -4,6 +4,7 @@ namespace ServisTakip.Entities.DTOs.DeviceTypes
 {
     public class DeviceTypeDto
     {
+        public long Id { get; set; }
         public long CompanyId { get; set; }
         public string Name { get; set; }
         public bool Status { get; set; }

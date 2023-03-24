@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import store from "@/store";
 import { Actions } from "@/store/enums/StoreEnums";
 
@@ -28,6 +28,16 @@ const routes: Array<RouteRecordRaw> = [
         name: "closedServices",
         component: () => import("@/views/ClosedServices.vue"),
       },
+      {
+        path: "/sozlesmeBasim",
+        name: "sozlesmeBasim",
+        component: () => import("@/views/reports/SozlesmeBasim.vue"),
+      },
+      {
+        path: "/bakimRaporu",
+        name: "bakimRaporu",
+        component: () => import("@/views/reports/BakimRaporu.vue"),
+      },
     ],
   },
   {
@@ -49,7 +59,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 

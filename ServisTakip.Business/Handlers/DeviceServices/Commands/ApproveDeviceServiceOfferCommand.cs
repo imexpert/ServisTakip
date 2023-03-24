@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Aspects.Autofac.Transaction;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.DeviceServices;
 using ServisTakip.Entities.DTOs.Offers;
 using ServisTakip.Entities.Enums;
 

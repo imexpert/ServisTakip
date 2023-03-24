@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Serilog.Context;
 using ServisTakip.Api.Infrastructure;
 using ServisTakip.Business.DependencyResolvers;
 using ServisTakip.Core.Extensions;
@@ -23,7 +24,7 @@ builder.Services.AddCustomMediatR();
 
 builder.Services.AddCustomCacheServices();
 
-builder.Services.AddCarbonDbContext();
+builder.Services.AddServisTakipDbContext();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
@@ -47,7 +48,7 @@ app.UseSwagger();
 
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("v1/swagger.json", "Carbon Calculator");
+    c.SwaggerEndpoint("v1/swagger.json", "Servis Takip Api");
     c.DocExpansion(DocExpansion.None);
 });
 
@@ -63,8 +64,10 @@ app.UseAuthorization();
 
 app.Use(async (httpContext, next) =>
 {
-    //LogContext.PushProperty("Username", Utils.Username);
-    //LogContext.PushProperty("ClientIp", httpContext.Connection.RemoteIpAddress);
+    LogContext.PushProperty("UserMail", Utils.Email);
+    LogContext.PushProperty("UserId", Utils.UserId);
+    LogContext.PushProperty("CompanyId", Utils.CompanyId);
+    LogContext.PushProperty("ClientIp", httpContext.Connection.RemoteIpAddress);
 
     await next.Invoke();
 });

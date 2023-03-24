@@ -9,8 +9,6 @@ using ServisTakip.Core.Extensions;
 using FastReport.Export.Pdf;
 using FastReport.Utils;
 using ServisTakip.Entities.DTOs.Reports;
-using ServisTakip.Entities.Concrete;
-using System.IO;
 using AutoMapper;
 using ServisTakip.Entities.DTOs.DeviceServiceParts;
 

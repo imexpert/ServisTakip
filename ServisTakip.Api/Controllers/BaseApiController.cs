@@ -34,5 +34,11 @@ namespace ServisTakip.Api.Controllers
                 StatusCode = response.StatusCode
             };
         }
+
+        [NonAction]
+        public IActionResult CreatePagedActionResult<T>(PagedResult<T> response)
+        {
+            return new ObjectResult(response);
+        }
     }
 }

@@ -12,7 +12,6 @@ import CityModule from "@/store/modules/CityModule";
 import DistrictModule from "@/store/modules/DistrictModule";
 import QuerterModule from "@/store/modules/QuerterModule";
 import BodyModule from "@/store/modules/BodyModule";
-import BreadcrumbsModule from "@/store/modules/BreadcrumbsModule";
 import ConfigModule from "@/store/modules/ConfigModule";
 import ThemeModeModule from "@/store/modules/ThemeModeModule";
 import BootCodeModule from "@/store/modules/BootCodeModule";
@@ -22,6 +21,12 @@ import DeviceServicePartModule from "@/store/modules/DeviceServicePartModule";
 import CompanyModule from "@/store/modules/CompanyModule";
 import OfferModule from "@/store/modules/OfferModule";
 import OfferSubjectModule from "@/store/modules/OfferSubjectModule";
+import DeviceTypeModule from "@/store/modules/DeviceTypeModule";
+import DeviceBrandModule from "@/store/modules/DeviceBrandModule";
+import DeviceModelModule from "@/store/modules/DeviceModelModule";
+import ContractCodeModule from "@/store/modules/ContractCodeModule";
+import ContractModule from "@/store/modules/ContractModule";
+import ReportModule from "@/store/modules/ReportModule";
 
 
 config.rawError = true;
@@ -36,7 +41,6 @@ const store = createStore({
     DistrictModule,
     QuerterModule,
     BodyModule,
-    BreadcrumbsModule,
     ConfigModule,
     ThemeModeModule,
     AddressModule,
@@ -48,7 +52,13 @@ const store = createStore({
     DeviceServicePartModule,
     CompanyModule,
     OfferModule,
-    OfferSubjectModule
+    OfferSubjectModule,
+    DeviceTypeModule,
+    DeviceBrandModule,
+    DeviceModelModule,
+    ContractCodeModule,
+    ContractModule,
+    ReportModule
   },
   mutations: {
     setCustomerId(state, id) {

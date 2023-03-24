@@ -1,13 +1,8 @@
 ﻿using MediatR;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Core.Utilities.Settings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 
 namespace ServisTakip.Business.Handlers.MailSenders.Commands

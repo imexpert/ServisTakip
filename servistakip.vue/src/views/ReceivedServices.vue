@@ -62,6 +62,13 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column label="Departman">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.device.address.department }}</span>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column label="Açıklama">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
@@ -69,6 +76,7 @@
                 </div>
               </template>
             </el-table-column>
+            
             <el-table-column label="#" fixed="left" width="170">
               <template #default="scope">
                 <el-dropdown size="small" type="danger">
@@ -169,6 +177,13 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column label="Departman">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.device.address.department }}</span>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column label="Açıklama">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
@@ -262,6 +277,13 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column label="Departman">
+              <template #default="scope">
+                <div style="display: flex; align-items: center">
+                  <span>{{ scope.row.device.address.department }}</span>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column label="Açıklama">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
@@ -279,7 +301,7 @@
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item>
+                      <el-dropdown-item @click="teknisyenAtaAc(scope.row.id)">
                         <el-icon> <ArrowRight /> </el-icon>&nbsp; Teknisyen Ata
                       </el-dropdown-item>
                       <el-dropdown-item @click="getOrderReceipt(scope.row.id)">
@@ -652,6 +674,7 @@ export default defineComponent({
                   teknisyenAtaDialogVisible.value = false;
                   await getReceivedDeviceServiceList();
                   await getTechnicianAssignedDeviceServiceList();
+                  await getPartsExchangeDeviceServiceList();
                   hideModal(formAssignTechnicianRef.value);
                 });
               } else {

@@ -16,16 +16,26 @@ enum Actions {
   SET_BREADCRUMB_ACTION = "setBreadcrumbAction",
   SET_THEME_MODE_ACTION = "setThemeModeAction",
   GET_SECTOR_LIST = "getsectorlist",
+  GET_CONTRACTCODE_LIST = "getContractCodelist",
   GET_OFFERSUBJECTCODE_LIST = "getOfferSubjectCodelist",
   GET_CITY_LIST = "getCitylist",
   GET_DISTRICT_LIST = "getDistrictlist",
   GET_QUERTER_LIST = "getQuerterlist",
   ADD_CUSTOMER = "addCustomer",
+  UPDATE_CUSTOMER = "updateCustomer",
+  DELETE_CUSTOMER = "deleteCustomer",
   ADD_ADDRESS = "addAddress",
+  UPDATE_ADDRESS = "updateAddress",
+  DELETE_ADDRESS = "deleteAddress",
+  GET_ADDRESSLISTBYCUSTOMERID = "getAddressListByCustomerId",
+  GET_ADDRESSBYID = "getAddressById",
   GET_CUSTOMER = "getCustomer",
   GET_LASTTRADED_CUSTOMER = "getLastTradedCustomer",
   GET_CUSTOMER_BY_FILTER = "getCustomerByFilter",
+  ADD_DEVICE = "addDevice",
+  UPDATE_DEVICE = "updateDevice",
   GET_DEVICE_BY_FILTER = "getDeviceByFilter",
+  GET_DEVICE_BY_ID = "getDeviceById",
   GET_DEVICE_BY_SERIALNO_FILTER = "getDeviceBySerialNoFilter",
   GET_DEVICE_BY_MODEL_NAME_FILTER = "getDeviceByModelNameFilter",
   GET_MAIN_PAGE_CUSTOMER = "getMainPageCustomer",
@@ -68,7 +78,22 @@ enum Actions {
   DELETE_OFFER = "deleteOffer",
   UPDATE_SENDOFFER = "updateSendOffer",
   UPDATE_SENDOFFERAGAIN = "updateSendOfferAgain",
-  GET_OFFERREPORT = "getOfferReport"
+  GET_OFFERREPORT = "getOfferReport",
+
+  GET_DEVICETYPELIST = "getDeviceTypeList",
+  GET_DEVICEBRANDLIST = "getDeviceBrandList",
+  GET_DEVICEMODELBYBRANDIDLIST = "getDeviceModelByBrandList",
+  GET_DEVICEMODELLIST = "getDeviceModelList",
+
+  ADD_CONTRACT = "addContract",
+  UPDATE_CONTRACT = "updateContract",
+  DELETE_CONTRACT = "deleteContract",
+  GET_CONTRACTLIST = "getContractList",
+  GET_CONTRACTBYID = "getContractById",
+
+  GET_MODEL_BY_NAME_FILTER = "getModelByNameFilter",
+
+  GET_SOZLESMEBASIM = "getSozlesmeBasim",
 }
 
 enum Mutations {

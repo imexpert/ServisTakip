@@ -1,5 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import { Actions, Mutations } from "@/store/enums/StoreEnums";
+import { showError } from "@/core/plugins/Utils";
 
 export interface StoreInfo {
   classes: {

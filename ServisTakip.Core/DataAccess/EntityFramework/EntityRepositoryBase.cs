@@ -23,11 +23,24 @@ namespace ServisTakip.Core.DataAccess.EntityFramework
             return Context.Add(entity).Entity;
         }
 
+        public void AddRange(List<TEntity> entityList)
+        {
+            Context.ChangeTracker.Clear();
+            Context.AddRange(entityList);
+        }
+
         public void Delete(TEntity entity)
         {
             Context.ChangeTracker.Clear();
 
             Context.Remove(entity);
+        }
+
+        public void DeleteRange(List<TEntity> entityList)
+        {
+            Context.ChangeTracker.Clear();
+
+            Context.RemoveRange(entityList);
         }
 
         public TEntity Get(Expression<Func<TEntity, bool>> expression)

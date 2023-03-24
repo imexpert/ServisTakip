@@ -1,6 +1,6 @@
 {
-  "name": "demo1",
-  "version": "8.1.2",
+  "name": "servistakip",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
@@ -32,6 +32,7 @@
     "deepmerge": "^4.2.2",
     "dropzone": "^5.9.3",
     "element-plus": "^2.2.4",
+    "libphonenumber-js": "^1.10.21",
     "line-awesome": "^1.3.0",
     "moment": "^2.29.1",
     "nouislider": "^14.6.3",
@@ -43,11 +44,12 @@
     "socicon": "^3.0.5",
     "sweetalert2": "^9.10.12",
     "vee-validate": "^4.5.11",
-    "vue": "^3.2.29",
+    "vue": "^3.2.47",
     "vue-axios": "^3.3.7",
-    "vue-currency-input": "^2.1.0",
+    "vue-currency-input": "3.0.0",
     "vue-i18n": "^9.1.8",
     "vue-inline-svg": "^3.1.0",
+    "vue-phone-number-input": "^1.12.13",
     "vue-router": "^4.0.3",
     "vue3-apexcharts": "^1.4.1",
     "vue3-loading-screen": "^1.0.3",
@@ -56,6 +58,7 @@
     "yup": "^0.32.8"
   },
   "devDependencies": {
+    "@volar-plugins/vetur": "latest",
     "@types/array-sort": "^1.0.0",
     "@types/prismjs": "^1.16.2",
     "@typescript-eslint/eslint-plugin": "^5.4.0",

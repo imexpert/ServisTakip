@@ -45,11 +45,11 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<District> Districts { get; set; }
-        public DbSet<Querter> Querters { get; set; }
         public DbSet<GroupClaim> GroupClaims { get; set; }
         public DbSet<DeviceService> DeviceServices { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Device> Devices { get; set; }
+        public DbSet<DeviceModel> DeviceModels { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<ContractMaintenance> ContractMaintenances { get; set; }

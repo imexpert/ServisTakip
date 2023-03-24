@@ -4,7 +4,6 @@ namespace ServisTakip.Entities.Concrete
 {
     public class DeviceModel : BaseEntity
     {
-        public long CompanyId { get; set; }
         public long DeviceBrandId { get; set; }
         public string Name { get; set; }
         public string PaperType { get; set; }

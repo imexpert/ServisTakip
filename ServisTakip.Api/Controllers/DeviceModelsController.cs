@@ -20,5 +20,36 @@ namespace ServisTakip.Api.Controllers
         {
             return CreateActionResult(await Mediator.Send(new GetDeviceModelListQuery()));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="deviceBrandId"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceModelDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetDeviceModelListWithBrandIdAsync(long deviceBrandId)
+        {
+            return CreateActionResult(await Mediator.Send(new GetDeviceModelListWithBrandIdQuery()
+                { DeviceBrandId = deviceBrandId }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceModelDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetModelNameByFilterAsync(string filter)
+        {
+            return CreateActionResult(await Mediator.Send(new GetModelByNameFilterQuery() { Filter = filter }));
+        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
+using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Devices;
@@ -36,19 +37,22 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result = new LastTradedCustomerInfoDto()
                     {
                         CustomerTitle = device.Address.Customer.Title,
+                        AddressId = device.AddressId,
                         CustomerSector = device.Address.Customer.Sector.Name,
                         AccountCode = device.Address.AccountCode,
                         AuthorizedName = device.Address.AuthorizedName,
                         AuthorizedPhone = device.Address.AuthorizedPhone,
+                        AuthorizedWorkPhone = device.Address.AuthorizedWorkPhone,
                         AuthorizedTask = device.Address.AuthorizedTask,
-                        CityName = device.Address.Querter.District.City.Name,
+                        CityName = device.Address.District.City.Name,
                         CustomerId = device.Address.Customer.Id,
                         AuthorizedEmail = device.Address.AuthorizedEmail,
+                        Department = device.Address.Department,
                         DeviceId = device.Id,
-                        DistrictName = device.Address.Querter.District.Name,
-                        QuarterName = device.Address.Querter.Name,
-                        RegionCode = device.Address.Querter.RegionCode,
-                        DeviceDto = mapper.Map<DeviceDto>(device),
+                        DistrictName = device.Address.District.Name,
+                        QuarterName = device.Address.QuerterName,
+                        RegionCode = device.Address.RegionCode,
+                        Device = mapper.Map<DeviceDto>(device),
                         RowId = $"{device.Address.Customer.Id}|{device.Address.Id}|{device.Id}"
                     };
 
@@ -62,9 +66,12 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.DeviceServices = result.DeviceServices.OrderByDescending(s => s.ResultDate).ToList();
 
                     var service = result.DeviceServices.FirstOrDefault();
-                    result.WbCount = service.WBCount;
-                    result.ColorCount = service.ColorCount;
-
+                    if (service != null)
+                    {
+                        result.WbCount = service.WBCount;
+                        result.ColorCount = service.ColorCount;
+                    }
+                    
                     result.Devices = mapper.Map<List<DeviceDto>>(await deviceRepo.GetAllDevices(result.CustomerId));
                     result.Devices.Select(c => { c.RowId = $"{result.CustomerId}|{c.AddressId}|{c.Id}"; return c; }).ToList();
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
@@ -73,14 +80,17 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 {
                     var address = await addressRepo.GetAddressInfo(Convert.ToInt64(splitIds[1]));
                     result.AccountCode = address.AccountCode;
+                    result.AddressId = address.Id;
                     result.AuthorizedName = address.AuthorizedName;
                     result.AuthorizedPhone = address.AuthorizedPhone;
+                    result.AuthorizedWorkPhone = address.AuthorizedWorkPhone;
                     result.AuthorizedTask = address.AuthorizedTask;
                     result.AuthorizedEmail = address.AuthorizedEmail;
-                    result.CityName = address.Querter.District.City.Name;
-                    result.DistrictName = address.Querter.District.Name;
-                    result.QuarterName = address.Querter.Name;
-                    result.RegionCode = address.Querter.RegionCode;
+                    result.Department = address.Department;
+                    result.CityName = address.District.City.Name;
+                    result.DistrictName = address.District.Name;
+                    result.QuarterName = address.QuerterName;
+                    result.RegionCode = address.RegionCode;
                     result.CustomerTitle = address.Customer.Title;
                     result.CustomerId = address.Customer.Id;
                     result.CustomerSector = address.Customer.Sector.Name;

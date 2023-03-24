@@ -55,7 +55,8 @@ namespace ServisTakip.Core.Extensions
         {
             get
             {
-                return "0.0.0.0";
+                var context = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
+                return context.HttpContext.Connection.RemoteIpAddress.ToString();
             }
             private set { }
         }

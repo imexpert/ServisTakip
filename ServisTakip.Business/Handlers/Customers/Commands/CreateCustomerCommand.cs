@@ -10,23 +10,25 @@ using ServisTakip.Entities.DTOs.Customers;
 
 namespace ServisTakip.Business.Handlers.Customers.Commands
 {
-    public class CreateCustomerCommand : IRequest<ResponseMessage<CreateCustomerDto>>
+    public class CreateCustomerCommand : IRequest<ResponseMessage<CustomerDto>>
     {
         public CreateCustomerDto Model { get; set; }
-        public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, ResponseMessage<CreateCustomerDto>>
+        public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, ResponseMessage<CustomerDto>>
         {
-            public async Task<ResponseMessage<CreateCustomerDto>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<CustomerDto>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
             {
                 var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
                 var customer = mapper.Map<Customer>(request.Model);
-                customer.Status = true;
                 customer.CompanyId = Utils.CompanyId;
 
                 customerRepo.Add(customer);
                 await customerRepo.SaveChangesAsync();
-                return ResponseMessage<CreateCustomerDto>.Success();
+
+                var resultCustomer = mapper.Map<CustomerDto>(customer);
+
+                return ResponseMessage<CustomerDto>.Success(resultCustomer);
             }
         }
     }

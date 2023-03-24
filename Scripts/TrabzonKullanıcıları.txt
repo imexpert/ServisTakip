@@ -1,0 +1,151 @@
+{
+  "companyId": 4,
+  "firstname": "CENGİZ",
+  "lastname": "KONGUR",
+  "email": "cengizkongur@tekobiz.com.tr",
+  "password": "Cengiz4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "İRFAN",
+  "lastname": "KORKMAZ",
+  "email": "irfankorkmaz@tekobiz.com.tr",
+  "password": "Korkmaz4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "ALİ",
+  "lastname": "ÇIKRIKCI",
+  "email": "alicikrikci@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "ŞENOL",
+  "lastname": "ALTUNTAŞ",
+  "email": "senolaltuntas@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "ÖMER FARUK",
+  "lastname": "DENİZ",
+  "email": "omerfaruk@hotmail.com",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "MERT",
+  "lastname": "DEMİRCİ",
+  "email": "mertdemirci@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "ADİL",
+  "lastname": "ŞENTÜRK",
+  "email": "adilsentürk@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "COŞKUN",
+  "lastname": "ÇOLAK",
+  "email": "coskuncolak@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "BARIŞ",
+  "lastname": "ŞAHİNLER",
+  "email": "barissahinler@hotmail.com",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "SONER",
+  "lastname": "REİS",
+  "email": "sonerreis@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "ONUR",
+  "lastname": "TÜRKDAY",
+  "email": "onurtürkday@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "ÇANER",
+  "lastname": "ÇELİK",
+  "email": "canercelik@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "BAYRAM",
+  "lastname": "TOKLU",
+  "email": "bayramtoklu@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "ÖMER",
+  "lastname": "ÖKSÜZ",
+  "email": "omeroksuz@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "TANER",
+  "lastname": "ATILGAN",
+  "email": "taneratılgan@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "İSMET",
+  "lastname": "ÇAKIR",
+  "email": "ismetcakır@hotmail.com",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "KAAN",
+  "lastname": "YAŞAR",
+  "email": "kaanyasar@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "ERTUĞRUL",
+  "lastname": "ATMACA",
+  "email": "ertugrulatmaca@tekobiz.com.tr",
+  "password": "Trabzon4"
+}
+
+{
+  "companyId": 4,
+  "firstname": "RAHMAN",
+  "lastname": "ÖZKAN",
+  "email": "rahmanozgan@tekobiz.com.tr",
+  "password": "Trabzon4"
+}

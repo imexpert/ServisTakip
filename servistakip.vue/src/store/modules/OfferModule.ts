@@ -2,6 +2,7 @@ import ApiService from "@/core/services/ApiService";
 import { Actions, Mutations } from "@/store/enums/StoreEnums";
 import { Module, Action, VuexModule } from "vuex-module-decorators";
 import router from "@/router";
+import { showError } from "@/core/plugins/Utils";
 
 @Module
 export default class OfferModule extends VuexModule {
@@ -13,8 +14,7 @@ export default class OfferModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        showError(response);
       });
   }
 
@@ -25,8 +25,7 @@ export default class OfferModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        showError(response);
       });
   }
 
@@ -37,8 +36,7 @@ export default class OfferModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        showError(response);
       });
   }
 
@@ -49,8 +47,7 @@ export default class OfferModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        showError(response);
       });
   }
 
@@ -61,8 +58,7 @@ export default class OfferModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        showError(response);
       });
   }
 
@@ -75,8 +71,7 @@ export default class OfferModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        showError(response);
       });
   }
 
@@ -89,8 +84,7 @@ export default class OfferModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        showError(response);
       });
   }
 
@@ -101,8 +95,7 @@ export default class OfferModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        showError(response);
       });
   }
 
@@ -113,8 +106,7 @@ export default class OfferModule extends VuexModule {
         return data;
       })
       .catch(({ response }) => {
-        this.context.commit(Mutations.PURGE_AUTH);
-        router.push({ name: 'sign-in' });
+        showError(response);
       });
   }
 }

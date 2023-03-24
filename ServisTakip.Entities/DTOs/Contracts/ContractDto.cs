@@ -12,6 +12,8 @@ namespace ServisTakip.Entities.DTOs.Contracts
         public string EndDateString => EndDate.ToString("dd/MM/yyyy");
         public string ContractCode { get; set; }
         public int MaintenancePeriod { get; set; }
+        public decimal? Price { get; set; }
+        public string CurrencyType { get; set; }
         public bool Status { get; set; }
         public DeviceDto Device { get; set; }
     }
