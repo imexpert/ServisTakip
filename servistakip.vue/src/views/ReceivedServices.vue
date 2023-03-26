@@ -34,7 +34,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="Müşteri Unvan">
+            <el-table-column label="Müşteri Unvan" width="370">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.customer.title }}</span>
@@ -76,7 +76,7 @@
                 </div>
               </template>
             </el-table-column>
-            
+
             <el-table-column label="#" fixed="left" width="170">
               <template #default="scope">
                 <el-dropdown size="small" type="danger">
@@ -134,7 +134,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Müşteri Unvan">
+            <el-table-column label="Müşteri Unvan" width="370">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.customer.title }}</span>
@@ -177,14 +177,14 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Departman">
+            <el-table-column label="Departman" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.department }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açıklama">
+            <el-table-column label="Açıklama" width="320">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.bootDescription }}</span>

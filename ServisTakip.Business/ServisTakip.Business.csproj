@@ -16,6 +16,7 @@
     <Folder Include="Handlers\Companies\Commands\" />
     <Folder Include="Handlers\ContractMaintenances\Commands\" />
     <Folder Include="Handlers\OfferSubjectCodes\Commands\" />
+    <Folder Include="Handlers\UserGroups\Commands\" />
   </ItemGroup>
 
   <ItemGroup>

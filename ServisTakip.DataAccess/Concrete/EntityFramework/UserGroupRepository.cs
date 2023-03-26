@@ -1,4 +1,5 @@
-﻿using ServisTakip.DataAccess.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using ServisTakip.DataAccess.Abstract;
 using ServisTakip.DataAccess.Concrete.EntityFramework.Contexts;
 using ServisTakip.Core.DataAccess.EntityFramework;
 using ServisTakip.Core.Entities.Concrete;
@@ -26,6 +27,15 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
 
             Context.UserGroups.RemoveRange(DbUserGroupList);
             await Context.UserGroups.AddRangeAsync(userGroups);
+        }
+
+        public async Task<List<UserGroup>> GetUserGroupsByUserId(long userId, CancellationToken cancellationToken)
+        {
+            return await Context.UserGroups
+                .Include(s => s.User)
+                .Include(s => s.Group)
+                .Where(s => s.UserId == userId)
+                .ToListAsync(cancellationToken);
         }
     }
 }

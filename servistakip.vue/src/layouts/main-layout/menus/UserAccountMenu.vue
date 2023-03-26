@@ -9,6 +9,8 @@
       <div class="menu-content d-flex align-items-center px-3">
         <!--begin::Avatar-->
         <div class="symbol symbol-50px me-5">
+          {{ avatar.length }}
+
           <img alt="Logo" src="media/avatars/300-1.jpg" />
         </div>
         <!--end::Avatar-->
@@ -17,7 +19,8 @@
         <div class="d-flex flex-column">
           <div class="fw-bold d-flex align-items-center fs-5">
             {{ fullName }}
-            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Admin</span>
+            <span v-if="isAdmin == 'true'" class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">admin</span>
+            <!-- <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2"></span> -->
           </div>
           <a href="#" class="fw-semobold text-muted text-hover-primary fs-7">{{ email }}</a>
         </div>
@@ -76,8 +79,7 @@ import JwtService from '@/core/services/JwtService';
 
 export default defineComponent({
   name: 'kt-user-menu',
-  components: {
-  },
+  components: {},
   setup() {
     const router = useRouter();
     const i18n = useI18n();
@@ -85,8 +87,11 @@ export default defineComponent({
 
     const fullName = JwtService.getFullName();
     const email = JwtService.getEmail();
+    const isAdmin = JwtService.isAdmin();
+    const gender = JwtService.getGender();
+    const avatar = JwtService.getAvatar();
 
-    i18n.locale.value = localStorage.getItem('lang') ? (localStorage.getItem('lang') as string) : 'en';
+    console.log(isAdmin);
 
     const countries = {
       en: {
@@ -136,7 +141,10 @@ export default defineComponent({
       countries,
       store,
       fullName,
-      email
+      email,
+      isAdmin,
+      avatar,
+      gender,
     };
   },
 });

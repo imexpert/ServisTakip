@@ -33,7 +33,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Müşteri Unvan">
+            <el-table-column label="Müşteri Unvan" width="370">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.customer.title }}</span>
@@ -76,14 +76,14 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Departman">
+            <el-table-column label="Departman" width="170">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.department }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açıklama">
+            <el-table-column label="Açıklama" width="370">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.bootDescription }}</span>
@@ -508,11 +508,14 @@ export default defineComponent({
 
     var toBeOfferedDeviceServiceItem = ref<IDeviceServiceData>({});
     var technicianItem = ref<IUserData>({
+      avatar: '',
       id: '',
       email: '',
       firstname: '',
       lastname: '',
+      gender: 0,
       fullname: '',
+      admin: false,
     });
     var technicianAssignedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
     var partsExchangeDeviceServiceList = ref<Array<IDeviceServiceData>>([]);

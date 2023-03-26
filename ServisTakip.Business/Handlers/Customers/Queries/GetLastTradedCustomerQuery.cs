@@ -154,6 +154,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         result.CityName = address.District.City.Name;
                         result.DistrictName = address.District.Name;
                         result.QuarterName = address.QuerterName;
+                        result.RegionCode = address.RegionCode;
                         result.RowId = $"{customer.Id}|{address.Id}|{0}";
                     }
                     else

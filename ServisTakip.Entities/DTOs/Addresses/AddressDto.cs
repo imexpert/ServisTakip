@@ -8,8 +8,10 @@ namespace ServisTakip.Entities.DTOs.Addresses
     {
         public long Id { get; set; }
         public long CustomerId { get; set; }
-        public long QuarterId { get; set; }
+        public long DistrictId { get; set; }
         public string AddressTitle { get; set; }
+        public string QuerterName { get; set; }
+        public string RegionCode { get; set; }
         public string AccountCode { get; set; }
         public string NetAddress { get; set; }
         public string AuthorizedName { get; set; }

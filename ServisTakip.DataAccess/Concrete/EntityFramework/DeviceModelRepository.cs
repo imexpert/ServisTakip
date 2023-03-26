@@ -3,7 +3,6 @@ using ServisTakip.DataAccess.Concrete.EntityFramework.Contexts;
 using ServisTakip.Core.DataAccess.EntityFramework;
 using ServisTakip.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using ServisTakip.Core.Extensions;
 
 namespace ServisTakip.DataAccess.Concrete.EntityFramework
 {

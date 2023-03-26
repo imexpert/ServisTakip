@@ -176,7 +176,13 @@
                     </div>
                   </div>
                 </li>
-                <el-option v-for="item in customerInfoList" :key="item.rowId" :label="item.title" :value="item.rowId">
+                <el-option
+                  class="aramaDropdownMenu"
+                  v-for="item in customerInfoList"
+                  :key="item.rowId"
+                  :label="item.title"
+                  :value="item.rowId"
+                >
                   <div class="row" style="width: 100%">
                     <div class="col-md-4" style="font-size: 12px">
                       {{ item.title }}
@@ -419,7 +425,13 @@
                   </div>
                 </div>
               </li>
-              <el-option v-for="item in modelList" :key="item.rowId" :label="item.model" :value="item.rowId">
+              <el-option
+                class="aramaDropdownMenu"
+                v-for="item in modelList"
+                :key="item.rowId"
+                :label="item.model"
+                :value="item.rowId"
+              >
                 <div class="row">
                   <div class="col-md-6" style="font-size: 12px">
                     {{ item.title }}
@@ -470,7 +482,13 @@
                   </div>
                 </div>
               </li>
-              <el-option v-for="item in seriNoList" :key="item.rowId" :label="item.serialNo" :value="item.rowId">
+              <el-option
+                class="aramaDropdownMenu"
+                v-for="item in seriNoList"
+                :key="item.rowId"
+                :label="item.serialNo"
+                :value="item.rowId"
+              >
                 <div class="row">
                   <div class="col-md-6" style="font-size: 12px">
                     {{ item.title }}
@@ -1717,14 +1735,14 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Yetkili Telefon" width="130">
+            <el-table-column label="Yetkili Telefon" width="170">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.authorizedPhone }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Yetkili Telefon (İş)" width="130">
+            <el-table-column label="Yetkili Telefon (İş)" width="170">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.authorizedWorkPhone }}</span>
@@ -1867,8 +1885,8 @@
                   <span>İlçe</span>
                 </label>
                 <!--end::Label-->
-                <el-form-item prop="selectedIlce">
-                  <el-select placeholder="İlçe seçiniz" filterable clearable v-model="selectedIlce">
+                <el-form-item prop="districtId">
+                  <el-select placeholder="İlçe seçiniz" filterable clearable v-model="newAddress.districtId">
                     <el-option v-for="item in ilceList" :key="item.id" :label="item.name" :value="item.id"> </el-option>
                   </el-select>
                 </el-form-item>
@@ -1881,7 +1899,7 @@
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                   <span>Semt</span>
                 </label>
                 <!--end::Label-->
@@ -1893,7 +1911,7 @@
             </div>
 
             <!-- Açık Adres -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-8 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1903,6 +1921,22 @@
                 <!--end::Label-->
                 <el-form-item prop="netAddress">
                   <el-input v-model="newAddress.netAddress" placeholder="Açık adres giriniz"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Bölge -->
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Bölge</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="regionCode">
+                  <el-input v-model="newAddress.regionCode" placeholder="Bölge giriniz"></el-input>
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -2437,11 +2471,14 @@ export default defineComponent({
       serviceResultCode: '',
       tonerType: '',
       user: {
+        avatar: '',
         email: '',
         firstname: '',
         fullname: '',
         id: '',
         lastname: '',
+        gender: 0,
+        admin: false,
       },
       userAssignDate: '',
       userAssignDateString: '',
@@ -2480,11 +2517,14 @@ export default defineComponent({
       serviceResultCode: '',
       tonerType: '',
       user: {
+        avatar: '',
         email: '',
         firstname: '',
         fullname: '',
         id: '',
         lastname: '',
+        gender: 0,
+        admin: false,
       },
       userAssignDate: '',
       userAssignDateString: '',
@@ -2949,6 +2989,63 @@ export default defineComponent({
       });
     };
 
+    // Adres Submit
+    const addressSubmit = () => {
+      if (!formAddressRef.value) {
+        return;
+      }
+
+      formAddressRef.value.validate(valid => {
+        if (valid) {
+          adresLoading.value = true;
+          console.log(newAddress.value);
+
+          newAddress.value.customerId = newCustomer.value.id;
+
+          if (selectAddressMode.value == 'I') {
+            store
+              .dispatch(Actions.ADD_ADDRESS, newAddress.value)
+              .then(result => {
+                if (result.isSuccess) {
+                  showSuccessMessage('Adres başarıyla eklendi.').then(async () => {
+                    await getAddressList(newCustomer.value.id);
+                    adresLoading.value = false;
+                    adresDialogVisible.value = false;
+                  });
+                } else {
+                  showErrorMessage(result.message).then(() => {
+                    deviceLoading.value = false;
+                    servisAcDialogVisible.value = false;
+                  });
+                }
+              })
+              .catch(({ response }) => {});
+          } else {
+            store
+              .dispatch(Actions.UPDATE_ADDRESS, newAddress.value)
+              .then(result => {
+                loading.value = false;
+                if (result.isSuccess) {
+                  showSuccessMessage('Adres başarıyla güncellendi.').then(async () => {
+                    await getAddressList(newCustomer.value.id);
+                    adresLoading.value = false;
+                    adresDialogVisible.value = false;
+                  });
+                } else {
+                  showErrorMessage(result.message).then(() => {
+                    deviceLoading.value = false;
+                    servisAcDialogVisible.value = false;
+                  });
+                }
+              })
+              .catch(({ response }) => {});
+          }
+
+          adresLoading.value = false;
+        }
+      });
+    };
+
     const remoteMethod = async (query: string) => {
       if (query && query.length > 3) {
         loading.value = true;
@@ -3082,6 +3179,8 @@ export default defineComponent({
       (newAddress.value.customer = null), (newAddress.value.deviceModel = null), (newAddress.value.netAddress = '');
       newAddress.value.querterName = '';
       newAddress.value.department = '';
+      newAddress.value.districtId = '';
+      newAddress.value.regionCode = '';
 
       selectedSehir.value = null;
       selectedIlce.value = null;
@@ -3131,6 +3230,7 @@ export default defineComponent({
       selectedModelName.value = '';
 
       selectedSerialNo.value = '';
+      selectedDevice.value = '';
 
       contractMaintenanceStatus.value = '';
 
@@ -3182,11 +3282,14 @@ export default defineComponent({
         serviceResultCode: '',
         tonerType: '',
         user: {
+          avatar: '',
           email: '',
           firstname: '',
           fullname: '',
           id: '',
           lastname: '',
+          gender: 0,
+          admin: false,
         },
         userAssignDate: '',
         userAssignDateString: '',
@@ -3246,11 +3349,14 @@ export default defineComponent({
         serviceResultCode: '',
         tonerType: '',
         user: {
+          avatar: '',
           email: '',
           firstname: '',
           fullname: '',
           id: '',
           lastname: '',
+          gender: 0,
+          admin: false,
         },
         userAssignDate: '',
         userAssignDateString: '',
@@ -3329,63 +3435,6 @@ export default defineComponent({
       await getMainPageCustomer(selectedModelName.value);
     }
 
-    // Adres Submit
-    const addressSubmit = () => {
-      if (!formAddressRef.value) {
-        return;
-      }
-
-      formAddressRef.value.validate(valid => {
-        if (valid) {
-          adresLoading.value = true;
-          console.log(newAddress.value);
-
-          newAddress.value.customerId = newCustomer.value.id;
-
-          if (selectAddressMode.value == 'I') {
-            store
-              .dispatch(Actions.ADD_ADDRESS, newAddress.value)
-              .then(result => {
-                if (result.isSuccess) {
-                  showSuccessMessage('Adres başarıyla eklendi.').then(async () => {
-                    await getAddressList(newCustomer.value.id);
-                    adresLoading.value = false;
-                    adresDialogVisible.value = false;
-                  });
-                } else {
-                  showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
-                    servisAcDialogVisible.value = false;
-                  });
-                }
-              })
-              .catch(({ response }) => {});
-          } else {
-            store
-              .dispatch(Actions.UPDATE_ADDRESS, newAddress.value)
-              .then(result => {
-                loading.value = false;
-                if (result.isSuccess) {
-                  showSuccessMessage('Adres başarıyla güncellendi.').then(async () => {
-                    await getAddressList(newCustomer.value.id);
-                    adresLoading.value = false;
-                    adresDialogVisible.value = false;
-                  });
-                } else {
-                  showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
-                    servisAcDialogVisible.value = false;
-                  });
-                }
-              })
-              .catch(({ response }) => {});
-          }
-
-          deviceLoading.value = false;
-        }
-      });
-    };
-
     async function onSehirChange() {
       selectedIlce.value = '';
       semtList.value = [];
@@ -3430,53 +3479,56 @@ export default defineComponent({
 
     async function getMainPageCustomer(rowId) {
       clearPage();
-      anaSayfaLoading.value = true;
-      cihazListesiDialogVisible.value = false;
-      await store
-        .dispatch(Actions.GET_MAIN_PAGE_CUSTOMER, rowId)
-        .then(result => {
-          anaSayfaLoading.value = false;
-          if (result.isSuccess) {
-            console.clear();
-            console.log(result.data);
-            firmaOzet.value = result.data;
-            console.clear();
-            console.log(firmaOzet.value);
-            contracts.value = result.data.contracts;
 
-            if (result.data.device) {
-              device.value = result.data.device;
-              deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
-              deviceModel.value = result.data.device?.deviceModel;
-              deviceStatus.value = device.value.status == true ? 'Aktif' : 'Pasif';
+      if (rowId) {
+        anaSayfaLoading.value = true;
+        cihazListesiDialogVisible.value = false;
+        await store
+          .dispatch(Actions.GET_MAIN_PAGE_CUSTOMER, rowId)
+          .then(result => {
+            anaSayfaLoading.value = false;
+            if (result.isSuccess) {
+              console.clear();
+              console.log(result.data);
+              firmaOzet.value = result.data;
+              console.clear();
+              console.log(firmaOzet.value);
+              contracts.value = result.data.contracts;
+
+              if (result.data.device) {
+                device.value = result.data.device;
+                deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
+                deviceModel.value = result.data.device?.deviceModel;
+                deviceStatus.value = device.value.status == true ? 'Aktif' : 'Pasif';
+                deviceList.value = result.data.devices;
+                contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
+                maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+                backgroundColor.value = device.value.status ? '#ABEBC6' : '#F5B7B1';
+                selectedModelName.value = deviceModel.value.name;
+                selectedSerialNo.value = device.value.serialNumber;
+              }
+
               deviceList.value = result.data.devices;
-              contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
-              maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
-              backgroundColor.value = device.value.status ? '#ABEBC6' : '#F5B7B1';
-              selectedModelName.value = deviceModel.value.name;
-              selectedSerialNo.value = device.value.serialNumber;
+              selectedDevice.value = result.data.deviceId;
+              selectedCustomer.value = result.data.customerTitle;
+              deviceServices.value = result.data.deviceServices;
+            } else {
+              Swal.fire({
+                title: 'Hata',
+                text: result.message,
+                icon: 'error',
+                buttonsStyling: false,
+                confirmButtonText: 'Tamam !',
+                customClass: {
+                  confirmButton: 'btn fw-bold btn-danger',
+                },
+              });
             }
-
-            deviceList.value = result.data.devices;
-            selectedDevice.value = result.data.deviceId;
-            selectedCustomer.value = result.data.customerTitle;
-            deviceServices.value = result.data.deviceServices;
-          } else {
-            Swal.fire({
-              title: 'Hata',
-              text: result.message,
-              icon: 'error',
-              buttonsStyling: false,
-              confirmButtonText: 'Tamam !',
-              customClass: {
-                confirmButton: 'btn fw-bold btn-danger',
-              },
-            });
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
+          })
+          .catch(() => {
+            const [error] = Object.keys(store.getters.getErrors);
+          });
+      }
     }
 
     async function getDeviceService(id) {

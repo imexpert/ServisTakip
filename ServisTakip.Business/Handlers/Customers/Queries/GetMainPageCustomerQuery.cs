@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Devices;
@@ -99,10 +98,33 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 }
 
                 var customer = await customerRepo.GetCustomerById(Convert.ToInt64(splitIds[0]));
-                result.CustomerTitle = customer.Title;
-                result.CustomerId = customer.Id;
-                result.CustomerSector = customer.Sector.Name;
-                result.RowId = $"{customer.Id}|{0}|{0}";
+
+
+                if (customer.Addresses is { Count: > 0 })
+                {
+                    var address = customer.Addresses.MaxBy(s => s.UpdateDate);
+                    result.AddressId = address.Id;
+                    result.AccountCode = address.AccountCode;
+                    result.AuthorizedEmail = address.AuthorizedEmail;
+                    result.AuthorizedName = address.AuthorizedName;
+                    result.AuthorizedPhone = address.AuthorizedPhone;
+                    result.AuthorizedWorkPhone = address.AuthorizedWorkPhone;
+                    result.AuthorizedTask = address.AuthorizedTask;
+                    result.Department = address.Department;
+                    result.CityName = address.District.City.Name;
+                    result.DistrictName = address.District.Name;
+                    result.QuarterName = address.QuerterName;
+                    result.RegionCode = address.RegionCode;
+                    result.RowId = $"{customer.Id}|{address.Id}|{0}";
+                }
+                else
+                {
+                    result.CustomerTitle = customer.Title;
+                    result.CustomerId = customer.Id;
+                    result.CustomerSector = customer.Sector.Name;
+                    result.RowId = $"{customer.Id}|{0}|{0}";
+                }
+                
                 return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
             }
         }
