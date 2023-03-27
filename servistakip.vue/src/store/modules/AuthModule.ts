@@ -63,6 +63,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
     JwtService.saveFullName(user.fullname);
     JwtService.saveEmail(user.email);
     JwtService.saveIsAdmin(user.isAdmin);
+
     JwtService.saveAvatar(user.avatar);
     JwtService.saveGender(user.gender);
   }

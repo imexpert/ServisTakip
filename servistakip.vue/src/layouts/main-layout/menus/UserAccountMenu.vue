@@ -9,9 +9,9 @@
       <div class="menu-content d-flex align-items-center px-3">
         <!--begin::Avatar-->
         <div class="symbol symbol-50px me-5">
-          {{ avatar.length }}
-
-          <img alt="Logo" src="media/avatars/300-1.jpg" />
+          <img v-if="isManLogo" alt="Logo" src="media/avatars/man.png" />
+          <img v-if="isWomanLogo" alt="Logo" src="media/avatars/woman.png" />
+          <img v-if="isLogoExists" alt="Logo" :src="logoSrc" />
         </div>
         <!--end::Avatar-->
 
@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -85,11 +85,30 @@ export default defineComponent({
     const i18n = useI18n();
     const store = useStore();
 
+    const logoSrc = ref<string>('');
+
+    const isLogoExists = ref<boolean>(false);
+    const isManLogo = ref<boolean>(false);
+    const isWomanLogo = ref<boolean>(false);
+
     const fullName = JwtService.getFullName();
     const email = JwtService.getEmail();
     const isAdmin = JwtService.isAdmin();
     const gender = JwtService.getGender();
     const avatar = JwtService.getAvatar();
+
+    if (avatar == null || avatar == '') {
+      isLogoExists.value = false;
+      if (gender == '1') {
+        isManLogo.value = true;
+        isWomanLogo.value = false;
+      } else if (gender == '2') {
+        isManLogo.value = false;
+        isWomanLogo.value = true;
+      }
+    } else {
+      isLogoExists.value = true;
+    }
 
     console.log(isAdmin);
 
@@ -145,6 +164,10 @@ export default defineComponent({
       isAdmin,
       avatar,
       gender,
+      isLogoExists,
+      isManLogo,
+      isWomanLogo,
+      logoSrc,
     };
   },
 });

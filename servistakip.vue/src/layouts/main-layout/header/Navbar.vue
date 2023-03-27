@@ -10,7 +10,10 @@
         data-kt-menu-attach="parent"
         data-kt-menu-placement="bottom-end"
       >
-        <img src="media/avatars/300-1.jpg" alt="user" />
+        <img v-if="isManLogo" alt="Logo" src="media/avatars/man.png" />
+        <img v-if="isWomanLogo" alt="Logo" src="media/avatars/woman.png" />
+        <img v-if="isLogoExists" alt="Logo" :src="logoSrc" />
+        <!-- <img src="media/avatars/300-1.jpg" alt="user" /> -->
       </div>
       <KTUserMenu />
       <!--end::Menu wrapper-->
@@ -18,10 +21,7 @@
     <!--end::User menu-->
     <!--begin::Header menu toggle-->
     <div class="app-navbar-item d-lg-none ms-2 me-n3" title="Show header menu">
-      <div
-        class="btn btn-icon btn-active-color-primary w-35px h-35px"
-        id="kt_app_header_menu_toggle"
-      >
+      <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_header_menu_toggle">
         <span class="svg-icon svg-icon-1">
           <inline-svg src="media/icons/duotune/text/txt001.svg" />
         </span>
@@ -32,17 +32,18 @@
   <!--end::Navbar-->
 </template>
 
-<script>
-import { defineComponent, computed } from "vue";
-import KTSearch from "@/layouts/main-layout/search/Search.vue";
-import KTNotificationMenu from "@/layouts/main-layout/menus/NotificationsMenu.vue";
-import KTQuickLinksMenu from "@/layouts/main-layout/menus/QuickLinksMenu.vue";
-import KTUserMenu from "@/layouts/main-layout/menus/UserAccountMenu.vue";
-import KTThemeModeSwitcher from "@/layouts/main-layout/theme-mode/ThemeModeSwitcher.vue";
-import { useStore } from "vuex";
+<script lang="ts">
+import { defineComponent, computed, ref } from 'vue';
+import KTSearch from '@/layouts/main-layout/search/Search.vue';
+import KTNotificationMenu from '@/layouts/main-layout/menus/NotificationsMenu.vue';
+import KTQuickLinksMenu from '@/layouts/main-layout/menus/QuickLinksMenu.vue';
+import KTUserMenu from '@/layouts/main-layout/menus/UserAccountMenu.vue';
+import KTThemeModeSwitcher from '@/layouts/main-layout/theme-mode/ThemeModeSwitcher.vue';
+import { useStore } from 'vuex';
+import JwtService from '@/core/services/JwtService';
 
 export default defineComponent({
-  name: "header-navbar",
+  name: 'header-navbar',
   components: {
     KTSearch,
     KTNotificationMenu,
@@ -53,12 +54,43 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
+    const logoSrc = ref<string>('');
+
+    const isLogoExists = ref<boolean>(false);
+    const isManLogo = ref<boolean>(false);
+    const isWomanLogo = ref<boolean>(false);
+
+    const fullName = JwtService.getFullName();
+    const email = JwtService.getEmail();
+    const isAdmin = JwtService.isAdmin();
+    const gender = JwtService.getGender();
+    const avatar = JwtService.getAvatar();
+
+    if (avatar == null || avatar == '') {
+      isLogoExists.value = false;
+      if (gender == '1') {
+        isManLogo.value = true;
+        isWomanLogo.value = false;
+      } else if (gender == '2') {
+        isManLogo.value = false;
+        isWomanLogo.value = true;
+      }
+    } else {
+      isLogoExists.value = true;
+    }
+
     const themeMode = computed(() => {
       return store.getters.getThemeMode;
     });
 
     return {
       themeMode,
+      avatar,
+      gender,
+      isLogoExists,
+      isManLogo,
+      isWomanLogo,
+      logoSrc,
     };
   },
 });
