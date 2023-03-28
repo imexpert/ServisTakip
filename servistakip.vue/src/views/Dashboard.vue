@@ -309,83 +309,7 @@
         <div class="row mb-2">
           <!-- Sözleşmeler -->
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-            <el-table
-              :data="contracts"
-              style="width: 100%"
-              height="150"
-              max-height="150px"
-              :default-sort="{ prop: 'startDate', order: 'descending' }"
-            >
-              <template #empty v-if="firmaOzet.deviceId != null">
-                <div class="row">
-                  <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-                    <el-button type="danger">
-                      <el-icon> <Plus></Plus> </el-icon>Yeni Ekle
-                    </el-button>
-                  </div>
-                </div>
-              </template>
-              <el-table-column label="Başlangıç T." width="140" sortable>
-                <template #default="scope">
-                  <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.startDateString }}</span>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column label="Bitiş T." width="140" sortable>
-                <template #default="scope">
-                  <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.endDateString }}</span>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column label="Sözleşme Kodu" width="160">
-                <template #default="scope">
-                  <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.contractCode }}</span>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column label="Bakım Periyodu" width="160">
-                <template #default="scope">
-                  <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.maintenancePeriod }} Aylık</span>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column label="Fiyat" width="120">
-                <template #default="scope">
-                  <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.price }} {{ scope.row.currencyType }} </span>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column label="#" fixed="left" width="140">
-                <template #default="scope">
-                  <el-dropdown size="small" @click="sozlemeDialogAc()" split-button type="danger">
-                    Yeni Ekle
-                    <template #dropdown>
-                      <el-dropdown-menu>
-                        <el-dropdown-item @click="sozlemeDialogAc(scope.row.id)">
-                          <el-icon>
-                            <Edit></Edit>
-                          </el-icon>
-                          Düzenle
-                        </el-dropdown-item>
-                        <el-dropdown-item @click="deleteConract(scope.row.id)">
-                          <el-icon>
-                            <el-icon>
-                              <Delete />
-                            </el-icon>
-                          </el-icon>
-                          Sil
-                        </el-dropdown-item>
-                      </el-dropdown-menu>
-                    </template>
-                  </el-dropdown>
-                </template>
-              </el-table-column>
-            </el-table>
+            <SozlesmeListesi ref="sozlesmeListesiRef" :deviceId="Number(firmaOzet.deviceId)" />
           </div>
 
           <!-- Divider -->
@@ -570,71 +494,71 @@
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-8 col-sm-12 mb-1" v-loading="anaSayfaLoading">
       <el-card class="box-card">
         <div class="text item">
-          <el-table :data="deviceServices" height="268" max-height="268" style="width: 100%; font-size: 12px">
-            <el-table-column label="Açılış Tarihi" width="145" sortable>
+          <el-table :data="deviceServices" height="268" max-height="268" class="tableClass">
+            <el-table-column label="Açılış Tarihi" width="150" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.failureDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Tek.Ver.Tarihi" width="145" sortable>
+            <el-table-column label="Tek.Ver.Tarihi" width="150" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.userAssignDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Kapanış Tarihi" width="145">
+            <el-table-column label="Kapanış Tarihi" width="150" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.resultDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="S/B" width="80">
+            <el-table-column label="S/B" width="80" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.wbCount }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Renkli" width="80">
+            <el-table-column label="Renkli" width="80" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.colorCount }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Ser.Kod" width="80">
+            <el-table-column label="Ser.Kod" width="90" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.serviceBootCode }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Tes.Kodu" width="80">
+            <el-table-column label="Tes.Kodu" width="100" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.detectionCode }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Son.Kodu" width="90">
+            <el-table-column label="Son.Kodu" width="100" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.serviceResultCode }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Teknisyen" width="120">
+            <el-table-column label="Teknisyen" width="150" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.user.firstname }} {{ scope.row.user.lastname }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Dr" width="40">
+            <el-table-column label="Dr" width="50" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.dr">1</span>
@@ -642,7 +566,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Dv" width="40">
+            <el-table-column label="Dv" width="50" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.dv">1</span>
@@ -650,7 +574,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Bc" width="40">
+            <el-table-column label="Bc" width="50" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.bc">1</span>
@@ -658,7 +582,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Fs" width="40">
+            <el-table-column label="Fs" width="50" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.fs">1</span>
@@ -666,7 +590,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Pa" width="40">
+            <el-table-column label="Pa" width="50" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.pa">1</span>
@@ -674,7 +598,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Bk" width="40">
+            <el-table-column label="Bk" width="50" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.bk">1</span>
@@ -682,7 +606,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Ak" width="40">
+            <el-table-column label="Ak" width="50" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.ak">1</span>
@@ -690,7 +614,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="#" fixed="left" width="70">
+            <el-table-column label="#" fixed="left" width="70" label-class-name="tableHeader" >
               <template #default="scope">
                 <el-button type="danger" @click="getDeviceService(scope.row.id)">
                   <el-icon title="Detay Görüntüle">
@@ -2104,183 +2028,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog v-model="sozlesmeDialogVisible" title="Sözleşme Ekle / Düzenle" width="40%" destroy-on-close center>
-      <div class="row" v-loading="sozlesmeLoading">
-        <el-form
-          status-icon
-          :rules="newContractRules"
-          ref="formContractRef"
-          :model="newContract"
-          @submit.prevent="contractSubmit()"
-          label-width="120px"
-          label-position="top"
-        >
-          <div class="row">
-            <!-- Sözleşme Başlangıç Tarihi -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Başlangıç Tarihi</span>
-                </label>
-                <!--end::Label-->
-
-                <el-form-item prop="startDate">
-                  <el-date-picker
-                    v-model="newContract.startDate"
-                    format="DD.MM.YYYY"
-                    type="datetime"
-                    placeholder="Sözleşme başlangıç tarihini seçiniz"
-                    :shortcuts="shortcuts"
-                  />
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-
-            <!-- Sözleşme Bitiş Tarihi -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Bitiş Tarihi</span>
-                </label>
-                <!--end::Label-->
-
-                <el-form-item prop="endDate">
-                  <el-date-picker
-                    v-model="newContract.endDate"
-                    format="DD.MM.YYYY"
-                    type="datetime"
-                    placeholder="Sözleşme başlangıç tarihini seçiniz"
-                    :shortcuts="shortcuts"
-                  />
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-
-            <!-- Sözleşme Kodu -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Sözleşme Kodu</span>
-                </label>
-                <!--end::Label-->
-                <el-form-item prop="contractCode">
-                  <el-select placeholder="Sözleşme Kodu" filterable clearable v-model="newContract.contractCode">
-                    <el-option v-for="item in contractCodeList" :key="item.code" :label="item.name" :value="item.code">
-                      <div class="row">
-                        <div class="col-md-3" style="font-size: 12px">
-                          {{ item.code }}
-                        </div>
-                        <div class="col-md-9" style="font-size: 12px">
-                          {{ item.name }}
-                        </div>
-                      </div>
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-
-            <!-- Bakım Periyodu -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Bakım Periyodu</span>
-                </label>
-                <!--end::Label-->
-                <el-form-item prop="maintenancePeriod">
-                  <el-select
-                    placeholder="Cihaz bakım periyodu seçiniz"
-                    filterable
-                    clearable
-                    v-model="newContract.maintenancePeriod"
-                  >
-                    <el-option label="1 Aylık" :value="1"></el-option>
-                    <el-option label="2 Aylık" :value="2"></el-option>
-                    <el-option label="3 Aylık" :value="3"></el-option>
-                    <el-option label="4 Aylık" :value="4"></el-option>
-                    <el-option label="5 Aylık" :value="5"></el-option>
-                    <el-option label="6 Aylık" :value="6"></el-option>
-                    <el-option label="7 Aylık" :value="7"></el-option>
-                    <el-option label="8 Aylık" :value="8"></el-option>
-                    <el-option label="9 Aylık" :value="9"></el-option>
-                    <el-option label="10 Aylık" :value="10"></el-option>
-                    <el-option label="11 Aylık" :value="11"></el-option>
-                    <el-option label="12 Aylık" :value="12"></el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-
-            <!-- Sözleşme Ücreti -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Sözleşme Ücreti</span>
-                </label>
-                <!--end::Label-->
-                <el-form-item prop="price">
-                  <input
-                    type="number"
-                    class="form-control form-control-sm border border-secondary"
-                    v-model="newContract.price"
-                    step="0.01"
-                  />
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-
-            <!-- Ücret Tipi -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Ücret Tipi</span>
-                </label>
-                <!--end::Label-->
-                <!--end::Label-->
-                <el-form-item prop="currencyType">
-                  <el-select placeholder="Para birimi seçin" v-model="newContract.currencyType">
-                    <el-option label="TL" value="TL" />
-                    <el-option label="USD" value="USD" />
-                    <el-option label="EURO" value="EURO" />
-                  </el-select>
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-          </div>
-          <!--begin::Actions-->
-          <div class="text-center">
-            <!--begin::Button-->
-            <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
-              <span v-if="!loading" class="indicator-label"> Kaydet </span>
-              <span v-if="loading" class="indicator-progress">
-                Lütfen Bekleyiniz...
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-              </span>
-            </button>
-            <!--end::Button-->
-          </div>
-          <!--end::Actions-->
-        </el-form>
-      </div>
-    </el-dialog>
+    
   </div>
 </template>
 
@@ -2311,6 +2059,7 @@ import { ICityData } from '@/core/data/CityData';
 import { IDistrictData } from '@/core/data/DistrictData';
 import { IQuerterData } from '@/core/data/QuerterData';
 import { IContractCodeData } from '@/core/data/ContractCodeData';
+import SozlesmeListesi from '@/components/partial/SozlesmeListesi.vue'
 
 export default defineComponent({
   name: 'default-dashboard-widget-2',
@@ -2320,6 +2069,7 @@ export default defineComponent({
     Form,
     Search,
     Plus,
+    SozlesmeListesi
   },
   setup() {
     const store = useStore();
@@ -2331,8 +2081,7 @@ export default defineComponent({
     const cihazListesiDialogVisible = ref(false);
     const musteriDialogVisible = ref(false);
     const servisAcDialogVisible = ref(false);
-    const sozlesmeDialogVisible = ref(false);
-
+    
     const loading = ref<boolean>(false);
     const anaSayfaLoading = ref<boolean>(false);
     const servisAcLoading = ref<boolean>(false);
@@ -2341,7 +2090,7 @@ export default defineComponent({
     const createDeviceLoading = ref<boolean>(false);
     const musteriLoading = ref<boolean>(false);
     const adresLoading = ref<boolean>(false);
-    const sozlesmeLoading = ref<boolean>(false);
+    
 
     const adresTableVisible = ref<boolean>(false);
 
@@ -2416,20 +2165,6 @@ export default defineComponent({
       status: false,
     });
 
-    var newContract = ref<IContractData>({
-      device: null,
-      contractCode: '',
-      currencyType: 'TL',
-      deviceId: null,
-      endDate: '',
-      endDateString: '',
-      maintenancePeriod: '',
-      price: '1234',
-      startDate: '',
-      startDateString: '',
-      status: false,
-    });
-
     var deviceBrand = ref<IDeviceBrandData>({
       name: '',
       deviceType: null,
@@ -2452,7 +2187,7 @@ export default defineComponent({
       detectionCode: '',
       detectionDescription: '',
       device: null,
-      deviceId: '',
+      deviceId: null,
       dr: false,
       dv: false,
       failureDate: '',
@@ -2498,7 +2233,7 @@ export default defineComponent({
       detectionCode: '',
       detectionDescription: '',
       device: null,
-      deviceId: '',
+      deviceId: null,
       dr: false,
       dv: false,
       failureDate: '',
@@ -2539,7 +2274,7 @@ export default defineComponent({
       description: '',
       deviceModel: null,
       deviceModelId: '',
-      id: '',
+      id: null,
       rowId: '',
       serialNumber: '',
       status: true,
@@ -2554,7 +2289,7 @@ export default defineComponent({
     var deviceModelList = ref<Array<IDeviceModelData>>([]);
     var deviceList = ref<Array<IDeviceData>>([]);
     var deviceServices = ref<Array<IDeviceServiceData>>([]);
-    var contracts = ref<Array<IContractData>>([]);
+    
     var customerAddresses = ref<Array<IAddressData>>([]);
 
     var deviceStatus = ref<string>('');
@@ -2571,7 +2306,7 @@ export default defineComponent({
     var selectedIlce = ref<string>();
     var selectMode = ref<string>('I');
     var selectAddressMode = ref<string>('I');
-    var selectContractMode = ref<string>('I');
+    
     const shortcuts = [
       {
         text: 'Bugün',
@@ -2596,7 +2331,7 @@ export default defineComponent({
     var seriNoList = ref<Array<ICustomerListData>>([]);
     var addressList = ref<Array<IAddressData>>([]);
     var sectorList = ref<Array<ISectorData>>([]);
-    var contractCodeList = ref<Array<IContractCodeData>>([]);
+    
     var sehirList = ref<Array<ICityData>>([]);
     var ilceList = ref<Array<IDistrictData>>([]);
     var semtList = ref<Array<IQuerterData>>([]);
@@ -2605,8 +2340,8 @@ export default defineComponent({
     const formDeviceRef = ref<null | HTMLFormElement>(null);
     const formCustomerRef = ref<null | HTMLFormElement>(null);
     const formAddressRef = ref<null | HTMLFormElement>(null);
-    const formContractRef = ref<null | HTMLFormElement>(null);
-
+    const sozlesmeListesiRef = ref<null | HTMLFormElement>(null);
+    
     const newServiceRules = ref({
       failureDate: [
         {
@@ -2731,37 +2466,6 @@ export default defineComponent({
       ],
     });
 
-    const newContractRules = ref({
-      startDate: [
-        {
-          required: true,
-          message: 'Başlangıç tarihi seçilmedi.',
-          trigger: 'blur',
-        },
-      ],
-      endDate: [
-        {
-          required: true,
-          message: 'Bitiş tarihi seçilmedi.',
-          trigger: 'blur',
-        },
-      ],
-      contractCode: [
-        {
-          required: true,
-          message: 'Sözleşme kodu seçilmedi.',
-          trigger: 'blur',
-        },
-      ],
-      maintenancePeriod: [
-        {
-          required: true,
-          message: 'Bakım periyodu seçilmedi.',
-          trigger: 'blur',
-        },
-      ],
-    });
-
     const servicAcSubmit = () => {
       if (!formServiceRef.value) {
         return;
@@ -2771,7 +2475,7 @@ export default defineComponent({
         if (valid) {
           loading.value = true;
 
-          newService.value.deviceId = firmaOzet.value.deviceId;
+          newService.value.deviceId = Number(firmaOzet.value.deviceId);
 
           store
             .dispatch(Actions.ADD_DEVICESERVICE, newService.value)
@@ -2873,63 +2577,6 @@ export default defineComponent({
       });
     };
 
-    const contractSubmit = () => {
-      if (!formContractRef.value) {
-        return;
-      }
-
-      formContractRef.value.validate(valid => {
-        if (valid) {
-          sozlesmeLoading.value = true;
-          console.log(newContract.value);
-
-          newContract.value.deviceId = firmaOzet.value.deviceId;
-
-          if (selectContractMode.value == 'I') {
-            store
-              .dispatch(Actions.ADD_CONTRACT, newContract.value)
-              .then(result => {
-                loading.value = false;
-                if (result.isSuccess) {
-                  showSuccessMessage('Sözleşme başarıyla eklendi.').then(async () => {
-                    await getContractList();
-                    sozlesmeLoading.value = false;
-                    sozlesmeDialogVisible.value = false;
-                  });
-                } else {
-                  showErrorMessage(result.message).then(() => {
-                    sozlesmeLoading.value = false;
-                    sozlesmeDialogVisible.value = false;
-                  });
-                }
-              })
-              .catch(({ response }) => {});
-          } else {
-            store
-              .dispatch(Actions.UPDATE_CONTRACT, newContract.value)
-              .then(result => {
-                loading.value = false;
-                if (result.isSuccess) {
-                  showSuccessMessage('Sözleşme başarıyla güncellendi.').then(async () => {
-                    await getContractList();
-                    sozlesmeLoading.value = false;
-                    sozlesmeDialogVisible.value = false;
-                  });
-                } else {
-                  showErrorMessage(result.message).then(() => {
-                    sozlesmeLoading.value = false;
-                    sozlesmeDialogVisible.value = false;
-                  });
-                }
-              })
-              .catch(({ response }) => {});
-          }
-
-          deviceLoading.value = false;
-        }
-      });
-    };
-
     const customerSubmit = () => {
       if (!formCustomerRef.value) {
         return;
@@ -2968,7 +2615,7 @@ export default defineComponent({
                   showSuccessMessage('Müşteri başarıyla güncellendi.').then(async () => {
                     deviceLoading.value = false;
                     cihazDialogVisible.value = false;
-                    if (firmaOzet.value.deviceId == newDevice.value.id) {
+                    if (firmaOzet.value.deviceId === newDevice.value.id) {
                       var rowId =
                         firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + firmaOzet.value.deviceId;
                       await getMainPageCustomer(rowId);
@@ -3199,7 +2846,7 @@ export default defineComponent({
         authorizedTask: '',
         cityName: '',
         authorizedEmail: '',
-        deviceId: '',
+        deviceId: null,
         districtName: '',
         quarterName: '',
         regionCode: '',
@@ -3236,7 +2883,7 @@ export default defineComponent({
 
       deviceStatus.value = '';
 
-      contracts.value = [];
+      sozlesmeListesiRef.value.contracts = [];
 
       deviceInfoList.value = [];
 
@@ -3263,7 +2910,7 @@ export default defineComponent({
         detectionCode: '',
         detectionDescription: '',
         device: null,
-        deviceId: '',
+        deviceId: null,
         dr: false,
         dv: false,
         failureDate: '',
@@ -3309,7 +2956,7 @@ export default defineComponent({
         description: '',
         deviceModel: null,
         deviceModelId: '',
-        id: '',
+        id: null,
         rowId: '',
         serialNumber: '',
         status: true,
@@ -3330,7 +2977,7 @@ export default defineComponent({
         detectionCode: '',
         detectionDescription: '',
         device: null,
-        deviceId: '',
+        deviceId: null,
         dr: false,
         dv: false,
         failureDate: '',
@@ -3493,7 +3140,7 @@ export default defineComponent({
               firmaOzet.value = result.data;
               console.clear();
               console.log(firmaOzet.value);
-              contracts.value = result.data.contracts;
+              // contracts.value = result.data.contracts;
 
               if (result.data.device) {
                 device.value = result.data.device;
@@ -3529,6 +3176,45 @@ export default defineComponent({
             const [error] = Object.keys(store.getters.getErrors);
           });
       }
+    }
+
+    async function getLastTradedCustomer() {
+      anaSayfaLoading.value = true;
+      await store
+        .dispatch(Actions.GET_LASTTRADED_CUSTOMER)
+        .then(result => {
+          anaSayfaLoading.value = false;
+          if (result.isSuccess) {
+            firmaOzet.value = result.data;
+            console.clear();
+            console.log(firmaOzet.value);
+            sozlesmeListesiRef.value?.getContractList();
+            // contracts.value = result.data.contracts;
+
+            if (result.data.device) {
+              device.value = result.data.device;
+              deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
+              deviceModel.value = result.data.device?.deviceModel;
+              deviceStatus.value = device.value.status == true ? 'Aktif' : 'Pasif';
+              deviceList.value = result.data.devices;
+              contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
+              maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+            }
+
+            selectedDevice.value = result.data.deviceId;
+            selectedDevice.value = result.data.deviceId;
+            selectedCustomer.value = result.data.customerTitle;
+            selectedSerialNo.value = device.value.serialNumber;
+            selectedModelName.value = deviceModel.value.name;
+
+            deviceServices.value = result.data.deviceServices;
+          } else {
+            showWarningMessage(result.message);
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
     }
 
     async function getDeviceService(id) {
@@ -3602,19 +3288,6 @@ export default defineComponent({
         });
     }
 
-    async function getContractCodeList() {
-      await store
-        .dispatch(Actions.GET_CONTRACTCODE_LIST)
-        .then(result => {
-          if (result.isSuccess) {
-            contractCodeList.value = result.data;
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
-    }
-
     async function getSehirList() {
       await store
         .dispatch(Actions.GET_CITY_LIST)
@@ -3622,21 +3295,6 @@ export default defineComponent({
           if (result.isSuccess) {
             sehirList.value = result.data;
             adresLoading.value = false;
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
-    }
-
-    async function getContractList() {
-      anaSayfaLoading.value = true;
-      await store
-        .dispatch(Actions.GET_CONTRACTLIST, firmaOzet.value.deviceId)
-        .then(result => {
-          if (result.isSuccess) {
-            contracts.value = result.data;
-            anaSayfaLoading.value = false;
           }
         })
         .catch(() => {
@@ -3702,43 +3360,7 @@ export default defineComponent({
       });
     }
 
-    async function getLastTradedCustomer() {
-      anaSayfaLoading.value = true;
-      await store
-        .dispatch(Actions.GET_LASTTRADED_CUSTOMER)
-        .then(result => {
-          anaSayfaLoading.value = false;
-          if (result.isSuccess) {
-            firmaOzet.value = result.data;
-            console.clear();
-            console.log(firmaOzet.value);
-            contracts.value = result.data.contracts;
-
-            if (result.data.device) {
-              device.value = result.data.device;
-              deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
-              deviceModel.value = result.data.device?.deviceModel;
-              deviceStatus.value = device.value.status == true ? 'Aktif' : 'Pasif';
-              deviceList.value = result.data.devices;
-              contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
-              maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
-            }
-
-            selectedDevice.value = result.data.deviceId;
-            selectedDevice.value = result.data.deviceId;
-            selectedCustomer.value = result.data.customerTitle;
-            selectedSerialNo.value = device.value.serialNumber;
-            selectedModelName.value = deviceModel.value.name;
-
-            deviceServices.value = result.data.deviceServices;
-          } else {
-            showWarningMessage(result.message);
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
-    }
+    
 
     async function cihazListesi() {
       cihazListesiDialogVisible.value = true;
@@ -3825,53 +3447,6 @@ export default defineComponent({
       });
     }
 
-    async function deleteConract(id) {
-      Swal.fire({
-        title: 'Sözleşme kaydı silinecek !!!',
-        text: 'Devam etmek istiyor musunuz ?',
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: 'Sil',
-        denyButtonText: `Vazgeç`,
-      }).then(async result => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          await store
-            .dispatch(Actions.DELETE_CONTRACT, id)
-            .then(async result => {
-              if (result.isSuccess) {
-                Swal.fire({
-                  text: 'Sözleşme başarıyla silindi.',
-                  icon: 'success',
-                  buttonsStyling: false,
-                  confirmButtonText: 'Tamam',
-                  customClass: {
-                    confirmButton: 'btn btn-primary',
-                  },
-                }).then(async () => {
-                  await getContractList();
-                });
-              } else {
-                Swal.fire({
-                  title: 'Hata',
-                  text: result.message,
-                  icon: 'error',
-                  buttonsStyling: false,
-                  confirmButtonText: 'Tamam !',
-                  customClass: {
-                    confirmButton: 'btn fw-bold btn-danger',
-                  },
-                });
-              }
-            })
-            .catch(() => {
-              const [error] = Object.keys(store.getters.getErrors);
-            });
-        } else if (result.isDenied) {
-        }
-      });
-    }
-
     async function cihazDialogAc(mode) {
       selectMode.value = mode;
       deviceLoading.value = true;
@@ -3920,22 +3495,6 @@ export default defineComponent({
             newDevice.value.deviceModelId = modelId;
             newDevice.value.maintenancePeriod = result.data.lastContract.maintenancePeriod.toString();
             newDevice.value.status = result.data.status == true ? true : false;
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
-    }
-
-    async function getContractById(id) {
-      await store
-        .dispatch(Actions.GET_CONTRACTBYID, id)
-        .then(async result => {
-          if (result.isSuccess) {
-            console.clear();
-            console.log(result.data);
-
-            newContract.value = result.data;
           }
         })
         .catch(() => {
@@ -4014,33 +3573,12 @@ export default defineComponent({
       }
     };
 
-    async function sozlemeDialogAc(id = 0) {
-      sozlesmeLoading.value = true;
-      sozlesmeDialogVisible.value = true;
-
-      await getContractCodeList();
-
-      if (id > 0) {
-        selectContractMode.value = 'U';
-        await getContractById(id);
-      } else {
-        selectContractMode.value = 'I';
-      }
-
-      sozlesmeLoading.value = false;
-    }
-
     onMounted(async () => {
       await getLastTradedCustomer();
       console.log(store.getters.currentUser);
     });
 
     return {
-      sozlesmeDialogVisible,
-      sozlesmeLoading,
-      newContractRules,
-      formContractRef,
-      newContract,
       selectAddressMode,
       newCustomerRules,
       newAddressRules,
@@ -4069,7 +3607,6 @@ export default defineComponent({
       firmaOzet,
       device,
       deviceBrand,
-      contracts,
       customerInfoList,
       deviceInfoList,
       deviceServices,
@@ -4107,7 +3644,6 @@ export default defineComponent({
       ilceList,
       semtList,
       adresLoading,
-      contractCodeList,
       musteriDialogAc,
       customerSubmit,
       remoteMethodSerialNo,
@@ -4136,9 +3672,7 @@ export default defineComponent({
       deleteAdres,
       handleDeviceMenuCommand,
       handleCustomerMenuCommand,
-      contractSubmit,
-      sozlemeDialogAc,
-      deleteConract,
+      sozlesmeListesiRef
     };
   },
 });

@@ -2,7 +2,7 @@ import { IAddressData } from "./AddressData";
 import { IDeviceModelData } from "./DeviceModelData";
 
 interface IDeviceData {
-    id?: string | '',
+    id : Number | null,
     addressId?: string | '',
     deviceModelId?: string | '',
     serialNumber?: string | '',

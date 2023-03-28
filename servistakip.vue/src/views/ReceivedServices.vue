@@ -1,75 +1,62 @@
 <template>
   <!--begin::Row-->
-  <div class="row g-5 g-xl-2">
-    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-      <el-card class="box-card" shadow="hover">
-        <template #header>
-          <div class="card-header">
-            <div class="row">
-              <div class="col-md-2">
-                <h4>Alınan Servisler</h4>
-              </div>
-              <div class="col-md-3">
-                (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ receivedDeviceServiceList.length }}</span
-                >)
-              </div>
-            </div>
-          </div>
-        </template>
-        <div>
-          <el-table :data="receivedDeviceServiceList" style="width: 100%" max-height="150" height="150">
-            <el-table-column label="C.No" width="90">
+  <div class="row g-5 g-xl-2" v-loading="alinanServislerLoading">
+    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12" style="height: 770px;" >
+      <el-tabs type="border-card" style="height: 770px;">
+        <el-tab-pane :label="alinanServislerLabel">
+          <el-table
+            :data="receivedDeviceServiceList"
+            class="tableClass">
+            <el-table-column label="C.No" label-class-name="tableHeader" width="80">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.deviceId }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açılış Tarihi" width="170" sortable>
+            <el-table-column label="Açılış Tarihi" label-class-name="tableHeader" width="170">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.failureDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-
-            <el-table-column label="Müşteri Unvan" width="370">
+            <el-table-column label="Müşteri Unvan" label-class-name="tableHeader" width="570">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.customer.title }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Model" width="160">
+            <el-table-column label="Model" label-class-name="tableHeader" width="160">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.deviceModel.name }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Seri No" width="120">
+            <el-table-column label="Seri No" label-class-name="tableHeader" width="140">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.serialNumber }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Servis Kodu" width="120">
+            <el-table-column label="Servis Kodu" label-class-name="tableHeader" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.serviceBootCode }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Departman">
+            <el-table-column label="Departman" label-class-name="tableHeader" width="250">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.department }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açıklama">
+            <el-table-column label="Açıklama" label-class-name="tableHeader" width="450">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.bootDescription }}</span>
@@ -77,7 +64,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="#" fixed="left" width="170">
+            <el-table-column label="#" fixed="left" label-class-name="tableHeader" width="170">
               <template #default="scope">
                 <el-dropdown size="small" type="danger">
                   <el-button type="primary">
@@ -98,57 +85,38 @@
                 </el-dropdown>
               </template>
             </el-table-column>
-          </el-table>
-        </div>
-      </el-card>
-    </div>
-    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-      <el-card class="box-card" shadow="hover">
-        <template #header>
-          <div class="card-header">
-            <div class="row">
-              <div class="col-md-2">
-                <h4>Teknisyendeki İşler</h4>
-              </div>
-              <div class="col-md-3">
-                (<span style="font-weight: 800; font-size: 14px"> Toplam Servis Sayısı :&nbsp;</span>
-                <span style="color: red; font-weight: bold"> {{ technicianAssignedDeviceServiceList.length }}</span
-                >)
-              </div>
-            </div>
-          </div>
-        </template>
-        <div>
-          <el-table :data="technicianAssignedDeviceServiceList" style="width: 100%" max-height="150" height="150">
-            <el-table-column label="C.No" width="90">
+          </el-table></el-tab-pane>
+        <el-tab-pane :label="teknisyendekiIslerLabel">
+          <el-table :data="technicianAssignedDeviceServiceList" class="tableClass">
+            <el-table-column label="C.No" label-class-name="tableHeader" width="90">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.deviceId }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açılış Tarihi" width="170" sortable>
+            <el-table-column label="Açılış Tarihi" label-class-name="tableHeader" width="170" sortable>
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.failureDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Müşteri Unvan" width="370">
+            <el-table-column label="Müşteri Unvan" label-class-name="tableHeader" width="370">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.customer.title }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Teknisyen Veriliş Tarihi" width="210">
+            <el-table-column label="Teknisyen Veriliş Tarihi" label-class-name="tableHeader" width="210">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.userAssignDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Teknisyen" width="180">
+            <el-table-column label="Teknisyen" label-class-name="tableHeader" width="180">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.user.firstname }} {{ scope.row.user.lastname }}</span>
@@ -156,42 +124,42 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="Model" width="160">
+            <el-table-column label="Model" label-class-name="tableHeader" width="160">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.deviceModel.name }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Seri No" width="120">
+            <el-table-column label="Seri No" label-class-name="tableHeader" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.serialNumber }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Servis Kodu" width="120">
+            <el-table-column label="Servis Kodu" label-class-name="tableHeader" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.serviceBootCode }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Departman" width="120">
+            <el-table-column label="Departman" label-class-name="tableHeader" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.department }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açıklama" width="320">
+            <el-table-column label="Açıklama" label-class-name="tableHeader" width="320">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.bootDescription }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="#" fixed="left" width="170">
+            <el-table-column label="#" fixed="left" label-class-name="tableHeader" width="170">
               <template #default="scope">
                 <el-dropdown size="small" type="danger">
                   <el-button type="primary">
@@ -222,26 +190,17 @@
               </template>
             </el-table-column>
           </el-table>
-        </div>
-      </el-card>
-    </div>
-    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-      <el-card class="box-card" shadow="hover">
-        <template #header>
-          <div class="card-header">
-            <h4><span>Parça Değişim İşleri</span></h4>
-          </div>
-        </template>
-        <div>
-          <el-table :data="partsExchangeDeviceServiceList" style="width: 100%" max-height="150" height="150">
-            <el-table-column label="C.No" width="90">
+        </el-tab-pane>
+        <el-tab-pane :label="parcaDegisimIslerLabel">
+          <el-table :data="partsExchangeDeviceServiceList" class="tableClass">
+            <el-table-column label="C.No" label-class-name="tableHeader" width="90">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.deviceId }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açılış Tarihi" width="170" sortable>
+            <el-table-column label="Açılış Tarihi" label-class-name="tableHeader" width="170" sortable>
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.failureDateString }}</span>
@@ -249,49 +208,49 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="Müşteri Unvan">
+            <el-table-column label="Müşteri Unvan" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.customer.title }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Model" width="160">
+            <el-table-column label="Model" label-class-name="tableHeader" width="160">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.deviceModel.name }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Seri No" width="120">
+            <el-table-column label="Seri No" label-class-name="tableHeader" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.serialNumber }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Servis Kodu" width="120">
+            <el-table-column label="Servis Kodu" label-class-name="tableHeader" width="120">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.serviceBootCode }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Departman">
+            <el-table-column label="Departman" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.department }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açıklama">
+            <el-table-column label="Açıklama" label-class-name="tableHeader" >
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.bootDescription }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="#" fixed="left" width="170">
+            <el-table-column label="#" fixed="left" label-class-name="tableHeader" width="170">
               <template #default="scope">
                 <el-dropdown size="small" type="danger">
                   <el-button type="primary">
@@ -319,8 +278,8 @@
               </template>
             </el-table-column>
           </el-table>
-        </div>
-      </el-card>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 
@@ -604,6 +563,7 @@ export default defineComponent({
     var teknisyenRaporu = ref<string>('');
     var orderReceiptReport = ref<string>('');
     const loading = ref<boolean>(false);
+    const alinanServislerLoading = ref<boolean>(false);
     var selectedDeviceServiceId = ref<string>('');
     var orderReceiptMailAddress = ref<string>('');
     var mailModel = ref<IMailModel>({
@@ -645,6 +605,10 @@ export default defineComponent({
         },
       ],
     });
+
+    const alinanServislerLabel = ref<string>('Alınan Servisler');
+    const teknisyendekiIslerLabel = ref<string>('Teknisyendeki İşler');
+    const parcaDegisimIslerLabel = ref<string>('Parça Değişim İşleri');
 
     const teknisyenAtaSubmit = () => {
       if (!formAssignTechnicianRef.value) {
@@ -833,16 +797,19 @@ export default defineComponent({
     }
 
     async function getReceivedDeviceServiceList() {
+      alinanServislerLoading.value = true;
       await store
         .dispatch(Actions.GET_RECEIVEDDEVICESERVICE)
         .then(result => {
           if (result.isSuccess) {
             receivedDeviceServiceList.value = result.data;
+            alinanServislerLabel.value = alinanServislerLabel.value + " ("+ receivedDeviceServiceList.value.length+")"
           }
         })
         .catch(() => {
           const [error] = Object.keys(store.getters.getErrors);
         });
+        alinanServislerLoading.value = false;
     }
 
     async function getTechnicianAssignedDeviceServiceList() {
@@ -851,6 +818,7 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             technicianAssignedDeviceServiceList.value = result.data;
+            teknisyendekiIslerLabel.value = teknisyendekiIslerLabel.value + " ("+ technicianAssignedDeviceServiceList.value.length+")"
           }
         })
         .catch(() => {
@@ -864,6 +832,7 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             partsExchangeDeviceServiceList.value = result.data;
+            parcaDegisimIslerLabel.value = parcaDegisimIslerLabel.value + " ("+ partsExchangeDeviceServiceList.value.length+")"
           }
         })
         .catch(() => {
@@ -1087,6 +1056,8 @@ export default defineComponent({
       await getReceivedDeviceServiceList();
       await getTechnicianAssignedDeviceServiceList();
       await getPartsExchangeDeviceServiceList();
+
+      
     });
 
     return {
@@ -1112,6 +1083,10 @@ export default defineComponent({
       mailModel,
       siparisFisGonderRules,
       siparisFisGonderRef,
+      alinanServislerLabel,
+      alinanServislerLoading,
+      teknisyendekiIslerLabel,
+      parcaDegisimIslerLabel,
       teknisyenAtaSubmit,
       getTechnicianList,
       teknisyenAtaAc,
