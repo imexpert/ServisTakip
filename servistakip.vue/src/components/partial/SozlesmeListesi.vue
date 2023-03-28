@@ -266,10 +266,11 @@ import { defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default defineComponent({
+  name: 'SozlesmeListesi',
   props: {
     deviceId: {
-      type: Number,
-      required: true
+      type: String,
+      required: true,
     },
   },
   setup(props) {
@@ -395,7 +396,7 @@ export default defineComponent({
           sozlesmeLoading.value = true;
           console.log(newContract.value);
 
-          newContract.value.deviceId = props.deviceId;
+          // newContract.value.deviceId = props.deviceId;
 
           if (selectContractMode.value == 'I') {
             store
@@ -495,6 +496,8 @@ export default defineComponent({
         .dispatch(Actions.GET_CONTRACTLIST, props.deviceId)
         .then(result => {
           if (result.isSuccess) {
+            console.clear();
+            console.log(result.data);
             contracts.value = result.data;
             sozlesmeLoading.value = false;
           }
@@ -517,7 +520,7 @@ export default defineComponent({
       newContractRules,
       newContract,
       shortcuts,
-      formContractRef
+      formContractRef,
     };
   },
 });

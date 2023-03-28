@@ -15,7 +15,7 @@ interface IFirmaOzetData {
     authorizedTask?: string | '',
     cityName?: string | '',
     authorizedEmail?: string | '',
-    deviceId: Number | null,
+    deviceId: number | null,
     districtName?: string | '',
     department?: string | '',
     quarterName?: string | '',

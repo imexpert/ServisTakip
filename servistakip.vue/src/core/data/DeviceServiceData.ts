@@ -4,7 +4,7 @@ import { IUserData } from "./UserData";
 interface IDeviceServiceData {
     id?: string | null,
     linkedDeviceServiceId?: string | null,
-    deviceId: Number | null,
+    deviceId: number | null,
     userId?: string | '',
     userAssignDate?: string | null,
     userAssignDateString?: string | '',

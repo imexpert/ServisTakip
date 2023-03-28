@@ -309,7 +309,7 @@
         <div class="row mb-2">
           <!-- Sözleşmeler -->
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-            <SozlesmeListesi ref="sozlesmeListesiRef" :deviceId="Number(firmaOzet.deviceId)" />
+            <SozlesmeListesi ref="sozlesmeListesiRef" :deviceId="deviceId" />
           </div>
 
           <!-- Divider -->
@@ -495,70 +495,70 @@
       <el-card class="box-card">
         <div class="text item">
           <el-table :data="deviceServices" height="268" max-height="268" class="tableClass">
-            <el-table-column label="Açılış Tarihi" width="150" label-class-name="tableHeader" >
+            <el-table-column label="Açılış Tarihi" width="150" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.failureDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Tek.Ver.Tarihi" width="150" label-class-name="tableHeader" >
+            <el-table-column label="Tek.Ver.Tarihi" width="150" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.userAssignDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Kapanış Tarihi" width="150" label-class-name="tableHeader" >
+            <el-table-column label="Kapanış Tarihi" width="150" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.resultDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="S/B" width="80" label-class-name="tableHeader" >
+            <el-table-column label="S/B" width="80" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.wbCount }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Renkli" width="80" label-class-name="tableHeader" >
+            <el-table-column label="Renkli" width="80" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.colorCount }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Ser.Kod" width="90" label-class-name="tableHeader" >
+            <el-table-column label="Ser.Kod" width="90" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.serviceBootCode }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Tes.Kodu" width="100" label-class-name="tableHeader" >
+            <el-table-column label="Tes.Kodu" width="100" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.detectionCode }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Son.Kodu" width="100" label-class-name="tableHeader" >
+            <el-table-column label="Son.Kodu" width="100" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.serviceResultCode }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Teknisyen" width="150" label-class-name="tableHeader" >
+            <el-table-column label="Teknisyen" width="150" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.user.firstname }} {{ scope.row.user.lastname }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Dr" width="50" label-class-name="tableHeader" >
+            <el-table-column label="Dr" width="50" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.dr">1</span>
@@ -566,7 +566,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Dv" width="50" label-class-name="tableHeader" >
+            <el-table-column label="Dv" width="50" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.dv">1</span>
@@ -574,7 +574,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Bc" width="50" label-class-name="tableHeader" >
+            <el-table-column label="Bc" width="50" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.bc">1</span>
@@ -582,7 +582,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Fs" width="50" label-class-name="tableHeader" >
+            <el-table-column label="Fs" width="50" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.fs">1</span>
@@ -590,7 +590,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Pa" width="50" label-class-name="tableHeader" >
+            <el-table-column label="Pa" width="50" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.pa">1</span>
@@ -598,7 +598,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Bk" width="50" label-class-name="tableHeader" >
+            <el-table-column label="Bk" width="50" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.bk">1</span>
@@ -606,7 +606,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Ak" width="50" label-class-name="tableHeader" >
+            <el-table-column label="Ak" width="50" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span v-if="scope.row.ak">1</span>
@@ -614,7 +614,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="#" fixed="left" width="70" label-class-name="tableHeader" >
+            <el-table-column label="#" fixed="left" width="70" label-class-name="tableHeader">
               <template #default="scope">
                 <el-button type="danger" @click="getDeviceService(scope.row.id)">
                   <el-icon title="Detay Görüntüle">
@@ -2027,8 +2027,6 @@
         </el-form>
       </div>
     </el-dialog>
-
-    
   </div>
 </template>
 
@@ -2059,7 +2057,7 @@ import { ICityData } from '@/core/data/CityData';
 import { IDistrictData } from '@/core/data/DistrictData';
 import { IQuerterData } from '@/core/data/QuerterData';
 import { IContractCodeData } from '@/core/data/ContractCodeData';
-import SozlesmeListesi from '@/components/partial/SozlesmeListesi.vue'
+import SozlesmeListesi from '@/components/partial/SozlesmeListesi.vue';
 
 export default defineComponent({
   name: 'default-dashboard-widget-2',
@@ -2069,7 +2067,7 @@ export default defineComponent({
     Form,
     Search,
     Plus,
-    SozlesmeListesi
+    SozlesmeListesi,
   },
   setup() {
     const store = useStore();
@@ -2081,7 +2079,7 @@ export default defineComponent({
     const cihazListesiDialogVisible = ref(false);
     const musteriDialogVisible = ref(false);
     const servisAcDialogVisible = ref(false);
-    
+
     const loading = ref<boolean>(false);
     const anaSayfaLoading = ref<boolean>(false);
     const servisAcLoading = ref<boolean>(false);
@@ -2090,7 +2088,6 @@ export default defineComponent({
     const createDeviceLoading = ref<boolean>(false);
     const musteriLoading = ref<boolean>(false);
     const adresLoading = ref<boolean>(false);
-    
 
     const adresTableVisible = ref<boolean>(false);
 
@@ -2289,7 +2286,7 @@ export default defineComponent({
     var deviceModelList = ref<Array<IDeviceModelData>>([]);
     var deviceList = ref<Array<IDeviceData>>([]);
     var deviceServices = ref<Array<IDeviceServiceData>>([]);
-    
+
     var customerAddresses = ref<Array<IAddressData>>([]);
 
     var deviceStatus = ref<string>('');
@@ -2306,7 +2303,7 @@ export default defineComponent({
     var selectedIlce = ref<string>();
     var selectMode = ref<string>('I');
     var selectAddressMode = ref<string>('I');
-    
+
     const shortcuts = [
       {
         text: 'Bugün',
@@ -2331,7 +2328,7 @@ export default defineComponent({
     var seriNoList = ref<Array<ICustomerListData>>([]);
     var addressList = ref<Array<IAddressData>>([]);
     var sectorList = ref<Array<ISectorData>>([]);
-    
+
     var sehirList = ref<Array<ICityData>>([]);
     var ilceList = ref<Array<IDistrictData>>([]);
     var semtList = ref<Array<IQuerterData>>([]);
@@ -2341,7 +2338,9 @@ export default defineComponent({
     const formCustomerRef = ref<null | HTMLFormElement>(null);
     const formAddressRef = ref<null | HTMLFormElement>(null);
     const sozlesmeListesiRef = ref<null | HTMLFormElement>(null);
-    
+
+    var deviceId = ref<string>('');
+
     const newServiceRules = ref({
       failureDate: [
         {
@@ -3182,13 +3181,16 @@ export default defineComponent({
       anaSayfaLoading.value = true;
       await store
         .dispatch(Actions.GET_LASTTRADED_CUSTOMER)
-        .then(result => {
+        .then(async result => {
           anaSayfaLoading.value = false;
           if (result.isSuccess) {
             firmaOzet.value = result.data;
             console.clear();
             console.log(firmaOzet.value);
-            sozlesmeListesiRef.value?.getContractList();
+            deviceId.value = firmaOzet.value.deviceId.toString();
+
+            await sozlesmeListesiRef.value.getContractList();
+
             // contracts.value = result.data.contracts;
 
             if (result.data.device) {
@@ -3359,8 +3361,6 @@ export default defineComponent({
         path: '/customer',
       });
     }
-
-    
 
     async function cihazListesi() {
       cihazListesiDialogVisible.value = true;
@@ -3644,6 +3644,7 @@ export default defineComponent({
       ilceList,
       semtList,
       adresLoading,
+      deviceId,
       musteriDialogAc,
       customerSubmit,
       remoteMethodSerialNo,
@@ -3672,7 +3673,7 @@ export default defineComponent({
       deleteAdres,
       handleDeviceMenuCommand,
       handleCustomerMenuCommand,
-      sozlesmeListesiRef
+      sozlesmeListesiRef,
     };
   },
 });

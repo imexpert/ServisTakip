@@ -14,7 +14,7 @@
         </div>
       </template>
     </el-table-column>
-    <el-table-column label="Müşteri Unvan" label-class-name="tableHeader" >
+    <el-table-column label="Müşteri Unvan" label-class-name="tableHeader">
       <template #default="scope">
         <div style="display: flex; align-items: center">
           <span>{{ scope.row.device.address.customer.title }}</span>
@@ -42,7 +42,7 @@
         </div>
       </template>
     </el-table-column>
-    <el-table-column label="Açıklama" label-class-name="tableHeader" >
+    <el-table-column label="Açıklama" label-class-name="tableHeader">
       <template #default="scope">
         <div style="display: flex; align-items: center">
           <span>{{ scope.row.bootDescription }}</span>
@@ -60,24 +60,16 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="parcaIslemDialogAc(scope.row.id)">
-                <el-icon>
-                  <Expand /> </el-icon
-                >&nbsp; Y.Parça
+                <el-icon> <Expand /> </el-icon>&nbsp; Y.Parça
               </el-dropdown-item>
               <el-dropdown-item @click="getOfferReport(scope.row.id)">
-                <el-icon>
-                  <CreditCard /> </el-icon
-                >&nbsp; Teklif Görüntüle
+                <el-icon> <CreditCard /> </el-icon>&nbsp; Teklif Görüntüle
               </el-dropdown-item>
               <el-dropdown-item>
-                <el-icon>
-                  <Document /> </el-icon
-                >&nbsp; Servis Kaydı
+                <el-icon> <Document /> </el-icon>&nbsp; Servis Kaydı
               </el-dropdown-item>
               <el-dropdown-item>
-                <el-icon>
-                  <RemoveFilled /> </el-icon
-                >&nbsp; Sil
+                <el-icon> <RemoveFilled /> </el-icon>&nbsp; Sil
               </el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -97,7 +89,7 @@
           </label>
           <!--end::Label-->
           <el-form-item prop="serviceBootCode">
-            <el-input v-model="Number(customInfo.deviceId)" disabled></el-input>
+            <el-input v-model="customInfo.deviceId" disabled></el-input>
           </el-form-item>
         </div>
         <!--end::Input group-->
@@ -204,19 +196,13 @@
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item @click="parcaEkleDialogAc()">
-                      <el-icon>
-                        <Plus /> </el-icon
-                      >&nbsp; Yeni Ekle
+                      <el-icon> <Plus /> </el-icon>&nbsp; Yeni Ekle
                     </el-dropdown-item>
                     <el-dropdown-item @click="parcaDuzenleDialogAc(scope.row.id)" divided>
-                      <el-icon>
-                        <ArrowRight /> </el-icon
-                      >&nbsp; Düzenle
+                      <el-icon> <ArrowRight /> </el-icon>&nbsp; Düzenle
                     </el-dropdown-item>
                     <el-dropdown-item @click="deleteDeviceServicePart(scope.row.id)">
-                      <el-icon>
-                        <ArrowLeft /> </el-icon
-                      >&nbsp; Sil
+                      <el-icon> <ArrowLeft /> </el-icon>&nbsp; Sil
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
@@ -597,9 +583,7 @@
     <div class="row">
       <div class="col-md-12">
         <el-button type="primary" @click="teklifGonderSubmit()">
-          <el-icon>
-            <Check /> </el-icon
-          >&nbsp; Teklifi Gönder
+          <el-icon> <Check /> </el-icon>&nbsp; Teklifi Gönder
         </el-button>
       </div>
       <div class="col-md-12 mt-5">
@@ -625,7 +609,7 @@ import { IOfferSubjectCodeData } from '@/core/data/OfferSubjectCode';
 import { IOfferData } from '@/core/data/OfferData';
 
 interface ICustomInfo {
-  deviceId: Number |null;
+  deviceId: number | null;
   serviceCode?: string;
   serviceFailureDate?: string;
   customerTitle?: string;
@@ -1195,6 +1179,4 @@ export default defineComponent({
 });
 </script>
 
-<style>
-
-</style>
+<style></style>
