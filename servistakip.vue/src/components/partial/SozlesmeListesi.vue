@@ -262,17 +262,12 @@ import { IContractCodeData } from '@/core/data/ContractCodeData';
 import { IContractData } from '@/core/data/ContractData';
 import { showErrorMessage, showSuccessMessage } from '@/core/plugins/Utils';
 import { Actions } from '@/store/enums/StoreEnums';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed, watch, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'SozlesmeListesi',
-  props: {
-    deviceId: {
-      type: String,
-      required: true,
-    },
-  },
+  props: ['deviceId'],
   setup(props) {
     const store = useStore();
 
@@ -330,6 +325,7 @@ export default defineComponent({
     });
 
     const sozlesmeDialogVisible = ref(false);
+
     var newContract = ref<IContractData>({
       device: null,
       contractCode: '',
@@ -506,6 +502,8 @@ export default defineComponent({
           const [error] = Object.keys(store.getters.getErrors);
         });
     }
+
+    watchEffect(async () => await getContractList())
 
     return {
       sozlemeDialogAc,

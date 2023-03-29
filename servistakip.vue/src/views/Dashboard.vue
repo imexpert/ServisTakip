@@ -309,7 +309,7 @@
         <div class="row mb-2">
           <!-- Sözleşmeler -->
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-            <SozlesmeListesi ref="sozlesmeListesiRef" :deviceId="deviceId" />
+            <SozlesmeListesi v-if="firmaOzet.deviceId" :deviceId="firmaOzet.deviceId" />
           </div>
 
           <!-- Divider -->
@@ -2031,7 +2031,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref, vModelCheckbox } from 'vue';
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
@@ -3187,11 +3187,9 @@ export default defineComponent({
             firmaOzet.value = result.data;
             console.clear();
             console.log(firmaOzet.value);
-            deviceId.value = firmaOzet.value.deviceId.toString();
+            deviceId.value = firmaOzet.value.deviceId;
 
-            await sozlesmeListesiRef.value.getContractList();
-
-            // contracts.value = result.data.contracts;
+            // await sozlesmeListesiRef.value?.getContractList();
 
             if (result.data.device) {
               device.value = result.data.device;
