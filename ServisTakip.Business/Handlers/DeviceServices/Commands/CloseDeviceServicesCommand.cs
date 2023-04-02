@@ -47,7 +47,10 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                 deviceServiceRepo.Update(deviceService);
                 await deviceServiceRepo.SaveChangesAsync();
 
-                await mediator.Send(new CreateOfferDeviceServicesCommand() { ClosedDeviceService = deviceService });
+                await mediator.Send(new CreateOfferDeviceServicesCommand()
+                {
+                    ClosedDeviceService = deviceService
+                }, cancellationToken);
 
                 return ResponseMessage<DeviceServiceDto>.Success(request.Model);
             }

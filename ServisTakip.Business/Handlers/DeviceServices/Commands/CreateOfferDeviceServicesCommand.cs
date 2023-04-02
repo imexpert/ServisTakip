@@ -33,15 +33,18 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                 {
                     deviceService.StatusCode = ((int)StatusCodes.ParcaDegisimTalebi);
                     deviceService.ServiceBootCode = "PDY-01";
+
+                    deviceServiceRepo.Add(deviceService);
+                    await deviceServiceRepo.SaveChangesAsync();
                 }
                 else
                 {
                     deviceService.StatusCode = ((int)StatusCodes.TeklifGonderilecek);
                     deviceService.ServiceBootCode = "TEK-1";
-                }
 
-                deviceServiceRepo.Add(deviceService);
-                await deviceServiceRepo.SaveChangesAsync();
+                    deviceServiceRepo.Add(deviceService);
+                    await deviceServiceRepo.SaveChangesAsync();
+                }
 
                 return ResponseMessage<CreateDeviceServiceDto>.Success(new CreateDeviceServiceDto());
             }

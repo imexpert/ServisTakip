@@ -122,7 +122,8 @@
             <!-- Cari Kod -->
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-6 fv-row">
               <label class="fs-5 fw-semobold mb-2">Cari Kod</label>
-              <el-input readonly disabled v-model="firmaOzet.accountCode" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.accountCode" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="carikod" />
@@ -133,7 +134,8 @@
             <!-- Sektör -->
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-6 fv-row">
               <label class="fs-5 fw-semobold mb-2">Sektör</label>
-              <el-input readonly disabled v-model="firmaOzet.customerSector" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.customerSector" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="sektor" />
@@ -205,7 +207,8 @@
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2 col-sm-2 fv-row">
               <label class="fs-5 fw-semobold mb-2">Bölge</label>
-              <el-input readonly disabled v-model="firmaOzet.regionCode" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.regionCode" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="bolge" />
@@ -216,7 +219,8 @@
           <div class="row mb-1">
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">Şehir</label>
-              <el-input readonly disabled v-model="firmaOzet.cityName" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.cityName" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="departman" />
@@ -225,7 +229,8 @@
             </div>
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">İlçe</label>
-              <el-input readonly disabled v-model="firmaOzet.districtName" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.districtName" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="departman" />
@@ -234,7 +239,8 @@
             </div>
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">Semt</label>
-              <el-input readonly disabled v-model="firmaOzet.quarterName" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.quarterName" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="departman" />
@@ -245,7 +251,8 @@
           <div class="row mb-1">
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">Yetkili Ad Soyad</label>
-              <el-input readonly disabled v-model="firmaOzet.authorizedName" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.authorizedName" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="departman" />
@@ -254,7 +261,8 @@
             </div>
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">Yetkili Görevi</label>
-              <el-input readonly disabled v-model="firmaOzet.authorizedTask" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.authorizedTask" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="departman" />
@@ -263,7 +271,8 @@
             </div>
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">Yetkili E-Mail</label>
-              <el-input readonly disabled v-model="firmaOzet.authorizedEmail" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.authorizedEmail" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="departman" />
@@ -274,7 +283,8 @@
           <div class="row mb-1">
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">Tel</label>
-              <el-input readonly disabled v-model="firmaOzet.authorizedPhone" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.authorizedPhone" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="departman" />
@@ -283,7 +293,13 @@
             </div>
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">Tel (İş)</label>
-              <el-input readonly disabled v-model="firmaOzet.authorizedWorkPhone" class="input-with-select"> </el-input>
+              <el-input
+                readonly
+                disabled
+                v-model="firmaOzet.authorizedWorkPhone"
+                class="input-with-select customBorder"
+              >
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="departman" />
@@ -293,7 +309,8 @@
 
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4 fv-row">
               <label class="fs-5 fw-semobold mb-2">Departman</label>
-              <el-input readonly disabled v-model="firmaOzet.department" class="input-with-select"> </el-input>
+              <el-input readonly disabled v-model="firmaOzet.department" class="input-with-select customBorder">
+              </el-input>
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
                   <ErrorMessage name="bolge" />
@@ -434,19 +451,21 @@
           <!-- Marka -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row">
             <label class="fs-5 fw-semobold mb-2">Marka</label>
-            <el-input disabled style="font-size: 12px" v-model="deviceBrand.name"> </el-input>
+            <el-input disabled style="font-size: 12px" v-model="deviceBrand.name" class="customBorder"> </el-input>
           </div>
 
           <!-- Montaj Tarihi -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Montaj Tarihi</label>
-            <el-input disabled style="font-size: 12px" v-model="device.assemblyDateString"> </el-input>
+            <el-input disabled style="font-size: 12px" v-model="device.assemblyDateString" class="customBorder">
+            </el-input>
           </div>
 
           <!-- Sözleşme Tipi -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Sözleşme Tipi</label>
-            <el-input disabled style="font-size: 12px" v-model="firmaOzet.contractType"> </el-input>
+            <el-input disabled style="font-size: 12px" v-model="firmaOzet.contractType" class="customBorder">
+            </el-input>
           </div>
 
           <!-- Cihaz Durumu -->
@@ -455,7 +474,7 @@
             <input
               type="text"
               disabled
-              class="form-control form-control-sm form-control-solid border border-secondary"
+              class="form-control form-control-sm form-control-solid border border-secondary customBorder"
               style="color: #a8abb2"
               :style="{ backgroundColor: backgroundColor }"
               name="row-name"
@@ -469,7 +488,7 @@
             <input
               type="text"
               disabled
-              class="form-control form-control-sm form-control-solid border border-secondary"
+              class="form-control form-control-sm form-control-solid border border-secondary customBorder"
               style="color: #a8abb2"
               :style="{ backgroundColor: maintenanceBackgroundColor }"
               name="row-name"
@@ -480,13 +499,13 @@
           <!-- SB Sayaç -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">S/B Sayaç</label>
-            <el-input disabled style="font-size: 12px" v-model="firmaOzet.wbCount"> </el-input>
+            <el-input disabled style="font-size: 12px" v-model="firmaOzet.wbCount" class="customBorder"> </el-input>
           </div>
 
           <!-- Renkli Sayaç -->
           <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
             <label class="fs-5 fw-semobold mb-2">Renkli Sayaç</label>
-            <el-input disabled style="font-size: 12px" v-model="firmaOzet.colorCount"> </el-input>
+            <el-input disabled style="font-size: 12px" v-model="firmaOzet.colorCount" class="customBorder"> </el-input>
           </div>
         </div>
       </el-card>
@@ -495,21 +514,21 @@
       <el-card class="box-card">
         <div class="text item">
           <el-table :data="deviceServices" height="268" max-height="268" class="tableClass">
-            <el-table-column label="Açılış Tarihi" width="150" label-class-name="tableHeader">
+            <el-table-column label="Açılış Tarihi" width="155" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.failureDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Tek.Ver.Tarihi" width="150" label-class-name="tableHeader">
+            <el-table-column label="Tek.Ver.Tarihi" width="155" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.userAssignDateString }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Kapanış Tarihi" width="150" label-class-name="tableHeader">
+            <el-table-column label="Kapanış Tarihi" width="155" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.resultDateString }}</span>
@@ -3684,6 +3703,12 @@ export default defineComponent({
 .arama {
   border: 1px solid #ebd72a;
   border-radius: 5px;
+}
+
+.customBorder {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  color: red;
 }
 
 .dropdownMenu {
