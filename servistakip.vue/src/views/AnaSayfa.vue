@@ -1189,8 +1189,25 @@
               <!--end::Input group-->
             </div>
 
-            <!-- Ad -->
-            <div class="col-md-6">
+            <!-- SB Sayaç -->
+            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">SB Sayaç</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="name">
+                  <el-input v-model="newService.name" placeholder="Talebi bildiren ad giriniz"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Rekli Sayaç -->
+            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
