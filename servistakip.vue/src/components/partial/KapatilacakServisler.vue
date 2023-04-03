@@ -1,100 +1,102 @@
 <template>
-  <el-table :data="kapatilacakServisList" class="tableClass">
-    <el-table-column label="C.No" label-class-name="tableHeader" width="90">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span>{{ scope.row.deviceId }}</span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Açılış Tarihi" label-class-name="tableHeader" width="170">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span>{{ scope.row.failureDateString }}</span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Müşteri Unvan" label-class-name="tableHeader" width="570">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span>{{ scope.row.device.address.customer.title }}</span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Teknisyen Veriliş Tarihi" label-class-name="tableHeader" width="210">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span>{{ scope.row.userAssignDateString }}</span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Teknisyen" label-class-name="tableHeader" width="180">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span>{{ scope.row.user.firstname }} {{ scope.row.user.lastname }}</span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Model" label-class-name="tableHeader" width="160">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span>{{ scope.row.device.deviceModel.name }}</span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Seri No" label-class-name="tableHeader" width="120">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span>{{ scope.row.device.serialNumber }}</span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Servis Kodu" label-class-name="tableHeader" width="120">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span>{{ scope.row.serviceBootCode }}</span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Departman" label-class-name="tableHeader" width="270">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span>{{ scope.row.device.address.department }}</span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Açıklama" label-class-name="tableHeader" width="370">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span>{{ scope.row.bootDescription }}</span>
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="#" fixed="left" label-class-name="tableHeader" width="170">
-      <template #default="scope">
-        <el-dropdown size="small" type="danger">
-          <el-button type="primary">
-            İşlem Listesi<el-icon class="el-icon--right">
-              <arrow-down />
-            </el-icon>
-          </el-button>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click="getClosedService(scope.row.id)">
-                <el-icon> <ArrowRight /> </el-icon>&nbsp; Talep Sonlandır
-              </el-dropdown-item>
-              <el-dropdown-item @click="teknisyeneGonder(scope.row.id)">
-                <el-icon> <ArrowLeft /> </el-icon>&nbsp; Teknisyene Gönder
-              </el-dropdown-item>
-              <el-dropdown-item @click="servisKaydiIptal(scope.row.id)">
-                <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </template>
-    </el-table-column>
-  </el-table>
+  <el-tab-pane :label="kapatilacakServislerLabel">
+    <el-table :data="kapatilacakServisList" class="tableClass">
+      <el-table-column label="C.No" label-class-name="tableHeader" width="90">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.deviceId }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Açılış Tarihi" label-class-name="tableHeader" width="170">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.failureDateString }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Müşteri Unvan" label-class-name="tableHeader" width="570">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.device.address.customer.title }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Teknisyen Veriliş Tarihi" label-class-name="tableHeader" width="210">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.userAssignDateString }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Teknisyen" label-class-name="tableHeader" width="180">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.user.firstname }} {{ scope.row.user.lastname }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Model" label-class-name="tableHeader" width="160">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.device.deviceModel.name }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Seri No" label-class-name="tableHeader" width="120">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.device.serialNumber }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Servis Kodu" label-class-name="tableHeader" width="120">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.serviceBootCode }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Departman" label-class-name="tableHeader" width="270">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.device.address.department }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Açıklama" label-class-name="tableHeader" width="370">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.bootDescription }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="#" fixed="left" label-class-name="tableHeader" width="170">
+        <template #default="scope">
+          <el-dropdown size="small" type="danger">
+            <el-button type="primary">
+              İşlem Listesi<el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="getClosedService(scope.row.id)">
+                  <el-icon> <ArrowRight /> </el-icon>&nbsp; Talep Sonlandır
+                </el-dropdown-item>
+                <el-dropdown-item @click="teknisyeneGonder(scope.row.id)">
+                  <el-icon> <ArrowLeft /> </el-icon>&nbsp; Teknisyene Gönder
+                </el-dropdown-item>
+                <el-dropdown-item @click="servisKaydiIptal(scope.row.id)">
+                  <el-icon> <RemoveFilled /> </el-icon>&nbsp; İptal Et
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </template>
+      </el-table-column>
+    </el-table>
+  </el-tab-pane>
 
   <el-dialog v-model="talepSonlandirDialogVisible" title="Talep Sonlandırma" width="50%" destroy-on-close align-top>
     <div class="row">
@@ -462,10 +464,7 @@ export default defineComponent({
     const store = useStore();
     const loading = ref<boolean>(false);
 
-    const emit = defineEmits<{
-      (e: 'change', id: number): void;
-      (e: 'update', value: string): void;
-    }>();
+    const kapatilacakServislerLabel = ref<string>('Kapatılacak İşler');
 
     const shortcuts = [
       {
@@ -598,7 +597,7 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             kapatilacakServisList.value = result.data;
-            // emit('set-count', 5);
+            kapatilacakServislerLabel.value = kapatilacakServislerLabel.value + " ("+ kapatilacakServisList.value.length+")"
           }
         })
         .catch(() => {
@@ -761,6 +760,7 @@ export default defineComponent({
       shortcuts,
       talepSonlandirRules,
       talepSonlandirRef,
+      kapatilacakServislerLabel,
       okuKapatilacakServis,
       getClosedService,
       teknisyeneGonder,
@@ -771,8 +771,3 @@ export default defineComponent({
   },
 });
 </script>
-
-function $emit(arg0: string, arg1: number) { throw new Error('Function not implemented.'); } function $emit(arg0:
-string, arg1: number) { throw new Error('Function not implemented.'); } function $emit(arg0: string, arg1: number) {
-throw new Error('Function not implemented.'); } function $emit(arg0: string, arg1: number) { throw new Error('Function
-not implemented.'); } function $emit(arg0: string, arg1: number) { throw new Error('Function not implemented.'); }

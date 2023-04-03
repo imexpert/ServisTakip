@@ -1,79 +1,81 @@
 <template>
-  <el-table :data="toSentOfferedDeviceServiceList" class="tableClass">
-        <el-table-column label="C.No" label-class-name="tableHeader" width="90">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <span>{{ scope.row.deviceId }}</span>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="Açılış Tarihi" label-class-name="tableHeader" width="170">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <span>{{ scope.row.failureDateString }}</span>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="Müşteri Unvan" label-class-name="tableHeader" >
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <span>{{ scope.row.device.address.customer.title }}</span>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="Model" label-class-name="tableHeader" width="160">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <span>{{ scope.row.device.deviceModel.name }}</span>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="Seri No" label-class-name="tableHeader" width="120">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <span>{{ scope.row.device.serialNumber }}</span>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="Servis Kodu" label-class-name="tableHeader" width="120">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <span>{{ scope.row.serviceBootCode }}</span>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="Açıklama" label-class-name="tableHeader" >
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <span>{{ scope.row.bootDescription }}</span>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="#" fixed="left" label-class-name="tableHeader" width="170">
-          <template #default="scope">
-            <el-dropdown size="small" type="danger">
-              <el-button type="primary">
-                İşlem Listesi<el-icon class="el-icon--right">
-                  <arrow-down />
-                </el-icon>
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item @click="getOfferReport(scope.row.id)">
-                    <el-icon> <Expand /> </el-icon>&nbsp; Teklif Görüntüle
-                  </el-dropdown-item>
-                  <el-dropdown-item @click="approveTeklifSubmit(scope.row.id)">
-                    <el-icon><Check /></el-icon>&nbsp; Teklif Onayla
-                  </el-dropdown-item>
-                  <el-dropdown-item>
-                    <el-icon><Close /></el-icon>&nbsp; Teklif İptal
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-      </el-table>
+  <el-tab-pane :label="gonderilenTekliflerLabel">
+    <el-table :data="toSentOfferedDeviceServiceList" class="tableClass">
+      <el-table-column label="C.No" label-class-name="tableHeader" width="90">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.deviceId }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Açılış Tarihi" label-class-name="tableHeader" width="170">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.failureDateString }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Müşteri Unvan" label-class-name="tableHeader">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.device.address.customer.title }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Model" label-class-name="tableHeader" width="160">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.device.deviceModel.name }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Seri No" label-class-name="tableHeader" width="120">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.device.serialNumber }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Servis Kodu" label-class-name="tableHeader" width="120">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.serviceBootCode }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Açıklama" label-class-name="tableHeader">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <span>{{ scope.row.bootDescription }}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="#" fixed="left" label-class-name="tableHeader" width="170">
+        <template #default="scope">
+          <el-dropdown size="small" type="danger">
+            <el-button type="primary">
+              İşlem Listesi<el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="getOfferReport(scope.row.id)">
+                  <el-icon> <Expand /> </el-icon>&nbsp; Teklif Görüntüle
+                </el-dropdown-item>
+                <el-dropdown-item @click="approveTeklifSubmit(scope.row.id)">
+                  <el-icon><Check /></el-icon>&nbsp; Teklif Onayla
+                </el-dropdown-item>
+                <el-dropdown-item>
+                  <el-icon><Close /></el-icon>&nbsp; Teklif İptal
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </template>
+      </el-table-column>
+    </el-table>
+  </el-tab-pane>
 
   <el-dialog
     v-model="raporDialogVisible"
@@ -127,6 +129,9 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const loading = ref<boolean>(false);
+
+    const gonderilenTekliflerLabel = ref<string>('Gönderilen Teklifler');
+
     var customInfo = ref<ICustomInfo>({
       deviceId: '',
       serviceCode: '',
@@ -184,6 +189,8 @@ export default defineComponent({
           if (result.isSuccess) {
             console.log(result.data);
             toSentOfferedDeviceServiceList.value = result.data;
+            gonderilenTekliflerLabel.value =
+              gonderilenTekliflerLabel.value + ' (' + toSentOfferedDeviceServiceList.value.length + ')';
           }
         })
         .catch(() => {
@@ -348,6 +355,7 @@ export default defineComponent({
       offerItem,
       raporDialogVisible,
       teklifRaporu,
+      gonderilenTekliflerLabel,
       getSentOfferedDeviceServiceList,
       teklifFormDialogAc,
       handleDownload,

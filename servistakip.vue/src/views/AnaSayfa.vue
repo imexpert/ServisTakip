@@ -927,6 +927,325 @@
       </div>
     </el-dialog>
 
+    <el-dialog v-model="bakimFormuDialogVisible" title="Bakım Formu" width="50%" destroy-on-close center>
+      <div class="row">
+        <el-form
+          status-icon
+          :rules="newBakimFormuRules"
+          ref="formBakimFormuRef"
+          :model="newBakimService"
+          @submit.prevent="bakimAcSubmit()"
+          label-width="120px"
+          label-position="top"
+        >
+          <div class="row">
+            <!-- Müşteri Unvan -->
+            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Firma Unvan</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="customerTitle">
+                  <el-input v-model="firmaOzet.customerTitle" disabled></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Arıza Tarihi -->
+            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Servis Açılış Tarihi</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="failureDate">
+                  <el-date-picker
+                    v-model="newService.failureDate"
+                    format="DD.MM.YYYY HH:mm:ss"
+                    type="datetime"
+                    placeholder="Servis açılış tarihini seçiniz"
+                    :shortcuts="shortcuts"
+                  />
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Servis Açılış Kodu -->
+            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Servis Açılış Kodu</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="serviceBootCode">
+                  <el-select placeholder="Servis Kodu" filterable clearable v-model="newService.serviceBootCode">
+                    <el-option v-for="item in bootCodeList" :key="item.code" :label="item.name" :value="item.code">
+                      <div class="row">
+                        <div class="col-md-3" style="font-size: 12px">
+                          {{ item.code }}
+                        </div>
+                        <div class="col-md-9" style="font-size: 12px">
+                          {{ item.name }}
+                        </div>
+                      </div>
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Açılış Açıklama -->
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Açıklama</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="bootDescription">
+                  <el-input v-model="newService.bootDescription" placeholder="Servis açıklamasını giriniz"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Teknisyen -->
+            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Teknisyen</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="technicianName">
+                  <el-select placeholder="Teknisyen" filterable clearable v-model="newService.userId">
+                    <el-option
+                      v-for="item in technicianUserList"
+                      :key="item.id"
+                      :label="item.firstname + item.lastname"
+                      :value="item.id"
+                    >
+                      <div class="row">
+                        <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
+                      </div>
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Teknisyen Atama Tarihi -->
+            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Teknisyen Atanma T.</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="userAssignDate">
+                  <el-date-picker
+                    v-model="newService.userAssignDate"
+                    format="DD.MM.YYYY HH:mm:ss"
+                    type="datetime"
+                    placeholder="Teknisyen atama tarihini seçiniz"
+                    :shortcuts="shortcuts"
+                  />
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Boş -->
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+            </div>
+
+            <!-- Tespit Kodu -->
+            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Tespit Kodu</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="technicianName">
+                  <el-select placeholder="Tespit kodu" filterable clearable v-model="newService.userId">
+                    <el-option
+                      v-for="item in technicianUserList"
+                      :key="item.id"
+                      :label="item.firstname + item.lastname"
+                      :value="item.id"
+                    >
+                      <div class="row">
+                        <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
+                      </div>
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Tespit Açıklama -->
+            <div class="col-md-12 col-lg-12 col-xl-9 col-xxl-9 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Tespit Açıklama</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="bootDescription">
+                  <el-input v-model="newService.bootDescription" placeholder="Servis açıklamasını giriniz"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Servis Kapanış Tarihi -->
+            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Servis Kapanış Tarihi</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="failureDate">
+                  <el-date-picker
+                    v-model="newService.failureDate"
+                    format="DD.MM.YYYY HH:mm:ss"
+                    type="datetime"
+                    placeholder="Servis açılış tarihini seçiniz"
+                    :shortcuts="shortcuts"
+                  />
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Servis Kapanış Kodu -->
+            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Servis Kapanış Kodu</span>
+                </label>
+                <!--end::Label-->
+                <el-form-item prop="serviceBootCode">
+                  <el-select placeholder="Servis Kodu" filterable clearable v-model="newService.serviceBootCode">
+                    <el-option v-for="item in bootCodeList" :key="item.code" :label="item.name" :value="item.code">
+                      <div class="row">
+                        <div class="col-md-3" style="font-size: 12px">
+                          {{ item.code }}
+                        </div>
+                        <div class="col-md-9" style="font-size: 12px">
+                          {{ item.name }}
+                        </div>
+                      </div>
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Kapanış Açıklama -->
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Kapanış Açıklama</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="bootDescription">
+                  <el-input v-model="newService.bootDescription" placeholder="Servis açıklamasını giriniz"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Ad -->
+            <div class="col-md-6">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Talep Bildiren</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="name">
+                  <el-input v-model="newService.name" placeholder="Talebi bildiren ad giriniz"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Telefon -->
+            <div class="col-md-6">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span class="required">Telefon</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="phone">
+                  <el-input
+                    v-model="newService.phone"
+                    :formatter="
+                      value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
+                    "
+                    placeholder="Talebi bildiren telefon giriniz"
+                  />
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+          </div>
+          <!--begin::Actions-->
+          <div class="text-center">
+            <!--begin::Button-->
+            <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+              <span v-if="!loading" class="indicator-label"> Kaydet </span>
+              <span v-if="loading" class="indicator-progress">
+                Lütfen Bekleyiniz...
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+              </span>
+            </button>
+            <!--end::Button-->
+          </div>
+          <!--end::Actions-->
+        </el-form>
+      </div>
+    </el-dialog>
+
     <el-dialog v-model="talepDialogVisible" title="Talep Detay" width="50%" destroy-on-close align-top>
       <div class="row" v-loading="talepDetayLoading">
         <div class="col-md-6 col-lg-6 col-xl-4 col-xxl-4 col-sm-12">
@@ -2098,6 +2417,7 @@ export default defineComponent({
     const cihazListesiDialogVisible = ref(false);
     const musteriDialogVisible = ref(false);
     const servisAcDialogVisible = ref(false);
+    const bakimFormuDialogVisible = ref(false);
 
     const loading = ref<boolean>(false);
     const anaSayfaLoading = ref<boolean>(false);
@@ -2284,6 +2604,52 @@ export default defineComponent({
       yellowCount: '',
     });
 
+    var newBakimService = ref<IDeviceServiceData>({
+      ak: false,
+      bc: false,
+      bk: false,
+      blackCount: '',
+      blueCount: '',
+      bootDescription: '',
+      colorCount: '',
+      detectionCode: '',
+      detectionDescription: '',
+      device: null,
+      deviceId: null,
+      dr: false,
+      dv: false,
+      failureDate: '',
+      failureDateString: '',
+      fs: false,
+      id: '',
+      linkedDeviceServiceId: '',
+      name: '',
+      pa: false,
+      phone: '',
+      redCount: '',
+      resultDate: '',
+      resultDateString: '',
+      resultDescription: '',
+      serviceBootCode: '',
+      serviceResultCode: '',
+      tonerType: '',
+      user: {
+        avatar: '',
+        email: '',
+        firstname: '',
+        fullname: '',
+        id: '',
+        lastname: '',
+        gender: 0,
+        admin: false,
+      },
+      userAssignDate: '',
+      userAssignDateString: '',
+      userId: '',
+      wbCount: '',
+      yellowCount: '',
+    });
+
     var newDevice = ref<IDeviceData>({
       address: null,
       addressId: '',
@@ -2353,6 +2719,7 @@ export default defineComponent({
     var semtList = ref<Array<IQuerterData>>([]);
 
     const formServiceRef = ref<null | HTMLFormElement>(null);
+    const formBakimFormuRef = ref<null | HTMLFormElement>(null);
     const formDeviceRef = ref<null | HTMLFormElement>(null);
     const formCustomerRef = ref<null | HTMLFormElement>(null);
     const formAddressRef = ref<null | HTMLFormElement>(null);
@@ -2361,6 +2728,37 @@ export default defineComponent({
     var deviceId = ref<string>('');
 
     const newServiceRules = ref({
+      failureDate: [
+        {
+          required: true,
+          message: 'Servis açılış girilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      serviceBootCode: [
+        {
+          required: true,
+          message: 'Servis açılış kodu seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      name: [
+        {
+          required: true,
+          message: 'Talep bildiren girilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      phone: [
+        {
+          required: true,
+          message: 'Talep bildiren telefon bilgisi girilmedi.',
+          trigger: 'blur',
+        },
+      ],
+    });
+
+    const newBakimFormuRules = ref({
       failureDate: [
         {
           required: true,
@@ -2485,6 +2883,55 @@ export default defineComponent({
     });
 
     const servicAcSubmit = () => {
+      if (!formServiceRef.value) {
+        return;
+      }
+
+      formServiceRef.value.validate(valid => {
+        if (valid) {
+          loading.value = true;
+
+          newService.value.deviceId = Number(firmaOzet.value.deviceId);
+
+          store
+            .dispatch(Actions.ADD_DEVICESERVICE, newService.value)
+            .then(result => {
+              loading.value = false;
+              console.clear();
+              console.log(result);
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Servis başarıyla eklendi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(() => {
+                  servisAcDialogVisible.value = false;
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        }
+      });
+    };
+
+    const bakimAcSubmit = () => {
       if (!formServiceRef.value) {
         return;
       }
@@ -3395,6 +3842,18 @@ export default defineComponent({
       servisAcLoading.value = false;
     }
 
+    async function bakimFormuAc() {
+      clearSevicAcModal();
+
+      bakimFormuDialogVisible.value = true;
+      servisAcLoading.value = true;
+
+      await getBootCodeList();
+      await getTechnicianList();
+
+      servisAcLoading.value = false;
+    }
+
     async function talepDetayAc() {
       talepDialogVisible.value = true;
     }
@@ -3531,7 +3990,7 @@ export default defineComponent({
           servisAc();
           break;
         case 'HS':
-          servisAc();
+          bakimFormuAc();
           break;
         case 'CL':
           cihazListesi();
@@ -3596,6 +4055,10 @@ export default defineComponent({
     });
 
     return {
+      formBakimFormuRef,
+      newBakimFormuRules,
+      bakimAcSubmit,
+      bakimFormuDialogVisible,
       selectAddressMode,
       newCustomerRules,
       newAddressRules,
@@ -3662,6 +4125,8 @@ export default defineComponent({
       semtList,
       adresLoading,
       deviceId,
+      newBakimService,
+      bakimFormuAc,
       musteriDialogAc,
       customerSubmit,
       remoteMethodSerialNo,
