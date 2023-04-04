@@ -105,6 +105,9 @@ export default defineComponent({
       } else if (gender == '2') {
         isManLogo.value = false;
         isWomanLogo.value = true;
+      } else {
+        isManLogo.value = true;
+        isWomanLogo.value = false;
       }
     } else {
       isLogoExists.value = true;

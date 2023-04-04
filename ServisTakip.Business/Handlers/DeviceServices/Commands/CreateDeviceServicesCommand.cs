@@ -23,7 +23,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                 var anyServices = await deviceServiceRepo
                     .Query()
                     .Where(s => s.StatusCode != (int)StatusCodes.TalepSonlandirildi && s.DeviceId == request.Model.DeviceId)
-                    .ToListAsync();
+                    .ToListAsync(cancellationToken: cancellationToken);
                 
                 if (anyServices.Any()) 
                     return ResponseMessage<CreateDeviceServiceDto>.Fail("Bu cihaz için açılmış servis kaydı mevcuttur.");

@@ -19,6 +19,17 @@ export default class DeviceServiceModule extends VuexModule {
   }
 
   @Action
+  [Actions.ADD_BAKIMFORMUDEVICESERVICE](deviceService) {
+    return ApiService.post("DeviceServices/AddBakimFormu", deviceService)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
   [Actions.UPDATE_ASSIGNTECHNICIANDEVICESERVICE](deviceService) {
     console.log(deviceService);
     return ApiService.put("DeviceServices/AssignTechnicianDeviceService", deviceService)
@@ -116,6 +127,17 @@ export default class DeviceServiceModule extends VuexModule {
   @Action
   [Actions.GET_RECEIVEDDEVICESERVICE]() {
     return ApiService.get("DeviceServices/GetReceivedDeviceServicesList")
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  [Actions.GET_KAPATILMISDEVICESERVICE](deviceId) {
+    return ApiService.getWithParamUrl("DeviceServices/GetirKapatilmisServisList?deviceId=" + deviceId)
       .then(({ data }) => {
         return data;
       })

@@ -487,23 +487,27 @@ export default defineComponent({
     }
 
     async function getContractList() {
+      contracts.value = [];
+
       sozlesmeLoading.value = true;
-      await store
-        .dispatch(Actions.GET_CONTRACTLIST, props.deviceId)
-        .then(result => {
-          if (result.isSuccess) {
-            console.clear();
-            console.log(result.data);
-            contracts.value = result.data;
-            sozlesmeLoading.value = false;
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
+      if (props.deviceId) {
+        await store
+          .dispatch(Actions.GET_CONTRACTLIST, props.deviceId)
+          .then(result => {
+            if (result.isSuccess) {
+              console.clear();
+              console.log(result.data);
+              contracts.value = result.data;
+              sozlesmeLoading.value = false;
+            }
+          })
+          .catch(() => {
+            const [error] = Object.keys(store.getters.getErrors);
+          });
+      }
     }
 
-    watchEffect(async () => await getContractList())
+    watchEffect(async () => await getContractList());
 
     return {
       sozlemeDialogAc,

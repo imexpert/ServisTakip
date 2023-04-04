@@ -19,5 +19,6 @@
         public string AuthorizeName { get; set; }
         public string Phone { get; set; }
         public string BootDescription { get; set; }
+        public string TechnicianName { get; set; }
     }
 }

@@ -326,7 +326,7 @@
         <div class="row mb-2">
           <!-- Sözleşmeler -->
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-            <SozlesmeListesi v-if="firmaOzet.deviceId" :deviceId="firmaOzet.deviceId" />
+            <SozlesmeListesi :deviceId="firmaOzet.deviceId" />
           </div>
 
           <!-- Divider -->
@@ -928,7 +928,7 @@
     </el-dialog>
 
     <el-dialog v-model="bakimFormuDialogVisible" title="Bakım Formu" width="50%" destroy-on-close center>
-      <div class="row">
+      <div class="row" v-loading="loading">
         <el-form
           status-icon
           :rules="newBakimFormuRules"
@@ -967,10 +967,11 @@
 
                 <el-form-item prop="failureDate">
                   <el-date-picker
-                    v-model="newService.failureDate"
+                    v-model="newBakimService.failureDate"
                     format="DD.MM.YYYY HH:mm:ss"
                     type="datetime"
-                    placeholder="Servis açılış tarihini seçiniz"
+                    class="customBorder"
+                    placeholder="Servis açılış tarihi"
                     :shortcuts="shortcuts"
                   />
                 </el-form-item>
@@ -988,7 +989,13 @@
                 </label>
                 <!--end::Label-->
                 <el-form-item prop="serviceBootCode">
-                  <el-select placeholder="Servis Kodu" filterable clearable v-model="newService.serviceBootCode">
+                  <el-select
+                    placeholder="Servis Kodu"
+                    class="customBorder"
+                    filterable
+                    clearable
+                    v-model="newBakimService.serviceBootCode"
+                  >
                     <el-option v-for="item in bootCodeList" :key="item.code" :label="item.name" :value="item.code">
                       <div class="row">
                         <div class="col-md-3" style="font-size: 12px">
@@ -1016,7 +1023,11 @@
                 <!--end::Label-->
 
                 <el-form-item prop="bootDescription">
-                  <el-input v-model="newService.bootDescription" placeholder="Servis açıklamasını giriniz"></el-input>
+                  <el-input
+                    v-model="newBakimService.bootDescription"
+                    class="customBorder"
+                    placeholder="Servis açıklamasını giriniz"
+                  ></el-input>
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -1028,12 +1039,18 @@
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span>Teknisyen</span>
+                  <span class="required">Teknisyen</span>
                 </label>
                 <!--end::Label-->
 
-                <el-form-item prop="technicianName">
-                  <el-select placeholder="Teknisyen" filterable clearable v-model="newService.userId">
+                <el-form-item prop="userId">
+                  <el-select
+                    placeholder="Teknisyen"
+                    class="customBorder"
+                    filterable
+                    clearable
+                    v-model="newBakimService.userId"
+                  >
                     <el-option
                       v-for="item in technicianUserList"
                       :key="item.id"
@@ -1056,16 +1073,17 @@
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span>Teknisyen Atanma T.</span>
+                  <span class="required">Teknisyen Atanma T.</span>
                 </label>
                 <!--end::Label-->
 
                 <el-form-item prop="userAssignDate">
                   <el-date-picker
-                    v-model="newService.userAssignDate"
+                    v-model="newBakimService.userAssignDate"
                     format="DD.MM.YYYY HH:mm:ss"
                     type="datetime"
-                    placeholder="Teknisyen atama tarihini seçiniz"
+                    class="customBorder"
+                    placeholder="Teknisyen atama tarihi"
                     :shortcuts="shortcuts"
                   />
                 </el-form-item>
@@ -1074,8 +1092,7 @@
             </div>
 
             <!-- Boş -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-            </div>
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12"></div>
 
             <!-- Tespit Kodu -->
             <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
@@ -1087,16 +1104,22 @@
                 </label>
                 <!--end::Label-->
 
-                <el-form-item prop="technicianName">
-                  <el-select placeholder="Tespit kodu" filterable clearable v-model="newService.userId">
-                    <el-option
-                      v-for="item in technicianUserList"
-                      :key="item.id"
-                      :label="item.firstname + item.lastname"
-                      :value="item.id"
-                    >
+                <el-form-item prop="detectionCode">
+                  <el-select
+                    placeholder="Tespit kodu"
+                    class="customBorder"
+                    filterable
+                    clearable
+                    v-model="newBakimService.detectionCode"
+                  >
+                    <el-option v-for="item in detectionCodeList" :key="item.code" :label="item.name" :value="item.code">
                       <div class="row">
-                        <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
+                        <div class="col-md-3" style="font-size: 12px">
+                          {{ item.code }}
+                        </div>
+                        <div class="col-md-9" style="font-size: 12px">
+                          {{ item.name }}
+                        </div>
                       </div>
                     </el-option>
                   </el-select>
@@ -1116,7 +1139,11 @@
                 <!--end::Label-->
 
                 <el-form-item prop="bootDescription">
-                  <el-input v-model="newService.bootDescription" placeholder="Servis açıklamasını giriniz"></el-input>
+                  <el-input
+                    v-model="newBakimService.detectionDescription"
+                    class="customBorder"
+                    placeholder="Tespit açıklamasını giriniz"
+                  ></el-input>
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -1132,12 +1159,13 @@
                 </label>
                 <!--end::Label-->
 
-                <el-form-item prop="failureDate">
+                <el-form-item prop="resultDate">
                   <el-date-picker
-                    v-model="newService.failureDate"
+                    v-model="newBakimService.resultDate"
                     format="DD.MM.YYYY HH:mm:ss"
                     type="datetime"
-                    placeholder="Servis açılış tarihini seçiniz"
+                    class="customBorder"
+                    placeholder="Servis kapanış tarihi"
                     :shortcuts="shortcuts"
                   />
                 </el-form-item>
@@ -1154,9 +1182,15 @@
                   <span class="required">Servis Kapanış Kodu</span>
                 </label>
                 <!--end::Label-->
-                <el-form-item prop="serviceBootCode">
-                  <el-select placeholder="Servis Kodu" filterable clearable v-model="newService.serviceBootCode">
-                    <el-option v-for="item in bootCodeList" :key="item.code" :label="item.name" :value="item.code">
+                <el-form-item prop="serviceResultCode">
+                  <el-select
+                    placeholder="Servis Sonuç Kodu"
+                    class="customBorder"
+                    filterable
+                    clearable
+                    v-model="newBakimService.serviceResultCode"
+                  >
+                    <el-option v-for="item in resultCodeList" :key="item.code" :label="item.name" :value="item.code">
                       <div class="row">
                         <div class="col-md-3" style="font-size: 12px">
                           {{ item.code }}
@@ -1182,8 +1216,12 @@
                 </label>
                 <!--end::Label-->
 
-                <el-form-item prop="bootDescription">
-                  <el-input v-model="newService.bootDescription" placeholder="Servis açıklamasını giriniz"></el-input>
+                <el-form-item prop="resultDescription">
+                  <el-input
+                    v-model="newBakimService.resultDescription"
+                    class="customBorder"
+                    placeholder="Servis kapanış açıklamasını giriniz"
+                  ></el-input>
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -1195,12 +1233,16 @@
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">SB Sayaç</span>
+                  <span>SB Sayaç</span>
                 </label>
                 <!--end::Label-->
 
-                <el-form-item prop="name">
-                  <el-input v-model="newService.name" placeholder="Talebi bildiren ad giriniz"></el-input>
+                <el-form-item prop="wbCount">
+                  <el-input
+                    v-model="newBakimService.wbCount"
+                    class="customBorder"
+                    placeholder="Siyah/Beyaz adet"
+                  ></el-input>
                 </el-form-item>
               </div>
               <!--end::Input group-->
@@ -1212,42 +1254,152 @@
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Talep Bildiren</span>
+                  <span>Renkli Sayaç</span>
                 </label>
                 <!--end::Label-->
 
-                <el-form-item prop="name">
-                  <el-input v-model="newService.name" placeholder="Talebi bildiren ad giriniz"></el-input>
+                <el-form-item prop="colorCount">
+                  <el-input
+                    v-model="newBakimService.colorCount"
+                    class="customBorder"
+                    placeholder="Renkli adet"
+                  ></el-input>
                 </el-form-item>
               </div>
               <!--end::Input group-->
             </div>
 
-            <!-- Telefon -->
-            <div class="col-md-6">
+            <!-- Boş -->
+            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12"></div>
+
+            <!-- Toner Tipi -->
+            <div class="col-md-12 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Toner Tipi</span>
+                </label>
+                <!--end::Label-->
+                <!--end::Label-->
+                <el-form-item prop="tonerType">
+                  <el-select v-model="newBakimService.tonerType" placeholder="Toner Tipi">
+                    <el-option label="Orjinal" value="1" />
+                    <el-option label="Muadil" value="2" />
+                    <el-option label="Dolum" value="3" />
+                  </el-select>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Siyah -->
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Telefon</span>
+                  <span>Siyah</span>
                 </label>
                 <!--end::Label-->
 
-                <el-form-item prop="phone">
+                <el-form-item prop="name">
                   <el-input
-                    v-model="newService.phone"
-                    :formatter="
-                      value => value.replace(/\D/g, '').replace(/^(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+90-($1)-$2-$3-$4')
-                    "
-                    placeholder="Talebi bildiren telefon giriniz"
-                  />
+                    v-model="newBakimService.blackCount"
+                    class="customBorder"
+                    placeholder="Siyah adet"
+                  ></el-input>
                 </el-form-item>
               </div>
               <!--end::Input group-->
             </div>
+
+            <!-- Mavi -->
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Mavi</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="name">
+                  <el-input v-model="newBakimService.blueCount" class="customBorder" placeholder="Mavi adet"></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Kırmızı -->
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Kırmızı</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="name">
+                  <el-input
+                    v-model="newBakimService.redCount"
+                    class="customBorder"
+                    placeholder="Kırmızı adet"
+                  ></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Sarı -->
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+              <!--begin::Input group-->
+              <div class="d-flex flex-column mb-1 fv-row">
+                <!--begin::Label-->
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                  <span>Sarı</span>
+                </label>
+                <!--end::Label-->
+
+                <el-form-item prop="name">
+                  <el-input
+                    v-model="newBakimService.yellowCount"
+                    class="customBorder"
+                    placeholder="Sarı adet"
+                  ></el-input>
+                </el-form-item>
+              </div>
+              <!--end::Input group-->
+            </div>
+
+            <!-- Boş -->
+            <div class="col-md-1 col-lg-1 col-xl-1 col-xxl-1 col-sm-1"></div>
+
+            <div class="col-md-1">
+              <el-checkbox label="Dr" v-model="newBakimService.dr" />
+            </div>
+            <div class="col-md-1">
+              <el-checkbox label="Bc" v-model="newBakimService.bc" />
+            </div>
+            <div class="col-md-1">
+              <el-checkbox label="Pa" v-model="newBakimService.pa" />
+            </div>
+            <div class="col-md-1">
+              <el-checkbox label="Bk" v-model="newBakimService.bk" />
+            </div>
+            <div class="col-md-1">
+              <el-checkbox label="Dv" v-model="newBakimService.dv" />
+            </div>
+            <div class="col-md-1">
+              <el-checkbox label="Fs" v-model="newBakimService.fs" />
+            </div>
+            <div class="col-md-1">
+              <el-checkbox label="Ak" v-model="newBakimService.ak" />
+            </div>
           </div>
           <!--begin::Actions-->
-          <div class="text-center">
+          <div class="text-center mt-2">
             <!--begin::Button-->
             <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
               <span v-if="!loading" class="indicator-label"> Kaydet </span>
@@ -2413,6 +2565,8 @@ import { IDistrictData } from '@/core/data/DistrictData';
 import { IQuerterData } from '@/core/data/QuerterData';
 import { IContractCodeData } from '@/core/data/ContractCodeData';
 import SozlesmeListesi from '@/components/partial/SozlesmeListesi.vue';
+import { IResultCodeData } from '@/core/data/ResultCodeData';
+import { IDetectionCodeData } from '@/core/data/DetectionCodeData';
 
 export default defineComponent({
   name: 'default-dashboard-widget-2',
@@ -2734,6 +2888,8 @@ export default defineComponent({
     var sehirList = ref<Array<ICityData>>([]);
     var ilceList = ref<Array<IDistrictData>>([]);
     var semtList = ref<Array<IQuerterData>>([]);
+    var resultCodeList = ref<Array<IResultCodeData>>([]);
+    var detectionCodeList = ref<Array<IDetectionCodeData>>([]);
 
     const formServiceRef = ref<null | HTMLFormElement>(null);
     const formBakimFormuRef = ref<null | HTMLFormElement>(null);
@@ -2790,17 +2946,31 @@ export default defineComponent({
           trigger: 'blur',
         },
       ],
-      name: [
+      userId: [
         {
           required: true,
-          message: 'Talep bildiren girilmedi.',
+          message: 'Teknisyen seçilmedi.',
           trigger: 'blur',
         },
       ],
-      phone: [
+      userAssignDate: [
         {
           required: true,
-          message: 'Talep bildiren telefon bilgisi girilmedi.',
+          message: 'Teknisyen atama tarihi seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      resultDate: [
+        {
+          required: true,
+          message: 'Kapanış tarihi seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      serviceResultCode: [
+        {
+          required: true,
+          message: 'Kapanış kodu seçilmedi.',
           trigger: 'blur',
         },
       ],
@@ -2949,33 +3119,33 @@ export default defineComponent({
     };
 
     const bakimAcSubmit = () => {
-      if (!formServiceRef.value) {
+      if (!formBakimFormuRef.value) {
         return;
       }
 
-      formServiceRef.value.validate(valid => {
+      formBakimFormuRef.value.validate(async valid => {
         if (valid) {
           loading.value = true;
 
-          newService.value.deviceId = Number(firmaOzet.value.deviceId);
+          newBakimService.value.deviceId = Number(firmaOzet.value.deviceId);
 
-          store
-            .dispatch(Actions.ADD_DEVICESERVICE, newService.value)
-            .then(result => {
-              loading.value = false;
+          await store
+            .dispatch(Actions.ADD_BAKIMFORMUDEVICESERVICE, newBakimService.value)
+            .then(async result => {
               console.clear();
               console.log(result);
               if (result.isSuccess) {
                 Swal.fire({
-                  text: 'Servis başarıyla eklendi.',
+                  text: 'Bakım formu başarıyla kaydedildi.',
                   icon: 'success',
                   buttonsStyling: false,
                   confirmButtonText: 'Tamam',
                   customClass: {
                     confirmButton: 'btn btn-primary',
                   },
-                }).then(() => {
-                  servisAcDialogVisible.value = false;
+                }).then(async () => {
+                  await getKapatilmisServisList();
+                  bakimFormuDialogVisible.value = false;
                 });
               } else {
                 Swal.fire({
@@ -2993,6 +3163,8 @@ export default defineComponent({
             .catch(() => {
               const [error] = Object.keys(store.getters.getErrors);
             });
+
+          loading.value = false;
         }
       });
     };
@@ -3365,8 +3537,6 @@ export default defineComponent({
 
       deviceStatus.value = '';
 
-      sozlesmeListesiRef.value.contracts = [];
-
       deviceInfoList.value = [];
 
       deviceBrand.value = {
@@ -3382,6 +3552,54 @@ export default defineComponent({
 
     function clearSevicAcModal() {
       newService.value = {
+        ak: false,
+        bc: false,
+        bk: false,
+        blackCount: '',
+        blueCount: '',
+        bootDescription: '',
+        colorCount: '',
+        detectionCode: '',
+        detectionDescription: '',
+        device: null,
+        deviceId: null,
+        dr: false,
+        dv: false,
+        failureDate: '',
+        failureDateString: '',
+        fs: false,
+        id: '',
+        linkedDeviceServiceId: '',
+        name: '',
+        pa: false,
+        phone: '',
+        redCount: '',
+        resultDate: '',
+        resultDateString: '',
+        resultDescription: '',
+        serviceBootCode: '',
+        serviceResultCode: '',
+        tonerType: '',
+        user: {
+          avatar: '',
+          email: '',
+          firstname: '',
+          fullname: '',
+          id: '',
+          lastname: '',
+          gender: 0,
+          admin: false,
+        },
+        userAssignDate: '',
+        userAssignDateString: '',
+        userId: '',
+        wbCount: '',
+        yellowCount: '',
+      };
+    }
+
+    function clearBakimFormuModal() {
+      newBakimService.value = {
         ak: false,
         bc: false,
         bk: false,
@@ -3493,6 +3711,19 @@ export default defineComponent({
         wbCount: '',
         yellowCount: '',
       };
+    }
+
+    async function getResultCodeList() {
+      await store
+        .dispatch(Actions.GET_RESULTCODE_LIST)
+        .then(result => {
+          if (result.isSuccess) {
+            resultCodeList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
     }
 
     async function getBootCodeList() {
@@ -3620,9 +3851,6 @@ export default defineComponent({
               console.clear();
               console.log(result.data);
               firmaOzet.value = result.data;
-              console.clear();
-              console.log(firmaOzet.value);
-              // contracts.value = result.data.contracts;
 
               if (result.data.device) {
                 device.value = result.data.device;
@@ -3635,6 +3863,8 @@ export default defineComponent({
                 backgroundColor.value = device.value.status ? '#ABEBC6' : '#F5B7B1';
                 selectedModelName.value = deviceModel.value.name;
                 selectedSerialNo.value = device.value.serialNumber;
+
+                deviceId.value = firmaOzet.value.deviceId;
               }
 
               deviceList.value = result.data.devices;
@@ -3671,8 +3901,6 @@ export default defineComponent({
             console.clear();
             console.log(firmaOzet.value);
             deviceId.value = firmaOzet.value.deviceId;
-
-            // await sozlesmeListesiRef.value?.getContractList();
 
             if (result.data.device) {
               device.value = result.data.device;
@@ -3758,6 +3986,19 @@ export default defineComponent({
         });
     }
 
+    async function getKapatilmisServisList() {
+      await store
+        .dispatch(Actions.GET_KAPATILMISDEVICESERVICE, firmaOzet.value.deviceId)
+        .then(result => {
+          if (result.isSuccess) {
+            deviceServices.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
     async function getSectorList() {
       await store
         .dispatch(Actions.GET_SECTOR_LIST)
@@ -3778,6 +4019,19 @@ export default defineComponent({
           if (result.isSuccess) {
             sehirList.value = result.data;
             adresLoading.value = false;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getDetectionCodeList() {
+      await store
+        .dispatch(Actions.GET_DETECTIONCODE_LIST)
+        .then(result => {
+          if (result.isSuccess) {
+            detectionCodeList.value = result.data;
           }
         })
         .catch(() => {
@@ -3860,13 +4114,15 @@ export default defineComponent({
     }
 
     async function bakimFormuAc() {
-      clearSevicAcModal();
+      clearBakimFormuModal();
 
       bakimFormuDialogVisible.value = true;
       servisAcLoading.value = true;
 
       await getBootCodeList();
       await getTechnicianList();
+      await getResultCodeList();
+      await getDetectionCodeList();
 
       servisAcLoading.value = false;
     }
@@ -4068,7 +4324,6 @@ export default defineComponent({
 
     onMounted(async () => {
       await getLastTradedCustomer();
-      console.log(store.getters.currentUser);
     });
 
     return {
@@ -4143,6 +4398,8 @@ export default defineComponent({
       adresLoading,
       deviceId,
       newBakimService,
+      resultCodeList,
+      detectionCodeList,
       bakimFormuAc,
       musteriDialogAc,
       customerSubmit,

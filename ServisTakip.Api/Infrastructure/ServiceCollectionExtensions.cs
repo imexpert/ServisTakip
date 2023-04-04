@@ -74,6 +74,7 @@ namespace ServisTakip.Api.Infrastructure
                         builder.WithOrigins("http://159.69.188.101:6002")
                             .AllowAnyOrigin()
                             .AllowAnyMethod()
+                            .AllowAnyOrigin()
                             .AllowAnyHeader());
             });
 

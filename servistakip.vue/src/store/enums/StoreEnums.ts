@@ -47,7 +47,9 @@ enum Actions {
   GET_TECHNICIAN_LIST = "getTechnicianlist",
 
   ADD_DEVICESERVICE = "addDeviceService",
+  ADD_BAKIMFORMUDEVICESERVICE = "addBakimFormuDeviceService",
   GET_RECEIVEDDEVICESERVICE = "getReceivedDeviceService",
+  GET_KAPATILMISDEVICESERVICE = "getKapatilmisService",
   GET_PARTSEXCHANGEDEVICESERVICELIST = "getPartsExchangeDeviceServiceList",
   GET_DEVICESERVICEWITHID = "getDeviceServiceWithId",
   GET_TECHNICIANASSINEDDEVICESERVICE = "getTechnicianAssignedDeviceService",
