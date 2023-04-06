@@ -4,6 +4,7 @@
 </template>
 
 <script lang="ts">
+import devtools from '@vue/devtools';
 import { computed, ref } from 'vue';
 import { defineComponent, nextTick, onMounted } from 'vue';
 import { useStore } from 'vuex';

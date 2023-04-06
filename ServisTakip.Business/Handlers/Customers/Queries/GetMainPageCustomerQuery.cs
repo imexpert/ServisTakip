@@ -26,6 +26,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 var addressRepo = ServiceTool.ServiceProvider.GetService<IAddressRepository>();
                 var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
+                var contractMaintenanceRepo = ServiceTool.ServiceProvider.GetService<IContractMaintenanceRepository>();
 
                 var splitIds = request.RowId.Split('|').ToList();
 
@@ -59,8 +60,23 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.Contracts = mapper.Map<List<ContractDto>>(contracts);
 
                     var lastContract = result.Contracts.MaxBy(s => s.EndDate);
-                    result.ContractType = lastContract?.ContractCode;
 
+                    if (lastContract != null && lastContract.EndDate >= DateTime.Now)
+                    {
+                        result.ContractType = lastContract?.ContractCode;
+
+                        var contractMaintenances =
+                            await contractMaintenanceRepo.GetListAsync(s =>
+                                s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
+                                s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
+
+                        result.MaintenanceStatus = contractMaintenances.Any();
+                    }
+                    else
+                    {
+                        result.ContractType = "ÜCRETLİ";
+                    }
+                    
                     result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(device.DeviceServices.Where(s => s.StatusCode == (int)StatusCodes.TalepSonlandirildi));
                     result.DeviceServices = result.DeviceServices.OrderByDescending(s => s.ResultDate).ToList();
 

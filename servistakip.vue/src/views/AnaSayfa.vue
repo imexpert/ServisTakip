@@ -186,8 +186,8 @@
                   :value="item.rowId"
                 >
                   <div class="row" style="width: 100%">
-                    <div class="col-md-4" style="font-size: 12px">
-                      {{ item.title }}
+                    <div class="col-md-4" style="font-size: 12px; word-wrap: break-word">
+                      {{ item.title.substring(0, 47) + '...' }}
                     </div>
                     <div class="col-md-2" style="font-size: 12px">
                       {{ item.department }}
@@ -870,7 +870,13 @@
                 <!--end::Label-->
 
                 <el-form-item prop="technicianName">
-                  <el-select placeholder="Teknisyen" filterable clearable v-model="newService.userId">
+                  <el-select
+                    placeholder="Teknisyen"
+                    @change="onServisAcTeknisyenChange()"
+                    filterable
+                    clearable
+                    v-model="newService.userId"
+                  >
                     <el-option
                       v-for="item in technicianUserList"
                       :key="item.id"
@@ -1049,6 +1055,7 @@
                     class="customBorder"
                     filterable
                     clearable
+                    @change="onBakimFormuAcTeknisyenChange()"
                     v-model="newBakimService.userId"
                   >
                     <el-option
@@ -2697,7 +2704,7 @@ export default defineComponent({
       deviceId: null,
       dr: false,
       dv: false,
-      failureDate: '',
+      failureDate: new Date(),
       failureDateString: '',
       fs: false,
       id: '',
@@ -2722,7 +2729,7 @@ export default defineComponent({
         gender: 0,
         admin: false,
       },
-      userAssignDate: '',
+      userAssignDate: null,
       userAssignDateString: '',
       userId: '',
       wbCount: '',
@@ -2768,7 +2775,7 @@ export default defineComponent({
         gender: 0,
         admin: false,
       },
-      userAssignDate: '',
+      userAssignDate: null,
       userAssignDateString: '',
       userId: '',
       wbCount: '',
@@ -2814,7 +2821,7 @@ export default defineComponent({
         gender: 0,
         admin: false,
       },
-      userAssignDate: '',
+      userAssignDate: null,
       userAssignDateString: '',
       userId: '',
       wbCount: '',
@@ -3590,7 +3597,7 @@ export default defineComponent({
           gender: 0,
           admin: false,
         },
-        userAssignDate: '',
+        userAssignDate: null,
         userAssignDateString: '',
         userId: '',
         wbCount: '',
@@ -3638,7 +3645,7 @@ export default defineComponent({
           gender: 0,
           admin: false,
         },
-        userAssignDate: '',
+        userAssignDate: null,
         userAssignDateString: '',
         userId: '',
         wbCount: '',
@@ -3705,7 +3712,7 @@ export default defineComponent({
           gender: 0,
           admin: false,
         },
-        userAssignDate: '',
+        userAssignDate: null,
         userAssignDateString: '',
         userId: '',
         wbCount: '',
@@ -3750,6 +3757,30 @@ export default defineComponent({
         .catch(() => {
           const [error] = Object.keys(store.getters.getErrors);
         });
+    }
+
+    async function onServisAcTeknisyenChange() {
+      if (newService.value.userId) {
+        newService.value.userAssignDate = new Date();
+      } else {
+        newService.value.userAssignDate = null;
+      }
+    }
+
+    async function onBakimFormuAcTeknisyenChange() {
+      if (newService.value.userId) {
+        newService.value.userAssignDate = new Date();
+      } else {
+        newService.value.userAssignDate = null;
+      }
+    }
+
+    async function onBakimFormuTeknisyenChange() {
+      if (newBakimService.value.userId) {
+        newBakimService.value.userAssignDate = new Date();
+      } else {
+        newBakimService.value.userAssignDate = null;
+      }
     }
 
     async function onCustomerChange() {
@@ -4110,6 +4141,8 @@ export default defineComponent({
       await getBootCodeList();
       await getTechnicianList();
 
+      newService.value.failureDate = new Date();
+
       servisAcLoading.value = false;
     }
 
@@ -4123,6 +4156,8 @@ export default defineComponent({
       await getTechnicianList();
       await getResultCodeList();
       await getDetectionCodeList();
+
+      newBakimService.value.failureDate = new Date();
 
       servisAcLoading.value = false;
     }
@@ -4330,6 +4365,9 @@ export default defineComponent({
       formBakimFormuRef,
       newBakimFormuRules,
       bakimAcSubmit,
+      onServisAcTeknisyenChange,
+      onBakimFormuTeknisyenChange,
+      onBakimFormuAcTeknisyenChange,
       bakimFormuDialogVisible,
       selectAddressMode,
       newCustomerRules,

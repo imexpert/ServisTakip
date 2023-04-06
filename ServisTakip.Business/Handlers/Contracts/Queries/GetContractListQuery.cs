@@ -20,6 +20,7 @@ namespace ServisTakip.Business.Handlers.Contracts.Queries
 
                 var contractList = await contractRepo.GetContractList(request.DeviceId);
                 var result = mapper.Map<List<ContractDto>>(contractList);
+                result = result.OrderByDescending(s => s.EndDate).ToList();
                 return ResponseMessage<List<ContractDto>>.Success(result);
             }
         }
