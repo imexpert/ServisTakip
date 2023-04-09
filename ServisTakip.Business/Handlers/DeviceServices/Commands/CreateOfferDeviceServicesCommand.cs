@@ -37,7 +37,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                     deviceServiceRepo.Add(deviceService);
                     await deviceServiceRepo.SaveChangesAsync();
                 }
-                else
+                else if(request.ClosedDeviceService.ServiceResultCode == "TEK")
                 {
                     deviceService.StatusCode = ((int)StatusCodes.TeklifGonderilecek);
                     deviceService.ServiceBootCode = "TEK-1";

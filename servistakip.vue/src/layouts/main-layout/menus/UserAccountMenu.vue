@@ -34,6 +34,11 @@
     <!--end::Menu separator-->
 
     <!--begin::Menu item-->
+    <div class="menu-item px-5" v-if="isAdmin == 'true'">
+      <router-link to="/pages/profile/overview" class="menu-link px-5"> Yönetim Paneli</router-link>
+    </div>
+    <!--end::Menu item-->
+    <!--begin::Menu item-->
     <div class="menu-item px-5">
       <router-link to="/pages/profile/overview" class="menu-link px-5"> Profilim </router-link>
     </div>

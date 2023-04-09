@@ -46,7 +46,7 @@
                         <el-icon> <Plus></Plus> </el-icon>Servis Aç
                       </el-dropdown-item>
                       <el-dropdown-item command="HS" :disabled="firmaOzet.deviceId == null">
-                        <el-icon> <Edit></Edit> </el-icon>Hızlı Servis
+                        <el-icon> <Edit></Edit> </el-icon>Bakım Formu
                       </el-dropdown-item>
                       <el-dropdown-item command="CL" :disabled="firmaOzet.deviceId == null">
                         <el-icon> <List /> </el-icon>Cihaz Listesi
@@ -2796,7 +2796,7 @@ export default defineComponent({
       deviceId: null,
       dr: false,
       dv: false,
-      failureDate: '',
+      failureDate: new Date(),
       failureDateString: '',
       fs: false,
       id: '',
@@ -4158,6 +4158,8 @@ export default defineComponent({
       await getDetectionCodeList();
 
       newBakimService.value.failureDate = new Date();
+      newBakimService.value.resultDate = new Date();
+      newBakimService.value.userAssignDate = new Date();
 
       servisAcLoading.value = false;
     }
