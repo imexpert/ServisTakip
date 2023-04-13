@@ -933,7 +933,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog v-model="bakimFormuDialogVisible" title="Bakım Formu" width="50%" destroy-on-close center>
+    <el-dialog v-model="bakimFormuDialogVisible" title="Bakım Formu" width="45%" destroy-on-close center>
       <div class="row" v-loading="loading">
         <el-form
           status-icon
@@ -946,7 +946,7 @@
         >
           <div class="row">
             <!-- Müşteri Unvan -->
-            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+            <div class="col-md-9 col-lg-9 col-xl-9 col-xxl-9 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -961,13 +961,13 @@
               <!--end::Input group-->
             </div>
 
-            <!-- Arıza Tarihi -->
+            <!-- Bakım Tarihi -->
             <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Servis Açılış Tarihi</span>
+                  <span class="required">Bakım Tarihi</span>
                 </label>
                 <!--end::Label-->
 
@@ -1019,7 +1019,7 @@
             </div>
 
             <!-- Açılış Açıklama -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+            <div class="col-md-12 col-lg-12 col-xl-9 col-xxl-9 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1039,33 +1039,31 @@
               <!--end::Input group-->
             </div>
 
-            <!-- Teknisyen -->
+            <!-- Servis Kapanış Kodu -->
             <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
               <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
+              <div class="d-flex flex-column fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Teknisyen</span>
+                  <span class="required">Sonuç Kodu</span>
                 </label>
                 <!--end::Label-->
-
-                <el-form-item prop="userId">
+                <el-form-item prop="serviceResultCode">
                   <el-select
-                    placeholder="Teknisyen"
+                    placeholder="Sonuç Kodu"
                     class="customBorder"
                     filterable
                     clearable
-                    @change="onBakimFormuAcTeknisyenChange()"
-                    v-model="newBakimService.userId"
+                    v-model="newBakimService.serviceResultCode"
                   >
-                    <el-option
-                      v-for="item in technicianUserList"
-                      :key="item.id"
-                      :label="item.firstname + item.lastname"
-                      :value="item.id"
-                    >
+                    <el-option v-for="item in resultCodeList" :key="item.code" :label="item.name" :value="item.code">
                       <div class="row">
-                        <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
+                        <div class="col-md-3" style="font-size: 12px">
+                          {{ item.code }}
+                        </div>
+                        <div class="col-md-9" style="font-size: 12px">
+                          {{ item.name }}
+                        </div>
                       </div>
                     </el-option>
                   </el-select>
@@ -1074,32 +1072,26 @@
               <!--end::Input group-->
             </div>
 
-            <!-- Teknisyen Atama Tarihi -->
-            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+            <!-- Kapanış Açıklama -->
+            <div class="col-md-12 col-lg-12 col-xl-9 col-xxl-9 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Teknisyen Atanma T.</span>
+                  <span>Kapanış Açıklama</span>
                 </label>
                 <!--end::Label-->
 
-                <el-form-item prop="userAssignDate">
-                  <el-date-picker
-                    v-model="newBakimService.userAssignDate"
-                    format="DD.MM.YYYY HH:mm:ss"
-                    type="datetime"
+                <el-form-item prop="resultDescription">
+                  <el-input
+                    v-model="newBakimService.resultDescription"
                     class="customBorder"
-                    placeholder="Teknisyen atama tarihi"
-                    :shortcuts="shortcuts"
-                  />
+                    placeholder="Servis kapanış açıklamasını giriniz"
+                  ></el-input>
                 </el-form-item>
               </div>
               <!--end::Input group-->
             </div>
-
-            <!-- Boş -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12"></div>
 
             <!-- Tespit Kodu -->
             <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
@@ -1156,55 +1148,33 @@
               <!--end::Input group-->
             </div>
 
-            <!-- Servis Kapanış Tarihi -->
-            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+            <!-- Teknisyen -->
+            <div class="col-md-12 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Servis Kapanış Tarihi</span>
+                  <span class="required">Teknisyen</span>
                 </label>
                 <!--end::Label-->
 
-                <el-form-item prop="resultDate">
-                  <el-date-picker
-                    v-model="newBakimService.resultDate"
-                    format="DD.MM.YYYY HH:mm:ss"
-                    type="datetime"
-                    class="customBorder"
-                    placeholder="Servis kapanış tarihi"
-                    :shortcuts="shortcuts"
-                  />
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-
-            <!-- Servis Kapanış Kodu -->
-            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span class="required">Servis Kapanış Kodu</span>
-                </label>
-                <!--end::Label-->
-                <el-form-item prop="serviceResultCode">
+                <el-form-item prop="userId">
                   <el-select
-                    placeholder="Servis Sonuç Kodu"
+                    placeholder="Teknisyen"
                     class="customBorder"
                     filterable
                     clearable
-                    v-model="newBakimService.serviceResultCode"
+                    @change="onBakimFormuAcTeknisyenChange()"
+                    v-model="newBakimService.userId"
                   >
-                    <el-option v-for="item in resultCodeList" :key="item.code" :label="item.name" :value="item.code">
+                    <el-option
+                      v-for="item in technicianUserList"
+                      :key="item.id"
+                      :label="item.firstname + item.lastname"
+                      :value="item.id"
+                    >
                       <div class="row">
-                        <div class="col-md-3" style="font-size: 12px">
-                          {{ item.code }}
-                        </div>
-                        <div class="col-md-9" style="font-size: 12px">
-                          {{ item.name }}
-                        </div>
+                        <div class="col-md-9" style="font-size: 12px">{{ item.firstname }} {{ item.lastname }}</div>
                       </div>
                     </el-option>
                   </el-select>
@@ -1213,29 +1183,8 @@
               <!--end::Input group-->
             </div>
 
-            <!-- Kapanış Açıklama -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-              <!--begin::Input group-->
-              <div class="d-flex flex-column mb-1 fv-row">
-                <!--begin::Label-->
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                  <span>Kapanış Açıklama</span>
-                </label>
-                <!--end::Label-->
-
-                <el-form-item prop="resultDescription">
-                  <el-input
-                    v-model="newBakimService.resultDescription"
-                    class="customBorder"
-                    placeholder="Servis kapanış açıklamasını giriniz"
-                  ></el-input>
-                </el-form-item>
-              </div>
-              <!--end::Input group-->
-            </div>
-
             <!-- SB Sayaç -->
-            <div class="col-md-12 col-lg-12 col-xl-3 col-xxl-3 col-sm-12">
+            <div class="col-md-12 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1276,9 +1225,6 @@
               <!--end::Input group-->
             </div>
 
-            <!-- Boş -->
-            <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12"></div>
-
             <!-- Toner Tipi -->
             <div class="col-md-12 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
               <!--begin::Input group-->
@@ -1301,7 +1247,7 @@
             </div>
 
             <!-- Siyah -->
-            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+            <div class="col-md-12 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1322,7 +1268,7 @@
             </div>
 
             <!-- Mavi -->
-            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+            <div class="col-md-12 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1339,7 +1285,7 @@
             </div>
 
             <!-- Kırmızı -->
-            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+            <div class="col-md-12 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1360,7 +1306,7 @@
             </div>
 
             <!-- Sarı -->
-            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2 col-sm-12">
+            <div class="col-md-12 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
               <!--begin::Input group-->
               <div class="d-flex flex-column mb-1 fv-row">
                 <!--begin::Label-->
@@ -1379,9 +1325,6 @@
               </div>
               <!--end::Input group-->
             </div>
-
-            <!-- Boş -->
-            <div class="col-md-1 col-lg-1 col-xl-1 col-xxl-1 col-sm-1"></div>
 
             <div class="col-md-1">
               <el-checkbox label="Dr" v-model="newBakimService.dr" />
@@ -1406,7 +1349,7 @@
             </div>
           </div>
           <!--begin::Actions-->
-          <div class="text-center mt-2">
+          <div class="text-center mt-5">
             <!--begin::Button-->
             <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
               <span v-if="!loading" class="indicator-label"> Kaydet </span>
@@ -2942,7 +2885,7 @@ export default defineComponent({
       failureDate: [
         {
           required: true,
-          message: 'Servis açılış girilmedi.',
+          message: 'Bakım tarihi girilmedi.',
           trigger: 'blur',
         },
       ],
@@ -3139,6 +3082,7 @@ export default defineComponent({
           await store
             .dispatch(Actions.ADD_BAKIMFORMUDEVICESERVICE, newBakimService.value)
             .then(async result => {
+              loading.value = false;
               console.clear();
               console.log(result);
               if (result.isSuccess) {
@@ -3170,8 +3114,6 @@ export default defineComponent({
             .catch(() => {
               const [error] = Object.keys(store.getters.getErrors);
             });
-
-          loading.value = false;
         }
       });
     };
@@ -3922,10 +3864,12 @@ export default defineComponent({
     }
 
     async function getLastTradedCustomer() {
+      alert('getLastTradedCustomer başladı');
       anaSayfaLoading.value = true;
       await store
         .dispatch(Actions.GET_LASTTRADED_CUSTOMER)
         .then(async result => {
+          alert('getLastTradedCustomer bitti');
           anaSayfaLoading.value = false;
           if (result.isSuccess) {
             firmaOzet.value = result.data;
@@ -3941,6 +3885,7 @@ export default defineComponent({
               deviceList.value = result.data.devices;
               contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
               maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+              await getKapatilmisServisList();
             }
 
             selectedDevice.value = result.data.deviceId;
@@ -4018,9 +3963,11 @@ export default defineComponent({
     }
 
     async function getKapatilmisServisList() {
+      alert('getKapatilmisServisList başladı');
       await store
         .dispatch(Actions.GET_KAPATILMISDEVICESERVICE, firmaOzet.value.deviceId)
-        .then(result => {
+        .then(async result => {
+          alert('getKapatilmisServisList biti');
           if (result.isSuccess) {
             deviceServices.value = result.data;
           }

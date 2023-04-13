@@ -25,6 +25,9 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                 var bakimFormu = mapper.Map<DeviceService>(request.Model);
                 bakimFormu.StatusCode = (int)StatusCodes.TalepSonlandirildi;
 
+                bakimFormu.ResultDate = bakimFormu.FailureDate;
+                bakimFormu.UserAssignDate = bakimFormu.FailureDate;
+
                 deviceServiceRepo.Add(bakimFormu);
                 await deviceServiceRepo.SaveChangesAsync();
 
