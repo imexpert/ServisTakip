@@ -5,13 +5,13 @@ import { Actions } from "@/store/enums/StoreEnums";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/dashboard",
+    redirect: "/anaSayfa",
     component: () => import("@/layouts/main-layout/MainLayout.vue"),
     children: [
       {
-        path: "/dashboard",
-        name: "dashboard",
-        component: () => import("@/views/Dashboard.vue"),
+        path: "/anaSayfa",
+        name: "anaSayfa",
+        component: () => import("@/views/AnaSayfa.vue"),
       },
       {
         path: "/customer",
@@ -19,19 +19,24 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/Customer.vue"),
       },
       {
-        path: "/receivedServices",
-        name: "ReceivedServices",
-        component: () => import("@/views/ReceivedServices.vue"),
+        path: "/alinanServisler",
+        name: "AlinanServisler",
+        component: () => import("@/views/AlinanServisler.vue"),
       },
       {
-        path: "/closedServices",
-        name: "closedServices",
-        component: () => import("@/views/ClosedServices.vue"),
+        path: "/kapatilacakIsler",
+        name: "KapatilacakIsler",
+        component: () => import("@/views/KapatilacakIsler.vue"),
       },
       {
         path: "/sozlesmeBasim",
         name: "sozlesmeBasim",
         component: () => import("@/views/reports/SozlesmeBasim.vue"),
+      },
+      {
+        path: "/musteriRaporu",
+        name: "musteriRaporu",
+        component: () => import("@/views/reports/MusteriRaporu.vue"),
       },
       {
         path: "/bakimRaporu",

@@ -1,7 +1,7 @@
 import { IDeviceData } from "./DeviceData";
 
 interface IContractData {
-    deviceId?: string | '',
+    deviceId?: Number | '',
     startDate?: string | '',
     startDateString?: string | '',
     endDate?: string | '',

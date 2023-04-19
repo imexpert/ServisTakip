@@ -58,16 +58,20 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.Contracts = mapper.Map<List<ContractDto>>(contracts);
 
                     var lastContract = result.Contracts.MaxBy(s => s.EndDate);
-                    result.ContractType = lastContract?.ContractCode;
-
-                    if (lastContract != null)
+                    if (lastContract != null && lastContract.EndDate >= DateTime.Now)
                     {
+                        result.ContractType = lastContract?.ContractCode;
+
                         var contractMaintenances =
-                        await contractMaintenanceRepo.GetListAsync(s =>
-                            s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
-                            s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
+                            await contractMaintenanceRepo.GetListAsync(s =>
+                                s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
+                                s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
 
                         result.MaintenanceStatus = contractMaintenances.Any();
+                    }
+                    else
+                    {
+                        result.ContractType = "ÜCRETLİ";
                     }
 
                     var deviceServices = await deviceServicesRepo.GetDeviceServices(lastService.DeviceId);
@@ -119,13 +123,16 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     var lastContract = result.Contracts.MaxBy(s => s.EndDate);
                     result.ContractType = lastContract?.ContractCode;
 
-                    var contractMaintenances =
-                        await contractMaintenanceRepo.GetListAsync(s =>
-                            s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
-                            s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
+                    if (lastContract != null)
+                    {
+                        var contractMaintenances =
+                            await contractMaintenanceRepo.GetListAsync(s =>
+                                s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
+                                s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
 
-                    result.MaintenanceStatus = contractMaintenances.Any();
-
+                        result.MaintenanceStatus = contractMaintenances.Any();
+                    }
+                    
                     result.Devices = mapper.Map<List<DeviceDto>>(await deviceRepo.GetAllDevices(result.CustomerId));
                     result.Devices.Select(c => { c.RowId = $"{result.CustomerId}|{c.AddressId}|{c.Id}"; return c; }).ToList();
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
@@ -154,6 +161,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         result.CityName = address.District.City.Name;
                         result.DistrictName = address.District.Name;
                         result.QuarterName = address.QuerterName;
+                        result.RegionCode = address.RegionCode;
                         result.RowId = $"{customer.Id}|{address.Id}|{0}";
                     }
                     else
@@ -164,7 +172,35 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
-                return ResponseMessage<LastTradedCustomerInfoDto>.Fail("Henüz hiç kayıtlı müşteri yok.");
+                customer = customerList.MaxBy(s => s.RecordDate);
+
+                result.CustomerTitle = customer.Title;
+                result.CustomerId = customer.Id;
+                result.CustomerSector = customer.Sector.Name;
+
+                if (customer.Addresses is { Count: > 0 })
+                {
+                    var address = customer.Addresses.MaxBy(s => s.UpdateDate);
+                    result.AddressId = address.Id;
+                    result.AccountCode = address.AccountCode;
+                    result.AuthorizedEmail = address.AuthorizedEmail;
+                    result.AuthorizedName = address.AuthorizedName;
+                    result.AuthorizedPhone = address.AuthorizedPhone;
+                    result.AuthorizedWorkPhone = address.AuthorizedWorkPhone;
+                    result.AuthorizedTask = address.AuthorizedTask;
+                    result.Department = address.Department;
+                    result.CityName = address.District.City.Name;
+                    result.DistrictName = address.District.Name;
+                    result.QuarterName = address.QuerterName;
+                    result.RegionCode = address.RegionCode;
+                    result.RowId = $"{customer.Id}|{address.Id}|{0}";
+                }
+                else
+                {
+                    result.RowId = $"{customer.Id}|{0}|{0}";
+                }
+
+                return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
             }
         }
     }

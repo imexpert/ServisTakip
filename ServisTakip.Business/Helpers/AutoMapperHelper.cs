@@ -19,8 +19,10 @@ using ServisTakip.Entities.DTOs.DeviceServices;
 using ServisTakip.Entities.DTOs.DetectionCodes;
 using ServisTakip.Entities.DTOs.DeviceServiceParts;
 using ServisTakip.Entities.DTOs.Companies;
+using ServisTakip.Entities.DTOs.Groups;
 using ServisTakip.Entities.DTOs.Offers;
 using ServisTakip.Entities.DTOs.OfferSubjectCodes;
+using ServisTakip.Entities.DTOs.UserGroups;
 
 namespace ServisTakip.Business.Helpers
 {
@@ -48,6 +50,7 @@ namespace ServisTakip.Business.Helpers
             CreateMap<Contract, ContractDto>().ReverseMap();
             CreateMap<Device, DeviceDto>().ReverseMap();
             CreateMap<Device, CreateDeviceDto>().ReverseMap();
+            CreateMap<DeviceService, CreateBakimFormuDto>().ReverseMap();
             CreateMap<ContractCode, ContractCodeDto>().ReverseMap();
             CreateMap<DeviceServiceDto, DeviceService>().ReverseMap();
             CreateMap<CreateDeviceServiceDto, DeviceService>().ReverseMap();
@@ -59,6 +62,8 @@ namespace ServisTakip.Business.Helpers
             CreateMap<Offer, CreateOfferDto>().ReverseMap();
             CreateMap<Contract, CreateContractDto>().ReverseMap();
             CreateMap<Contract, UpdateContractDto>().ReverseMap();
+            CreateMap<UserGroup, UserGroupDto>().ReverseMap();
+            CreateMap<Group, GroupDto>().ReverseMap();
         }
     }
 }

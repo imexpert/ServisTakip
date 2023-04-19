@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Aspects.Autofac.Transaction;
 using ServisTakip.Core.Utilities.IoC;
@@ -19,7 +18,6 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
             public async Task<ResponseMessage<DeviceServiceDto>> Handle(CloseDeviceServicesCommand request, CancellationToken cancellationToken)
             {
                 var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
                 var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
 
                 var deviceService = await deviceServiceRepo.GetAsync(s => s.Id == request.Model.Id);
@@ -47,7 +45,10 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                 deviceServiceRepo.Update(deviceService);
                 await deviceServiceRepo.SaveChangesAsync();
 
-                await mediator.Send(new CreateOfferDeviceServicesCommand() { ClosedDeviceService = deviceService });
+                await mediator.Send(new CreateOfferDeviceServicesCommand()
+                {
+                    ClosedDeviceService = deviceService
+                }, cancellationToken);
 
                 return ResponseMessage<DeviceServiceDto>.Success(request.Model);
             }

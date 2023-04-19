@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Utilities.IoC;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Devices;
@@ -27,6 +26,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 var addressRepo = ServiceTool.ServiceProvider.GetService<IAddressRepository>();
                 var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
+                var contractMaintenanceRepo = ServiceTool.ServiceProvider.GetService<IContractMaintenanceRepository>();
 
                 var splitIds = request.RowId.Split('|').ToList();
 
@@ -60,8 +60,23 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     result.Contracts = mapper.Map<List<ContractDto>>(contracts);
 
                     var lastContract = result.Contracts.MaxBy(s => s.EndDate);
-                    result.ContractType = lastContract?.ContractCode;
 
+                    if (lastContract != null && lastContract.EndDate >= DateTime.Now)
+                    {
+                        result.ContractType = lastContract?.ContractCode;
+
+                        var contractMaintenances =
+                            await contractMaintenanceRepo.GetListAsync(s =>
+                                s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
+                                s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
+
+                        result.MaintenanceStatus = contractMaintenances.Any();
+                    }
+                    else
+                    {
+                        result.ContractType = "ÜCRETLİ";
+                    }
+                    
                     result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(device.DeviceServices.Where(s => s.StatusCode == (int)StatusCodes.TalepSonlandirildi));
                     result.DeviceServices = result.DeviceServices.OrderByDescending(s => s.ResultDate).ToList();
 
@@ -99,10 +114,33 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                 }
 
                 var customer = await customerRepo.GetCustomerById(Convert.ToInt64(splitIds[0]));
-                result.CustomerTitle = customer.Title;
-                result.CustomerId = customer.Id;
-                result.CustomerSector = customer.Sector.Name;
-                result.RowId = $"{customer.Id}|{0}|{0}";
+
+
+                if (customer.Addresses is { Count: > 0 })
+                {
+                    var address = customer.Addresses.MaxBy(s => s.UpdateDate);
+                    result.AddressId = address.Id;
+                    result.AccountCode = address.AccountCode;
+                    result.AuthorizedEmail = address.AuthorizedEmail;
+                    result.AuthorizedName = address.AuthorizedName;
+                    result.AuthorizedPhone = address.AuthorizedPhone;
+                    result.AuthorizedWorkPhone = address.AuthorizedWorkPhone;
+                    result.AuthorizedTask = address.AuthorizedTask;
+                    result.Department = address.Department;
+                    result.CityName = address.District.City.Name;
+                    result.DistrictName = address.District.Name;
+                    result.QuarterName = address.QuerterName;
+                    result.RegionCode = address.RegionCode;
+                    result.RowId = $"{customer.Id}|{address.Id}|{0}";
+                }
+                else
+                {
+                    result.CustomerTitle = customer.Title;
+                    result.CustomerId = customer.Id;
+                    result.CustomerSector = customer.Sector.Name;
+                    result.RowId = $"{customer.Id}|{0}|{0}";
+                }
+                
                 return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
             }
         }

@@ -2,20 +2,20 @@ const DocMenuConfig = [
   {
     pages: [
       {
-        heading: "dashboard",
-        route: "/dashboard",
+        heading: "Ana Sayfa",
+        route: "/anaSayfa",
         svgIcon: "media/icons/duotune/art/art002.svg",
         fontIcon: "bi-app-indicator",
       },
       {
         heading: "alinanServisler",
-        route: "/receivedServices",
+        route: "/alinanServisler",
         svgIcon: "media/icons/duotune/general/gen019.svg",
         fontIcon: "bi-layers",
       },
       {
         heading: "kapatilacakIsler",
-        route: "/closedServices",
+        route: "/kapatilacakIsler",
         svgIcon: "media/icons/duotune/general/gen019.svg",
         fontIcon: "bi-layers",
       },

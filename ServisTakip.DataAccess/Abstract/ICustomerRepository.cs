@@ -8,5 +8,6 @@ namespace ServisTakip.DataAccess.Abstract
         Task<Customer> GetCustomerById(long id);
         Task<List<Customer>> GetCustomerByFilterAsync(string filter, CancellationToken cancellationToken);
         Task<List<Customer>> GetCustomerListAsync(CancellationToken cancellationToken);
+        IQueryable<Customer> GetMusteriRaporQuery();
     }
 }

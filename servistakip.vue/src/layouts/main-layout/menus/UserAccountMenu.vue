@@ -9,7 +9,9 @@
       <div class="menu-content d-flex align-items-center px-3">
         <!--begin::Avatar-->
         <div class="symbol symbol-50px me-5">
-          <img alt="Logo" src="media/avatars/300-1.jpg" />
+          <img v-if="isManLogo" alt="Logo" src="media/avatars/man.png" />
+          <img v-if="isWomanLogo" alt="Logo" src="media/avatars/woman.png" />
+          <img v-if="isLogoExists" alt="Logo" :src="logoSrc" />
         </div>
         <!--end::Avatar-->
 
@@ -17,7 +19,8 @@
         <div class="d-flex flex-column">
           <div class="fw-bold d-flex align-items-center fs-5">
             {{ fullName }}
-            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Admin</span>
+            <span v-if="isAdmin == 'true'" class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">admin</span>
+            <!-- <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2"></span> -->
           </div>
           <a href="#" class="fw-semobold text-muted text-hover-primary fs-7">{{ email }}</a>
         </div>
@@ -30,6 +33,11 @@
     <div class="separator my-2"></div>
     <!--end::Menu separator-->
 
+    <!--begin::Menu item-->
+    <div class="menu-item px-5" v-if="isAdmin == 'true'">
+      <router-link to="/pages/profile/overview" class="menu-link px-5"> Yönetim Paneli</router-link>
+    </div>
+    <!--end::Menu item-->
     <!--begin::Menu item-->
     <div class="menu-item px-5">
       <router-link to="/pages/profile/overview" class="menu-link px-5"> Profilim </router-link>
@@ -67,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -76,17 +84,41 @@ import JwtService from '@/core/services/JwtService';
 
 export default defineComponent({
   name: 'kt-user-menu',
-  components: {
-  },
+  components: {},
   setup() {
     const router = useRouter();
     const i18n = useI18n();
     const store = useStore();
 
+    const logoSrc = ref<string>('');
+
+    const isLogoExists = ref<boolean>(false);
+    const isManLogo = ref<boolean>(false);
+    const isWomanLogo = ref<boolean>(false);
+
     const fullName = JwtService.getFullName();
     const email = JwtService.getEmail();
+    const isAdmin = JwtService.isAdmin();
+    const gender = JwtService.getGender();
+    const avatar = JwtService.getAvatar();
 
-    i18n.locale.value = localStorage.getItem('lang') ? (localStorage.getItem('lang') as string) : 'en';
+    if (avatar == null || avatar == '') {
+      isLogoExists.value = false;
+      if (gender == '1') {
+        isManLogo.value = true;
+        isWomanLogo.value = false;
+      } else if (gender == '2') {
+        isManLogo.value = false;
+        isWomanLogo.value = true;
+      } else {
+        isManLogo.value = true;
+        isWomanLogo.value = false;
+      }
+    } else {
+      isLogoExists.value = true;
+    }
+
+    console.log(isAdmin);
 
     const countries = {
       en: {
@@ -136,7 +168,14 @@ export default defineComponent({
       countries,
       store,
       fullName,
-      email
+      email,
+      isAdmin,
+      avatar,
+      gender,
+      isLogoExists,
+      isManLogo,
+      isWomanLogo,
+      logoSrc,
     };
   },
 });

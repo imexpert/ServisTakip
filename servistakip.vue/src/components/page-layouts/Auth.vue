@@ -1,7 +1,7 @@
 <template>
   <div
     class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed"
-    :style="{ backgroundImage: 'url(' + getIllustrationsPath('14.png') + ')' }"
+    :style="{ backgroundImage: 'url(' + getIllustrationsPath('altbanner.png') + ')' }"
   >
     <!--begin::Content-->
     <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">

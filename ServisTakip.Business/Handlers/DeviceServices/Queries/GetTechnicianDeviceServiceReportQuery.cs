@@ -33,6 +33,11 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Queries
                 DataBand band = report.FindObject("Data1") as DataBand; 
                 band.DataSource = report.GetDataSource("VW_TechnicianReport");
 
+                Parameter paramTechnicianName = new Parameter("TechnicianName");
+                paramTechnicianName.DataType = typeof(string);
+                paramTechnicianName.Value = deviceServices.FirstOrDefault().TechnicianName;
+                report.Parameters.Add(paramTechnicianName);
+
                 report.Prepare();
 
                 var export = new PDFExport();

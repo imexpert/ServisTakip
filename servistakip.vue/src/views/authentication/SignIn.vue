@@ -1,8 +1,15 @@
 <template>
   <!--begin::Wrapper-->
   <div class="w-lg-500px bg-white rounded shadow-sm p-10 p-lg-15 mx-auto" v-loading="loading">
-    <el-form status-icon :rules="loginRules" ref="formLoginRef" :model="loginModel" @submit.prevent="loginSubmit()"
-      label-width="120px" label-position="top">
+    <el-form
+      status-icon
+      :rules="loginRules"
+      ref="formLoginRef"
+      :model="loginModel"
+      @submit.prevent="loginSubmit()"
+      label-width="120px"
+      label-position="top"
+    >
       <!--begin::Heading-->
       <div class="text-center mb-10">
         <!--begin::Title-->
@@ -17,8 +24,13 @@
         <label class="form-label fs-6 fw-bolder text-dark">E-Mail</label>
         <!--end::Label-->
         <el-form-item prop="email">
-          <el-input class="w-150 m-2" size="large" v-model="loginModel.email" autocomplete="off"
-            placeholder="E-Mail adresinizi giriniz" />
+          <el-input
+            class="w-150 m-2"
+            size="large"
+            v-model="loginModel.email"
+            autocomplete="off"
+            placeholder="E-Mail adresinizi giriniz"
+          />
         </el-form-item>
       </div>
       <!--end::Input group-->
@@ -39,8 +51,15 @@
 
         <el-form-item prop="password">
           <!--begin::Input-->
-          <el-input v-model="loginModel.password" type="password" class="w-150" size="large"
-            placeholder="Şifrenizi giriniz" autocomplete="off" show-password />
+          <el-input
+            v-model="loginModel.password"
+            type="password"
+            class="w-150"
+            size="large"
+            placeholder="Şifrenizi giriniz"
+            autocomplete="off"
+            show-password
+          />
           <!--end::Input-->
         </el-form-item>
       </div>
@@ -66,7 +85,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { Search } from '@element-plus/icons-vue'
+import { Search } from '@element-plus/icons-vue';
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import { Actions } from '@/store/enums/StoreEnums';
 import { useStore } from 'vuex';
@@ -86,7 +105,7 @@ export default defineComponent({
     Field,
     Form,
     ErrorMessage,
-    Search
+    Search,
   },
   setup() {
     const store = useStore();
@@ -139,22 +158,21 @@ export default defineComponent({
             .dispatch(Actions.LOGIN, loginModel.value)
             .then(result => {
               loading.value = false;
-              if (result == null ) {
+              if (result == null) {
                 Swal.fire({
-                    title: 'Hata',
-                    html: "Login işlemi sırasında hata oluştu.<br>Lütfen tekrar deneyiniz...",
-                    icon: 'error',
-                    buttonsStyling: false,
-                    confirmButtonText: 'Tamam !',
-                    customClass: {
-                      confirmButton: 'btn fw-bold btn-danger',
-                    },
-                  });
-              }
-              else {
+                  title: 'Hata',
+                  html: 'Login işlemi sırasında hata oluştu.<br>Lütfen tekrar deneyiniz...',
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              } else {
                 if (result.isSuccess) {
                   // Go to page after successfully login
-                  router.push({ name: 'dashboard' });
+                  router.push({ name: 'anaSayfa' });
                 } else {
                   Swal.fire({
                     title: 'Hata',

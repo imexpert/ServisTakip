@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using ServisTakip.Business.Handlers.Authorizations.ValidationRules;
+using ServisTakip.Business.Handlers.UserGroups.Queries;
 using ServisTakip.Core.Aspects.Autofac.Validation;
 using ServisTakip.Core.CrossCuttingConcerns.Caching;
 using ServisTakip.Core.Utilities.Results;
@@ -51,6 +52,7 @@ namespace ServisTakip.Business.Handlers.Authorizations.Queries
                 accessToken.Claims = claims.Select(x => x.Name).ToList();
 
                 user.RefreshToken = accessToken.RefreshToken;
+                user.LastLogin = DateTime.Now;
                 _userRepository.Update(user);
                 await _userRepository.SaveChangesAsync();
 
@@ -62,7 +64,17 @@ namespace ServisTakip.Business.Handlers.Authorizations.Queries
                     Firstname = user.Firstname,
                     Lastname = user.Lastname,
                     Token = accessToken.Token,
+                    Gender = user.Gender,
+                    Avatar = user.Avatar ?? Array.Empty<byte>(),
                 };
+
+                var userGroupResponse = await _mediator.Send(new GetUserGroupsByUserIdQuery() { UserId = user.Id },
+                    cancellationToken);
+
+                if (userGroupResponse.IsSuccess)
+                {
+                    result.IsAdmin = userGroupResponse.Data.Any(s => s.Group.GroupName == "Admin");
+                }
 
                 return ResponseMessage<UserDto>.Success(result);
             }

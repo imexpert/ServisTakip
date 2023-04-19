@@ -4,6 +4,7 @@
 </template>
 
 <script lang="ts">
+import devtools from '@vue/devtools';
 import { computed, ref } from 'vue';
 import { defineComponent, nextTick, onMounted } from 'vue';
 import { useStore } from 'vuex';
@@ -83,5 +84,23 @@ export default defineComponent({
 
 .swal2-container {
   z-index: 20000 !important;
+}
+
+.tableHeader {
+  color: black;
+  font-size: 15px;
+  border-bottom: 2px solid black;
+}
+
+.sort-caret {
+  color: red;
+}
+
+.tableClass {
+  border: 2px solid var(--el-border-color);
+  width: 100%;
+  font-size: 13px;
+  color: black;
+  width: 100%;
 }
 </style>
