@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" v-loading="anaSayfaLoading">
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12 mb-2" v-loading="anaSayfaLoading">
       <el-card class="box-card">
         <template #header>
@@ -3864,12 +3864,10 @@ export default defineComponent({
     }
 
     async function getLastTradedCustomer() {
-      alert('getLastTradedCustomer başladı');
       anaSayfaLoading.value = true;
       await store
         .dispatch(Actions.GET_LASTTRADED_CUSTOMER)
         .then(async result => {
-          alert('getLastTradedCustomer bitti');
           anaSayfaLoading.value = false;
           if (result.isSuccess) {
             firmaOzet.value = result.data;
@@ -3885,7 +3883,6 @@ export default defineComponent({
               deviceList.value = result.data.devices;
               contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
               maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
-              await getKapatilmisServisList();
             }
 
             selectedDevice.value = result.data.deviceId;
@@ -3963,11 +3960,9 @@ export default defineComponent({
     }
 
     async function getKapatilmisServisList() {
-      alert('getKapatilmisServisList başladı');
       await store
         .dispatch(Actions.GET_KAPATILMISDEVICESERVICE, firmaOzet.value.deviceId)
         .then(async result => {
-          alert('getKapatilmisServisList biti');
           if (result.isSuccess) {
             deviceServices.value = result.data;
           }

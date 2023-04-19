@@ -96,6 +96,7 @@ enum Actions {
   GET_MODEL_BY_NAME_FILTER = "getModelByNameFilter",
 
   GET_SOZLESMEBASIM = "getSozlesmeBasim",
+  GET_MUSTERIRAPOR = "getMusteriRapor",
 }
 
 enum Mutations {

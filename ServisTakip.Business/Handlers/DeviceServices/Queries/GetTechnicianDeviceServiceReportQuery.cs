@@ -9,7 +9,6 @@ using ServisTakip.Core.Extensions;
 using FastReport.Export.Pdf;
 using FastReport.Utils;
 using ServisTakip.Entities.DTOs.Reports;
-using ServisTakip.Entities.Concrete;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Queries
 {

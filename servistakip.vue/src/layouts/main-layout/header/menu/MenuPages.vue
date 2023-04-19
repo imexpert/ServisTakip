@@ -59,7 +59,7 @@
               </a>
             </div>
             <div class="menu-item">
-              <a href="#" class="menu-link">
+              <a href="/musteriRaporu" class="menu-link">
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>

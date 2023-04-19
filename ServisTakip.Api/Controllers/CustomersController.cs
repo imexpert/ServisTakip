@@ -64,7 +64,7 @@ namespace ServisTakip.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetLastTradedCustomerAsync()
         {
-            return CreateActionResult(await Mediator.Send(new GetLastTradedCustomerQuery()));
+            return CreateActionResult(await Mediator.Send(new GetSonIslemYapilanMusteriQuery()));
         }
 
         /// <summary>

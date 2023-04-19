@@ -1,7 +1,4 @@
-﻿using ServisTakip.Entities.DTOs.Devices;
-using ServisTakip.Entities.DTOs.User;
-
-namespace ServisTakip.Entities.DTOs.DeviceServices
+﻿namespace ServisTakip.Entities.DTOs.DeviceServices
 {
     public class CreateBakimFormuDto
     {

@@ -48,5 +48,21 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
         }
+
+        public IQueryable<Customer> GetMusteriRaporQuery()
+        {
+            return _context.Customers
+                .Include(s => s.Addresses)
+                    .ThenInclude(s => s.District)
+                    .ThenInclude(s => s.City)
+                .Include(s => s.Addresses)
+                    .ThenInclude(s => s.Devices)
+                    .ThenInclude(s => s.DeviceModel)
+                    .ThenInclude(s => s.DeviceBrand)
+                    .ThenInclude(s => s.DeviceType)
+                .Include(s => s.Addresses)
+                    .ThenInclude(s => s.Devices)
+                    .ThenInclude(s => s.Contracts);
+        }
     }
 }
