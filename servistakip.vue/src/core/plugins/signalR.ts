@@ -9,7 +9,7 @@ class SignalRService {
     public static init() {
         // Create your connection
         SignalRService.connection = new signalR.HubConnectionBuilder()
-            .withUrl('https://localhost:6001/servisTakipHub')
+            .withUrl(process.env.VUE_APP_HUB_URL)
             .withAutomaticReconnect([
                 0,
                 2000,
