@@ -1,12 +1,10 @@
 <template>
   <!--begin::Row-->
   <div class="row g-5 g-xl-2" v-loading="alinanServislerLoading">
-    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12" style="height: 770px;" >
-      <el-tabs type="border-card" style="height: 770px;">
+    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12" style="height: 770px">
+      <el-tabs type="border-card" style="height: 770px">
         <el-tab-pane :label="alinanServislerLabel">
-          <el-table
-            :data="receivedDeviceServiceList"
-            class="tableClass">
+          <el-table :data="receivedDeviceServiceList" class="tableClass">
             <el-table-column label="C.No" label-class-name="tableHeader" width="80">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
@@ -85,7 +83,8 @@
                 </el-dropdown>
               </template>
             </el-table-column>
-          </el-table></el-tab-pane>
+          </el-table></el-tab-pane
+        >
         <el-tab-pane :label="teknisyendekiIslerLabel">
           <el-table :data="technicianAssignedDeviceServiceList" class="tableClass">
             <el-table-column label="C.No" label-class-name="tableHeader" width="90">
@@ -208,7 +207,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="Müşteri Unvan" label-class-name="tableHeader" >
+            <el-table-column label="Müşteri Unvan" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.customer.title }}</span>
@@ -236,14 +235,14 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Departman" label-class-name="tableHeader" >
+            <el-table-column label="Departman" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.device.address.department }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Açıklama" label-class-name="tableHeader" >
+            <el-table-column label="Açıklama" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
                   <span>{{ scope.row.bootDescription }}</span>
@@ -623,8 +622,6 @@ export default defineComponent({
             .dispatch(Actions.UPDATE_ASSIGNTECHNICIANDEVICESERVICE, assignTechnicianModel.value)
             .then(result => {
               loading.value = false;
-              console.clear();
-              console.log(result);
               if (result.isSuccess) {
                 Swal.fire({
                   text: 'Servis başarıyla teknisyene atandı eklendi.',
@@ -668,8 +665,6 @@ export default defineComponent({
         .dispatch(Actions.UPDATE_SENDDEVICESERVICETOCLOSE, assignTechnicianModel)
         .then(result => {
           loading.value = false;
-          console.clear();
-          console.log(result);
           if (result.isSuccess) {
             Swal.fire({
               text: 'Servis başarıyla kapatılacak işlere gönderildi.',
@@ -713,8 +708,6 @@ export default defineComponent({
             .dispatch(Actions.GET_TECHNICIANDEVICESERVICEREPORT, assignTechnicianModel.value.userId)
             .then(result => {
               loading.value = false;
-              console.clear();
-              console.log(result);
               if (result.isSuccess) {
                 teknisyenRaporDialogVisible.value = false;
                 raporDialogVisible.value = true;
@@ -803,13 +796,14 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             receivedDeviceServiceList.value = result.data;
-            alinanServislerLabel.value = alinanServislerLabel.value + " ("+ receivedDeviceServiceList.value.length+")"
+            alinanServislerLabel.value =
+              alinanServislerLabel.value + ' (' + receivedDeviceServiceList.value.length + ')';
           }
         })
         .catch(() => {
           const [error] = Object.keys(store.getters.getErrors);
         });
-        alinanServislerLoading.value = false;
+      alinanServislerLoading.value = false;
     }
 
     async function getTechnicianAssignedDeviceServiceList() {
@@ -818,7 +812,8 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             technicianAssignedDeviceServiceList.value = result.data;
-            teknisyendekiIslerLabel.value = teknisyendekiIslerLabel.value + " ("+ technicianAssignedDeviceServiceList.value.length+")"
+            teknisyendekiIslerLabel.value =
+              teknisyendekiIslerLabel.value + ' (' + technicianAssignedDeviceServiceList.value.length + ')';
           }
         })
         .catch(() => {
@@ -832,7 +827,8 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             partsExchangeDeviceServiceList.value = result.data;
-            parcaDegisimIslerLabel.value = parcaDegisimIslerLabel.value + " ("+ partsExchangeDeviceServiceList.value.length+")"
+            parcaDegisimIslerLabel.value =
+              parcaDegisimIslerLabel.value + ' (' + partsExchangeDeviceServiceList.value.length + ')';
           }
         })
         .catch(() => {
@@ -1018,8 +1014,6 @@ export default defineComponent({
             .dispatch(Actions.SEND_ORDERRECEIPT, mailModel.value)
             .then(result => {
               loading.value = false;
-              console.clear();
-              console.log(result);
               if (result.isSuccess) {
                 Swal.fire({
                   text: 'Sipariş fişi başarıyla gönderildi.',
@@ -1056,8 +1050,6 @@ export default defineComponent({
       await getReceivedDeviceServiceList();
       await getTechnicianAssignedDeviceServiceList();
       await getPartsExchangeDeviceServiceList();
-
-      
     });
 
     return {

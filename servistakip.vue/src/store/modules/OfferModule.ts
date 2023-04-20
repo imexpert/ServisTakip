@@ -64,8 +64,6 @@ export default class OfferModule extends VuexModule {
 
   @Action
   [Actions.UPDATE_SENDOFFER](offer) {
-    console.clear();
-    console.log(offer);
     return ApiService.put("Offers/SendOffer", offer.value)
       .then(({ data }) => {
         return data;
@@ -77,8 +75,6 @@ export default class OfferModule extends VuexModule {
 
   @Action
   [Actions.UPDATE_SENDOFFERAGAIN](offer) {
-    console.clear();
-    console.log(offer);
     return ApiService.put("Offers/SendOfferAgain", offer.value)
       .then(({ data }) => {
         return data;

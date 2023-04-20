@@ -358,9 +358,6 @@ export default defineComponent({
         .dispatch(Actions.GET_CONTRACTBYID, id)
         .then(async result => {
           if (result.isSuccess) {
-            console.clear();
-            console.log(result.data);
-
             newContract.value = result.data;
           }
         })
@@ -495,8 +492,6 @@ export default defineComponent({
           .dispatch(Actions.GET_CONTRACTLIST, props.deviceId)
           .then(result => {
             if (result.isSuccess) {
-              console.clear();
-              console.log(result.data);
               contracts.value = result.data;
               sozlesmeLoading.value = false;
             }
