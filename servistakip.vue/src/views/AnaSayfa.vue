@@ -3034,8 +3034,6 @@ export default defineComponent({
             .dispatch(Actions.ADD_DEVICESERVICE, newService.value)
             .then(result => {
               loading.value = false;
-              console.clear();
-              console.log(result);
               if (result.isSuccess) {
                 Swal.fire({
                   text: 'Servis başarıyla eklendi.',
@@ -3083,8 +3081,6 @@ export default defineComponent({
             .dispatch(Actions.ADD_BAKIMFORMUDEVICESERVICE, newBakimService.value)
             .then(async result => {
               loading.value = false;
-              console.clear();
-              console.log(result);
               if (result.isSuccess) {
                 Swal.fire({
                   text: 'Bakım formu başarıyla kaydedildi.',
@@ -3302,8 +3298,6 @@ export default defineComponent({
         await store
           .dispatch(Actions.GET_CUSTOMER_BY_FILTER, query)
           .then(result => {
-            console.clear();
-            console.log(result.data);
             loading.value = false;
 
             if (result.isSuccess) {
@@ -3335,8 +3329,6 @@ export default defineComponent({
         await store
           .dispatch(Actions.GET_DEVICE_BY_FILTER, query)
           .then(result => {
-            console.clear();
-            console.log(result.data);
             loading.value = false;
             if (result.isSuccess) {
               deviceInfoList.value = result.data;
@@ -3367,8 +3359,6 @@ export default defineComponent({
         await store
           .dispatch(Actions.GET_DEVICE_BY_SERIALNO_FILTER, query)
           .then(result => {
-            console.clear();
-            console.log(result.data);
             loading.value = false;
             if (result.isSuccess) {
               seriNoList.value = result.data;
@@ -3399,8 +3389,6 @@ export default defineComponent({
         await store
           .dispatch(Actions.GET_DEVICE_BY_MODEL_NAME_FILTER, query)
           .then(result => {
-            console.clear();
-            console.log(result.data);
             loading.value = false;
             if (result.isSuccess) {
               modelList.value = result.data;
@@ -3796,9 +3784,6 @@ export default defineComponent({
         .dispatch(Actions.GET_ADDRESSBYID, id)
         .then(async result => {
           if (result.isSuccess) {
-            console.clear();
-            console.log(result.data);
-
             selectedSehir.value = result.data.district.city.id;
             await onSehirChange();
             selectedIlce.value = result.data.district.id;
@@ -3821,8 +3806,6 @@ export default defineComponent({
           .then(result => {
             anaSayfaLoading.value = false;
             if (result.isSuccess) {
-              console.clear();
-              console.log(result.data);
               firmaOzet.value = result.data;
 
               if (result.data.device) {
@@ -3871,8 +3854,6 @@ export default defineComponent({
           anaSayfaLoading.value = false;
           if (result.isSuccess) {
             firmaOzet.value = result.data;
-            console.clear();
-            console.log(firmaOzet.value);
             deviceId.value = firmaOzet.value.deviceId;
 
             if (result.data.device) {
@@ -4210,9 +4191,6 @@ export default defineComponent({
         .dispatch(Actions.GET_DEVICE_BY_ID, firmaOzet.value.deviceId)
         .then(async result => {
           if (result.isSuccess) {
-            console.clear();
-            console.log(result.data);
-
             newDevice.value = result.data;
             var modelId = newDevice.value.deviceModelId;
             selectedDeviceType.value = newDevice.value.deviceModel.deviceBrand.deviceType.id;

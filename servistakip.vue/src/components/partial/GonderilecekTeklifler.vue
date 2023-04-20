@@ -830,7 +830,8 @@ export default defineComponent({
           if (result.isSuccess) {
             console.log(result.data);
             toBeOfferedDeviceServiceList.value = result.data;
-            gonderilecekTekliflerLabel.value = gonderilecekTekliflerLabel.value + " ("+ toBeOfferedDeviceServiceList.value.length+")"
+            gonderilecekTekliflerLabel.value =
+              gonderilecekTekliflerLabel.value + ' (' + toBeOfferedDeviceServiceList.value.length + ')';
           }
         })
         .catch(() => {
@@ -972,8 +973,6 @@ export default defineComponent({
               .dispatch(Actions.UPDATE_DEVICESERVICEPART, deviceServicePart.value)
               .then(result => {
                 loading.value = false;
-                console.clear();
-                console.log(result);
                 if (result.isSuccess) {
                   Swal.fire({
                     text: 'Parça başarıyla güncellendi.',

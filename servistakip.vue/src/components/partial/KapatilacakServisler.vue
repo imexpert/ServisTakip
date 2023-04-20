@@ -597,7 +597,8 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             kapatilacakServisList.value = result.data;
-            kapatilacakServislerLabel.value = kapatilacakServislerLabel.value + " ("+ kapatilacakServisList.value.length+")"
+            kapatilacakServislerLabel.value =
+              kapatilacakServislerLabel.value + ' (' + kapatilacakServisList.value.length + ')';
           }
         })
         .catch(() => {
@@ -713,8 +714,6 @@ export default defineComponent({
             .dispatch(Actions.UPDATE_CLOSEDEVICESERVICE, deviceServiceItem.value)
             .then(result => {
               loading.value = false;
-              console.clear();
-              console.log(result);
               if (result.isSuccess) {
                 Swal.fire({
                   text: 'Servis başarıyla kapatıldı.',

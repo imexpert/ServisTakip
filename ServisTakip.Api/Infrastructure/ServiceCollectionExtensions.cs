@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Reflection;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -18,6 +19,7 @@ using ServisTakip.Core.Utilities.Security.Encyption;
 using ServisTakip.Core.Utilities.Security.Jwt;
 using ServisTakip.Core.Utilities.Settings;
 using ServisTakip.DataAccess.Concrete.EntityFramework.Contexts;
+using StackExchange.Redis;
 
 namespace ServisTakip.Api.Infrastructure
 {
@@ -56,6 +58,8 @@ namespace ServisTakip.Api.Infrastructure
 
         public static void AddCustomServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<RedisSettings>(configuration.GetSection("RedisSettings"));
+
             Assembly assembly = Assembly.GetAssembly(typeof(AutofacBusinessModule));
 
             services
@@ -71,10 +75,9 @@ namespace ServisTakip.Api.Infrastructure
                 options.AddPolicy(
                     "AllowOrigin",
                     builder => 
-                        builder.WithOrigins("http://159.69.188.101:6002")
-                            .AllowAnyOrigin()
+                        builder.WithOrigins("http://159.69.188.101:6002","http://localhost:8080")
                             .AllowAnyMethod()
-                            .AllowAnyOrigin()
+                            .AllowCredentials()
                             .AllowAnyHeader());
             });
 
@@ -89,6 +92,13 @@ namespace ServisTakip.Api.Infrastructure
                 new ClaimsPrincipal(new ClaimsIdentity(""));
 
             services.AddScoped<IPrincipal>(getPrincipal);
+
+            var _redis = ConnectionMultiplexer.Connect(new ConfigurationOptions
+            {
+                EndPoints = { $"{configuration.GetValue<string>("RedisSettings:Host")}:{configuration.GetValue<string>("RedisSettings:Port")}" }
+            });
+
+            services.AddSingleton<IConnectionMultiplexer>(_redis);
 
             var coreModule = new CoreModule();
 

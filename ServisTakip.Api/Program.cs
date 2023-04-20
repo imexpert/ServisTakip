@@ -1,6 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Serilog.Context;
+using ServisTakip.Api.Hubs;
 using ServisTakip.Api.Infrastructure;
 using ServisTakip.Business.DependencyResolvers;
 using ServisTakip.Core.Extensions;
@@ -25,6 +26,20 @@ builder.Services.AddCustomMediatR();
 builder.Services.AddCustomCacheServices();
 
 builder.Services.AddServisTakipDbContext();
+
+var redisConnection = builder.Configuration.GetSection("RedisSettings:Host");
+
+if (redisConnection is { Value: { } })
+{
+    builder.Services.AddSignalR(options =>
+    {
+        options.EnableDetailedErrors = true;
+    }).AddStackExchangeRedis(redisConnection.Value, options =>
+    {
+        options.Configuration.ChannelPrefix = "Kec";
+    });
+}
+
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
@@ -72,6 +87,10 @@ app.Use(async (httpContext, next) =>
     await next.Invoke();
 });
 
-app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ServisTakipHub>("/servisTakipHub");
+});
 
 app.Run();

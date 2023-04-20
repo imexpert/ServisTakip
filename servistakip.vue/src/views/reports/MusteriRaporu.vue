@@ -516,8 +516,6 @@ export default defineComponent({
         await store
           .dispatch(Actions.GET_CUSTOMER_BY_FILTER, query)
           .then(result => {
-            console.clear();
-            console.log(result.data);
             loading.value = false;
 
             if (result.isSuccess) {
@@ -641,8 +639,6 @@ export default defineComponent({
         .dispatch(Actions.GET_MUSTERIRAPOR, filter.value)
         .then(result => {
           loading.value = false;
-          console.clear();
-          console.log(result);
           if (result.isSuccess) {
             totalCount.value = result.pageCount;
             customerList.value = result.data;
