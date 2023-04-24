@@ -269,12 +269,16 @@
           </el-form>
           <div class="row mb-3">
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+              <!-- <el-radio-group v-model="exportType">
+                <el-radio v-for="(item, index) in supportType" :key="index" :label="item" border>{{ item }}</el-radio>
+              </el-radio-group>
+              <el-button class="export-it" type="primary" @click="exportFile()">Export it !</el-button> -->
               <el-table
                 :data="customerList"
                 style="width: 100%; font-size: 12px"
                 height="300"
                 max-height="300px"
-                :default-sort="{ prop: 'startDate', order: 'descending' }"
+                ref="elTable"
               >
                 <el-table-column type="index" width="50" />
                 <el-table-column label="Firma Unvan" width="440" sortable>
@@ -298,7 +302,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="Semt" width="140" sortable>
+                <el-table-column label="Semt" width="180" sortable>
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
                       <span>{{ scope.row.semt }}</span>
@@ -319,7 +323,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="Model Adı" width="140" sortable>
+                <el-table-column label="Model Adı" width="180" sortable>
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
                       <span>{{ scope.row.model }}</span>
@@ -382,10 +386,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, getCurrentInstance, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { useRouter } from 'vue-router';
+import elTableExport from 'el-table-export';
 
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { ICustomerListData } from '@/core/data/CustomerListData';
@@ -421,6 +426,9 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
 
+    var supportType: ['csv', 'txt', 'json', 'xls'];
+    var exportType: 'csv';
+
     const loading = ref<boolean>(false);
 
     var totalCount = ref<number>(0);
@@ -433,6 +441,7 @@ export default defineComponent({
     var customerList = ref<Array<ICustomerReportData>>([]);
 
     const formSorgulaRef = ref<null | HTMLFormElement>(null);
+    const elTable = ref<null | HTMLFormElement>(null);
 
     const newSorgulaRules = ref({});
 
@@ -649,6 +658,23 @@ export default defineComponent({
         });
     }
 
+    const that: any = getCurrentInstance();
+
+    async function exportFile() {
+      elTableExport(that.ctx.elTable, {
+        fileName: 'export-demo',
+        type: 'xls',
+        useFormatter: false,
+        withBOM: false,
+      })
+        .then(() => {
+          console.info('ok');
+        })
+        .catch(err => {
+          console.info(err);
+        });
+    }
+
     onMounted(async () => {
       loading.value = true;
       await getSehirList();
@@ -658,6 +684,8 @@ export default defineComponent({
     });
 
     return {
+      that,
+      elTable,
       filter,
       loading,
       customerInfoList,
@@ -678,6 +706,9 @@ export default defineComponent({
       sorgulaSubmit,
       handleSizeChange,
       handleCurrentChange,
+      exportFile,
+      supportType,
+      exportType,
     };
   },
 });
