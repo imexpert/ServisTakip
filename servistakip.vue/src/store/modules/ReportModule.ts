@@ -28,4 +28,15 @@ export default class ReportModule extends VuexModule {
         showError(response);
       });
   }
+
+  @Action
+  [Actions.GET_MUSTERIRAPORFILE](filter) {
+    return ApiService.post("Reports/MusteriRaporFile", filter)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
 }

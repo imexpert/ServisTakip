@@ -35,6 +35,7 @@
     "dropzone": "^5.9.3",
     "el-table-export": "^1.0.8",
     "element-plus": "^2.2.4",
+    "export-from-json": "^1.7.2",
     "libphonenumber-js": "^1.10.21",
     "line-awesome": "^1.3.0",
     "moment": "^2.29.1",

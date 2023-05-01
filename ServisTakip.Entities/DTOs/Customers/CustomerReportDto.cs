@@ -17,5 +17,7 @@
         public string SozlesmeKodu { get; set; }
         public string BaslangicTarihi { get; set; }
         public string BitisTarihi { get; set; }
+        public string Departman { get; set; }
+        public string AcikAdres { get; set; }
     }
 }

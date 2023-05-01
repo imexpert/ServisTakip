@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/25/2023 23:45:28" ReportInfo.Modified="05/01/2023 16:47:49" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Styles>
+    <Style Name="Style1" Fill.Color="Yellow" Font="Arial, 10pt" ApplyBorder="false" ApplyTextFill="false" ApplyFont="false"/>
+  </Styles>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqnGnokm6M726K9MhodVs/+ShsgGVlx3Ao5/YCM1IKbpoWfEipkPtlrrn5HGqGx3vabZc2sHNm4rwgkC4qaOzRoLUPVy7txqZryhz9jM/q2+ht453MpMEbeN5lSySUaT8l1M6IuAuT185YbdoEl1Jz3MmkH8XHsK6V4wzZc/+i01/GbV/iWwYFnOTKYpAaeRdQfIdLXc7J7aI7OFJRGqRqHMT08IjZzDojjqd0PwEYnIw=">
+      <TableDataSource Name="VW_MusteriRaporu" DataType="System.Int32" Enabled="true" TableName="VW_MusteriRaporu">
+        <Column Name="Sehir" DataType="System.String"/>
+        <Column Name="Ilce" DataType="System.String"/>
+        <Column Name="Semt" DataType="System.String"/>
+        <Column Name="AddressId" DataType="System.Int64"/>
+        <Column Name="Tip" DataType="System.String"/>
+        <Column Name="Marka" DataType="System.String"/>
+        <Column Name="Model" DataType="System.String"/>
+        <Column Name="CihazSeriNo" DataType="System.String"/>
+        <Column Name="MontajTarihi" DataType="System.DateTime"/>
+        <Column Name="DeviceId" DataType="System.Int64"/>
+        <Column Name="Unvan" DataType="System.String"/>
+        <Column Name="CustomerId" DataType="System.Int64"/>
+        <Column Name="SozlesmeKodu" DataType="System.String"/>
+        <Column Name="BaslangicTarihi" DataType="System.DateTime"/>
+        <Column Name="BitisTarihi" DataType="System.DateTime"/>
+        <Column Name="AcikAdres" DataType="System.String"/>
+        <Column Name="Departman" DataType="System.String"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Guides="0,1047.06,192.78,262.71,332.64,402.57,481.95,570.78,659.61,729.54,799.47,888.3,967.68,1046.85,192.65,262.83,332.44,402.83,481.87,571,659.51,729.19,799.2,888.15,967.3101,1046.92" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="18.9"/>
+    <PageHeaderBand Name="PageHeader1" Top="22.9" Width="1047.06" Height="47.25" PrintOn="FirstPage" Guides="0,47.25">
+      <TextObject Name="Text1" Width="1047.06" Height="47.25" Dock="Fill" Border.Lines="All" Text="MÜŞTERİ LİSTESİ" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 15pt, style=Bold"/>
+    </PageHeaderBand>
+    <ColumnHeaderBand Name="ColumnHeader1" Top="74.15" Width="1047.06" Height="37.8" Guides="0,37.8">
+      <TableObject Name="Table1" Width="1047.06" Height="37.8" Dock="Fill">
+        <TableColumn Name="Column1" Width="192.78"/>
+        <TableColumn Name="Column2" Width="69.93"/>
+        <TableColumn Name="Column3" Width="69.93"/>
+        <TableColumn Name="Column4" Width="69.93"/>
+        <TableColumn Name="Column5" Width="79.38"/>
+        <TableColumn Name="Column6" Width="88.83"/>
+        <TableColumn Name="Column7" Width="88.83"/>
+        <TableColumn Name="Column8" Width="69.93"/>
+        <TableColumn Name="Column9" Width="69.93"/>
+        <TableColumn Name="Column10" Width="88.83"/>
+        <TableColumn Name="Column11" Width="79.38"/>
+        <TableColumn Name="Column12" Width="79.17"/>
+        <TableRow Name="Row1" Height="37.8">
+          <TableCell Name="Cell1" Border.Lines="All" Fill.Color="Yellow" Text="Firma Unvan" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell2" Border.Lines="All" Fill.Color="Yellow" Text="Şehir" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell3" Border.Lines="All" Fill.Color="Yellow" Text="İlçe" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell4" Border.Lines="All" Fill.Color="Yellow" Text="Semt" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Fill.Color="Yellow" Text="Tip Adı" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell6" Border.Lines="All" Fill.Color="Yellow" Text="Marka Adı" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell7" Border.Lines="All" Fill.Color="Yellow" Text="Model Adı" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell8" Border.Lines="All" Fill.Color="Yellow" Text="Seri No" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell9" Border.Lines="All" Fill.Color="Yellow" Text="Montaj Tarihi" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell10" Border.Lines="All" Fill.Color="Yellow" Text="Sözleşme Kodu" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell11" Border.Lines="All" Fill.Color="Yellow" Text="Başlangıç Tarihi" VertAlign="Center" Font="Times New Roman, 11pt"/>
+          <TableCell Name="Cell12" Border.Lines="All" Fill.Color="Yellow" Text="Bitiş Tarihi" VertAlign="Center" Font="Times New Roman, 11pt"/>
+        </TableRow>
+      </TableObject>
+    </ColumnHeaderBand>
+    <DataBand Name="Data1" Top="115.95" Width="1047.06" Height="47.25" Guides="0,47.25" DataSource="VW_MusteriRaporu">
+      <TableObject Name="Table2" Width="1047.06" Height="47.25" Dock="Fill">
+        <TableColumn Name="Column13" Width="192.65"/>
+        <TableColumn Name="Column14" Width="70.18"/>
+        <TableColumn Name="Column15" Width="69.61"/>
+        <TableColumn Name="Column16" Width="70.39"/>
+        <TableColumn Name="Column17" Width="79.04"/>
+        <TableColumn Name="Column18" Width="89.13"/>
+        <TableColumn Name="Column19" Width="88.51"/>
+        <TableColumn Name="Column20" Width="69.68"/>
+        <TableColumn Name="Column21" Width="70.01"/>
+        <TableColumn Name="Column22" Width="88.95"/>
+        <TableColumn Name="Column23" Width="79.16"/>
+        <TableColumn Name="Column24" Width="79.61"/>
+        <TableRow Name="Row2" Height="47.25">
+          <TableCell Name="Cell13" Border.Lines="All" Text="[VW_MusteriRaporu.Unvan]" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell14" Border.Lines="All" Text="[VW_MusteriRaporu.Sehir]" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell15" Border.Lines="All" Text="[VW_MusteriRaporu.Ilce]" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell16" Border.Lines="All" Text="[VW_MusteriRaporu.Semt]" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell17" Border.Lines="All" Text="[VW_MusteriRaporu.Tip]" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell38" Border.Lines="All" Text="[VW_MusteriRaporu.Marka]" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell39" Border.Lines="All" Text="[VW_MusteriRaporu.Model]" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell40" Border.Lines="All" Text="[VW_MusteriRaporu.CihazSeriNo]" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell41" Border.Lines="All" Text="[VW_MusteriRaporu.MontajTarihi]" Format="Date" Format.Format="d" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell42" Border.Lines="All" Text="[VW_MusteriRaporu.SozlesmeKodu]" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell43" Border.Lines="All" Text="[VW_MusteriRaporu.BaslangicTarihi]" Format="Date" Format.Format="d" VertAlign="Center" Font="Times New Roman, 8pt"/>
+          <TableCell Name="Cell44" Border.Lines="All" Text="[VW_MusteriRaporu.BitisTarihi]" Format="Date" Format.Format="d" VertAlign="Center" Font="Times New Roman, 8pt"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="167.2" Width="1047.06" Height="18.9"/>
+  </ReportPage>
+</Report>

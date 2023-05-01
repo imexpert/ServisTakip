@@ -14,12 +14,12 @@ using ServisTakip.Entities.DTOs.DeviceServiceParts;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Queries
 {
-    public class GetOrderReceiptReportQuery : IRequest<ResponseMessage<TechnicianDeviceServiceReport>>
+    public class GetOrderReceiptReportQuery : IRequest<ResponseMessage<ReportModel>>
     {
         public long DeviceServiceId { get; set; }
-        public class GetOrderReceiptReportQueryHandler : IRequestHandler<GetOrderReceiptReportQuery, ResponseMessage<TechnicianDeviceServiceReport>>
+        public class GetOrderReceiptReportQueryHandler : IRequestHandler<GetOrderReceiptReportQuery, ResponseMessage<ReportModel>>
         {
-            public async Task<ResponseMessage<TechnicianDeviceServiceReport>> Handle(GetOrderReceiptReportQuery request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<ReportModel>> Handle(GetOrderReceiptReportQuery request, CancellationToken cancellationToken)
             {
                 var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
                 var offerRepo = ServiceTool.ServiceProvider.GetService<IOfferRepository>();
@@ -105,12 +105,12 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Queries
                 using MemoryStream ms = new MemoryStream();
                 report.Export(export, ms);
 
-                TechnicianDeviceServiceReport rpr = new TechnicianDeviceServiceReport()
+                ReportModel rpr = new ReportModel()
                 {
                     Report = ms.ToArray()
                 };
 
-                return ResponseMessage<TechnicianDeviceServiceReport>.Success(rpr);
+                return ResponseMessage<ReportModel>.Success(rpr);
             }
         }
     }

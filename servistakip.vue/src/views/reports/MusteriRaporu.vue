@@ -261,24 +261,30 @@
             </div>
             <div class="row mb-3">
               <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
-                <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+                <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-sm btn-lg btn-primary" type="submit">
                   Sorgula
                 </button>
+                <el-dropdown style="margin-left: 5px" split-button type="danger" @click="getMusteriRaporFile">
+                  Dışa Aktar
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item>Excel</el-dropdown-item>
+                      <el-dropdown-item>Pdf</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
               </div>
             </div>
           </el-form>
           <div class="row mb-3">
             <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
-              <!-- <el-radio-group v-model="exportType">
-                <el-radio v-for="(item, index) in supportType" :key="index" :label="item" border>{{ item }}</el-radio>
-              </el-radio-group>
-              <el-button class="export-it" type="primary" @click="exportFile()">Export it !</el-button> -->
               <el-table
                 :data="customerList"
                 style="width: 100%; font-size: 12px"
                 height="300"
                 max-height="300px"
                 ref="elTable"
+                id="denemeTable"
               >
                 <el-table-column type="index" width="50" />
                 <el-table-column label="Firma Unvan" width="440" sortable>
@@ -383,6 +389,23 @@
       </el-card>
     </div>
   </div>
+
+  <el-dialog
+    v-model="raporDialogVisible"
+    title="Müşteri Raporu"
+    width="70%"
+    style="height: 700px"
+    destroy-on-close
+    center
+  >
+    <div class="row">
+      <div class="col-md-12">
+        <!-- <VuePdf :src="teknisyenRaporu" annotation-layer /> -->
+        <PDFViewer :source="musteriRaporu" style="height: 600px" @download="handleDownload" />
+        <!-- <pdf src="/sample.pdf" @error="error" style="overflow-y: auto; height: 500px"></pdf> -->
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -402,6 +425,7 @@ import { IDeviceModelData } from '@/core/data/DeviceModelData';
 import { IContractCodeData } from '@/core/data/ContractCodeData';
 import { IContractData } from '@/core/data/ContractData';
 import { ICustomerReportData } from '@/core/data/CustomerReportData';
+import PDFViewer from 'pdf-viewer-vue';
 
 interface IMusteriRaporRaporFilter {
   customerId: string | null;
@@ -421,13 +445,17 @@ interface IMusteriRaporRaporFilter {
 
 export default defineComponent({
   name: 'sozlesmeBasimRapor',
-
+  components: {
+    PDFViewer,
+  },
   setup() {
     const store = useStore();
     const router = useRouter();
 
+    var raporDialogVisible = ref<boolean>(false);
     var supportType: ['csv', 'txt', 'json', 'xls'];
     var exportType: 'csv';
+    var musteriRaporu = ref<string>('');
 
     const loading = ref<boolean>(false);
 
@@ -441,7 +469,6 @@ export default defineComponent({
     var customerList = ref<Array<ICustomerReportData>>([]);
 
     const formSorgulaRef = ref<null | HTMLFormElement>(null);
-    const elTable = ref<null | HTMLFormElement>(null);
 
     const newSorgulaRules = ref({});
 
@@ -643,6 +670,29 @@ export default defineComponent({
       });
     };
 
+    const handleDownload = value => {
+      var a = document.createElement('a'); //Create <a>
+      a.href = value.src;
+      a.download = 'MusteriRaporu.pdf'; //File name Here
+      a.click(); //Downloaded file
+      console.log(value);
+    };
+
+    async function getMusteriRaporFile() {
+      await store
+        .dispatch(Actions.GET_MUSTERIRAPORFILE, filter.value)
+        .then(result => {
+          loading.value = false;
+          if (result.isSuccess) {
+            raporDialogVisible.value = true;
+            musteriRaporu.value = 'data:application/pdf;base64,' + result.data.report;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
     async function getMusteriRaporList() {
       await store
         .dispatch(Actions.GET_MUSTERIRAPOR, filter.value)
@@ -658,14 +708,17 @@ export default defineComponent({
         });
     }
 
-    const that: any = getCurrentInstance();
+    const elTable = ref<null | HTMLTableElement>(null);
 
     async function exportFile() {
-      elTableExport(that.ctx.elTable, {
+      var table = document.getElementById('denemeTable');
+      console.log(table);
+
+      elTableExport(elTable.value, {
         fileName: 'export-demo',
         type: 'xls',
-        useFormatter: false,
-        withBOM: false,
+        useFormatter: true,
+        withBOM: true,
       })
         .then(() => {
           console.info('ok');
@@ -684,7 +737,7 @@ export default defineComponent({
     });
 
     return {
-      that,
+      raporDialogVisible,
       elTable,
       filter,
       loading,
@@ -699,6 +752,9 @@ export default defineComponent({
       formSorgulaRef,
       newSorgulaRules,
       totalCount,
+      musteriRaporu,
+      handleDownload,
+      getMusteriRaporFile,
       remoteMusteriAramaMethod,
       remoteMethodModelName,
       onIlceChange,

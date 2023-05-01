@@ -22,7 +22,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 
                 var anyServices = await deviceServiceRepo
                     .Query()
-                    .Where(s => s.StatusCode != (int)StatusCodes.TalepSonlandirildi && s.DeviceId == request.Model.DeviceId)
+                    .Where(s => s.StatusCode != (int)StatusCodes.TalepSonlandirildi && s.StatusCode != (int)StatusCodes.TalepIptalEdildi && s.DeviceId == request.Model.DeviceId)
                     .ToListAsync(cancellationToken: cancellationToken);
                 
                 if (anyServices.Any()) 

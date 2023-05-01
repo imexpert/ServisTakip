@@ -15,5 +15,11 @@ namespace ServisTakip.DataAccess.Abstract
 
         Task<PagedResult<List<CustomerReportDto>>> GetMusteriRaporQuery(MusteriRaporFilter filter,
             CancellationToken cancellationToken);
+
+        Task<List<CustomerReportDto>> GetCustomerReportFile(MusteriRaporFilter filter,
+            CancellationToken cancellationToken);
+
+        Task<List<CustomerReportDto>> GetCustomerReportFileWithoutPaging(MusteriRaporFilter filter,
+            CancellationToken cancellationToken);
     }
 }

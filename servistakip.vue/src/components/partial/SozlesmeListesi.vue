@@ -389,7 +389,7 @@ export default defineComponent({
           sozlesmeLoading.value = true;
           console.log(newContract.value);
 
-          // newContract.value.deviceId = props.deviceId;
+          newContract.value.deviceId = props.deviceId;
 
           if (selectContractMode.value == 'I') {
             store
