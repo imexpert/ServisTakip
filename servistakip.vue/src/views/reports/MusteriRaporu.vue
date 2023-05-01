@@ -264,12 +264,17 @@
                 <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-sm btn-lg btn-primary" type="submit">
                   Sorgula
                 </button>
-                <el-dropdown style="margin-left: 5px" split-button type="danger" @click="getMusteriRaporFile">
-                  Dışa Aktar
+                <el-dropdown style="padding-left: 5px" trigger="click">
+                  <el-button type="danger">
+                    Dışa Aktar<el-icon class="el-icon--right">
+                      <arrow-down />
+                    </el-icon>
+                  </el-button>
                   <template #dropdown>
-                    <el-dropdown-menu>
-                      <el-dropdown-item>Excel</el-dropdown-item>
-                      <el-dropdown-item>Pdf</el-dropdown-item>
+                    <el-dropdown-menu class="dropdownMenu">
+                      <el-dropdown-item @click="getMusteriRaporFileAsExcel">
+                        <el-icon><Document /></el-icon>Excel
+                      </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -312,6 +317,20 @@
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
                       <span>{{ scope.row.semt }}</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Adres" width="280" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.acikAdres }}</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Departman" width="180" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.departman }}</span>
                     </div>
                   </template>
                 </el-table-column>
@@ -389,23 +408,6 @@
       </el-card>
     </div>
   </div>
-
-  <el-dialog
-    v-model="raporDialogVisible"
-    title="Müşteri Raporu"
-    width="70%"
-    style="height: 700px"
-    destroy-on-close
-    center
-  >
-    <div class="row">
-      <div class="col-md-12">
-        <!-- <VuePdf :src="teknisyenRaporu" annotation-layer /> -->
-        <PDFViewer :source="musteriRaporu" style="height: 600px" @download="handleDownload" />
-        <!-- <pdf src="/sample.pdf" @error="error" style="overflow-y: auto; height: 500px"></pdf> -->
-      </div>
-    </div>
-  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -673,19 +675,37 @@ export default defineComponent({
     const handleDownload = value => {
       var a = document.createElement('a'); //Create <a>
       a.href = value.src;
-      a.download = 'MusteriRaporu.pdf'; //File name Here
+      a.download = 'MusteriRaporu.xlsx'; //File name Here
       a.click(); //Downloaded file
       console.log(value);
     };
 
-    async function getMusteriRaporFile() {
+    async function getMusteriRaporFileAsPdf() {
       await store
-        .dispatch(Actions.GET_MUSTERIRAPORFILE, filter.value)
+        .dispatch(Actions.GET_MUSTERIRAPORFILEASPDF, filter.value)
         .then(result => {
           loading.value = false;
           if (result.isSuccess) {
             raporDialogVisible.value = true;
             musteriRaporu.value = 'data:application/pdf;base64,' + result.data.report;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getMusteriRaporFileAsExcel() {
+      await store
+        .dispatch(Actions.GET_MUSTERIRAPORFILEASEXCEL, filter.value)
+        .then(result => {
+          loading.value = false;
+          if (result.isSuccess) {
+            musteriRaporu.value = 'data:application/xls;base64,' + result.data.report;
+            var a = document.createElement('a'); //Create <a>
+            a.href = musteriRaporu.value;
+            a.download = 'MusteriRaporu.xlsx'; //File name Here
+            a.click(); //Downloaded file
           }
         })
         .catch(() => {
@@ -754,7 +774,8 @@ export default defineComponent({
       totalCount,
       musteriRaporu,
       handleDownload,
-      getMusteriRaporFile,
+      getMusteriRaporFileAsPdf,
+      getMusteriRaporFileAsExcel,
       remoteMusteriAramaMethod,
       remoteMethodModelName,
       onIlceChange,

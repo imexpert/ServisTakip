@@ -97,7 +97,8 @@ enum Actions {
 
   GET_SOZLESMEBASIM = "getSozlesmeBasim",
   GET_MUSTERIRAPOR = "getMusteriRapor",
-  GET_MUSTERIRAPORFILE = "getMusteriRaporFile",
+  GET_MUSTERIRAPORFILEASPDF = "getMusteriRaporFileAsPdf",
+  GET_MUSTERIRAPORFILEASEXCEL = "getMusteriRaporFileAsExcel",
 }
 
 enum Mutations {

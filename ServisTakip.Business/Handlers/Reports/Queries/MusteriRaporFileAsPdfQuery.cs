@@ -17,12 +17,12 @@ using FastReport.Export.Pdf;
 
 namespace ServisTakip.Business.Handlers.Reports.Queries
 {
-    public class MusteriRaporFileQuery : IRequest<ResponseMessage<ReportModel>>
+    public class MusteriRaporFileAsPdfQuery : IRequest<ResponseMessage<ReportModel>>
     {
         public MusteriRaporFilter Model { get; set; }
-        public class MusteriRaporFileQueryHandler : IRequestHandler<MusteriRaporFileQuery, ResponseMessage<ReportModel>>
+        public class MusteriRaporFileQueryHandler : IRequestHandler<MusteriRaporFileAsPdfQuery, ResponseMessage<ReportModel>>
         {
-            public async Task<ResponseMessage<ReportModel>> Handle(MusteriRaporFileQuery request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<ReportModel>> Handle(MusteriRaporFileAsPdfQuery request, CancellationToken cancellationToken)
             {
                 var contractRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
                 var data =  await contractRepo.GetCustomerReportFileWithoutPaging(request.Model, cancellationToken);

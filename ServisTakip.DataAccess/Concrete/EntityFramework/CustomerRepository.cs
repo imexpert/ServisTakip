@@ -123,7 +123,8 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                              SozlesmeKodu = ctemp != null ? ctemp.ContractCode : null,
                              BaslangicTarihi = ctemp != null ? ctemp.StartDate.ToString("dd/MM/yyyy") : null,
                              BitisTarihi = ctemp != null ? ctemp.EndDate.ToString("dd/MM/yyyy") : null,
-
+                             AcikAdres = address != null ? address.NetAddress : null,
+                             Departman = address != null ? address.Department : null,
                          })
                 .AsQueryable();
 
@@ -151,7 +152,9 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     CihazSeriNo = item.CihazSeriNo,
                     BaslangicTarihi = item.BaslangicTarihi,
                     BitisTarihi = item.BitisTarihi,
-                    SozlesmeKodu = item.SozlesmeKodu
+                    SozlesmeKodu = item.SozlesmeKodu,
+                    AcikAdres = item.AcikAdres,
+                    Departman = item.Departman
                 };
 
                 list.Add(customer);
