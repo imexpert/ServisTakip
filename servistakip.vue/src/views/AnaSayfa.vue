@@ -42,6 +42,9 @@
                       <el-dropdown-item command="CU" :disabled="firmaOzet.deviceId == null">
                         <el-icon> <Edit></Edit> </el-icon>Cihaz Düzenle
                       </el-dropdown-item>
+                      <el-dropdown-item command="CT" :disabled="firmaOzet.deviceId == null">
+                        <el-icon><SwitchFilled /></el-icon>Cihaz Transfer
+                      </el-dropdown-item>
                       <el-dropdown-item command="S" divided :disabled="firmaOzet.deviceId == null">
                         <el-icon> <Plus></Plus> </el-icon>Servis Aç
                       </el-dropdown-item>
@@ -2484,6 +2487,268 @@
         </el-form>
       </div>
     </el-dialog>
+
+    <el-dialog
+      v-model="cihazTransferDialogVisible"
+      title="Cihaz Transfer İşlemleri"
+      width="40%"
+      destroy-on-close
+      center
+    >
+      <el-form
+        status-icon
+        :rules="newCustomerRules"
+        ref="formCustomerRef"
+        :model="newCustomer"
+        @submit.prevent="customerSubmit()"
+        label-width="120px"
+        label-position="top"
+      >
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6">
+            <span class="text-bold">Transfer Edilecek Cihaz</span>
+          </div>
+          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6">
+            <span>Cihaz Nereye Transfer Edilecek</span>
+          </div>
+          <!-- Transfer Edilecek Cihaz Müşteri -->
+          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
+            <label class="required fs-5 fw-semobold mb-2">Müşteri Seçiniz</label>
+            <el-select
+              @change="onCustomerTransferChange()"
+              filterable
+              class="arama"
+              remote
+              clearable
+              placeholder="Arama için en az 4 harf giriniz"
+              reserve-keyword
+              remote-show-suffix
+              v-model="selectedTransferCustomer"
+              :remote-method="remoteTransferMethod"
+              :loading="loading"
+            >
+              <li class="el-select-dropdown__item">
+                <div class="row" style="width: 100%">
+                  <div class="col-md-4">
+                    <span style="font-weight: 900"> Unvan </span>
+                  </div>
+                  <div class="col-md-2">
+                    <span style="font-weight: 900"> Departman </span>
+                  </div>
+                  <div class="col-md-2">
+                    <span style="font-weight: 900"> Semt </span>
+                  </div>
+                  <div class="col-md-3">
+                    <span style="font-weight: 900"> Model </span>
+                  </div>
+                  <div class="col-md-1">
+                    <span style="font-weight: 900"> Seri No </span>
+                  </div>
+                </div>
+              </li>
+              <el-option
+                class="aramaDropdownMenu"
+                v-for="item in customerInfoTransferList"
+                :key="item.id"
+                :label="item.title"
+                :value="item.id"
+              >
+                <div class="row" style="width: 100%">
+                  <div class="col-md-4" style="font-size: 12px; word-wrap: break-word">
+                    {{ item.title.substring(0, 47) + '...' }}
+                  </div>
+                  <div class="col-md-2" style="font-size: 12px">
+                    {{ item.department }}
+                  </div>
+                  <div class="col-md-2" style="font-size: 12px">
+                    {{ item.querter }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.model }}
+                  </div>
+                  <div class="col-md-1" style="font-size: 12px">
+                    {{ item.serialNo }}
+                  </div>
+                </div>
+              </el-option>
+            </el-select>
+          </div>
+
+          <!-- Cihaz Nereye Transfer Edilecek Müşteri -->
+          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
+            <label class="required fs-5 fw-semobold mb-2">Müşteri Seçiniz</label>
+            <el-select
+              @change="onCustomerCihazNereyeTransferEdilecekChange()"
+              filterable
+              remote
+              clearable
+              placeholder="Arama için en az 4 harf giriniz"
+              reserve-keyword
+              remote-show-suffix
+              v-model="cihazNereyeTransferEdilecekMusteri"
+              :remote-method="remoteCihazNereyeTransferEdilecekMethod"
+              :loading="loading"
+            >
+              <li class="el-select-dropdown__item">
+                <div class="row" style="width: 100%">
+                  <div class="col-md-4">
+                    <span style="font-weight: 900"> Unvan </span>
+                  </div>
+                  <div class="col-md-2">
+                    <span style="font-weight: 900"> Departman </span>
+                  </div>
+                  <div class="col-md-2">
+                    <span style="font-weight: 900"> Semt </span>
+                  </div>
+                  <div class="col-md-3">
+                    <span style="font-weight: 900"> Model </span>
+                  </div>
+                  <div class="col-md-1">
+                    <span style="font-weight: 900"> Seri No </span>
+                  </div>
+                </div>
+              </li>
+              <el-option
+                class="aramaDropdownMenu"
+                v-for="item in customerNereyeTransferEdilecekList"
+                :key="item.id"
+                :label="item.title"
+                :value="item.id"
+              >
+                <div class="row" style="width: 100%">
+                  <div class="col-md-4" style="font-size: 12px; word-wrap: break-word">
+                    {{ item.title.substring(0, 47) + '...' }}
+                  </div>
+                  <div class="col-md-2" style="font-size: 12px">
+                    {{ item.department }}
+                  </div>
+                  <div class="col-md-2" style="font-size: 12px">
+                    {{ item.querter }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.model }}
+                  </div>
+                  <div class="col-md-1" style="font-size: 12px">
+                    {{ item.serialNo }}
+                  </div>
+                </div>
+              </el-option>
+            </el-select>
+          </div>
+
+          <!-- Transfer Edilecek Cihaz Adres -->
+          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
+            <label class="required fs-5 fw-semobold mb-2">Adres Seçiniz</label>
+            <el-select
+              placeholder="Adres seçiniz"
+              @change="onAddressTransferChange()"
+              filterable
+              class="arama"
+              clearable
+              v-model="adresTransferId"
+            >
+              <li class="el-select-dropdown__item">
+                <div class="row">
+                  <div class="col-md-3" style="font-size: 12px">Adres Başlığı</div>
+                  <div class="col-md-3" style="font-size: 12px">Şehir</div>
+                  <div class="col-md-3" style="font-size: 12px">İlçe</div>
+                  <div class="col-md-3" style="font-size: 12px">Semt</div>
+                </div>
+              </li>
+              <el-option v-for="item in addressTransferList" :key="item.id" :label="item.addressTitle" :value="item.id">
+                <div class="row">
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.addressTitle }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.district.city.name }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.district.name }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.querterName }}
+                  </div>
+                </div>
+              </el-option>
+            </el-select>
+          </div>
+
+          <!-- Cihaz Nereye Transfer Edilecek Adres -->
+          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
+            <label class="required fs-5 fw-semobold mb-2">Adres Seçiniz</label>
+            <el-select placeholder="Adres seçiniz" filterable clearable v-model="adresCihazNereyeTransferEdilecekId">
+              <li class="el-select-dropdown__item">
+                <div class="row">
+                  <div class="col-md-3" style="font-size: 12px">Adres Başlığı</div>
+                  <div class="col-md-3" style="font-size: 12px">Şehir</div>
+                  <div class="col-md-3" style="font-size: 12px">İlçe</div>
+                  <div class="col-md-3" style="font-size: 12px">Semt</div>
+                </div>
+              </li>
+              <el-option
+                v-for="item in addressCihazNereyeTransferEdilecekList"
+                :key="item.id"
+                :label="item.addressTitle"
+                :value="item.id"
+              >
+                <div class="row">
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.addressTitle }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.district.city.name }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.district.name }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.querterName }}
+                  </div>
+                </div>
+              </el-option>
+            </el-select>
+          </div>
+
+          <!-- Transfer Edilecek Cihaz -->
+          <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
+            <label class="required fs-5 fw-semobold mb-2">Cihaz Seçiniz</label>
+            <el-select placeholder="Cihaz seçiniz" filterable clearable v-model="transferEdilecekCihazId">
+              <li class="el-select-dropdown__item">
+                <div class="row">
+                  <div class="col-md-3" style="font-size: 12px">Tip</div>
+                  <div class="col-md-3" style="font-size: 12px">Marka</div>
+                  <div class="col-md-3" style="font-size: 12px">Model</div>
+                  <div class="col-md-3" style="font-size: 12px">Seri No</div>
+                </div>
+              </li>
+              <el-option
+                class="aramaTransferDropdownMenu"
+                v-for="item in deviceTransferList"
+                :key="item.id"
+                :label="item.addressTitle"
+                :value="item.id"
+              >
+                <div class="row">
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.deviceModel.deviceBrand.deviceType.name }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.deviceModel.deviceBrand.name }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.deviceModel.name }}
+                  </div>
+                  <div class="col-md-3" style="font-size: 12px">
+                    {{ item.serialNumber }}
+                  </div>
+                </div>
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -2539,6 +2804,7 @@ export default defineComponent({
     const musteriDialogVisible = ref(false);
     const servisAcDialogVisible = ref(false);
     const bakimFormuDialogVisible = ref(false);
+    const cihazTransferDialogVisible = ref(false);
 
     const loading = ref<boolean>(false);
     const anaSayfaLoading = ref<boolean>(false);
@@ -2786,6 +3052,7 @@ export default defineComponent({
     });
 
     var technicianUserList = ref<Array<IUserData>>([]);
+    var deviceTransferList = ref<Array<IDeviceData>>([]);
     var customerList = ref<Array<ICustomerData>>([]);
     var deviceTypeList = ref<Array<IDeviceTypeData>>([]);
     var deviceBrandList = ref<Array<IDeviceBrandData>>([]);
@@ -2796,6 +3063,8 @@ export default defineComponent({
     var customerAddresses = ref<Array<IAddressData>>([]);
 
     var deviceStatus = ref<string>('');
+    var adresTransferId = ref<string>('');
+    var adresCihazNereyeTransferEdilecekId = ref<string>('');
     var backgroundColor = ref<string>('');
     var maintenanceBackgroundColor = ref<string>('');
     var contractMaintenanceStatus = ref<string>('');
@@ -2803,12 +3072,15 @@ export default defineComponent({
     var selectedDeviceType = ref<string>('');
     var selectedDeviceBrand = ref<string>('');
     var selectedCustomer = ref<string>('');
+    var selectedTransferCustomer = ref<string>('');
     var selectedSerialNo = ref<string>();
     var selectedModelName = ref<string>();
     var selectedSehir = ref<string>();
     var selectedIlce = ref<string>();
     var selectMode = ref<string>('I');
     var selectAddressMode = ref<string>('I');
+    var transferEdilecekCihazId = ref<string>('');
+    var cihazNereyeTransferEdilecekMusteri = ref<string>('');
 
     const shortcuts = [
       {
@@ -2828,11 +3100,15 @@ export default defineComponent({
     var bootCodeList = ref<Array<IBootCodeData>>([]);
 
     var customerInfoList = ref<Array<ICustomerListData>>([]);
+    var customerInfoTransferList = ref<Array<ICustomerListData>>([]);
+    var customerNereyeTransferEdilecekList = ref<Array<ICustomerListData>>([]);
     var deviceInfoList = ref<Array<ICustomerListData>>([]);
     var deviceServices = ref<Array<IDeviceServiceData>>([]);
     var modelList = ref<Array<ICustomerListData>>([]);
     var seriNoList = ref<Array<ICustomerListData>>([]);
     var addressList = ref<Array<IAddressData>>([]);
+    var addressTransferList = ref<Array<IAddressData>>([]);
+    var addressCihazNereyeTransferEdilecekList = ref<Array<IAddressData>>([]);
     var sectorList = ref<Array<ISectorData>>([]);
 
     var sehirList = ref<Array<ICityData>>([]);
@@ -3323,6 +3599,68 @@ export default defineComponent({
       }
     };
 
+    const remoteTransferMethod = async (query: string) => {
+      if (query && query.length > 3) {
+        loading.value = true;
+        await store
+          .dispatch(Actions.GET_CUSTOMER_BY_FILTER, query)
+          .then(result => {
+            loading.value = false;
+
+            if (result.isSuccess) {
+              customerInfoTransferList.value = result.data;
+            } else {
+              Swal.fire({
+                title: 'Hata',
+                text: result.message,
+                icon: 'error',
+                buttonsStyling: false,
+                confirmButtonText: 'Tamam !',
+                customClass: {
+                  confirmButton: 'btn fw-bold btn-danger',
+                },
+              });
+            }
+          })
+          .catch(() => {
+            const [error] = Object.keys(store.getters.getErrors);
+          });
+      } else {
+        customerInfoTransferList.value = [];
+      }
+    };
+
+    const remoteCihazNereyeTransferEdilecekMethod = async (query: string) => {
+      if (query && query.length > 3) {
+        loading.value = true;
+        await store
+          .dispatch(Actions.GET_CUSTOMER_BY_FILTER, query)
+          .then(result => {
+            loading.value = false;
+
+            if (result.isSuccess) {
+              customerNereyeTransferEdilecekList.value = result.data;
+            } else {
+              Swal.fire({
+                title: 'Hata',
+                text: result.message,
+                icon: 'error',
+                buttonsStyling: false,
+                confirmButtonText: 'Tamam !',
+                customClass: {
+                  confirmButton: 'btn fw-bold btn-danger',
+                },
+              });
+            }
+          })
+          .catch(() => {
+            const [error] = Object.keys(store.getters.getErrors);
+          });
+      } else {
+        customerNereyeTransferEdilecekList.value = [];
+      }
+    };
+
     const remoteMethodCihazNo = async (query: string) => {
       if (query) {
         loading.value = true;
@@ -3723,6 +4061,24 @@ export default defineComponent({
       await getMainPageCustomer(selectedCustomer.value);
     }
 
+    async function onCustomerTransferChange() {
+      if (!selectedTransferCustomer) {
+        adresTransferId.value = '';
+        return;
+      }
+
+      await getAddressTransferList(selectedTransferCustomer.value);
+    }
+
+    async function onCustomerCihazNereyeTransferEdilecekChange() {
+      if (!cihazNereyeTransferEdilecekMusteri) {
+        adresTransferId.value = '';
+        return;
+      }
+
+      await getAddressCihazNereyeTransferEdilecekList(cihazNereyeTransferEdilecekMusteri.value);
+    }
+
     async function onDeviceNoChange() {
       if (!selectedDevice) {
         selectedCustomer.value = '';
@@ -3769,6 +4125,26 @@ export default defineComponent({
           .then(result => {
             if (result.isSuccess) {
               ilceList.value = result.data;
+            }
+          })
+          .catch(() => {
+            const [error] = Object.keys(store.getters.getErrors);
+          });
+      }
+
+      adresLoading.value = false;
+    }
+
+    async function onAddressTransferChange() {
+      transferEdilecekCihazId.value = '';
+      deviceTransferList.value = [];
+
+      if (adresTransferId.value) {
+        await store
+          .dispatch(Actions.GET_DEVICELIST_BY_ADDRESSID, adresTransferId.value)
+          .then(result => {
+            if (result.isSuccess) {
+              deviceTransferList.value = result.data;
             }
           })
           .catch(() => {
@@ -3920,6 +4296,34 @@ export default defineComponent({
           if (result.isSuccess) {
             console.log(result.data);
             addressList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getAddressTransferList(customerId) {
+      await store
+        .dispatch(Actions.GET_ADDRESSLISTBYCUSTOMERID, customerId)
+        .then(result => {
+          if (result.isSuccess) {
+            console.log(result.data);
+            addressTransferList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getAddressCihazNereyeTransferEdilecekList(customerId) {
+      await store
+        .dispatch(Actions.GET_ADDRESSLISTBYCUSTOMERID, customerId)
+        .then(result => {
+          if (result.isSuccess) {
+            console.log(result.data);
+            addressCihazNereyeTransferEdilecekList.value = result.data;
           }
         })
         .catch(() => {
@@ -4171,6 +4575,10 @@ export default defineComponent({
       deviceLoading.value = false;
     }
 
+    async function cihazTransferDialogAc() {
+      cihazTransferDialogVisible.value = true;
+    }
+
     async function musteriDialogAc(mode) {
       selectMode.value = mode;
       musteriLoading.value = true;
@@ -4224,6 +4632,9 @@ export default defineComponent({
           break;
         case 'CL':
           cihazListesi();
+          break;
+        case 'CT':
+          cihazTransferDialogAc();
           break;
         default:
           break;
@@ -4284,12 +4695,15 @@ export default defineComponent({
     });
 
     return {
+      deviceTransferList,
       formBakimFormuRef,
       newBakimFormuRules,
       bakimAcSubmit,
       onServisAcTeknisyenChange,
       onBakimFormuTeknisyenChange,
       onBakimFormuAcTeknisyenChange,
+      cihazTransferDialogAc,
+      transferEdilecekCihazId,
       bakimFormuDialogVisible,
       selectAddressMode,
       newCustomerRules,
@@ -4303,6 +4717,7 @@ export default defineComponent({
       musteriDialogVisible,
       customerList,
       selectedCustomer,
+      selectedTransferCustomer,
       deviceList,
       selectedDevice,
       selectedSerialNo,
@@ -4335,6 +4750,8 @@ export default defineComponent({
       newDeviceRules,
       newDevice,
       addressList,
+      addressTransferList,
+      addressCihazNereyeTransferEdilecekList,
       deviceTypeList,
       deviceBrandList,
       deviceModelList,
@@ -4360,6 +4777,9 @@ export default defineComponent({
       newBakimService,
       resultCodeList,
       detectionCodeList,
+      cihazNereyeTransferEdilecekMusteri,
+      remoteCihazNereyeTransferEdilecekMethod,
+      onCustomerCihazNereyeTransferEdilecekChange,
       bakimFormuAc,
       musteriDialogAc,
       customerSubmit,
@@ -4369,6 +4789,7 @@ export default defineComponent({
       onModelNameChange,
       servicAcSubmit,
       remoteMethod,
+      remoteTransferMethod,
       remoteMethodCihazNo,
       routeAddCustomer,
       routeUpdateCustomer,
@@ -4390,6 +4811,12 @@ export default defineComponent({
       handleDeviceMenuCommand,
       handleCustomerMenuCommand,
       sozlesmeListesiRef,
+      onCustomerTransferChange,
+      cihazTransferDialogVisible,
+      customerInfoTransferList,
+      adresTransferId,
+      onAddressTransferChange,
+      adresCihazNereyeTransferEdilecekId,
     };
   },
 });
@@ -4415,5 +4842,9 @@ export default defineComponent({
 }
 .aramaDropdownMenu {
   width: 1100px;
+}
+
+.aramaTransferDropdownMenu {
+  width: 700px;
 }
 </style>

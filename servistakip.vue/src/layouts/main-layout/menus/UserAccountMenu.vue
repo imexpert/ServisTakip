@@ -119,6 +119,7 @@ export default defineComponent({
     }
 
     console.log(isAdmin);
+    console.log(gender);
 
     const countries = {
       en: {

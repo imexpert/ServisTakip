@@ -157,6 +157,11 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     Departman = item.Departman
                 };
 
+                if (string.IsNullOrEmpty(customer.BitisTarihi) || Convert.ToDateTime(customer.BitisTarihi) < DateTime.Now)
+                {
+                    customer.SozlesmeKodu = "ÜCRETLİ";
+                }
+
                 list.Add(customer);
             }
 
@@ -330,6 +335,11 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     AcikAdres = item.AcikAdres,
                     Departman = item.Departman
                 };
+
+                if (string.IsNullOrEmpty(customer.BitisTarihi) || Convert.ToDateTime(customer.BitisTarihi) < DateTime.Now)
+                {
+                    customer.SozlesmeKodu = "ÜCRETLİ";
+                }
 
                 list.Add(customer);
             }

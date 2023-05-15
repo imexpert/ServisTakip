@@ -74,8 +74,8 @@ namespace ServisTakip.Api.Infrastructure
             {
                 options.AddPolicy(
                     "AllowOrigin",
-                    builder => 
-                        builder.WithOrigins("http://159.69.188.101:6002","http://localhost:8080", "http://servisim.biz", "https://servisim.biz", "http://192.168.68.111:8080")
+                    builder =>
+                        builder.WithOrigins("http://localhost:8080", "http://192.168.68.111:8080", "https://www.avrpro.net", "http://www.avrpro.net", "http://avrpro.net", "https://avrpro.net")
                             .AllowAnyMethod()
                             .AllowCredentials()
                             .AllowAnyHeader());

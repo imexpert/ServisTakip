@@ -42,6 +42,17 @@ export default class DeviceModule extends VuexModule {
   }
 
   @Action
+  [Actions.GET_DEVICELIST_BY_ADDRESSID](addressId) {
+    return ApiService.getWithParamUrl("Devices/GetDeviceListByAddressId?addressId=" + addressId)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
   [Actions.GET_DEVICE_BY_FILTER](filter) {
     return ApiService.getWithParamUrl("Devices/GetDeviceWithQuery?deviceId=" + filter)
       .then(({ data }) => {

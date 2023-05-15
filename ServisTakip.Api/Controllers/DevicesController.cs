@@ -27,7 +27,7 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="deviceId"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -67,6 +67,21 @@ namespace ServisTakip.Api.Controllers
         public async Task<IActionResult> GetDeviceBySerialNoFilterAsync(string filter)
         {
             return CreateActionResult(await Mediator.Send(new GetDeviceBySerialNoFilterQuery() { Filter = filter }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addressId"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetDeviceListByAddressIdAsync(long addressId)
+        {
+            return CreateActionResult(await Mediator.Send(new GetDeviceListByAddressIdQuery() { AddressId = addressId }));
         }
 
         /// <summary>
