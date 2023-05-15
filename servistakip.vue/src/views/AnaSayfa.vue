@@ -2713,38 +2713,7 @@
           <!-- Transfer Edilecek Cihaz -->
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
             <label class="required fs-5 fw-semobold mb-2">Cihaz Seçiniz</label>
-            <el-select placeholder="Cihaz seçiniz" filterable clearable v-model="transferEdilecekCihazId">
-              <li class="el-select-dropdown__item">
-                <div class="row">
-                  <div class="col-md-3" style="font-size: 12px">Tip</div>
-                  <div class="col-md-3" style="font-size: 12px">Marka</div>
-                  <div class="col-md-3" style="font-size: 12px">Model</div>
-                  <div class="col-md-3" style="font-size: 12px">Seri No</div>
-                </div>
-              </li>
-              <el-option
-                class="aramaTransferDropdownMenu"
-                v-for="item in deviceTransferList"
-                :key="item.id"
-                :label="item.addressTitle"
-                :value="item.id"
-              >
-                <div class="row">
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.deviceModel.deviceBrand.deviceType.name }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.deviceModel.deviceBrand.name }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.deviceModel.name }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.serialNumber }}
-                  </div>
-                </div>
-              </el-option>
-            </el-select>
+            <DeviceList :addressId="adresTransferId" @changeAddressId="getAddressIdFromChild($event)"></DeviceList>
           </div>
         </div>
       </el-form>
@@ -2780,6 +2749,7 @@ import { IDistrictData } from '@/core/data/DistrictData';
 import { IQuerterData } from '@/core/data/QuerterData';
 import { IContractCodeData } from '@/core/data/ContractCodeData';
 import SozlesmeListesi from '@/components/partial/SozlesmeListesi.vue';
+import DeviceList from '@/components/custom/DeviceList.vue';
 import { IResultCodeData } from '@/core/data/ResultCodeData';
 import { IDetectionCodeData } from '@/core/data/DetectionCodeData';
 
@@ -2792,6 +2762,7 @@ export default defineComponent({
     Search,
     Plus,
     SozlesmeListesi,
+    DeviceList,
   },
   setup() {
     const store = useStore();
@@ -3063,6 +3034,8 @@ export default defineComponent({
     var customerAddresses = ref<Array<IAddressData>>([]);
 
     var deviceStatus = ref<string>('');
+    var transferEdilecekCihazAdresId = ref<Number>(0);
+
     var adresTransferId = ref<string>('');
     var adresCihazNereyeTransferEdilecekId = ref<string>('');
     var backgroundColor = ref<string>('');
@@ -4136,23 +4109,21 @@ export default defineComponent({
     }
 
     async function onAddressTransferChange() {
-      transferEdilecekCihazId.value = '';
-      deviceTransferList.value = [];
-
-      if (adresTransferId.value) {
-        await store
-          .dispatch(Actions.GET_DEVICELIST_BY_ADDRESSID, adresTransferId.value)
-          .then(result => {
-            if (result.isSuccess) {
-              deviceTransferList.value = result.data;
-            }
-          })
-          .catch(() => {
-            const [error] = Object.keys(store.getters.getErrors);
-          });
-      }
-
-      adresLoading.value = false;
+      // transferEdilecekCihazId.value = '';
+      // deviceTransferList.value = [];
+      // if (adresTransferId.value) {
+      //   await store
+      //     .dispatch(Actions.GET_DEVICELIST_BY_ADDRESSID, adresTransferId.value)
+      //     .then(result => {
+      //       if (result.isSuccess) {
+      //         deviceTransferList.value = result.data;
+      //       }
+      //     })
+      //     .catch(() => {
+      //       const [error] = Object.keys(store.getters.getErrors);
+      //     });
+      // }
+      // adresLoading.value = false;
     }
 
     async function getAddressById(id) {
@@ -4694,7 +4665,11 @@ export default defineComponent({
       await getLastTradedCustomer();
     });
 
+    function getAddressIdFromChild(addressId) {
+      transferEdilecekCihazAdresId.value = addressId;
+    }
     return {
+      getAddressIdFromChild,
       deviceTransferList,
       formBakimFormuRef,
       newBakimFormuRules,
@@ -4817,6 +4792,8 @@ export default defineComponent({
       adresTransferId,
       onAddressTransferChange,
       adresCihazNereyeTransferEdilecekId,
+      customerNereyeTransferEdilecekList,
+      transferEdilecekCihazAdresId,
     };
   },
 });
