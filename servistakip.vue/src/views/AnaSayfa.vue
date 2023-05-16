@@ -2577,68 +2577,13 @@
           <!-- Cihaz Nereye Transfer Edilecek Müşteri -->
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
             <label class="required fs-5 fw-semobold mb-2">Müşteri Seçiniz</label>
-            <el-select
-              @change="onCustomerCihazNereyeTransferEdilecekChange()"
-              filterable
-              remote
-              clearable
-              placeholder="Arama için en az 4 harf giriniz"
-              reserve-keyword
-              remote-show-suffix
-              v-model="cihazNereyeTransferEdilecekMusteri"
-              :remote-method="remoteCihazNereyeTransferEdilecekMethod"
-              :loading="loading"
-            >
-              <li class="el-select-dropdown__item">
-                <div class="row" style="width: 100%">
-                  <div class="col-md-4">
-                    <span style="font-weight: 900"> Unvan </span>
-                  </div>
-                  <div class="col-md-2">
-                    <span style="font-weight: 900"> Departman </span>
-                  </div>
-                  <div class="col-md-2">
-                    <span style="font-weight: 900"> Semt </span>
-                  </div>
-                  <div class="col-md-3">
-                    <span style="font-weight: 900"> Model </span>
-                  </div>
-                  <div class="col-md-1">
-                    <span style="font-weight: 900"> Seri No </span>
-                  </div>
-                </div>
-              </li>
-              <el-option
-                class="aramaDropdownMenu"
-                v-for="item in customerNereyeTransferEdilecekList"
-                :key="item.id"
-                :label="item.title"
-                :value="item.id"
-              >
-                <div class="row" style="width: 100%">
-                  <div class="col-md-4" style="font-size: 12px; word-wrap: break-word">
-                    {{ item.title.substring(0, 47) + '...' }}
-                  </div>
-                  <div class="col-md-2" style="font-size: 12px">
-                    {{ item.department }}
-                  </div>
-                  <div class="col-md-2" style="font-size: 12px">
-                    {{ item.querter }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.model }}
-                  </div>
-                  <div class="col-md-1" style="font-size: 12px">
-                    {{ item.serialNo }}
-                  </div>
-                </div>
-              </el-option>
-            </el-select>
+            <CustomerList></CustomerList>
           </div>
 
           <!-- Transfer Edilecek Cihaz Adres -->
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
             <label class="required fs-5 fw-semobold mb-2">Adres Seçiniz</label>
+            <AddressList></AddressList>
             <el-select
               placeholder="Adres seçiniz"
               @change="onAddressTransferChange()"
@@ -2713,7 +2658,7 @@
           <!-- Transfer Edilecek Cihaz -->
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
             <label class="required fs-5 fw-semobold mb-2">Cihaz Seçiniz</label>
-            <DeviceList :addressId="adresTransferId" @changeAddressId="getAddressIdFromChild($event)"></DeviceList>
+            <DeviceList :addressId="adresTransferId" @getSelectedId="getSelectedDeviceId($event)"></DeviceList>
           </div>
         </div>
       </el-form>
@@ -2750,8 +2695,11 @@ import { IQuerterData } from '@/core/data/QuerterData';
 import { IContractCodeData } from '@/core/data/ContractCodeData';
 import SozlesmeListesi from '@/components/partial/SozlesmeListesi.vue';
 import DeviceList from '@/components/custom/DeviceList.vue';
+import CustomerList from '@/components/custom/CustomerList.vue';
+import AddressList from '@/components/custom/AddressList.vue';
 import { IResultCodeData } from '@/core/data/ResultCodeData';
 import { IDetectionCodeData } from '@/core/data/DetectionCodeData';
+import { ICihazTransferData } from '@/core/data/CihazTransferData';
 
 export default defineComponent({
   name: 'default-dashboard-widget-2',
@@ -2763,6 +2711,8 @@ export default defineComponent({
     Plus,
     SozlesmeListesi,
     DeviceList,
+    CustomerList,
+    AddressList
   },
   setup() {
     const store = useStore();
@@ -2793,6 +2743,18 @@ export default defineComponent({
       title: '',
       id: '',
       status: true,
+    });
+
+    var secilenCihaz = ref<ICihazTransferData>({
+      musteriId : 0,
+      adresId : 0,
+      cihazId:0
+    });
+
+    var cihazTransferBilgi = ref<ICihazTransferData>({
+      musteriId : 0,
+      adresId : 0,
+      cihazId:0
     });
 
     var newAddress = ref<IAddressData>({
@@ -4665,11 +4627,19 @@ export default defineComponent({
       await getLastTradedCustomer();
     });
 
-    function getAddressIdFromChild(addressId) {
-      transferEdilecekCihazAdresId.value = addressId;
+    function getSelectedDeviceId(deviceId) {
+      secilenCihaz.value.cihazId = deviceId;
     }
+
+    function getSelectedAddressId(addressId) {
+      secilenCihaz.value.adresId = addressId;
+    }
+
     return {
-      getAddressIdFromChild,
+      secilenCihaz,
+      cihazTransferBilgi,
+      getSelectedDeviceId,
+      getSelectedAddressId,
       deviceTransferList,
       formBakimFormuRef,
       newBakimFormuRules,

@@ -18,5 +18,11 @@ module.exports = {
     'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    'vue/no-unused-vars': [
+      'error',
+      {
+        ignorePattern: '^_',
+      },
+    ],
   },
 };

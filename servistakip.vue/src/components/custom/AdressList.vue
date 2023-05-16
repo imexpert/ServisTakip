@@ -1,5 +1,5 @@
 <template>
-  <el-select placeholder="Adres seçiniz" filterable clearable v-model="customerId" @change="onChange()">
+  <el-select placeholder="Adres seçiniz" filterable clearable v-model="addresId" @change="onChange()">
     <li class="el-select-dropdown__item">
       <div class="row">
         <div class="col-md-3" style="font-size: 12px">Adres Başlığı</div>
@@ -28,7 +28,6 @@
 </template>
 
 <script lang="ts">
-import { IDeviceData } from '@/core/data/DeviceData';
 import { defineComponent, ref, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
@@ -40,7 +39,7 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
 
-    var customerId = ref<string>('');
+    var addresId = ref<string>('');
 
     var adressList = ref<Array<IAddressData>>([]);
 
@@ -62,14 +61,14 @@ export default defineComponent({
     }
 
     async function onChange() {
-      context.emit('changeAddressId', customerId);
+      context.emit('getSelectedId', addresId);
     }
 
     watchEffect(async () => await getAddressList());
 
     return {
       adressList,
-      customerId,
+      addresId,
       onChange,
     };
   },

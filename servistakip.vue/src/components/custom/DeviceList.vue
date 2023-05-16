@@ -1,5 +1,5 @@
 <template>
-  <el-select placeholder="Cihaz seçiniz" filterable clearable v-model="adresId" @change="onChange()">
+  <el-select placeholder="Cihaz seçiniz" filterable clearable v-model="cihazId" @change="onChange()">
     <li class="el-select-dropdown__item">
       <div class="row">
         <div class="col-md-3" style="font-size: 12px">Tip</div>
@@ -46,7 +46,7 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
 
-    var adresId = ref<string>('');
+    var cihazId = ref<string>('');
 
     var deviceList = ref<Array<IDeviceData>>([]);
 
@@ -68,14 +68,14 @@ export default defineComponent({
     }
 
     async function onChange() {
-      context.emit('changeAddressId', adresId);
+      context.emit('getSelectedId', cihazId);
     }
 
     watchEffect(async () => await getDeviceList());
 
     return {
       deviceList,
-      adresId,
+      cihazId,
       onChange,
     };
   },
