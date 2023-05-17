@@ -28,6 +28,20 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
+// main.js
+
+// Service Worker kaydı
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(registration => {
+                console.log('Service Worker kaydedildi.', registration);
+            })
+            .catch(error => {
+                console.log('Service Worker kaydedilemedi.', error);
+            });
+    });
+}
 
 app.use(store);
 app.use(router);
