@@ -12,7 +12,7 @@
       class="dropdownMenu"
       v-for="item in deviceList"
       :key="item.id"
-      :label="item.serialNumber"
+      :label="item.id"
       :value="item.id"
       @change="onChange()"
     >

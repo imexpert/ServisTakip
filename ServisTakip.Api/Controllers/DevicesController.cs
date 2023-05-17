@@ -113,5 +113,20 @@ namespace ServisTakip.Api.Controllers
         {
             return CreateActionResult(await Mediator.Send(new UpdateDeviceCommand() { Model = model }));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceTransferDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
+        public async Task<IActionResult> UpdateDeviceTransferAsync([FromBody] DeviceTransferDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new UpdateDeviceTransferCommand() { Model = model }));
+        }
     }
 }

@@ -34,6 +34,7 @@ enum Actions {
   GET_CUSTOMER_BY_FILTER = "getCustomerByFilter",
   ADD_DEVICE = "addDevice",
   UPDATE_DEVICE = "updateDevice",
+  UPDATE_DEVICETRANSFER = "updateDeviceTransfer",
   GET_DEVICE_BY_FILTER = "getDeviceByFilter",
   GET_DEVICE_BY_ID = "getDeviceById",
   GET_DEVICELIST_BY_ADDRESSID = "getDeviceListByAddressId",

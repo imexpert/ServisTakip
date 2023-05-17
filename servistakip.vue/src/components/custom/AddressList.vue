@@ -34,7 +34,6 @@ import { Actions } from '@/store/enums/StoreEnums';
 import { IAddressData } from '@/core/data/AddressData';
 
 export default defineComponent({
-  name: 'AdressListComponent',
   props: ['customerId'],
   setup(props, context) {
     const store = useStore();

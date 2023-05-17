@@ -101,7 +101,7 @@ export default defineComponent({
     };
 
     async function onChange() {
-      context.emit('changeAddressId', selectedCustomer);
+      context.emit('getSelectedId', selectedCustomer);
     }
 
     return {

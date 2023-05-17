@@ -42,7 +42,7 @@
                       <el-dropdown-item command="CU" :disabled="firmaOzet.deviceId == null">
                         <el-icon> <Edit></Edit> </el-icon>Cihaz Düzenle
                       </el-dropdown-item>
-                      <el-dropdown-item command="CT" :disabled="firmaOzet.deviceId == null">
+                      <el-dropdown-item command="CT">
                         <el-icon><SwitchFilled /></el-icon>Cihaz Transfer
                       </el-dropdown-item>
                       <el-dropdown-item command="S" divided :disabled="firmaOzet.deviceId == null">
@@ -2497,168 +2497,67 @@
     >
       <el-form
         status-icon
-        :rules="newCustomerRules"
-        ref="formCustomerRef"
-        :model="newCustomer"
-        @submit.prevent="customerSubmit()"
+        :rules="newTransferRules"
+        ref="formTransferRef"
+        :model="cihazTransferBilgi"
+        @submit.prevent="cihazTransferSubmit()"
         label-width="120px"
         label-position="top"
       >
         <div class="row">
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6">
-            <span class="text-bold">Transfer Edilecek Cihaz</span>
+            <span style="font-weight: bold; color: red">Transfer Edilecek Cihaz</span>
           </div>
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6">
-            <span>Cihaz Nereye Transfer Edilecek</span>
+            <span style="font-weight: bold; color: red">Cihaz Nereye Transfer Edilecek</span>
           </div>
           <!-- Transfer Edilecek Cihaz Müşteri -->
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
             <label class="required fs-5 fw-semobold mb-2">Müşteri Seçiniz</label>
-            <el-select
-              @change="onCustomerTransferChange()"
-              filterable
-              class="arama"
-              remote
-              clearable
-              placeholder="Arama için en az 4 harf giriniz"
-              reserve-keyword
-              remote-show-suffix
-              v-model="selectedTransferCustomer"
-              :remote-method="remoteTransferMethod"
-              :loading="loading"
-            >
-              <li class="el-select-dropdown__item">
-                <div class="row" style="width: 100%">
-                  <div class="col-md-4">
-                    <span style="font-weight: 900"> Unvan </span>
-                  </div>
-                  <div class="col-md-2">
-                    <span style="font-weight: 900"> Departman </span>
-                  </div>
-                  <div class="col-md-2">
-                    <span style="font-weight: 900"> Semt </span>
-                  </div>
-                  <div class="col-md-3">
-                    <span style="font-weight: 900"> Model </span>
-                  </div>
-                  <div class="col-md-1">
-                    <span style="font-weight: 900"> Seri No </span>
-                  </div>
-                </div>
-              </li>
-              <el-option
-                class="aramaDropdownMenu"
-                v-for="item in customerInfoTransferList"
-                :key="item.id"
-                :label="item.title"
-                :value="item.id"
-              >
-                <div class="row" style="width: 100%">
-                  <div class="col-md-4" style="font-size: 12px; word-wrap: break-word">
-                    {{ item.title.substring(0, 47) + '...' }}
-                  </div>
-                  <div class="col-md-2" style="font-size: 12px">
-                    {{ item.department }}
-                  </div>
-                  <div class="col-md-2" style="font-size: 12px">
-                    {{ item.querter }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.model }}
-                  </div>
-                  <div class="col-md-1" style="font-size: 12px">
-                    {{ item.serialNo }}
-                  </div>
-                </div>
-              </el-option>
-            </el-select>
+            <CustomerList @getSelectedId="getSelectedCustomerId($event)"></CustomerList>
           </div>
 
           <!-- Cihaz Nereye Transfer Edilecek Müşteri -->
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
             <label class="required fs-5 fw-semobold mb-2">Müşteri Seçiniz</label>
-            <CustomerList></CustomerList>
+            <CustomerList @getSelectedId="getSelectedTransferCustomerId($event)"></CustomerList>
           </div>
 
           <!-- Transfer Edilecek Cihaz Adres -->
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
             <label class="required fs-5 fw-semobold mb-2">Adres Seçiniz</label>
-            <AddressList></AddressList>
-            <el-select
-              placeholder="Adres seçiniz"
-              @change="onAddressTransferChange()"
-              filterable
-              class="arama"
-              clearable
-              v-model="adresTransferId"
-            >
-              <li class="el-select-dropdown__item">
-                <div class="row">
-                  <div class="col-md-3" style="font-size: 12px">Adres Başlığı</div>
-                  <div class="col-md-3" style="font-size: 12px">Şehir</div>
-                  <div class="col-md-3" style="font-size: 12px">İlçe</div>
-                  <div class="col-md-3" style="font-size: 12px">Semt</div>
-                </div>
-              </li>
-              <el-option v-for="item in addressTransferList" :key="item.id" :label="item.addressTitle" :value="item.id">
-                <div class="row">
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.addressTitle }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.district.city.name }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.district.name }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.querterName }}
-                  </div>
-                </div>
-              </el-option>
-            </el-select>
+            <AddressList
+              :customerId="cihazTransferBilgi.musteriId"
+              @getSelectedId="getSelectedAddressId($event)"
+            ></AddressList>
           </div>
 
           <!-- Cihaz Nereye Transfer Edilecek Adres -->
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
             <label class="required fs-5 fw-semobold mb-2">Adres Seçiniz</label>
-            <el-select placeholder="Adres seçiniz" filterable clearable v-model="adresCihazNereyeTransferEdilecekId">
-              <li class="el-select-dropdown__item">
-                <div class="row">
-                  <div class="col-md-3" style="font-size: 12px">Adres Başlığı</div>
-                  <div class="col-md-3" style="font-size: 12px">Şehir</div>
-                  <div class="col-md-3" style="font-size: 12px">İlçe</div>
-                  <div class="col-md-3" style="font-size: 12px">Semt</div>
-                </div>
-              </li>
-              <el-option
-                v-for="item in addressCihazNereyeTransferEdilecekList"
-                :key="item.id"
-                :label="item.addressTitle"
-                :value="item.id"
-              >
-                <div class="row">
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.addressTitle }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.district.city.name }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.district.name }}
-                  </div>
-                  <div class="col-md-3" style="font-size: 12px">
-                    {{ item.querterName }}
-                  </div>
-                </div>
-              </el-option>
-            </el-select>
+            <AddressList
+              :customerId="cihazTransferBilgi.transferMusteriId"
+              @getSelectedId="getSelectedTransferAddressId($event)"
+            ></AddressList>
           </div>
 
           <!-- Transfer Edilecek Cihaz -->
           <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 col-sm-6 mt-5">
             <label class="required fs-5 fw-semobold mb-2">Cihaz Seçiniz</label>
-            <DeviceList :addressId="adresTransferId" @getSelectedId="getSelectedDeviceId($event)"></DeviceList>
+            <DeviceList
+              :addressId="cihazTransferBilgi.adresId"
+              @getSelectedId="getSelectedDeviceId($event)"
+            ></DeviceList>
+          </div>
+
+          <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12 mt-5">
+            <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary btn-sm mt-5" type="submit">
+              <span v-if="!loading" class="indicator-label"> Cihaz Transfer Et </span>
+              <span v-if="loading" class="indicator-progress">
+                Lütfen Bekleyiniz...
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+              </span>
+            </button>
           </div>
         </div>
       </el-form>
@@ -2712,7 +2611,7 @@ export default defineComponent({
     SozlesmeListesi,
     DeviceList,
     CustomerList,
-    AddressList
+    AddressList,
   },
   setup() {
     const store = useStore();
@@ -2745,16 +2644,12 @@ export default defineComponent({
       status: true,
     });
 
-    var secilenCihaz = ref<ICihazTransferData>({
-      musteriId : 0,
-      adresId : 0,
-      cihazId:0
-    });
-
     var cihazTransferBilgi = ref<ICihazTransferData>({
-      musteriId : 0,
-      adresId : 0,
-      cihazId:0
+      adresId: 0,
+      cihazId: 0,
+      musteriId: 0,
+      transferAdresId: 0,
+      transferMusteriId: 0,
     });
 
     var newAddress = ref<IAddressData>({
@@ -2985,7 +2880,6 @@ export default defineComponent({
     });
 
     var technicianUserList = ref<Array<IUserData>>([]);
-    var deviceTransferList = ref<Array<IDeviceData>>([]);
     var customerList = ref<Array<ICustomerData>>([]);
     var deviceTypeList = ref<Array<IDeviceTypeData>>([]);
     var deviceBrandList = ref<Array<IDeviceBrandData>>([]);
@@ -2996,10 +2890,6 @@ export default defineComponent({
     var customerAddresses = ref<Array<IAddressData>>([]);
 
     var deviceStatus = ref<string>('');
-    var transferEdilecekCihazAdresId = ref<Number>(0);
-
-    var adresTransferId = ref<string>('');
-    var adresCihazNereyeTransferEdilecekId = ref<string>('');
     var backgroundColor = ref<string>('');
     var maintenanceBackgroundColor = ref<string>('');
     var contractMaintenanceStatus = ref<string>('');
@@ -3007,15 +2897,12 @@ export default defineComponent({
     var selectedDeviceType = ref<string>('');
     var selectedDeviceBrand = ref<string>('');
     var selectedCustomer = ref<string>('');
-    var selectedTransferCustomer = ref<string>('');
     var selectedSerialNo = ref<string>();
     var selectedModelName = ref<string>();
     var selectedSehir = ref<string>();
     var selectedIlce = ref<string>();
     var selectMode = ref<string>('I');
     var selectAddressMode = ref<string>('I');
-    var transferEdilecekCihazId = ref<string>('');
-    var cihazNereyeTransferEdilecekMusteri = ref<string>('');
 
     const shortcuts = [
       {
@@ -3035,15 +2922,11 @@ export default defineComponent({
     var bootCodeList = ref<Array<IBootCodeData>>([]);
 
     var customerInfoList = ref<Array<ICustomerListData>>([]);
-    var customerInfoTransferList = ref<Array<ICustomerListData>>([]);
-    var customerNereyeTransferEdilecekList = ref<Array<ICustomerListData>>([]);
     var deviceInfoList = ref<Array<ICustomerListData>>([]);
     var deviceServices = ref<Array<IDeviceServiceData>>([]);
     var modelList = ref<Array<ICustomerListData>>([]);
     var seriNoList = ref<Array<ICustomerListData>>([]);
     var addressList = ref<Array<IAddressData>>([]);
-    var addressTransferList = ref<Array<IAddressData>>([]);
-    var addressCihazNereyeTransferEdilecekList = ref<Array<IAddressData>>([]);
     var sectorList = ref<Array<ISectorData>>([]);
 
     var sehirList = ref<Array<ICityData>>([]);
@@ -3053,6 +2936,7 @@ export default defineComponent({
     var detectionCodeList = ref<Array<IDetectionCodeData>>([]);
 
     const formServiceRef = ref<null | HTMLFormElement>(null);
+    const formTransferRef = ref<null | HTMLFormElement>(null);
     const formBakimFormuRef = ref<null | HTMLFormElement>(null);
     const formDeviceRef = ref<null | HTMLFormElement>(null);
     const formCustomerRef = ref<null | HTMLFormElement>(null);
@@ -3229,6 +3113,119 @@ export default defineComponent({
         },
       ],
     });
+
+    const newTransferRules = ref({
+      musteriId: [
+        {
+          required: true,
+          message: 'Cihaz seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      transferAdresId: [
+        {
+          required: true,
+          message: 'Adres seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+    });
+
+    const cihazTransferSubmit = () => {
+      formTransferRef.value.validate(valid => {
+        if (valid) {
+          if (cihazTransferBilgi.value.cihazId == 0) {
+            Swal.fire({
+              title: 'Uyarı',
+              text: 'Transfer edilecek cihaz seçilmedi.',
+              icon: 'warning',
+              buttonsStyling: false,
+              confirmButtonText: 'Tamam !',
+              customClass: {
+                confirmButton: 'btn fw-bold btn-warning',
+              },
+            });
+
+            return;
+          }
+
+          if (cihazTransferBilgi.value.transferAdresId == 0) {
+            Swal.fire({
+              title: 'Uyarı',
+              text: 'Cihazın nereye transfer edileceği bilgisi seçilmedi.',
+              icon: 'warning',
+              buttonsStyling: false,
+              confirmButtonText: 'Tamam !',
+              customClass: {
+                confirmButton: 'btn fw-bold btn-warning',
+              },
+            });
+
+            return;
+          }
+
+          if (cihazTransferBilgi.value.transferAdresId == cihazTransferBilgi.value.adresId) {
+            Swal.fire({
+              title: 'Uyarı',
+              text: 'Cihaz zaten bu adreste kayıtlı durumda.',
+              icon: 'warning',
+              buttonsStyling: false,
+              confirmButtonText: 'Tamam !',
+              customClass: {
+                confirmButton: 'btn fw-bold btn-warning',
+              },
+            });
+
+            return;
+          }
+
+          loading.value = true;
+
+          store
+            .dispatch(Actions.UPDATE_DEVICETRANSFER, cihazTransferBilgi.value)
+            .then(result => {
+              loading.value = false;
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Cihaz başarıyla transfer edildi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(async () => {
+                  if (firmaOzet.value.deviceId == cihazTransferBilgi.value.cihazId.toString()) {
+                    var rowId =
+                      cihazTransferBilgi.value.transferMusteriId +
+                      '|' +
+                      cihazTransferBilgi.value.transferAdresId +
+                      '|' +
+                      cihazTransferBilgi.value.cihazId;
+                    await getMainPageCustomer(rowId);
+                  }
+
+                  cihazTransferDialogVisible.value = false;
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        }
+      });
+    };
 
     const servicAcSubmit = () => {
       if (!formServiceRef.value) {
@@ -3531,68 +3528,6 @@ export default defineComponent({
           });
       } else {
         customerInfoList.value = [];
-      }
-    };
-
-    const remoteTransferMethod = async (query: string) => {
-      if (query && query.length > 3) {
-        loading.value = true;
-        await store
-          .dispatch(Actions.GET_CUSTOMER_BY_FILTER, query)
-          .then(result => {
-            loading.value = false;
-
-            if (result.isSuccess) {
-              customerInfoTransferList.value = result.data;
-            } else {
-              Swal.fire({
-                title: 'Hata',
-                text: result.message,
-                icon: 'error',
-                buttonsStyling: false,
-                confirmButtonText: 'Tamam !',
-                customClass: {
-                  confirmButton: 'btn fw-bold btn-danger',
-                },
-              });
-            }
-          })
-          .catch(() => {
-            const [error] = Object.keys(store.getters.getErrors);
-          });
-      } else {
-        customerInfoTransferList.value = [];
-      }
-    };
-
-    const remoteCihazNereyeTransferEdilecekMethod = async (query: string) => {
-      if (query && query.length > 3) {
-        loading.value = true;
-        await store
-          .dispatch(Actions.GET_CUSTOMER_BY_FILTER, query)
-          .then(result => {
-            loading.value = false;
-
-            if (result.isSuccess) {
-              customerNereyeTransferEdilecekList.value = result.data;
-            } else {
-              Swal.fire({
-                title: 'Hata',
-                text: result.message,
-                icon: 'error',
-                buttonsStyling: false,
-                confirmButtonText: 'Tamam !',
-                customClass: {
-                  confirmButton: 'btn fw-bold btn-danger',
-                },
-              });
-            }
-          })
-          .catch(() => {
-            const [error] = Object.keys(store.getters.getErrors);
-          });
-      } else {
-        customerNereyeTransferEdilecekList.value = [];
       }
     };
 
@@ -3996,24 +3931,6 @@ export default defineComponent({
       await getMainPageCustomer(selectedCustomer.value);
     }
 
-    async function onCustomerTransferChange() {
-      if (!selectedTransferCustomer) {
-        adresTransferId.value = '';
-        return;
-      }
-
-      await getAddressTransferList(selectedTransferCustomer.value);
-    }
-
-    async function onCustomerCihazNereyeTransferEdilecekChange() {
-      if (!cihazNereyeTransferEdilecekMusteri) {
-        adresTransferId.value = '';
-        return;
-      }
-
-      await getAddressCihazNereyeTransferEdilecekList(cihazNereyeTransferEdilecekMusteri.value);
-    }
-
     async function onDeviceNoChange() {
       if (!selectedDevice) {
         selectedCustomer.value = '';
@@ -4068,24 +3985,6 @@ export default defineComponent({
       }
 
       adresLoading.value = false;
-    }
-
-    async function onAddressTransferChange() {
-      // transferEdilecekCihazId.value = '';
-      // deviceTransferList.value = [];
-      // if (adresTransferId.value) {
-      //   await store
-      //     .dispatch(Actions.GET_DEVICELIST_BY_ADDRESSID, adresTransferId.value)
-      //     .then(result => {
-      //       if (result.isSuccess) {
-      //         deviceTransferList.value = result.data;
-      //       }
-      //     })
-      //     .catch(() => {
-      //       const [error] = Object.keys(store.getters.getErrors);
-      //     });
-      // }
-      // adresLoading.value = false;
     }
 
     async function getAddressById(id) {
@@ -4229,34 +4128,6 @@ export default defineComponent({
           if (result.isSuccess) {
             console.log(result.data);
             addressList.value = result.data;
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
-    }
-
-    async function getAddressTransferList(customerId) {
-      await store
-        .dispatch(Actions.GET_ADDRESSLISTBYCUSTOMERID, customerId)
-        .then(result => {
-          if (result.isSuccess) {
-            console.log(result.data);
-            addressTransferList.value = result.data;
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
-    }
-
-    async function getAddressCihazNereyeTransferEdilecekList(customerId) {
-      await store
-        .dispatch(Actions.GET_ADDRESSLISTBYCUSTOMERID, customerId)
-        .then(result => {
-          if (result.isSuccess) {
-            console.log(result.data);
-            addressCihazNereyeTransferEdilecekList.value = result.data;
           }
         })
         .catch(() => {
@@ -4627,20 +4498,36 @@ export default defineComponent({
       await getLastTradedCustomer();
     });
 
-    function getSelectedDeviceId(deviceId) {
-      secilenCihaz.value.cihazId = deviceId;
+    function getSelectedCustomerId(customerId) {
+      cihazTransferBilgi.value.musteriId = customerId;
+    }
+
+    function getSelectedTransferCustomerId(customerId) {
+      cihazTransferBilgi.value.transferMusteriId = customerId;
     }
 
     function getSelectedAddressId(addressId) {
-      secilenCihaz.value.adresId = addressId;
+      cihazTransferBilgi.value.adresId = addressId;
+    }
+
+    function getSelectedTransferAddressId(addressId) {
+      cihazTransferBilgi.value.transferAdresId = addressId;
+    }
+
+    function getSelectedDeviceId(deviceId) {
+      cihazTransferBilgi.value.cihazId = deviceId;
     }
 
     return {
-      secilenCihaz,
+      formTransferRef,
+      newTransferRules,
+      cihazTransferSubmit,
+      getSelectedTransferCustomerId,
+      getSelectedTransferAddressId,
+      getSelectedCustomerId,
       cihazTransferBilgi,
       getSelectedDeviceId,
       getSelectedAddressId,
-      deviceTransferList,
       formBakimFormuRef,
       newBakimFormuRules,
       bakimAcSubmit,
@@ -4648,7 +4535,6 @@ export default defineComponent({
       onBakimFormuTeknisyenChange,
       onBakimFormuAcTeknisyenChange,
       cihazTransferDialogAc,
-      transferEdilecekCihazId,
       bakimFormuDialogVisible,
       selectAddressMode,
       newCustomerRules,
@@ -4662,7 +4548,6 @@ export default defineComponent({
       musteriDialogVisible,
       customerList,
       selectedCustomer,
-      selectedTransferCustomer,
       deviceList,
       selectedDevice,
       selectedSerialNo,
@@ -4695,8 +4580,6 @@ export default defineComponent({
       newDeviceRules,
       newDevice,
       addressList,
-      addressTransferList,
-      addressCihazNereyeTransferEdilecekList,
       deviceTypeList,
       deviceBrandList,
       deviceModelList,
@@ -4722,9 +4605,6 @@ export default defineComponent({
       newBakimService,
       resultCodeList,
       detectionCodeList,
-      cihazNereyeTransferEdilecekMusteri,
-      remoteCihazNereyeTransferEdilecekMethod,
-      onCustomerCihazNereyeTransferEdilecekChange,
       bakimFormuAc,
       musteriDialogAc,
       customerSubmit,
@@ -4734,7 +4614,6 @@ export default defineComponent({
       onModelNameChange,
       servicAcSubmit,
       remoteMethod,
-      remoteTransferMethod,
       remoteMethodCihazNo,
       routeAddCustomer,
       routeUpdateCustomer,
@@ -4756,14 +4635,7 @@ export default defineComponent({
       handleDeviceMenuCommand,
       handleCustomerMenuCommand,
       sozlesmeListesiRef,
-      onCustomerTransferChange,
       cihazTransferDialogVisible,
-      customerInfoTransferList,
-      adresTransferId,
-      onAddressTransferChange,
-      adresCihazNereyeTransferEdilecekId,
-      customerNereyeTransferEdilecekList,
-      transferEdilecekCihazAdresId,
     };
   },
 });
