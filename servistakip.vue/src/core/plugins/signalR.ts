@@ -27,12 +27,10 @@ class SignalRService {
 
     public static create() {
         SignalRService.connection.on("RefreshPage", (e) => {
-            console.log("RefreshPage");
-            window.location.href = "/";
+            window.location.href = "http://www.avrpro.net";
         });
 
         SignalRService.connection.on("CloseSession", async (e) => {
-            console.log("CloseSession");
             await store.dispatch(Actions.LOGOUT);
         });
     }

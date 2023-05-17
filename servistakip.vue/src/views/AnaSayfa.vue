@@ -2741,7 +2741,7 @@ export default defineComponent({
       deviceId: null,
       dr: false,
       dv: false,
-      failureDate: new Date(),
+      failureDate: new Date().toString(),
       failureDateString: '',
       fs: false,
       id: '',
@@ -2833,7 +2833,7 @@ export default defineComponent({
       deviceId: null,
       dr: false,
       dv: false,
-      failureDate: new Date(),
+      failureDate: new Date().toString(),
       failureDateString: '',
       fs: false,
       id: '',
@@ -3899,7 +3899,7 @@ export default defineComponent({
 
     async function onServisAcTeknisyenChange() {
       if (newService.value.userId) {
-        newService.value.userAssignDate = new Date();
+        newService.value.userAssignDate = new Date().toString();
       } else {
         newService.value.userAssignDate = null;
       }
@@ -3907,7 +3907,7 @@ export default defineComponent({
 
     async function onBakimFormuAcTeknisyenChange() {
       if (newService.value.userId) {
-        newService.value.userAssignDate = new Date();
+        newService.value.userAssignDate = new Date().toString();
       } else {
         newService.value.userAssignDate = null;
       }
@@ -3915,7 +3915,7 @@ export default defineComponent({
 
     async function onBakimFormuTeknisyenChange() {
       if (newBakimService.value.userId) {
-        newBakimService.value.userAssignDate = new Date();
+        newBakimService.value.userAssignDate = new Date().toString();
       } else {
         newBakimService.value.userAssignDate = null;
       }
@@ -4272,7 +4272,7 @@ export default defineComponent({
       await getBootCodeList();
       await getTechnicianList();
 
-      newService.value.failureDate = new Date();
+      newService.value.failureDate = new Date().toString();
 
       servisAcLoading.value = false;
     }
@@ -4288,9 +4288,9 @@ export default defineComponent({
       await getResultCodeList();
       await getDetectionCodeList();
 
-      newBakimService.value.failureDate = new Date();
-      newBakimService.value.resultDate = new Date();
-      newBakimService.value.userAssignDate = new Date();
+      newBakimService.value.failureDate = new Date().toUTCString();
+      newBakimService.value.resultDate = new Date().toUTCString();
+      newBakimService.value.userAssignDate = new Date().toUTCString();
 
       servisAcLoading.value = false;
     }
