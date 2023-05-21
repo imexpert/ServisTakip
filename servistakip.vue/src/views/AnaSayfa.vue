@@ -3899,7 +3899,7 @@ export default defineComponent({
 
     async function onServisAcTeknisyenChange() {
       if (newService.value.userId) {
-        newService.value.userAssignDate = new Date().toString();
+        newService.value.userAssignDate = new Date().toUTCString();
       } else {
         newService.value.userAssignDate = null;
       }
@@ -3907,7 +3907,7 @@ export default defineComponent({
 
     async function onBakimFormuAcTeknisyenChange() {
       if (newService.value.userId) {
-        newService.value.userAssignDate = new Date().toString();
+        newService.value.userAssignDate = new Date().toUTCString();
       } else {
         newService.value.userAssignDate = null;
       }
@@ -3915,7 +3915,7 @@ export default defineComponent({
 
     async function onBakimFormuTeknisyenChange() {
       if (newBakimService.value.userId) {
-        newBakimService.value.userAssignDate = new Date().toString();
+        newBakimService.value.userAssignDate = new Date().toUTCString();
       } else {
         newBakimService.value.userAssignDate = null;
       }
@@ -4272,7 +4272,7 @@ export default defineComponent({
       await getBootCodeList();
       await getTechnicianList();
 
-      newService.value.failureDate = new Date().toString();
+      newService.value.failureDate = new Date().toUTCString();
 
       servisAcLoading.value = false;
     }
