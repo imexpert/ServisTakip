@@ -4,6 +4,8 @@ enum Actions {
 
   ADD_BODY_CLASSNAME = "addBodyClassName",
   REMOVE_BODY_CLASSNAME = "removeBodyClassName",
+  REMOVE_BODY_LOADING = "removeBodyLoading",
+  ADD_BODY_LOADING = "addBodyLoading",
   ADD_BODY_ATTRIBUTE = "addBodyAttribute",
   REMOVE_BODY_ATTRIBUTE = "removeBodyAttribute",
   ADD_CLASSNAME = "addClassName",

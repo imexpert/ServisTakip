@@ -4,8 +4,7 @@
 </template>
 
 <script lang="ts">
-import devtools from '@vue/devtools';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { defineComponent, nextTick, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { Mutations, Actions } from '@/store/enums/StoreEnums';
@@ -18,7 +17,6 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
-    const language = ref('tr');
     var locale = tr;
 
     onMounted(() => {
@@ -37,6 +35,7 @@ export default defineComponent({
         initializeComponents();
 
         store.dispatch(Actions.REMOVE_BODY_CLASSNAME, 'page-loading');
+        store.dispatch(Actions.ADD_BODY_LOADING);
       });
     });
 
@@ -75,6 +74,10 @@ export default defineComponent({
 
 .el-select {
   width: 100%;
+}
+
+.el-loading-text{
+  color: black;
 }
 
 .el-date-editor.el-input,

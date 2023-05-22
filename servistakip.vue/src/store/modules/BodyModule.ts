@@ -1,6 +1,7 @@
-import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import { Actions, Mutations } from "@/store/enums/StoreEnums";
-import { showError } from "@/core/plugins/Utils";
+import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
+import { Actions, Mutations } from '@/store/enums/StoreEnums';
+import { showError } from '@/core/plugins/Utils';
+import { ElLoading } from 'element-plus'
 
 export interface StoreInfo {
   classes: {
@@ -30,8 +31,8 @@ export default class BodyModule extends VuexModule implements StoreInfo {
    * @returns string
    */
   get getClasses() {
-    return (position) => {
-      if (typeof position !== "undefined") {
+    return position => {
+      if (typeof position !== 'undefined') {
         return this.classes[position];
       }
       return this.classes;
@@ -55,6 +56,21 @@ export default class BodyModule extends VuexModule implements StoreInfo {
   @Action
   [Actions.REMOVE_BODY_CLASSNAME](className) {
     document.body.classList.remove(className);
+  }
+
+  @Action
+  [Actions.REMOVE_BODY_LOADING]() {
+    var div = document.getElementById('app');
+    div.setAttribute('v-loading', "false");
+  }
+
+  @Action
+  [Actions.ADD_BODY_LOADING]() {
+    const loading = ElLoading.service({
+      lock: true,
+      text: 'Lütfen bekleyiniz...',
+      background: 'rgba(122, 122, 122, 0.8)',
+    });
   }
 
   @Action

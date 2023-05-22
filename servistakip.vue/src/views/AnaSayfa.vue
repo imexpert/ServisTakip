@@ -1,5 +1,5 @@
 <template>
-  <div class="row" v-loading="anaSayfaLoading">
+  <div id="divMain" class="row" v-loading="anaSayfaLoading">
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12 mb-2" v-loading="anaSayfaLoading">
       <el-card class="box-card">
         <template #header>
