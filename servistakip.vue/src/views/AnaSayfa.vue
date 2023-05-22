@@ -1,6 +1,6 @@
 <template>
-  <div id="divMain" class="row" v-loading="anaSayfaLoading">
-    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12 mb-2" v-loading="anaSayfaLoading">
+  <div id="divMain" class="row">
+    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12 mb-2">
       <el-card class="box-card">
         <template #header>
           <div class="card-header">
@@ -324,7 +324,7 @@
         </div>
       </el-card>
     </div>
-    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12 mb-1" v-loading="anaSayfaLoading">
+    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12 mb-1">
       <el-card class="box-card">
         <div class="row mb-2">
           <!-- Sözleşmeler -->
@@ -513,7 +513,7 @@
         </div>
       </el-card>
     </div>
-    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-8 col-sm-12 mb-1" v-loading="anaSayfaLoading">
+    <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-8 col-sm-12 mb-1">
       <el-card class="box-card">
         <div class="text item">
           <el-table :data="deviceServices" height="268" max-height="268" class="tableClass">
@@ -1368,8 +1368,8 @@
       </div>
     </el-dialog>
 
-    <el-dialog v-model="talepDialogVisible" title="Talep Detay" width="50%" destroy-on-close align-top>
-      <div class="row" v-loading="talepDetayLoading">
+    <el-dialog ref="talepDetayRef" v-model="talepDialogVisible" title="Talep Detay" width="50%" destroy-on-close align-top>
+      <div class="row">
         <div class="col-md-6 col-lg-6 col-xl-4 col-xxl-4 col-sm-12">
           <!--begin::Input group-->
           <div class="d-flex flex-column fv-row">
@@ -1568,7 +1568,7 @@
           <!--end::Input group-->
         </div>
       </div>
-      <div class="row" v-loading="talepDetayLoading">
+      <div class="row" >
         <div class="col-md-4 col-lg-4 col-xl-4 col-xxl-4 col-sm-12">
           <!--begin::Input group-->
           <div class="d-flex flex-column fv-row">
@@ -1668,7 +1668,7 @@
     </el-dialog>
 
     <el-dialog v-model="cihazDialogVisible" title="Cihaz Ekle / Düzenle" width="40%" destroy-on-close center>
-      <div class="row" v-loading="createDeviceLoading">
+      <div class="row">
         <el-form
           status-icon
           :rules="newDeviceRules"
@@ -1917,24 +1917,24 @@
             <!--begin::Button-->
             <button
               v-if="selectMode == 'I'"
-              :data-kt-indicator="createDeviceLoading ? 'on' : null"
+              :data-kt-indicator="loading ? 'on' : null"
               class="btn btn-lg btn-primary"
               type="submit"
             >
-              <span v-if="!createDeviceLoading" class="indicator-label"> Kaydet </span>
-              <span v-if="createDeviceLoading" class="indicator-progress">
+              <span v-if="!loading" class="indicator-label"> Kaydet </span>
+              <span v-if="loading" class="indicator-progress">
                 Lütfen Bekleyiniz...
                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
               </span>
             </button>
             <button
               v-else
-              :data-kt-indicator="createDeviceLoading ? 'on' : null"
+              :data-kt-indicator="loading ? 'on' : null"
               class="btn btn-lg btn-primary"
               type="submit"
             >
-              <span v-if="!createDeviceLoading" class="indicator-label"> Güncelle </span>
-              <span v-if="createDeviceLoading" class="indicator-progress">
+              <span v-if="!loading" class="indicator-label"> Güncelle </span>
+              <span v-if="loading" class="indicator-progress">
                 Lütfen Bekleyiniz...
                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
               </span>
@@ -1947,7 +1947,7 @@
     </el-dialog>
 
     <el-dialog v-model="musteriDialogVisible" title="Müşteri İşlemleri" width="60%" destroy-on-close center>
-      <div class="row" v-loading="musteriLoading">
+      <div class="row">
         <el-form
           status-icon
           :rules="newCustomerRules"
@@ -2192,7 +2192,7 @@
     </el-dialog>
 
     <el-dialog v-model="adresDialogVisible" title="Adres Ekle / Düzenle" width="40%" destroy-on-close center>
-      <div class="row" v-loading="adresLoading">
+      <div class="row">
         <el-form
           status-icon
           :rules="newAddressRules"
@@ -2599,7 +2599,8 @@ import AddressList from '@/components/custom/AddressList.vue';
 import { IResultCodeData } from '@/core/data/ResultCodeData';
 import { IDetectionCodeData } from '@/core/data/DetectionCodeData';
 import { ICihazTransferData } from '@/core/data/CihazTransferData';
-
+import { hideModal } from "@/core/helpers/dom";
+import { showModal } from "@/core/helpers/dom";
 export default defineComponent({
   name: 'default-dashboard-widget-2',
   components: {
@@ -2616,7 +2617,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
-
+    const loading = ref(false);
     const talepDialogVisible = ref(false);
     const cihazDialogVisible = ref(false);
     const adresDialogVisible = ref(false);
@@ -2625,17 +2626,9 @@ export default defineComponent({
     const servisAcDialogVisible = ref(false);
     const bakimFormuDialogVisible = ref(false);
     const cihazTransferDialogVisible = ref(false);
-
-    const loading = ref<boolean>(false);
-    const anaSayfaLoading = ref<boolean>(false);
-    const servisAcLoading = ref<boolean>(false);
-    const talepDetayLoading = ref<boolean>(false);
-    const deviceLoading = ref<boolean>(false);
-    const createDeviceLoading = ref<boolean>(false);
-    const musteriLoading = ref<boolean>(false);
-    const adresLoading = ref<boolean>(false);
-
     const adresTableVisible = ref<boolean>(false);
+
+    const talepDetayRef = ref<null | HTMLElement>(null);
 
     var newCustomer = ref<ICustomerData>({
       sectorId: '',
@@ -3179,12 +3172,9 @@ export default defineComponent({
             return;
           }
 
-          loading.value = true;
-
           store
             .dispatch(Actions.UPDATE_DEVICETRANSFER, cihazTransferBilgi.value)
             .then(result => {
-              loading.value = false;
               if (result.isSuccess) {
                 Swal.fire({
                   text: 'Cihaz başarıyla transfer edildi.',
@@ -3234,14 +3224,11 @@ export default defineComponent({
 
       formServiceRef.value.validate(valid => {
         if (valid) {
-          loading.value = true;
-
           newService.value.deviceId = Number(firmaOzet.value.deviceId);
 
           store
             .dispatch(Actions.ADD_DEVICESERVICE, newService.value)
             .then(result => {
-              loading.value = false;
               if (result.isSuccess) {
                 Swal.fire({
                   text: 'Servis başarıyla eklendi.',
@@ -3281,14 +3268,11 @@ export default defineComponent({
 
       formBakimFormuRef.value.validate(async valid => {
         if (valid) {
-          loading.value = true;
-
           newBakimService.value.deviceId = Number(firmaOzet.value.deviceId);
 
           await store
             .dispatch(Actions.ADD_BAKIMFORMUDEVICESERVICE, newBakimService.value)
             .then(async result => {
-              loading.value = false;
               if (result.isSuccess) {
                 Swal.fire({
                   text: 'Bakım formu başarıyla kaydedildi.',
@@ -3329,26 +3313,21 @@ export default defineComponent({
 
       formDeviceRef.value.validate(async valid => {
         if (valid) {
-          createDeviceLoading.value = true;
-          console.log(newDevice.value);
-
           if (selectMode.value == 'I') {
             await store
               .dispatch(Actions.ADD_DEVICE, newDevice.value)
               .then(result => {
-                loading.value = false;
                 if (result.isSuccess) {
                   showSuccessMessage('Cihaz başarıyla eklendi.').then(async () => {
                     if (!firmaOzet.value.deviceId) {
                       var rowId = firmaOzet.value.customerId + '|' + firmaOzet.value.addressId + '|' + result.data.id;
                       await getMainPageCustomer(rowId);
                     }
-                    createDeviceLoading.value = false;
+
                     cihazDialogVisible.value = false;
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
-                    createDeviceLoading.value = false;
                     servisAcDialogVisible.value = false;
                   });
                 }
@@ -3358,10 +3337,8 @@ export default defineComponent({
             await store
               .dispatch(Actions.UPDATE_DEVICE, newDevice.value)
               .then(result => {
-                loading.value = false;
                 if (result.isSuccess) {
                   showSuccessMessage('Cihaz başarıyla güncellendi.').then(async () => {
-                    deviceLoading.value = false;
                     cihazDialogVisible.value = false;
                     if (firmaOzet.value.deviceId == newDevice.value.id) {
                       var rowId =
@@ -3371,15 +3348,12 @@ export default defineComponent({
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
-                    createDeviceLoading.value = false;
                     servisAcDialogVisible.value = false;
                   });
                 }
               })
               .catch(({ response }) => {});
           }
-
-          createDeviceLoading.value = false;
         }
       });
     };
@@ -3391,14 +3365,12 @@ export default defineComponent({
 
       formCustomerRef.value.validate(async valid => {
         if (valid) {
-          musteriLoading.value = true;
           console.log(newDevice.value);
 
           if (selectMode.value == 'I') {
             await store
               .dispatch(Actions.ADD_CUSTOMER, newCustomer.value)
               .then(result => {
-                loading.value = false;
                 if (result.isSuccess) {
                   showSuccessMessage('Müşteri başarıyla eklendi.').then(() => {
                     newCustomer.value = result.data;
@@ -3407,7 +3379,6 @@ export default defineComponent({
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
                     servisAcDialogVisible.value = false;
                   });
                 }
@@ -3417,10 +3388,8 @@ export default defineComponent({
             await store
               .dispatch(Actions.UPDATE_CUSTOMER, newCustomer.value)
               .then(result => {
-                loading.value = false;
                 if (result.isSuccess) {
                   showSuccessMessage('Müşteri başarıyla güncellendi.').then(async () => {
-                    deviceLoading.value = false;
                     cihazDialogVisible.value = false;
                     if (firmaOzet.value.deviceId === newDevice.value.id) {
                       var rowId =
@@ -3430,15 +3399,12 @@ export default defineComponent({
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
                     servisAcDialogVisible.value = false;
                   });
                 }
               })
               .catch(({ response }) => {});
           }
-
-          musteriLoading.value = false;
         }
       });
     };
@@ -3451,7 +3417,6 @@ export default defineComponent({
 
       formAddressRef.value.validate(valid => {
         if (valid) {
-          adresLoading.value = true;
           console.log(newAddress.value);
 
           newAddress.value.customerId = newCustomer.value.id;
@@ -3463,12 +3428,10 @@ export default defineComponent({
                 if (result.isSuccess) {
                   showSuccessMessage('Adres başarıyla eklendi.').then(async () => {
                     await getAddressList(newCustomer.value.id);
-                    adresLoading.value = false;
                     adresDialogVisible.value = false;
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
                     servisAcDialogVisible.value = false;
                   });
                 }
@@ -3478,36 +3441,28 @@ export default defineComponent({
             store
               .dispatch(Actions.UPDATE_ADDRESS, newAddress.value)
               .then(result => {
-                loading.value = false;
                 if (result.isSuccess) {
                   showSuccessMessage('Adres başarıyla güncellendi.').then(async () => {
                     await getAddressList(newCustomer.value.id);
-                    adresLoading.value = false;
                     adresDialogVisible.value = false;
                   });
                 } else {
                   showErrorMessage(result.message).then(() => {
-                    deviceLoading.value = false;
                     servisAcDialogVisible.value = false;
                   });
                 }
               })
               .catch(({ response }) => {});
           }
-
-          adresLoading.value = false;
         }
       });
     };
 
     const remoteMethod = async (query: string) => {
       if (query && query.length > 3) {
-        loading.value = true;
         await store
           .dispatch(Actions.GET_CUSTOMER_BY_FILTER, query)
           .then(result => {
-            loading.value = false;
-
             if (result.isSuccess) {
               customerInfoList.value = result.data;
             } else {
@@ -3533,11 +3488,9 @@ export default defineComponent({
 
     const remoteMethodCihazNo = async (query: string) => {
       if (query) {
-        loading.value = true;
         await store
           .dispatch(Actions.GET_DEVICE_BY_FILTER, query)
           .then(result => {
-            loading.value = false;
             if (result.isSuccess) {
               deviceInfoList.value = result.data;
             } else {
@@ -3563,11 +3516,9 @@ export default defineComponent({
 
     const remoteMethodSerialNo = async (query: string) => {
       if (query && query.length > 3) {
-        loading.value = true;
         await store
           .dispatch(Actions.GET_DEVICE_BY_SERIALNO_FILTER, query)
           .then(result => {
-            loading.value = false;
             if (result.isSuccess) {
               seriNoList.value = result.data;
             } else {
@@ -3593,11 +3544,9 @@ export default defineComponent({
 
     const remoteMethodModelName = async (query: string) => {
       if (query && query.length > 3) {
-        loading.value = true;
         await store
           .dispatch(Actions.GET_DEVICE_BY_MODEL_NAME_FILTER, query)
           .then(result => {
-            loading.value = false;
             if (result.isSuccess) {
               modelList.value = result.data;
             }
@@ -3969,8 +3918,6 @@ export default defineComponent({
       semtList.value = [];
       ilceList.value = [];
 
-      adresLoading.value = true;
-
       if (selectedSehir.value) {
         await store
           .dispatch(Actions.GET_DISTRICT_LIST, selectedSehir.value)
@@ -3983,8 +3930,6 @@ export default defineComponent({
             const [error] = Object.keys(store.getters.getErrors);
           });
       }
-
-      adresLoading.value = false;
     }
 
     async function getAddressById(id) {
@@ -4007,12 +3952,10 @@ export default defineComponent({
       clearPage();
 
       if (rowId) {
-        anaSayfaLoading.value = true;
         cihazListesiDialogVisible.value = false;
         await store
           .dispatch(Actions.GET_MAIN_PAGE_CUSTOMER, rowId)
           .then(result => {
-            anaSayfaLoading.value = false;
             if (result.isSuccess) {
               firmaOzet.value = result.data;
 
@@ -4055,11 +3998,9 @@ export default defineComponent({
     }
 
     async function getLastTradedCustomer() {
-      anaSayfaLoading.value = true;
       await store
         .dispatch(Actions.GET_LASTTRADED_CUSTOMER)
         .then(async result => {
-          anaSayfaLoading.value = false;
           if (result.isSuccess) {
             firmaOzet.value = result.data;
             deviceId.value = firmaOzet.value.deviceId;
@@ -4093,13 +4034,11 @@ export default defineComponent({
     async function getDeviceService(id) {
       clearTalepDetayModal();
       talepDialogVisible.value = true;
-      talepDetayLoading.value = true;
 
       await store
         .dispatch(Actions.GET_DEVICESERVICEWITHID, id)
         .then(result => {
           if (result.isSuccess) {
-            talepDetayLoading.value = false;
             deviceServiceItem.value = result.data;
           }
         })
@@ -4180,7 +4119,6 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             sehirList.value = result.data;
-            adresLoading.value = false;
           }
         })
         .catch(() => {
@@ -4208,11 +4146,9 @@ export default defineComponent({
       newDevice.value.deviceModelId = '';
 
       if (selectedDeviceType.value) {
-        deviceLoading.value = true;
         await store
           .dispatch(Actions.GET_DEVICEBRANDLIST, selectedDeviceType.value)
           .then(result => {
-            deviceLoading.value = false;
             if (result.isSuccess) {
               deviceBrandList.value = result.data;
             }
@@ -4228,11 +4164,9 @@ export default defineComponent({
       newDevice.value.deviceModelId = '';
 
       if (selectedDeviceBrand.value) {
-        deviceLoading.value = true;
         await store
           .dispatch(Actions.GET_DEVICEMODELBYBRANDIDLIST, selectedDeviceBrand.value)
           .then(result => {
-            deviceLoading.value = false;
             if (result.isSuccess) {
               deviceModelList.value = result.data;
             }
@@ -4267,21 +4201,17 @@ export default defineComponent({
       clearSevicAcModal();
 
       servisAcDialogVisible.value = true;
-      servisAcLoading.value = true;
 
       await getBootCodeList();
       await getTechnicianList();
 
       newService.value.failureDate = new Date().toUTCString();
-
-      servisAcLoading.value = false;
     }
 
     async function bakimFormuAc() {
       clearBakimFormuModal();
 
       bakimFormuDialogVisible.value = true;
-      servisAcLoading.value = true;
 
       await getBootCodeList();
       await getTechnicianList();
@@ -4291,12 +4221,10 @@ export default defineComponent({
       newBakimService.value.failureDate = new Date().toUTCString();
       newBakimService.value.resultDate = new Date().toUTCString();
       newBakimService.value.userAssignDate = new Date().toUTCString();
-
-      servisAcLoading.value = false;
     }
 
     async function talepDetayAc() {
-      talepDialogVisible.value = true;
+      showModal(talepDetayRef.value);
     }
 
     async function adresDialogAc(id = 0) {
@@ -4304,7 +4232,6 @@ export default defineComponent({
 
       await getSehirList();
 
-      adresLoading.value = true;
       adresDialogVisible.value = true;
 
       if (id > 0) {
@@ -4313,8 +4240,6 @@ export default defineComponent({
       } else {
         selectAddressMode.value = 'I';
       }
-
-      adresLoading.value = false;
     }
 
     async function deleteAdres(id) {
@@ -4366,7 +4291,6 @@ export default defineComponent({
 
     async function cihazDialogAc(mode) {
       selectMode.value = mode;
-      deviceLoading.value = true;
       cihazDialogVisible.value = true;
       clearDeviceModal();
       await getAddressList(firmaOzet.value.customerId);
@@ -4375,8 +4299,6 @@ export default defineComponent({
       if (mode == 'U') {
         await getDeviceById();
       }
-
-      deviceLoading.value = false;
     }
 
     async function cihazTransferDialogAc() {
@@ -4385,7 +4307,6 @@ export default defineComponent({
 
     async function musteriDialogAc(mode) {
       selectMode.value = mode;
-      musteriLoading.value = true;
       musteriDialogVisible.value = true;
       await getSectorList();
 
@@ -4395,7 +4316,6 @@ export default defineComponent({
         adresTableVisible.value = true;
       } else {
       }
-      musteriLoading.value = false;
     }
 
     async function getDeviceById() {
@@ -4456,7 +4376,6 @@ export default defineComponent({
       }).then(async result => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          anaSayfaLoading.value = true;
           await store
             .dispatch(Actions.DELETE_CUSTOMER, firmaOzet.value.customerId)
             .then(async result => {
@@ -4467,7 +4386,6 @@ export default defineComponent({
             .catch(() => {
               const [error] = Object.keys(store.getters.getErrors);
             });
-          anaSayfaLoading.value = false;
         } else if (result.isDenied) {
         }
       });
@@ -4519,6 +4437,7 @@ export default defineComponent({
     }
 
     return {
+      talepDetayRef,
       formTransferRef,
       newTransferRules,
       cihazTransferSubmit,
@@ -4541,7 +4460,6 @@ export default defineComponent({
       newAddressRules,
       newCustomer,
       selectMode,
-      loading,
       sectorList,
       store,
       cihazListesiDialogVisible,
@@ -4567,15 +4485,12 @@ export default defineComponent({
       customerInfoList,
       deviceInfoList,
       deviceServices,
-      anaSayfaLoading,
       deviceStatus,
       backgroundColor,
       contractMaintenanceStatus,
       maintenanceBackgroundColor,
-      servisAcLoading,
       talepDialogVisible,
       deviceServiceItem,
-      talepDetayLoading,
       cihazDialogVisible,
       newDeviceRules,
       newDevice,
@@ -4583,15 +4498,12 @@ export default defineComponent({
       deviceTypeList,
       deviceBrandList,
       deviceModelList,
-      deviceLoading,
-      createDeviceLoading,
       selectedDeviceType,
       selectedDeviceBrand,
       formDeviceRef,
       formCustomerRef,
       formAddressRef,
       adresTableVisible,
-      musteriLoading,
       customerAddresses,
       adresDialogVisible,
       newAddress,
@@ -4600,7 +4512,6 @@ export default defineComponent({
       selectedIlce,
       ilceList,
       semtList,
-      adresLoading,
       deviceId,
       newBakimService,
       resultCodeList,
@@ -4636,6 +4547,7 @@ export default defineComponent({
       handleCustomerMenuCommand,
       sozlesmeListesiRef,
       cihazTransferDialogVisible,
+      loading,
     };
   },
 });

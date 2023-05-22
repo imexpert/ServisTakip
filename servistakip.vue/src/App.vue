@@ -34,8 +34,8 @@ export default defineComponent({
       nextTick(() => {
         initializeComponents();
 
-        store.dispatch(Actions.REMOVE_BODY_CLASSNAME, 'page-loading');
-        store.dispatch(Actions.ADD_BODY_LOADING);
+        // store.dispatch(Actions.REMOVE_BODY_CLASSNAME, 'page-loading');
+        // store.dispatch(Actions.ADD_BODY_LOADING);
       });
     });
 
@@ -76,10 +76,6 @@ export default defineComponent({
   width: 100%;
 }
 
-.el-loading-text{
-  color: black;
-}
-
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 100%;
@@ -105,5 +101,17 @@ export default defineComponent({
   font-size: 13px;
   color: black;
   width: 100%;
+}
+
+.customLoading {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.customLoading .el-loading-text {
+  font-size: 15px;
+}
+
+.customLoading .element-loading-spinner {
+  color: rgba(122, 122, 122, 0.8);
 }
 </style>

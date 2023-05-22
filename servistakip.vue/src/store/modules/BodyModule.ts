@@ -1,7 +1,7 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
 import { Actions, Mutations } from '@/store/enums/StoreEnums';
 import { showError } from '@/core/plugins/Utils';
-import { ElLoading } from 'element-plus'
+import { ElLoading } from 'element-plus';
 
 export interface StoreInfo {
   classes: {
@@ -60,16 +60,23 @@ export default class BodyModule extends VuexModule implements StoreInfo {
 
   @Action
   [Actions.REMOVE_BODY_LOADING]() {
-    var div = document.getElementById('app');
-    div.setAttribute('v-loading', "false");
+    const loading = ElLoading.service({
+      lock: true,
+      visible:false,
+      text: 'Lütfen bekleyiniz...',
+      customClass: 'customLoading',
+    });
+
+    loading.close();
   }
 
   @Action
   [Actions.ADD_BODY_LOADING]() {
     const loading = ElLoading.service({
       lock: true,
+      visible:true,
       text: 'Lütfen bekleyiniz...',
-      background: 'rgba(122, 122, 122, 0.8)',
+      customClass: 'customLoading',
     });
   }
 

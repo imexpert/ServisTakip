@@ -1,6 +1,6 @@
 <template>
   <!--begin::Wrapper-->
-  <div class="w-lg-500px bg-white rounded shadow-sm p-10 p-lg-15 mx-auto" v-loading="loading">
+  <div class="w-lg-500px bg-white rounded shadow-sm p-10 p-lg-15 mx-auto">
     <el-form
       status-icon
       :rules="loginRules"
