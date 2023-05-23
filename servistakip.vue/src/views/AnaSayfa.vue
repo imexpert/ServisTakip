@@ -1,5 +1,6 @@
 <template>
-  <div id="divMain" class="row">
+  <el-scrollbar max-height="785px">
+  <div class="row">
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-6 col-sm-12 mb-2">
       <el-card class="box-card">
         <template #header>
@@ -516,7 +517,7 @@
     <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-8 col-sm-12 mb-1">
       <el-card class="box-card">
         <div class="text item">
-          <el-table :data="deviceServices" height="268" max-height="268" class="tableClass">
+          <el-table :data="deviceServices" height="265" max-height="265" class="tableClass">
             <el-table-column label="Açılış Tarihi" width="155" label-class-name="tableHeader">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
@@ -2563,6 +2564,7 @@
       </el-form>
     </el-dialog>
   </div>
+  </el-scrollbar>
 </template>
 
 <script lang="ts">

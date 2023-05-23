@@ -1,6 +1,7 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw,useRoute  } from "vue-router";
 import store from "@/store";
 import { Actions } from "@/store/enums/StoreEnums";
+import JwtService from '@/core/services/JwtService';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -58,6 +59,18 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/",
+    redirect: "/admin/dashboard",
+    component: () => import("@/layouts/main-layout/AdminLayout.vue"),
+    children: [
+      {
+        path: "/admin/dashboard",
+        name: "adminDashboard",
+        component: () => import("@/views/admin/Dashboard.vue"),
+      },
+    ],
+  },
+  {
     path: "/:pathMatch(.*)*",
     redirect: "/404",
   },
@@ -69,6 +82,10 @@ const router = createRouter({
 });
 
 router.beforeEach(() => {
+  var route = useRoute();
+
+  var currentUrl = window.location.pathname;
+  console.log(window.location.href);
   store.dispatch(Actions.VERIFY_AUTH);
 
   // Scroll page to top on every route change
@@ -76,5 +93,9 @@ router.beforeEach(() => {
     window.scrollTo(0, 0);
   }, 100);
 });
+
+router.afterEach(() => {
+  store.dispatch(Actions.VERIFY_ADMIN);
+})
 
 export default router;
