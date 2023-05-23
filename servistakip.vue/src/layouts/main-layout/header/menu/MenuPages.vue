@@ -97,6 +97,37 @@
       <!--end:Row-->
     </div>
   </div>
+
+  <div
+    data-kt-menu-trigger="click"
+    data-kt-menu-placement="bottom-start"
+    class="menu-item menu-lg-down-accordion me-lg-1"
+  >
+    <span class="menu-link py-3">
+      <span class="menu-title">{{ translate('adminSide') }}</span>
+      <span class="menu-arrow d-lg-none"></span>
+    </span>
+    <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown w-100 w-lg-250px p-5 p-lg-5" style="">
+      <!--begin:Row-->
+      <div class="row" data-kt-menu-dismiss="true">
+        <!--begin:Col-->
+        <div class="col-lg-12 border-left-lg-1">
+          <div class="menu-inline menu-column menu-active-bg">
+            <div class="menu-item">
+              <a href="/admin/kullaniciYonetimi" class="menu-link">
+                <span class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">{{ translate('kullaniciYonetimi') }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!--end:Col-->
+      </div>
+      <!--end:Row-->
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

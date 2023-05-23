@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw,useRoute  } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw, useRoute } from "vue-router";
 import store from "@/store";
 import { Actions } from "@/store/enums/StoreEnums";
 import JwtService from '@/core/services/JwtService';
@@ -44,6 +44,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "bakimRaporu",
         component: () => import("@/views/reports/BakimRaporu.vue"),
       },
+      {
+        path: "/admin/kullaniciYonetimi",
+        name: "kullaniciYonetimi",
+        component: () => import("@/views/admin/KullaniciYonetimi.vue"),
+      },
     ],
   },
   {
@@ -55,18 +60,6 @@ const routes: Array<RouteRecordRaw> = [
         name: "sign-in",
         component: () =>
           import("@/views/authentication/SignIn.vue"),
-      },
-    ],
-  },
-  {
-    path: "/",
-    redirect: "/admin/dashboard",
-    component: () => import("@/layouts/main-layout/AdminLayout.vue"),
-    children: [
-      {
-        path: "/admin/dashboard",
-        name: "adminDashboard",
-        component: () => import("@/views/admin/Dashboard.vue"),
       },
     ],
   },
@@ -95,7 +88,7 @@ router.beforeEach(() => {
 });
 
 router.afterEach(() => {
-  store.dispatch(Actions.VERIFY_ADMIN);
+  // store.dispatch(Actions.VERIFY_ADMIN);
 })
 
 export default router;

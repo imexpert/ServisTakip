@@ -17,13 +17,13 @@
           <img
             v-if="themeMode === 'light' && layout === 'light-header'"
             alt="Logo"
-            src="media/logos/logo.png"
+            src="/media/logos/logo.png"
             class="h-70px h-lg-70px h-sm-50px app-sidebar-logo-default"
           />
           <img
             v-if="layout === 'dark-header' || (themeMode === 'dark' && layout === 'light-header')"
             alt="Logo"
-            src="media/logos/default-dark.svg"
+            src="/media/logos/default-dark.svg"
             class="h-20px h-lg-30px app-sidebar-logo-default"
           />
         </router-link>

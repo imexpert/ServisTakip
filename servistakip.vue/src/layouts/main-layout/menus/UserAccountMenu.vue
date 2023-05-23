@@ -9,8 +9,8 @@
       <div class="menu-content d-flex align-items-center px-3">
         <!--begin::Avatar-->
         <div class="symbol symbol-50px me-5">
-          <img v-if="isManLogo" alt="Logo" src="media/avatars/man.png" />
-          <img v-if="isWomanLogo" alt="Logo" src="media/avatars/woman.png" />
+          <img v-if="isManLogo" alt="Logo" src="/media/avatars/man.png" />
+          <img v-if="isWomanLogo" alt="Logo" src="/media/avatars/woman.png" />
           <img v-if="isLogoExists" alt="Logo" :src="logoSrc" />
         </div>
         <!--end::Avatar-->
@@ -33,11 +33,6 @@
     <div class="separator my-2"></div>
     <!--end::Menu separator-->
 
-    <!--begin::Menu item-->
-    <div class="menu-item px-5" v-if="isAdmin == 'true'">
-      <router-link to="/admin/dashboard" class="menu-link px-5"> Yönetim Paneli</router-link>
-    </div>
-    <!--end::Menu item-->
     <!--begin::Menu item-->
     <div class="menu-item px-5">
       <router-link to="/pages/profile/overview" class="menu-link px-5"> Profilim </router-link>

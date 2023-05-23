@@ -7,6 +7,8 @@ interface IUserData {
     gender: number | 0,
     fullname: string | '',
     admin: boolean | false,
+    groups: string | '',
+    lastLogin: Date | null,
 }
 
 export { IUserData }

@@ -501,6 +501,8 @@ export default defineComponent({
       gender: 0,
       fullname: '',
       admin: false,
+      groups: '',
+      lastLogin: null,
     });
 
     const talepSonlandirRef = ref<null | HTMLFormElement>(null);
