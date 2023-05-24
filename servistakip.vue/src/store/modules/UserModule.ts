@@ -17,4 +17,15 @@ export default class UserModule extends VuexModule {
         showError(response);
       });
   }
+
+  @Action
+  async [Actions.GET_USER_LIST]() {
+    return await ApiService.get("Users/GetUserList")
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
 }

@@ -2782,6 +2782,8 @@ export default defineComponent({
         admin: false,
         groups: '',
         lastLogin: null,
+        lastLoginString:null,
+        status:true
       },
       userAssignDate: null,
       userAssignDateString: '',
@@ -2830,6 +2832,8 @@ export default defineComponent({
         admin: false,
         groups: '',
         lastLogin: null,
+        lastLoginString:null,
+        status:true
       },
       userAssignDate: null,
       userAssignDateString: '',
@@ -2878,6 +2882,8 @@ export default defineComponent({
         admin: false,
         groups: '',
         lastLogin: null,
+        lastLoginString:null,
+        status:true
       },
       userAssignDate: null,
       userAssignDateString: '',
@@ -3713,6 +3719,8 @@ export default defineComponent({
           admin: false,
           groups: '',
           lastLogin: null,
+          lastLoginString:null,
+          status:true
         },
         userAssignDate: null,
         userAssignDateString: '',
@@ -3763,6 +3771,8 @@ export default defineComponent({
           admin: false,
           groups: '',
           lastLogin: null,
+          lastLoginString:null,
+          status:true
         },
         userAssignDate: null,
         userAssignDateString: '',
@@ -3832,6 +3842,8 @@ export default defineComponent({
           admin: false,
           groups: '',
           lastLogin: null,
+          lastLoginString:null,
+          status:true
         },
         userAssignDate: null,
         userAssignDateString: '',

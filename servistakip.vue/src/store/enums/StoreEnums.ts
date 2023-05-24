@@ -50,6 +50,7 @@ enum Actions {
   GET_RESULTCODE_LIST = "getResultCodelist",
 
   GET_TECHNICIAN_LIST = "getTechnicianlist",
+  GET_USER_LIST = "getUserList",
 
   ADD_DEVICESERVICE = "addDeviceService",
   ADD_BAKIMFORMUDEVICESERVICE = "addBakimFormuDeviceService",

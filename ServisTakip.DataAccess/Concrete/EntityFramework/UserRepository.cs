@@ -43,5 +43,13 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .Where(s=>s.CompanyId == Utils.CompanyId && s.UserGroups.Any(t=>t.GroupId == (long)GroupCodes.Technician))
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<List<User>> GetUserListAsync(CancellationToken cancellationToken)
+        {
+            return await Context.Users
+                .Include(s => s.UserGroups).ThenInclude(s=>s.Group)
+                .Where(s => s.CompanyId == Utils.CompanyId)
+                .ToListAsync(cancellationToken);
+        }
     }
 }

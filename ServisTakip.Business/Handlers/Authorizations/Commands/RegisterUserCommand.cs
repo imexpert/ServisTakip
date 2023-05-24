@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using ServisTakip.Business.Handlers.Authorizations.ValidationRules;
 using ServisTakip.Core.Aspects.Autofac.Validation;
 using ServisTakip.Core.Entities.Concrete;
+using ServisTakip.Core.Extensions;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Core.Utilities.Security.Hashing;
 using ServisTakip.DataAccess.Abstract;
@@ -36,7 +37,7 @@ namespace ServisTakip.Business.Handlers.Authorizations.Commands
 
                 var user = new User
                 {
-                    CompanyId = request.Model.CompanyId,
+                    CompanyId = Utils.CompanyId,
                     Email = request.Model.Email,
                     Firstname = request.Model.Firstname,
                     Lastname = request.Model.Lastname,

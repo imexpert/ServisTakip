@@ -503,6 +503,8 @@ export default defineComponent({
       admin: false,
       groups: '',
       lastLogin: null,
+      lastLoginString:null,
+      status:true
     });
 
     const talepSonlandirRef = ref<null | HTMLFormElement>(null);
