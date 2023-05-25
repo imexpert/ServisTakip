@@ -14,7 +14,7 @@ enum Actions {
   LOGIN = "login",
   LOGOUT = "logout",
   REGISTER = "register",
-  UPDATE_USER = "updateUser",
+
   FORGOT_PASSWORD = "forgotPassword",
   SET_BREADCRUMB_ACTION = "setBreadcrumbAction",
   SET_THEME_MODE_ACTION = "setThemeModeAction",
@@ -51,6 +51,9 @@ enum Actions {
 
   GET_TECHNICIAN_LIST = "getTechnicianlist",
   GET_USER_LIST = "getUserList",
+  ADD_USER = "addUser",
+  DELETE_USER = "deleteUser",
+  UPDATE_USER = "updateUser",
 
   ADD_DEVICESERVICE = "addDeviceService",
   ADD_BAKIMFORMUDEVICESERVICE = "addBakimFormuDeviceService",

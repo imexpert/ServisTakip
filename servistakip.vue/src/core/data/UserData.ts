@@ -1,6 +1,8 @@
+import { UploadRawFile } from "element-plus";
+
 interface IUserData {
     id: string | '',
-    avatar: string | null,
+    avatar: UploadRawFile | null,
     firstname: string | '',
     lastname: string | '',
     email: string | '',

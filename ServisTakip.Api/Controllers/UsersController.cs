@@ -42,7 +42,7 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="updateUserDto"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

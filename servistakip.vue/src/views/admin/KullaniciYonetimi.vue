@@ -132,9 +132,9 @@
 
               <el-form-item prop="startDate">
                 <el-upload
-                  action="#"
                   list-type="picture-card"
-                  :file-list="avatarList"
+                  ref="uploadRef"
+                  v-model:file-list="avatarList"
                   :limit="1"
                   :auto-upload="false"
                   :on-preview="handlePictureCardPreview"
@@ -227,8 +227,8 @@
               <!--end::Label-->
               <el-form-item prop="status">
                 <el-select v-model="userItem.status" placeholder="Durum">
-                  <el-option label="Aktif" :value="1" />
-                  <el-option label="Pasif" :value="0" />
+                  <el-option label="Aktif" :value="true" />
+                  <el-option label="Pasif" :value="false" />
                 </el-select>
               </el-form-item>
             </div>
@@ -254,12 +254,13 @@
 </template>
 
 <script lang="ts">
+import { IUserTempData } from '@/core/data/UserTempData';
 import { IUserData } from '@/core/data/UserData';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { showSuccessMessage, showErrorMessage } from '@/core/plugins/Utils';
-import type { UploadProps, UploadFile, UploadUserFile, ElMessage } from 'element-plus';
+import type { UploadProps, UploadFile, UploadUserFile, ElMessage, UploadInstance, UploadRawFile } from 'element-plus';
 
 export default defineComponent({
   components: {},
@@ -271,23 +272,19 @@ export default defineComponent({
     const dialogImageUrl = ref('');
     const dialogVisible = ref(false);
     const disabled = ref(false);
-    const avatarList = ref<Array<UploadUserFile>>();
+    const userAvatar = ref<UploadFile>();
+    const avatarList = ref<UploadUserFile[]>();
+    const uploadRef = ref<UploadInstance>();
 
     const userDialogVisible = ref<boolean>(false);
     const userList = ref<Array<IUserData>>();
-    const userItem = ref<IUserData>({
-      avatar: '',
-      id: '',
+    const userItem = ref<IUserTempData>({
+      avatar: null,
       email: '',
       firstname: '',
       lastname: '',
-      gender: null,
-      fullname: '',
-      admin: false,
-      groups: '',
-      lastLogin: null,
-      lastLoginString: null,
-      status: null,
+      gender: 1,
+      status: true,
       password: null,
     });
     var selectUserMode = ref<string>('I');
@@ -376,9 +373,25 @@ export default defineComponent({
         return;
       }
 
-      formUserRef.value.validate(valid => {
+      formUserRef.value.validate(async valid => {
         if (valid) {
           if (selectUserMode.value == 'I') {
+            userItem.value.avatar = avatarList.value[0].raw;
+            console.log(avatarList.value[0].raw);
+
+            store
+              .dispatch(Actions.ADD_USER, userItem.value)
+              .then(result => {
+                if (result.isSuccess) {
+                  showSuccessMessage('Kullanıcı başarıyla eklendi.').then(async () => {
+                    await getirKullaniciListe();
+                    userDialogVisible.value = false;
+                  });
+                } else {
+                  showErrorMessage(result.message).then(() => {});
+                }
+              })
+              .catch(({ response }) => {});
           } else {
           }
         }
@@ -392,9 +405,10 @@ export default defineComponent({
     const handlePictureCardPreview = (file: UploadFile) => {
       dialogImageUrl.value = file.url!;
       dialogVisible.value = true;
+      console.log(file);
     };
 
-    const handleDownload = (file: UploadFile) => {
+    const handleSuccess = (file: UploadFile) => {
       console.log(file);
     };
 
@@ -406,10 +420,11 @@ export default defineComponent({
       kKullaniciDialogAc,
       kullaniciSil,
       userSubmit,
-      handleDownload,
+      handleSuccess,
       handlePictureCardPreview,
       handleRemove,
       avatarList,
+      uploadRef,
       loading,
       dialogImageUrl,
       disabled,

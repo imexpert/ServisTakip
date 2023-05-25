@@ -493,7 +493,7 @@ export default defineComponent({
     var deviceServiceItem = ref<IDeviceServiceData>();
     var talepSonlandirDialogVisible = ref<boolean>(false);
     var technicianItem = ref<IUserData>({
-      avatar: '',
+      avatar: null,
       id: '',
       email: '',
       firstname: '',

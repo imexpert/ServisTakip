@@ -28,4 +28,37 @@ export default class UserModule extends VuexModule {
         showError(response);
       });
   }
+
+  @Action
+  async [Actions.ADD_USER](user) {
+    return await ApiService.post("Users/AddUser", user)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  async [Actions.UPDATE_USER](user) {
+    return await ApiService.put("Users/UpdateUser", user)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  async [Actions.DELETE_USER](id) {
+    return await ApiService.delete("Users/DeleteUser?id= " + id)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
 }
