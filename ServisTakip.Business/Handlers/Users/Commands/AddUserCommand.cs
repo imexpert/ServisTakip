@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using ServisTakip.Core.Entities.Concrete;
 using ServisTakip.Core.Extensions;
@@ -35,19 +36,21 @@ namespace ServisTakip.Business.Handlers.Users.Commands
                 var user = new User
                 {
                     CompanyId = Utils.CompanyId,
-                    Email = request.Model.Email,
+                    Avatar = request.Model.Avatar,
                     Firstname = request.Model.Firstname,
                     Lastname = request.Model.Lastname,
+                    Gender = request.Model.Gender,
+                    Email = request.Model.Email,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
                     Status = true
                 };
 
-                _userRepository.Add(user);
+                userRepo.Add(user);
 
-                var result = _mapper.Map<CreateUserDto>(user);
+                var result = mapper.Map<CreateUserDto>(user);
 
-                await _userRepository.SaveChangesAsync();
+                await userRepo.SaveChangesAsync();
 
                 return ResponseMessage<CreateUserDto>.Success(result);
             }

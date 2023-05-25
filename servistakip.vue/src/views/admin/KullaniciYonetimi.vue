@@ -120,149 +120,115 @@
         label-position="top"
       >
         <div class="row">
-          <!-- Sözleşme Başlangıç Tarihi -->
-          <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+          <!-- Avatar -->
+          <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
             <!--begin::Input group-->
             <div class="d-flex flex-column mb-1 fv-row">
               <!--begin::Label-->
               <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                <span class="required">Başlangıç Tarihi</span>
+                <span>Avatar Seçiniz</span>
               </label>
               <!--end::Label-->
 
               <el-form-item prop="startDate">
-                <el-date-picker
-                  v-model="newContract.startDate"
-                  format="DD.MM.YYYY"
-                  type="datetime"
-                  placeholder="Sözleşme başlangıç tarihini seçiniz"
-                  :shortcuts="shortcuts"
-                />
-              </el-form-item>
-            </div>
-            <!--end::Input group-->
-          </div>
-
-          <!-- Sözleşme Bitiş Tarihi -->
-          <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-            <!--begin::Input group-->
-            <div class="d-flex flex-column mb-1 fv-row">
-              <!--begin::Label-->
-              <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                <span class="required">Bitiş Tarihi</span>
-              </label>
-              <!--end::Label-->
-
-              <el-form-item prop="endDate">
-                <el-date-picker
-                  v-model="newContract.endDate"
-                  format="DD.MM.YYYY"
-                  type="datetime"
-                  placeholder="Sözleşme başlangıç tarihini seçiniz"
-                  :shortcuts="shortcuts"
-                />
-              </el-form-item>
-            </div>
-            <!--end::Input group-->
-          </div>
-
-          <!-- Sözleşme Kodu -->
-          <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-            <!--begin::Input group-->
-            <div class="d-flex flex-column mb-1 fv-row">
-              <!--begin::Label-->
-              <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                <span class="required">Sözleşme Kodu</span>
-              </label>
-              <!--end::Label-->
-              <el-form-item prop="contractCode">
-                <el-select placeholder="Sözleşme Kodu" filterable clearable v-model="newContract.contractCode">
-                  <el-option v-for="item in contractCodeList" :key="item.code" :label="item.name" :value="item.code">
-                    <div class="row">
-                      <div class="col-md-3" style="font-size: 12px">
-                        {{ item.code }}
-                      </div>
-                      <div class="col-md-9" style="font-size: 12px">
-                        {{ item.name }}
-                      </div>
-                    </div>
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-            <!--end::Input group-->
-          </div>
-
-          <!-- Bakım Periyodu -->
-          <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-            <!--begin::Input group-->
-            <div class="d-flex flex-column mb-1 fv-row">
-              <!--begin::Label-->
-              <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                <span class="required">Bakım Periyodu</span>
-              </label>
-              <!--end::Label-->
-              <el-form-item prop="maintenancePeriod">
-                <el-select
-                  placeholder="Cihaz bakım periyodu seçiniz"
-                  filterable
-                  clearable
-                  v-model="newContract.maintenancePeriod"
+                <el-upload
+                  action="#"
+                  list-type="picture-card"
+                  :file-list="avatarList"
+                  :limit="1"
+                  :auto-upload="false"
+                  :on-preview="handlePictureCardPreview"
+                  :on-remove="handleRemove"
                 >
-                  <el-option label="1 Aylık" :value="1"></el-option>
-                  <el-option label="2 Aylık" :value="2"></el-option>
-                  <el-option label="3 Aylık" :value="3"></el-option>
-                  <el-option label="4 Aylık" :value="4"></el-option>
-                  <el-option label="5 Aylık" :value="5"></el-option>
-                  <el-option label="6 Aylık" :value="6"></el-option>
-                  <el-option label="7 Aylık" :value="7"></el-option>
-                  <el-option label="8 Aylık" :value="8"></el-option>
-                  <el-option label="9 Aylık" :value="9"></el-option>
-                  <el-option label="10 Aylık" :value="10"></el-option>
-                  <el-option label="11 Aylık" :value="11"></el-option>
-                  <el-option label="12 Aylık" :value="12"></el-option>
+                  <el-icon><Plus /></el-icon>
+                </el-upload>
+                <el-dialog v-model="dialogVisible" width="250px">
+                  <img width="200" :src="dialogImageUrl" alt="Preview Image" />
+                </el-dialog>
+              </el-form-item>
+            </div>
+            <!--end::Input group-->
+          </div>
+          <!-- Ad -->
+          <div class="col-md-12 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+            <!--begin::Input group-->
+            <div class="d-flex flex-column mb-1 fv-row">
+              <!--begin::Label-->
+              <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <span>Ad</span>
+              </label>
+              <!--end::Label-->
+              <el-form-item prop="firstname">
+                <el-input v-model="userItem.firstname" placeholder="Ad bilgisi giriniz"></el-input>
+              </el-form-item>
+            </div>
+            <!--end::Input group-->
+          </div>
+
+          <!-- Soyad -->
+          <div class="col-md-12 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+            <!--begin::Input group-->
+            <div class="d-flex flex-column mb-1 fv-row">
+              <!--begin::Label-->
+              <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <span>Soyad</span>
+              </label>
+              <!--end::Label-->
+              <el-form-item prop="lastname">
+                <el-input v-model="userItem.lastname" placeholder="Soyad bilgisi giriniz"></el-input>
+              </el-form-item>
+            </div>
+            <!--end::Input group-->
+          </div>
+
+          <!-- E-Mail -->
+          <div class="col-md-12 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+            <!--begin::Input group-->
+            <div class="d-flex flex-column mb-1 fv-row">
+              <!--begin::Label-->
+              <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <span>Email</span>
+              </label>
+              <!--end::Label-->
+              <el-form-item prop="email">
+                <el-input v-model="userItem.email" placeholder="Email bilgisi giriniz"></el-input>
+              </el-form-item>
+            </div>
+            <!--end::Input group-->
+          </div>
+
+          <!-- Cinsiyet -->
+          <div class="col-md-12 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+            <!--begin::Input group-->
+            <div class="d-flex flex-column mb-1 fv-row">
+              <!--begin::Label-->
+              <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <span>Cinsiyet</span>
+              </label>
+              <!--end::Label-->
+              <el-form-item prop="gender">
+                <el-select v-model="userItem.gender" placeholder="Cinsiyet">
+                  <el-option label="Erkek" :value="1" />
+                  <el-option label="Kadım" :value="2" />
                 </el-select>
               </el-form-item>
             </div>
             <!--end::Input group-->
           </div>
 
-          <!-- Sözleşme Ücreti -->
-          <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
+          <!-- Durum -->
+          <div class="col-md-12 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
             <!--begin::Input group-->
             <div class="d-flex flex-column mb-1 fv-row">
               <!--begin::Label-->
-              <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                <span class="required">Sözleşme Ücreti</span>
+              <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <span>Durum</span>
               </label>
               <!--end::Label-->
-              <el-form-item prop="price">
-                <input
-                  type="number"
-                  class="form-control form-control-sm border border-secondary"
-                  v-model="newContract.price"
-                  step="0.01"
-                />
-              </el-form-item>
-            </div>
-            <!--end::Input group-->
-          </div>
-
-          <!-- Ücret Tipi -->
-          <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-6 col-sm-12">
-            <!--begin::Input group-->
-            <div class="d-flex flex-column mb-1 fv-row">
-              <!--begin::Label-->
-              <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                <span class="required">Ücret Tipi</span>
-              </label>
-              <!--end::Label-->
-              <!--end::Label-->
-              <el-form-item prop="currencyType">
-                <el-select placeholder="Para birimi seçin" v-model="newContract.currencyType">
-                  <el-option label="TL" value="TL" />
-                  <el-option label="USD" value="USD" />
-                  <el-option label="EURO" value="EURO" />
+              <el-form-item prop="status">
+                <el-select v-model="userItem.status" placeholder="Durum">
+                  <el-option label="Aktif" :value="1" />
+                  <el-option label="Pasif" :value="0" />
                 </el-select>
               </el-form-item>
             </div>
@@ -272,9 +238,9 @@
         <!--begin::Actions-->
         <div class="text-center">
           <!--begin::Button-->
-          <button :data-kt-indicator="sozlesmeLoading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
-            <span v-if="!sozlesmeLoading" class="indicator-label"> Kaydet </span>
-            <span v-if="sozlesmeLoading" class="indicator-progress">
+          <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+            <span v-if="!loading" class="indicator-label"> Kaydet </span>
+            <span v-if="loading" class="indicator-progress">
               Lütfen Bekleyiniz...
               <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
             </span>
@@ -292,16 +258,39 @@ import { IUserData } from '@/core/data/UserData';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
+import { showSuccessMessage, showErrorMessage } from '@/core/plugins/Utils';
+import type { UploadProps, UploadFile, UploadUserFile, ElMessage } from 'element-plus';
 
 export default defineComponent({
   components: {},
   setup() {
     const store = useStore();
 
+    const loading = ref<Boolean>(false);
+
+    const dialogImageUrl = ref('');
+    const dialogVisible = ref(false);
+    const disabled = ref(false);
+    const avatarList = ref<Array<UploadUserFile>>();
+
     const userDialogVisible = ref<boolean>(false);
     const userList = ref<Array<IUserData>>();
-    const userItem = ref<IUserData>();
-      var selectUserMode = ref<string>('I');
+    const userItem = ref<IUserData>({
+      avatar: '',
+      id: '',
+      email: '',
+      firstname: '',
+      lastname: '',
+      gender: null,
+      fullname: '',
+      admin: false,
+      groups: '',
+      lastLogin: null,
+      lastLoginString: null,
+      status: null,
+      password: null,
+    });
+    var selectUserMode = ref<string>('I');
 
     const formUserRef = ref<null | HTMLFormElement>(null);
 
@@ -356,7 +345,29 @@ export default defineComponent({
         });
     }
 
-    async function kKullaniciDialogAc(id = 0) {}
+    async function getirKullanici(id) {
+      await store
+        .dispatch(Actions.GET_USER_LIST)
+        .then(async result => {
+          if (result.isSuccess) {
+            userList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function kKullaniciDialogAc(id = 0) {
+      userDialogVisible.value = true;
+
+      if (id > 0) {
+        selectUserMode.value = 'U';
+        await getirKullanici(id);
+      } else {
+        selectUserMode.value = 'I';
+      }
+    }
 
     async function kullaniciSil(id) {}
 
@@ -368,47 +379,23 @@ export default defineComponent({
       formUserRef.value.validate(valid => {
         if (valid) {
           if (selectUserMode.value == 'I') {
-            store
-              .dispatch(Actions.ADD_CONTRACT, newContract.value)
-              .then(result => {
-                if (result.isSuccess) {
-                  showSuccessMessage('Sözleşme başarıyla eklendi.').then(async () => {
-                    await getContractList();
-                    sozlesmeLoading.value = false;
-                    sozlesmeDialogVisible.value = false;
-                  });
-                } else {
-                  showErrorMessage(result.message).then(() => {
-                    sozlesmeLoading.value = false;
-                    sozlesmeDialogVisible.value = false;
-                  });
-                }
-              })
-              .catch(({ response }) => {});
           } else {
-            store
-              .dispatch(Actions.UPDATE_CONTRACT, newContract.value)
-              .then(result => {
-                sozlesmeLoading.value = false;
-                if (result.isSuccess) {
-                  showSuccessMessage('Sözleşme başarıyla güncellendi.').then(async () => {
-                    await getContractList();
-                    sozlesmeLoading.value = false;
-                    sozlesmeDialogVisible.value = false;
-                  });
-                } else {
-                  showErrorMessage(result.message).then(() => {
-                    sozlesmeLoading.value = false;
-                    sozlesmeDialogVisible.value = false;
-                  });
-                }
-              })
-              .catch(({ response }) => {});
           }
-
-          sozlesmeLoading.value = false;
         }
       });
+    };
+
+    const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+      console.log(uploadFile, uploadFiles);
+    };
+
+    const handlePictureCardPreview = (file: UploadFile) => {
+      dialogImageUrl.value = file.url!;
+      dialogVisible.value = true;
+    };
+
+    const handleDownload = (file: UploadFile) => {
+      console.log(file);
     };
 
     onMounted(async () => {
@@ -419,6 +406,14 @@ export default defineComponent({
       kKullaniciDialogAc,
       kullaniciSil,
       userSubmit,
+      handleDownload,
+      handlePictureCardPreview,
+      handleRemove,
+      avatarList,
+      loading,
+      dialogImageUrl,
+      disabled,
+      dialogVisible,
       formUserRef,
       newUserRules,
       userList,
@@ -428,3 +423,33 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>
+
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+</style>

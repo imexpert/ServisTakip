@@ -33,11 +33,11 @@ namespace ServisTakip.Entities.DTOs.User
                     }
                 }
 
-                result = result.Remove(result.Length - 1, 1);
+                result = result.Length > 0 ? result.Remove(result.Length - 1, 1) : "";
 
                 return result;
             }
         }
-        public List<UserGroupDto> UserGroups { get; set; }
+        public List<UserGroupDto> UserGroups = new List<UserGroupDto>();
     }
 }
