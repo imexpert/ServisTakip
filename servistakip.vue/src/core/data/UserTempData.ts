@@ -1,7 +1,6 @@
-import { UploadRawFile } from "element-plus";
+import { UploadRawFile, UploadUserFile } from "element-plus";
 
 interface IUserTempData {
-    avatar: UploadRawFile,
     firstname: string,
     lastname: string,
     email: string,

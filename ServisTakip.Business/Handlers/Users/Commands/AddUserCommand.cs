@@ -36,14 +36,14 @@ namespace ServisTakip.Business.Handlers.Users.Commands
                 var user = new User
                 {
                     CompanyId = Utils.CompanyId,
-                    //Avatar = request.Model.Avatar,
+                    Avatar = request.Model.Avatar,
                     Firstname = request.Model.Firstname,
                     Lastname = request.Model.Lastname,
                     Gender = request.Model.Gender,
                     Email = request.Model.Email,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
-                    Status = true
+                    Status = request.Model.Status,
                 };
 
                 userRepo.Add(user);

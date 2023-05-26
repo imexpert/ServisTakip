@@ -31,6 +31,7 @@ export default class UserModule extends VuexModule {
 
   @Action
   async [Actions.ADD_USER](user) {
+    ApiService.vueInstance.axios.defaults.headers['Content-Type'] = 'multipart/form-data';
     return await ApiService.post("Users/AddUser", user)
       .then(({ data }) => {
         return data;

@@ -22,6 +22,24 @@ class ApiService {
     ApiService.vueInstance = app;
     ApiService.vueInstance.use(VueAxios, axios);
 
+    ApiService.vueInstance.axios.interceptors.response.use((config: AxiosRequestConfig) => {
+      store.commit('setLoading', true);
+      return config;
+    }, (error) => {
+      return Promise.reject(error);
+    });
+
+    ApiService.vueInstance.axios.interceptors.response.use(
+      (response: AxiosResponse<any>) => {
+        store.commit('setLoading', false);
+        return response;
+      },
+      (error: any) => {
+        store.commit('setLoading', false);
+        return Promise.reject(error);
+      }
+    );
+
     ApiService.vueInstance.axios.defaults.baseURL = process.env.VUE_APP_API_URL;
   }
 
@@ -40,10 +58,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static async query(resource: string, params: AxiosRequestConfig): Promise<AxiosResponse> {
-    store.dispatch(Actions.ADD_BODY_LOADING);
-    var result = await ApiService.vueInstance.axios.get(resource, params);
-    store.dispatch(Actions.REMOVE_BODY_LOADING);
-    return result;
+    return await ApiService.vueInstance.axios.get(resource, params);
   }
 
   /**
@@ -53,17 +68,11 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static async get(resource: string, slug = '' as string): Promise<AxiosResponse> {
-    store.dispatch(Actions.ADD_BODY_LOADING);
-    var result = await ApiService.vueInstance.axios.get(`${resource}/${slug}`);
-    store.dispatch(Actions.REMOVE_BODY_LOADING);
-    return result;
+    return await ApiService.vueInstance.axios.get(`${resource}/${slug}`);
   }
 
   public static async getWithParamUrl(resource: string, slug = '' as string): Promise<AxiosResponse> {
-    store.dispatch(Actions.ADD_BODY_LOADING);
-    var result = await ApiService.vueInstance.axios.get(`${resource}`);
-    store.dispatch(Actions.REMOVE_BODY_LOADING);
-    return result;
+    return await ApiService.vueInstance.axios.get(`${resource}`);
   }
 
   /**
@@ -73,10 +82,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static async post(resource: string, params: AxiosRequestConfig): Promise<AxiosResponse> {
-    store.dispatch(Actions.ADD_BODY_LOADING);
-    var result = await ApiService.vueInstance.axios.post(`${resource}`, params);
-    store.dispatch(Actions.REMOVE_BODY_LOADING);
-    return result;
+    return await ApiService.vueInstance.axios.post(`${resource}`, params);
   }
 
   /**
@@ -87,10 +93,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static async update(resource: string, slug: string, params: AxiosRequestConfig): Promise<AxiosResponse> {
-    store.dispatch(Actions.ADD_BODY_LOADING);
-    var result = await ApiService.vueInstance.axios.put(`${resource}/${slug}`, params);
-    store.dispatch(Actions.REMOVE_BODY_LOADING);
-    return result;
+    return await ApiService.vueInstance.axios.put(`${resource}/${slug}`, params);
   }
 
   /**
@@ -100,10 +103,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static async put(resource: string, params: AxiosRequestConfig): Promise<AxiosResponse> {
-    store.dispatch(Actions.ADD_BODY_LOADING);
-    var result = await ApiService.vueInstance.axios.put(`${resource}`, params);
-    store.dispatch(Actions.REMOVE_BODY_LOADING);
-    return result;
+    return await ApiService.vueInstance.axios.put(`${resource}`, params);
   }
 
   /**
@@ -112,10 +112,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static async delete(resource: string): Promise<AxiosResponse> {
-    store.dispatch(Actions.ADD_BODY_LOADING);
-    var result = await ApiService.vueInstance.axios.delete(resource);
-    store.dispatch(Actions.REMOVE_BODY_LOADING);
-    return result;
+    return await ApiService.vueInstance.axios.delete(resource);
   }
 }
 

@@ -19,6 +19,7 @@
             <template #default="scope">
               <div style="display: flex; align-items: center">
                 <img v-if="scope.row.avatar == ''" width="25" alt="Logo" src="/media/avatars/man.png" />
+                <img v-else width="25" alt="Logo" :src="'data:image/jpeg;base64,' + scope.row.avatar" />
                 <!-- <span>{{ scope.row.avatar }}</span> -->
               </div>
             </template>
@@ -139,6 +140,7 @@
                   :auto-upload="false"
                   :on-preview="handlePictureCardPreview"
                   :on-remove="handleRemove"
+                  :on-change="handleChange"
                 >
                   <el-icon><Plus /></el-icon>
                 </el-upload>
@@ -192,6 +194,22 @@
               <!--end::Label-->
               <el-form-item prop="email">
                 <el-input v-model="userItem.email" placeholder="Email bilgisi giriniz"></el-input>
+              </el-form-item>
+            </div>
+            <!--end::Input group-->
+          </div>
+
+          <!-- Şifre -->
+          <div class="col-md-12 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+            <!--begin::Input group-->
+            <div class="d-flex flex-column mb-1 fv-row">
+              <!--begin::Label-->
+              <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <span>Şifre</span>
+              </label>
+              <!--end::Label-->
+              <el-form-item prop="email">
+                <el-input v-model="userItem.password" type="password" placeholder="Şifre bilgisi giriniz"></el-input>
               </el-form-item>
             </div>
             <!--end::Input group-->
@@ -261,6 +279,7 @@ import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { showSuccessMessage, showErrorMessage } from '@/core/plugins/Utils';
 import type { UploadProps, UploadFile, UploadUserFile, ElMessage, UploadInstance, UploadRawFile } from 'element-plus';
+import { IUserModel } from '@/core/data/UserModel';
 
 export default defineComponent({
   components: {},
@@ -272,14 +291,12 @@ export default defineComponent({
     const dialogImageUrl = ref('');
     const dialogVisible = ref(false);
     const disabled = ref(false);
-    const userAvatar = ref<UploadFile>();
     const avatarList = ref<UploadUserFile[]>();
     const uploadRef = ref<UploadInstance>();
 
     const userDialogVisible = ref<boolean>(false);
     const userList = ref<Array<IUserData>>();
     const userItem = ref<IUserTempData>({
-      avatar: null,
       email: '',
       firstname: '',
       lastname: '',
@@ -368,6 +385,10 @@ export default defineComponent({
 
     async function kullaniciSil(id) {}
 
+    const handleChange = (file: UploadFile) => {
+      console.log(file);
+    };
+
     const userSubmit = () => {
       if (!formUserRef.value) {
         return;
@@ -376,11 +397,17 @@ export default defineComponent({
       formUserRef.value.validate(async valid => {
         if (valid) {
           if (selectUserMode.value == 'I') {
-            userItem.value.avatar = avatarList.value[0].raw;
-            console.log(avatarList.value[0].raw);
+            const formData = new FormData();
+            formData.append('firstname', userItem.value.firstname);
+            formData.append('lastname', userItem.value.lastname);
+            formData.append('email', userItem.value.email);
+            formData.append('password', userItem.value.password);
+            formData.append('gender', userItem.value.gender.toString());
+            formData.append('status', userItem.value.status.toString());
+            formData.append('file', avatarList.value[0].raw);
 
             store
-              .dispatch(Actions.ADD_USER, userItem.value)
+              .dispatch(Actions.ADD_USER, formData)
               .then(result => {
                 if (result.isSuccess) {
                   showSuccessMessage('Kullanıcı başarıyla eklendi.').then(async () => {
@@ -423,6 +450,7 @@ export default defineComponent({
       handleSuccess,
       handlePictureCardPreview,
       handleRemove,
+      handleChange,
       avatarList,
       uploadRef,
       loading,

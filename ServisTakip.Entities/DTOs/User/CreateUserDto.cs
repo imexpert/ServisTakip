@@ -1,8 +1,10 @@
-﻿namespace ServisTakip.Entities.DTOs.User
+﻿using Microsoft.AspNetCore.Http;
+
+namespace ServisTakip.Entities.DTOs.User
 {
     public class CreateUserDto
     {
-        public object Avatar { get; set; }
+        public byte[] Avatar { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }

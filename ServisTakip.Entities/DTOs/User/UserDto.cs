@@ -18,7 +18,7 @@ namespace ServisTakip.Entities.DTOs.User
         public string Fullname => Firstname + " " + Lastname;
         public bool IsAdmin { get; set; }
         public DateTime LastLogin { get; set; }
-        public string LastLoginString => LastLogin.ToString("dd/MM/yyyy HH:mm:ss");
+        public string LastLoginString => LastLogin > DateTime.MinValue ? LastLogin.ToString("dd/MM/yyyy HH:mm:ss") : "-";
         // public string Groups => string.Join(" , ", this.UserGroups != null ? this.UserGroups?.Select(s => s.Group.GroupName).ToList<string>(): "");
         public string Groups
         {

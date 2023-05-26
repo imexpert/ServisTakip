@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using ServisTakip.Business.Handlers.Authorizations.Commands;
 using ServisTakip.Business.Handlers.Users.Commands;
 using ServisTakip.Business.Handlers.Users.Queries;
@@ -14,14 +16,33 @@ namespace ServisTakip.Api.Controllers
         /// </summary>
         /// <param name="createUserDto"></param>
         /// <returns></returns>
-        [Consumes("application/json")]
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateUserDto>))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPost]
-        public async Task<IActionResult> AddUserAsync([FromBody] CreateUserDto createUserDto)
+        [EnableCors("AllowOrigin")]
+        public async Task<IActionResult> AddUserAsync()
         {
-            return CreateActionResult(await Mediator.Send(new AddUserCommand() { Model = createUserDto }));
+            var form = await Request.ReadFormAsync();
+            var file = form.Files.GetFile("file");
+
+            var model = new CreateUserDto
+            {
+                Firstname = form["firstname"],
+                Lastname = form["lastname"],
+                Email = form["email"],
+                Password = form["password"],
+                Gender = byte.Parse(form["gender"]),
+                Status = bool.Parse(form["status"])
+            };
+
+            byte[] fileBytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                fileBytes = memoryStream.ToArray();
+            }
+
+            model.Avatar = fileBytes;
+
+            return CreateActionResult(await Mediator.Send(new AddUserCommand() { Model = model }));
         }
 
         /// <summary>
