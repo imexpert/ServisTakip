@@ -30,6 +30,17 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
+  async [Actions.GET_USER](id) {
+    return await ApiService.getWithParamUrl("Users/GetUser?id=" + id)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
   async [Actions.ADD_USER](user) {
     ApiService.vueInstance.axios.defaults.headers['Content-Type'] = 'multipart/form-data';
     return await ApiService.post("Users/AddUser", user)
@@ -43,6 +54,7 @@ export default class UserModule extends VuexModule {
 
   @Action
   async [Actions.UPDATE_USER](user) {
+    ApiService.vueInstance.axios.defaults.headers['Content-Type'] = 'multipart/form-data';
     return await ApiService.put("Users/UpdateUser", user)
       .then(({ data }) => {
         return data;

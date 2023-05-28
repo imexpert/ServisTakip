@@ -14,7 +14,6 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="createUserDto"></param>
         /// <returns></returns>
         [HttpPost]
         [EnableCors("AllowOrigin")]
@@ -36,7 +35,7 @@ namespace ServisTakip.Api.Controllers
             byte[] fileBytes;
             using (var memoryStream = new MemoryStream())
             {
-                file.CopyTo(memoryStream);
+                await file.CopyToAsync(memoryStream);
                 fileBytes = memoryStream.ToArray();
             }
 
@@ -48,16 +47,35 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="updateUserDto"></param>
         /// <returns></returns>
-        [Consumes("application/json")]
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<UpdateUserDto>))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserDto updateUserDto)
+        [EnableCors("AllowOrigin")]
+        public async Task<IActionResult> UpdateUserAsync()
         {
-            return CreateActionResult(await Mediator.Send(new UpdateUserCommand() { Model = updateUserDto }));
+            var form = await Request.ReadFormAsync();
+            var file = form.Files.GetFile("file");
+
+            var model = new UpdateUserDto
+            {
+                Id = long.Parse(form["id"]),
+                Firstname = form["firstname"],
+                Lastname = form["lastname"],
+                Email = form["email"],
+                Gender = byte.Parse(form["gender"]),
+                Status = bool.Parse(form["status"]),
+                Groups = form["groups"].ToList()
+            };
+            
+            using (var memoryStream = new MemoryStream())
+            {
+                if (file is { Length: > 0 })
+                {
+                    await file.CopyToAsync(memoryStream);
+                    model.Avatar = memoryStream.ToArray();
+                }
+            }
+
+            return CreateActionResult(await Mediator.Send(new UpdateUserCommand() { Model = model }));
         }
 
         /// <summary>
@@ -101,6 +119,21 @@ namespace ServisTakip.Api.Controllers
         public async Task<IActionResult> GetUserListAsync()
         {
             return CreateActionResult(await Mediator.Send(new GetUserListQuery()));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<UserDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetUserAsync(long id)
+        {
+            return CreateActionResult(await Mediator.Send(new GetUserQuery() { Id = id }));
         }
     }
 }

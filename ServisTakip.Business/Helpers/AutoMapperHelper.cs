@@ -31,6 +31,7 @@ namespace ServisTakip.Business.Helpers
         public AutoMapperHelper()
         {
             CreateMap<User, CreateUserDto>().ReverseMap();
+            CreateMap<User, UpdateUserDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Sector, SectorDto>().ReverseMap();
             CreateMap<Company, CompanyDto>().ReverseMap();

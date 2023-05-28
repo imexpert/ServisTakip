@@ -27,6 +27,7 @@ import DeviceModelModule from "@/store/modules/DeviceModelModule";
 import ContractCodeModule from "@/store/modules/ContractCodeModule";
 import ContractModule from "@/store/modules/ContractModule";
 import ReportModule from "@/store/modules/ReportModule";
+import GroupModule from "@/store/modules/GroupModule";
 import { Actions } from "./enums/StoreEnums";
 
 config.rawError = true;
@@ -62,19 +63,20 @@ const store = createStore({
     DeviceModelModule,
     ContractCodeModule,
     ContractModule,
-    ReportModule
+    ReportModule,
+    GroupModule
   },
   mutations: {
     setCustomerId(state, id) {
       state.customerId = id
     },
     setLoading(state, isLoading) {
-      if(isLoading) {
+      if (isLoading) {
         store.dispatch(Actions.ADD_BODY_LOADING);
       } else {
         store.dispatch(Actions.REMOVE_BODY_LOADING);
       }
-      
+
       state.loading = isLoading;
     },
   },

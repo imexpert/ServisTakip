@@ -22,6 +22,7 @@ enum Actions {
   GET_CONTRACTCODE_LIST = "getContractCodelist",
   GET_OFFERSUBJECTCODE_LIST = "getOfferSubjectCodelist",
   GET_CITY_LIST = "getCitylist",
+  GET_GROUP_LIST = "getGrouplist",
   GET_DISTRICT_LIST = "getDistrictlist",
   GET_QUERTER_LIST = "getQuerterlist",
   ADD_CUSTOMER = "addCustomer",
@@ -51,6 +52,7 @@ enum Actions {
 
   GET_TECHNICIAN_LIST = "getTechnicianlist",
   GET_USER_LIST = "getUserList",
+  GET_USER = "getUser",
   ADD_USER = "addUser",
   DELETE_USER = "deleteUser",
   UPDATE_USER = "updateUser",
