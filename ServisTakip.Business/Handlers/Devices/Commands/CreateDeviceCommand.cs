@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Aspects.Autofac.Transaction;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
+﻿using ServisTakip.Core.Aspects.Autofac.Transaction;
 using ServisTakip.Entities.DTOs.Devices;
 
 namespace ServisTakip.Business.Handlers.Devices.Commands
@@ -18,20 +11,14 @@ namespace ServisTakip.Business.Handlers.Devices.Commands
             [TransactionScopeAspectAsync]
             public async Task<ResponseMessage<DeviceDto>> Handle(CreateDeviceCommand request, CancellationToken cancellationToken)
             {
-                var deviceRepo = ServiceTool.ServiceProvider.GetService<IDeviceRepository>();
-                var contractRepo = ServiceTool.ServiceProvider.GetService<IContractRepository>();
-                var contractMaintenancesRepo = ServiceTool.ServiceProvider.GetService<IContractMaintenanceRepository>();
-
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
                 #region Cihaz Ekleme
-                var isSerialNoExists = await deviceRepo.GetDeviceBySeriNo(request.Model.SerialNumber);
+                var isSerialNoExists = await Tools.DeviceRepository.GetDeviceBySeriNo(request.Model.SerialNumber);
                 if (isSerialNoExists != null && isSerialNoExists.Id > 0)
                     return ResponseMessage<DeviceDto>.Fail("Bu seri no'ya sahip cihaz daha önce eklenmiş.");
                 
-                var device = mapper.Map<Device>(request.Model);
-                deviceRepo.Add(device);
-                await deviceRepo.SaveChangesAsync();
+                var device = Tools.Mapper.Map<Device>(request.Model);
+                Tools.DeviceRepository.Add(device);
+                await Tools.DeviceRepository.SaveChangesAsync();
                 #endregion
 
                 #region Cihaz Sözleşme Ekleme
@@ -44,8 +31,8 @@ namespace ServisTakip.Business.Handlers.Devices.Commands
                     StartDate = device.AssemblyDate,
                     Status = true,
                 };
-                contractRepo.Add(contract);
-                await contractRepo.SaveChangesAsync();
+                Tools.ContractRepository.Add(contract);
+                await Tools.ContractRepository.SaveChangesAsync();
                 #endregion
 
                 #region Cihaz Sözleşme Bakım Ekleme
@@ -65,11 +52,11 @@ namespace ServisTakip.Business.Handlers.Devices.Commands
                     dt = contractMaintenance.EndDate.AddDays(1);
                 }
 
-                contractMaintenancesRepo.AddRange(contractMaintenances);
-                await contractMaintenancesRepo.SaveChangesAsync();
+                Tools.ContractMaintenanceRepository.AddRange(contractMaintenances);
+                await Tools.ContractMaintenanceRepository.SaveChangesAsync();
                 #endregion
 
-                var deviceDto = mapper.Map<DeviceDto>(device);
+                var deviceDto = Tools.Mapper.Map<DeviceDto>(device);
                 return ResponseMessage<DeviceDto>.Success(deviceDto);
             }
         }

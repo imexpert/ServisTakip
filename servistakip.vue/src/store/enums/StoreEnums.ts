@@ -4,14 +4,17 @@ enum Actions {
 
   ADD_BODY_CLASSNAME = "addBodyClassName",
   REMOVE_BODY_CLASSNAME = "removeBodyClassName",
+  REMOVE_BODY_LOADING = "removeBodyLoading",
+  ADD_BODY_LOADING = "addBodyLoading",
   ADD_BODY_ATTRIBUTE = "addBodyAttribute",
   REMOVE_BODY_ATTRIBUTE = "removeBodyAttribute",
   ADD_CLASSNAME = "addClassName",
   VERIFY_AUTH = "verifyAuth",
+  VERIFY_ADMIN = "verifyAdmin",
   LOGIN = "login",
   LOGOUT = "logout",
   REGISTER = "register",
-  UPDATE_USER = "updateUser",
+
   FORGOT_PASSWORD = "forgotPassword",
   SET_BREADCRUMB_ACTION = "setBreadcrumbAction",
   SET_THEME_MODE_ACTION = "setThemeModeAction",
@@ -19,6 +22,7 @@ enum Actions {
   GET_CONTRACTCODE_LIST = "getContractCodelist",
   GET_OFFERSUBJECTCODE_LIST = "getOfferSubjectCodelist",
   GET_CITY_LIST = "getCitylist",
+  GET_GROUP_LIST = "getGrouplist",
   GET_DISTRICT_LIST = "getDistrictlist",
   GET_QUERTER_LIST = "getQuerterlist",
   ADD_CUSTOMER = "addCustomer",
@@ -34,8 +38,10 @@ enum Actions {
   GET_CUSTOMER_BY_FILTER = "getCustomerByFilter",
   ADD_DEVICE = "addDevice",
   UPDATE_DEVICE = "updateDevice",
+  UPDATE_DEVICETRANSFER = "updateDeviceTransfer",
   GET_DEVICE_BY_FILTER = "getDeviceByFilter",
   GET_DEVICE_BY_ID = "getDeviceById",
+  GET_DEVICELIST_BY_ADDRESSID = "getDeviceListByAddressId",
   GET_DEVICE_BY_SERIALNO_FILTER = "getDeviceBySerialNoFilter",
   GET_DEVICE_BY_MODEL_NAME_FILTER = "getDeviceByModelNameFilter",
   GET_MAIN_PAGE_CUSTOMER = "getMainPageCustomer",
@@ -45,10 +51,17 @@ enum Actions {
   GET_RESULTCODE_LIST = "getResultCodelist",
 
   GET_TECHNICIAN_LIST = "getTechnicianlist",
+  GET_USER_LIST = "getUserList",
+  GET_USER = "getUser",
+  ADD_USER = "addUser",
+  DELETE_USER = "deleteUser",
+  UPDATE_USER = "updateUser",
+  CHANGE_USER_PASSWORD = "changeUserPasword",
 
   ADD_DEVICESERVICE = "addDeviceService",
   ADD_BAKIMFORMUDEVICESERVICE = "addBakimFormuDeviceService",
   GET_RECEIVEDDEVICESERVICE = "getReceivedDeviceService",
+  GET_OPENDEVICESERVICE = "getOpenDeviceService",
   GET_KAPATILMISDEVICESERVICE = "getKapatilmisService",
   GET_PARTSEXCHANGEDEVICESERVICELIST = "getPartsExchangeDeviceServiceList",
   GET_DEVICESERVICEWITHID = "getDeviceServiceWithId",
@@ -97,6 +110,8 @@ enum Actions {
 
   GET_SOZLESMEBASIM = "getSozlesmeBasim",
   GET_MUSTERIRAPOR = "getMusteriRapor",
+  GET_MUSTERIRAPORFILEASPDF = "getMusteriRaporFileAsPdf",
+  GET_MUSTERIRAPORFILEASEXCEL = "getMusteriRaporFileAsExcel",
 }
 
 enum Mutations {

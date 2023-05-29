@@ -8,5 +8,7 @@ namespace ServisTakip.DataAccess.Abstract
         List<OperationClaim> GetClaims(long userId);
         Task<User> GetByRefreshToken(string refreshToken);
         Task<List<User>> GetTechnicianUserListAsync(CancellationToken cancellationToken);
+        Task<List<User>> GetUserListAsync(CancellationToken cancellationToken);
+        Task<User> GetUserAsync(long id, CancellationToken cancellationToken);
     }
 }

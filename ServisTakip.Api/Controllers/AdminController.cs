@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using ServisTakip.Api.Hubs;
-using ServisTakip.Business.Handlers.Sectors.Queries;
 using ServisTakip.Core.Utilities.Results;
 using ServisTakip.Entities.DTOs.Sectors;
 using StackExchange.Redis;

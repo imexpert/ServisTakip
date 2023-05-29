@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ServisTakip.Core.Entities.Concrete;
-using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Sectors;
 using ServisTakip.Entities.DTOs.User;
@@ -31,6 +30,9 @@ namespace ServisTakip.Business.Helpers
         public AutoMapperHelper()
         {
             CreateMap<User, CreateUserDto>().ReverseMap();
+            CreateMap<User, UpdateUserDto>().ReverseMap();
+            CreateMap<User, DeleteUserDto>().ReverseMap();
+            CreateMap<User, ChangeUserPasswordDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Sector, SectorDto>().ReverseMap();
             CreateMap<Company, CompanyDto>().ReverseMap();
@@ -50,6 +52,7 @@ namespace ServisTakip.Business.Helpers
             CreateMap<Contract, ContractDto>().ReverseMap();
             CreateMap<Device, DeviceDto>().ReverseMap();
             CreateMap<Device, CreateDeviceDto>().ReverseMap();
+            CreateMap<Device, UpdateDeviceDto>().ReverseMap();
             CreateMap<DeviceService, CreateBakimFormuDto>().ReverseMap();
             CreateMap<ContractCode, ContractCodeDto>().ReverseMap();
             CreateMap<DeviceServiceDto, DeviceService>().ReverseMap();

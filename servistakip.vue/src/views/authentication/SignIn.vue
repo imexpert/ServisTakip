@@ -1,6 +1,6 @@
 <template>
   <!--begin::Wrapper-->
-  <div class="w-lg-500px bg-white rounded shadow-sm p-10 p-lg-15 mx-auto" v-loading="loading">
+  <div class="w-lg-500px bg-white rounded shadow-sm p-10 p-lg-15 mx-auto">
     <el-form
       status-icon
       :rules="loginRules"
@@ -84,7 +84,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref,onMounted } from 'vue';
 import { Search } from '@element-plus/icons-vue';
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import { Actions } from '@/store/enums/StoreEnums';
@@ -116,6 +116,10 @@ export default defineComponent({
     var loginModel = ref<ILoginModel>({
       email: '',
       password: '',
+    });
+
+    onMounted(async () => {
+      store.dispatch(Actions.REMOVE_BODY_LOADING);
     });
 
     const submitButton = ref<HTMLButtonElement | null>(null);

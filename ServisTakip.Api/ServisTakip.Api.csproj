@@ -19,6 +19,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="ReportFiles\MusteriRaporu.frx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="ReportFiles\OfferReports\1.frx">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

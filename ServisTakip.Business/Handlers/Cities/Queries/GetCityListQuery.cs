@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.Cities;
+﻿using ServisTakip.Entities.DTOs.Cities;
 
 namespace ServisTakip.Business.Handlers.Cities.Queries
 {
@@ -14,11 +8,8 @@ namespace ServisTakip.Business.Handlers.Cities.Queries
         {
             public async Task<ResponseMessage<List<CityDto>>> Handle(GetCityListQuery request, CancellationToken cancellationToken)
             {
-                var cityRepo = ServiceTool.ServiceProvider.GetService<ICityRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var cityList = await cityRepo.GetListAsync();
-                var result = mapper.Map<List<CityDto>>(cityList);
+                var cityList = await Tools.CityRepository.GetListAsync();
+                var result = Tools.Mapper.Map<List<CityDto>>(cityList);
                 return ResponseMessage<List<CityDto>>.Success(result);
             }
         }

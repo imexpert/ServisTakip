@@ -749,6 +749,7 @@ export default defineComponent({
     };
 
     async function teknisyenAtaAc(deviceServiceId) {
+      assignTechnicianModel.value.userId = null;
       selectedDeviceServiceId.value = deviceServiceId;
       await getTechnicianList();
       teknisyenAtaDialogVisible.value = true;

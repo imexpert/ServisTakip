@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.DetectionCodes;
+﻿using ServisTakip.Entities.DTOs.DetectionCodes;
 
 namespace ServisTakip.Business.Handlers.DetectionCodes.Queries
 {
@@ -14,11 +8,8 @@ namespace ServisTakip.Business.Handlers.DetectionCodes.Queries
         {
             public async Task<ResponseMessage<List<DetectionCodeDto>>> Handle(GetDetectionCodeListQuery request, CancellationToken cancellationToken)
             {
-                var detectionRepo = ServiceTool.ServiceProvider.GetService<IDetectionCodeRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var detectionList = await detectionRepo.GetListAsync();
-                var result = mapper.Map<List<DetectionCodeDto>>(detectionList);
+                var detectionList = await Tools.DetectionCodeRepository.GetListAsync();
+                var result = Tools.Mapper.Map<List<DetectionCodeDto>>(detectionList);
                 return ResponseMessage<List<DetectionCodeDto>>.Success(result);
             }
         }

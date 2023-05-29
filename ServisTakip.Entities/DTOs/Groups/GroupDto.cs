@@ -2,6 +2,7 @@
 {
     public class GroupDto
     {
+        public long Id { get; set; }
         public string GroupName { get; set; }
     }
 }

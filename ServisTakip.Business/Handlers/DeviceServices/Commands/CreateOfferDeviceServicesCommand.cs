@@ -1,12 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
-using ServisTakip.Entities.DTOs.DeviceServices;
-using ServisTakip.Entities.Enums;
+﻿using ServisTakip.Entities.DTOs.DeviceServices;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 {
@@ -17,9 +9,6 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
         {
             public async Task<ResponseMessage<CreateDeviceServiceDto>> Handle(CreateOfferDeviceServicesCommand request, CancellationToken cancellationToken)
             {
-                var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
                 var deviceService = new DeviceService()
                 {
                     LinkedDeviceServiceId = request.ClosedDeviceService.Id,
@@ -34,16 +23,16 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                     deviceService.StatusCode = ((int)StatusCodes.ParcaDegisimTalebi);
                     deviceService.ServiceBootCode = "PDY-01";
 
-                    deviceServiceRepo.Add(deviceService);
-                    await deviceServiceRepo.SaveChangesAsync();
+                    Tools.DeviceServiceRepository.Add(deviceService);
+                    await Tools.DeviceServiceRepository.SaveChangesAsync();
                 }
                 else if(request.ClosedDeviceService.ServiceResultCode == "TEK")
                 {
                     deviceService.StatusCode = ((int)StatusCodes.TeklifGonderilecek);
                     deviceService.ServiceBootCode = "TEK-1";
 
-                    deviceServiceRepo.Add(deviceService);
-                    await deviceServiceRepo.SaveChangesAsync();
+                    Tools.DeviceServiceRepository.Add(deviceService);
+                    await Tools.DeviceServiceRepository.SaveChangesAsync();
                 }
 
                 return ResponseMessage<CreateDeviceServiceDto>.Success(new CreateDeviceServiceDto());

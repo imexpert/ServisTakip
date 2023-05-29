@@ -1,10 +1,10 @@
-import ApiService from "@/core/services/ApiService";
-import JwtService from "@/core/services/JwtService";
-import { Actions, Mutations } from "@/store/enums/StoreEnums";
-import { Module, Action, Mutation, VuexModule } from "vuex-module-decorators";
-import router from "@/router";
-import { showError, showErrorMessage } from "@/core/plugins/Utils";
-import store from "@/store";
+import ApiService from '@/core/services/ApiService';
+import JwtService from '@/core/services/JwtService';
+import { Actions, Mutations } from '@/store/enums/StoreEnums';
+import { Module, Action, Mutation, VuexModule } from 'vuex-module-decorators';
+import router from '@/router';
+import { showError, showErrorMessage } from '@/core/plugins/Utils';
+import store from '@/store';
 
 export interface User {
   firstname: string;
@@ -83,7 +83,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
 
   @Action
   [Actions.LOGIN](credentials) {
-    return ApiService.post("Auth/login", credentials)
+    return ApiService.post('Auth/login', credentials)
       .then(({ data }) => {
         console.log(data);
         if (data.isSuccess) {
@@ -94,7 +94,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
         return data;
       })
       .catch(({ response }) => {
-        showErrorMessage("Giriş yapma sırasında hata oluştu.");
+        showErrorMessage('Giriş yapma sırasında hata oluştu.');
       });
   }
 
@@ -106,14 +106,14 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
 
   @Mutation
   [Mutations.SIGNOUT]() {
-    console.log("SIGNOUT")
+    console.log('SIGNOUT');
     this.context.commit(Mutations.PURGE_AUTH);
     router.push({ name: 'sign-in' });
   }
 
   @Action
   [Actions.REGISTER](credentials) {
-    return ApiService.post("register", credentials)
+    return ApiService.post('register', credentials)
       .then(({ data }) => {
         this.context.commit(Mutations.SET_AUTH, data);
       })
@@ -124,7 +124,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
 
   @Action
   [Actions.FORGOT_PASSWORD](payload) {
-    return ApiService.post("forgot_password", payload)
+    return ApiService.post('forgot_password', payload)
       .then(() => {
         this.context.commit(Mutations.SET_ERROR, {});
       })
@@ -137,16 +137,21 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
   [Actions.VERIFY_AUTH]() {
     if (JwtService.getToken()) {
       ApiService.setHeader();
-      ApiService.get("Auth/VerifyToken")
-        .then(({ data }) => {
-
-        })
+      ApiService.get('Auth/VerifyToken')
+        .then(({ data }) => {})
         .catch(({ response }) => {
           store.commit(Mutations.PURGE_AUTH);
           router.push({ name: 'sign-in' });
         });
     } else {
       this.context.commit(Mutations.PURGE_AUTH);
+    }
+  }
+
+  @Action
+  [Actions.VERIFY_ADMIN](path) {
+    if (path.includes('admin') && !JwtService.isAdmin()) {
+      router.push({ name: 'anaSayfa' });
     }
   }
 }

@@ -28,4 +28,26 @@ export default class ReportModule extends VuexModule {
         showError(response);
       });
   }
+
+  @Action
+  [Actions.GET_MUSTERIRAPORFILEASPDF](filter) {
+    return ApiService.post("Reports/MusteriRaporFileAsPdf", filter)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  [Actions.GET_MUSTERIRAPORFILEASEXCEL](filter) {
+    return ApiService.post("Reports/MusteriRaporFileAsExcel", filter)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
 }

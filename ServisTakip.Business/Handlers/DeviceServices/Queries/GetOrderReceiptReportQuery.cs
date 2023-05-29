@@ -1,41 +1,28 @@
 ﻿using FastReport;
 using FastReport.Data;
-using MediatR;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.DataAccess.Abstract;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Extensions;
 using FastReport.Export.Pdf;
 using FastReport.Utils;
 using ServisTakip.Entities.DTOs.Reports;
-using AutoMapper;
 using ServisTakip.Entities.DTOs.DeviceServiceParts;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Queries
 {
-    public class GetOrderReceiptReportQuery : IRequest<ResponseMessage<TechnicianDeviceServiceReport>>
+    public class GetOrderReceiptReportQuery : IRequest<ResponseMessage<ReportModel>>
     {
         public long DeviceServiceId { get; set; }
-        public class GetOrderReceiptReportQueryHandler : IRequestHandler<GetOrderReceiptReportQuery, ResponseMessage<TechnicianDeviceServiceReport>>
+        public class GetOrderReceiptReportQueryHandler : IRequestHandler<GetOrderReceiptReportQuery, ResponseMessage<ReportModel>>
         {
-            public async Task<ResponseMessage<TechnicianDeviceServiceReport>> Handle(GetOrderReceiptReportQuery request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<ReportModel>> Handle(GetOrderReceiptReportQuery request, CancellationToken cancellationToken)
             {
-                var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var offerRepo = ServiceTool.ServiceProvider.GetService<IOfferRepository>();
-                var userRepo = ServiceTool.ServiceProvider.GetService<IUserRepository>();
-                var deviceServicePartRepo = ServiceTool.ServiceProvider.GetService<IDeviceServicePartRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
+                var deviceService = await Tools.DeviceServiceRepository.GetDeviceServiceWithId(request.DeviceServiceId, cancellationToken);
 
-                var deviceService = await deviceServiceRepo.GetDeviceServiceWithId(request.DeviceServiceId, cancellationToken);
+                var deviceServiceParts = await Tools.DeviceServicePartRepository.GetListAsync(s => s.DeviceServiceId == request.DeviceServiceId);
 
-                var deviceServiceParts = await deviceServicePartRepo.GetListAsync(s => s.DeviceServiceId == request.DeviceServiceId);
+                var offer = await Tools.OfferRepository.GetOfferAsync(request.DeviceServiceId, cancellationToken);
 
-                var offer = await offerRepo.GetOfferAsync(request.DeviceServiceId, cancellationToken);
+                var user = await Tools.UserRepository.GetAsync(s => s.Email == offer.UpdateUsername);
 
-                var user = await userRepo.GetAsync(s => s.Email == offer.UpdateUsername);
-
-                var parts = mapper.Map<List<DeviceServicePartDto>>(deviceServiceParts);
+                var parts = Tools.Mapper.Map<List<DeviceServicePartDto>>(deviceServiceParts);
 
                 RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
 
@@ -105,12 +92,12 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Queries
                 using MemoryStream ms = new MemoryStream();
                 report.Export(export, ms);
 
-                TechnicianDeviceServiceReport rpr = new TechnicianDeviceServiceReport()
+                ReportModel rpr = new ReportModel()
                 {
                     Report = ms.ToArray()
                 };
 
-                return ResponseMessage<TechnicianDeviceServiceReport>.Success(rpr);
+                return ResponseMessage<ReportModel>.Success(rpr);
             }
         }
     }

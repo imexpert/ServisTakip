@@ -1,6 +1,7 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw, useRoute } from "vue-router";
 import store from "@/store";
 import { Actions } from "@/store/enums/StoreEnums";
+import JwtService from '@/core/services/JwtService';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -43,6 +44,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "bakimRaporu",
         component: () => import("@/views/reports/BakimRaporu.vue"),
       },
+      {
+        path: "/admin/kullaniciYonetimi",
+        name: "kullaniciYonetimi",
+        component: () => import("@/views/admin/KullaniciYonetimi.vue"),
+      },
     ],
   },
   {
@@ -69,6 +75,10 @@ const router = createRouter({
 });
 
 router.beforeEach(() => {
+  var route = useRoute();
+
+  var currentUrl = window.location.pathname;
+  console.log(window.location.href);
   store.dispatch(Actions.VERIFY_AUTH);
 
   // Scroll page to top on every route change
@@ -76,5 +86,9 @@ router.beforeEach(() => {
     window.scrollTo(0, 0);
   }, 100);
 });
+
+router.afterEach(() => {
+  // store.dispatch(Actions.VERIFY_ADMIN);
+})
 
 export default router;

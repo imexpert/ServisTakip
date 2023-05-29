@@ -27,7 +27,7 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="deviceId"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -72,6 +72,21 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="addressId"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetDeviceListByAddressIdAsync(long addressId)
+        {
+            return CreateActionResult(await Mediator.Send(new GetDeviceListByAddressIdQuery() { AddressId = addressId }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [Consumes("application/json")]
@@ -94,9 +109,24 @@ namespace ServisTakip.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateDeviceDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> UpdateDeviceAsync([FromBody] CreateDeviceDto model)
+        public async Task<IActionResult> UpdateDeviceAsync([FromBody] UpdateDeviceDto model)
         {
             return CreateActionResult(await Mediator.Send(new UpdateDeviceCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceTransferDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
+        public async Task<IActionResult> UpdateDeviceTransferAsync([FromBody] DeviceTransferDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new UpdateDeviceTransferCommand() { Model = model }));
         }
     }
 }

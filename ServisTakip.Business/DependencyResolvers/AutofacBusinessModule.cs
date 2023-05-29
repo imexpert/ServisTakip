@@ -3,7 +3,6 @@ using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 using FluentValidation;
-using MediatR;
 using ServisTakip.Core.Utilities.Interceptors;
 using ServisTakip.DataAccess.Concrete.EntityFramework.Contexts;
 

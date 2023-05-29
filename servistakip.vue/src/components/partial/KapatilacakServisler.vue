@@ -110,6 +110,7 @@
         label-position="top"
       >
         <div class="row">
+          <!-- Servis Kodu -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -124,6 +125,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Açılış Tarihi -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -140,6 +143,7 @@
             <!--end::Input group-->
           </div>
 
+          <!-- Açıklama -->
           <div class="col-md-6">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -154,6 +158,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Teknisyen Veriliş Tarihi -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -168,6 +174,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Telefon -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -182,6 +190,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Teknisyen -->
           <div class="col-md-6">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -196,6 +206,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Talep Bildiren -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -210,6 +222,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Tespit Kodu -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -222,7 +236,12 @@
                 <el-select placeholder="Tespit Kodu" filterable clearable v-model="deviceServiceItem.detectionCode">
                   <el-option v-for="item in detectionCodeList" :key="item.code" :label="item.name" :value="item.code">
                     <div class="row">
-                      <div class="col-md-9" style="font-size: 12px">{{ item.code }} {{ item.name }}</div>
+                      <div class="col-md-3" style="font-size: 12px">
+                        {{ item.code }}
+                      </div>
+                      <div class="col-md-9" style="font-size: 12px">
+                        {{ item.name }}
+                      </div>
                     </div>
                   </el-option>
                 </el-select>
@@ -230,6 +249,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Tespit Açıklama -->
           <div class="col-md-6">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -244,6 +265,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Sonuç Kodu -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -256,7 +279,12 @@
                 <el-select placeholder="Sonuç Kodu" filterable clearable v-model="deviceServiceItem.serviceResultCode">
                   <el-option v-for="item in resultCodeList" :key="item.code" :label="item.name" :value="item.code">
                     <div class="row">
-                      <div class="col-md-9" style="font-size: 12px">{{ item.code }} {{ item.name }}</div>
+                      <div class="col-md-3" style="font-size: 12px">
+                        {{ item.code }}
+                      </div>
+                      <div class="col-md-9" style="font-size: 12px">
+                        {{ item.name }}
+                      </div>
                     </div>
                   </el-option>
                 </el-select>
@@ -264,6 +292,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Kapanış Tarihi -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -284,6 +314,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Kapanış Açıklama -->
           <div class="col-md-6">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -298,6 +330,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- S/B Sayaç -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -312,6 +346,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Renkli Sayaç -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -328,6 +364,7 @@
           </div>
         </div>
         <div class="row">
+          <!-- Toner Tipi -->
           <div class="col-md-3">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -346,6 +383,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Siyah Adet -->
           <div class="col-md-2">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -360,6 +399,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Mavi Adet -->
           <div class="col-md-2">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -374,6 +415,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Sarı Adet -->
           <div class="col-md-2">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -388,6 +431,8 @@
             </div>
             <!--end::Input group-->
           </div>
+
+          <!-- Kırmızı Adet -->
           <div class="col-md-2">
             <!--begin::Input group-->
             <div class="d-flex flex-column fv-row">
@@ -404,24 +449,37 @@
           </div>
         </div>
         <div class="row">
+          <!-- dr -->
           <div class="col-md-1">
             <el-checkbox label="Dr" v-model="deviceServiceItem.dr" />
           </div>
+
+          <!-- bc -->
           <div class="col-md-1">
             <el-checkbox label="Bc" v-model="deviceServiceItem.bc" />
           </div>
+
+          <!-- pa -->
           <div class="col-md-1">
             <el-checkbox label="Pa" v-model="deviceServiceItem.pa" />
           </div>
+
+          <!-- bk -->
           <div class="col-md-1">
             <el-checkbox label="Bk" v-model="deviceServiceItem.bk" />
           </div>
+
+          <!-- dv -->
           <div class="col-md-1">
             <el-checkbox label="Dv" v-model="deviceServiceItem.dv" />
           </div>
+
+          <!-- fs -->
           <div class="col-md-1">
             <el-checkbox label="Fs" v-model="deviceServiceItem.fs" />
           </div>
+
+          <!-- ak -->
           <div class="col-md-1">
             <el-checkbox label="Ak" v-model="deviceServiceItem.ak" />
           </div>
@@ -493,7 +551,7 @@ export default defineComponent({
     var deviceServiceItem = ref<IDeviceServiceData>();
     var talepSonlandirDialogVisible = ref<boolean>(false);
     var technicianItem = ref<IUserData>({
-      avatar: '',
+      avatar: null,
       id: '',
       email: '',
       firstname: '',
@@ -501,6 +559,11 @@ export default defineComponent({
       gender: 0,
       fullname: '',
       admin: false,
+      groups: '',
+      lastLogin: null,
+      lastLoginString: null,
+      status: true,
+      password: null,
     });
 
     const talepSonlandirRef = ref<null | HTMLFormElement>(null);
@@ -584,6 +647,7 @@ export default defineComponent({
             deviceServiceItem.value = result.data;
             technicianItem.value = result.data.user;
             talepSonlandirDialogVisible.value = true;
+            deviceServiceItem.value.resultDate = new Date().toUTCString();
           }
         })
         .catch(() => {

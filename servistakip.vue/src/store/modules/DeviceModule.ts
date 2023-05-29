@@ -31,8 +31,30 @@ export default class DeviceModule extends VuexModule {
   }
 
   @Action
+  [Actions.UPDATE_DEVICETRANSFER](deviceTransfer) {
+    return ApiService.put("Devices/UpdateDeviceTransfer", deviceTransfer)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
   [Actions.GET_DEVICE_BY_ID](filter) {
     return ApiService.getWithParamUrl("Devices/GetDeviceById?deviceId=" + filter)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  [Actions.GET_DEVICELIST_BY_ADDRESSID](addressId) {
+    return ApiService.getWithParamUrl("Devices/GetDeviceListByAddressId?addressId=" + addressId)
       .then(({ data }) => {
         return data;
       })

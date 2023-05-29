@@ -28,6 +28,16 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<List<Device>> GetDeviceListByAddressId(long addressId, CancellationToken cancellationToken)
+        {
+            return await _context.Devices
+                .Include(s => s.DeviceModel)
+                    .ThenInclude(s => s.DeviceBrand)
+                    .ThenInclude(s => s.DeviceType)
+                .Where(s => s.AddressId == addressId)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<Device> GetDeviceInfo(long deviceId)
         {
             return await _context.Devices

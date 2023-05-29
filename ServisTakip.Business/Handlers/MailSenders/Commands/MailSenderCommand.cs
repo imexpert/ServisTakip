@@ -1,6 +1,4 @@
-﻿using MediatR;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Core.Utilities.Settings;
+﻿using ServisTakip.Core.Utilities.Settings;
 using System.Net.Mail;
 using System.Net;
 using Microsoft.Extensions.Options;

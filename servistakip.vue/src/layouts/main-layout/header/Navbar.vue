@@ -10,8 +10,8 @@
         data-kt-menu-attach="parent"
         data-kt-menu-placement="bottom-end"
       >
-        <img v-if="isManLogo" alt="Logo" src="media/avatars/man.png" />
-        <img v-if="isWomanLogo" alt="Logo" src="media/avatars/woman.png" />
+        <img v-if="isManLogo" alt="Logo" src="/media/avatars/man.png" />
+        <img v-if="isWomanLogo" alt="Logo" src="/media/avatars/woman.png" />
         <img v-if="isLogoExists" alt="Logo" :src="logoSrc" />
         <!-- <img src="media/avatars/300-1.jpg" alt="user" /> -->
       </div>
@@ -23,7 +23,7 @@
     <div class="app-navbar-item d-lg-none ms-2 me-n3" title="Show header menu">
       <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_header_menu_toggle">
         <span class="svg-icon svg-icon-1">
-          <inline-svg src="media/icons/duotune/text/txt001.svg" />
+          <inline-svg src="/media/icons/duotune/text/txt001.svg" />
         </span>
       </div>
     </div>
@@ -77,6 +77,7 @@ export default defineComponent({
       }
     } else {
       isLogoExists.value = true;
+      logoSrc.value = 'data:image/jpeg;base64,' + avatar;
     }
 
     const themeMode = computed(() => {

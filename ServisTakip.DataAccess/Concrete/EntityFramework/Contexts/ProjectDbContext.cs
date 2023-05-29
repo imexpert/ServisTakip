@@ -44,6 +44,8 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<DeviceBrand> DeviceBrands { get; set; }
+        public DbSet<DeviceType> DeviceTypes { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<GroupClaim> GroupClaims { get; set; }
         public DbSet<DeviceService> DeviceServices { get; set; }

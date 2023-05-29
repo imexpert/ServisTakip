@@ -1,10 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Extensions;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ServisTakip.Business.Handlers.Devices.Queries
 {
@@ -15,13 +9,11 @@ namespace ServisTakip.Business.Handlers.Devices.Queries
         {
             public async Task<ResponseMessage<List<long>>> Handle(GetDeviceIdListQuery request, CancellationToken cancellationToken)
             {
-                var deviceRepo = ServiceTool.ServiceProvider.GetService<IDeviceRepository>();
-
-                var deviceList = await deviceRepo.Query()
+                var deviceList = await Tools.DeviceRepository.Query()
                     .Include(s => s.Address).ThenInclude(s => s.Customer)
                     .Where(s => s.Address.Customer.CompanyId == Utils.CompanyId)
                     .Select(s => s.Id)
-                    .ToListAsync();
+                    .ToListAsync(cancellationToken: cancellationToken);
 
                 return ResponseMessage<List<long>>.Success(deviceList);
             }

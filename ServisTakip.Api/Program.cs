@@ -67,11 +67,11 @@ app.UseSwaggerUI(c =>
     c.DocExpansion(DocExpansion.None);
 });
 
-app.UseCors("AllowOrigin");
-
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors("AllowOrigin");
 
 app.UseAuthentication();
 

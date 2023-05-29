@@ -17,4 +17,72 @@ export default class UserModule extends VuexModule {
         showError(response);
       });
   }
+
+  @Action
+  async [Actions.GET_USER_LIST]() {
+    return await ApiService.get("Users/GetUserList")
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  async [Actions.GET_USER](id) {
+    return await ApiService.getWithParamUrl("Users/GetUser?id=" + id)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  async [Actions.ADD_USER](user) {
+    ApiService.vueInstance.axios.defaults.headers['Content-Type'] = 'multipart/form-data';
+    return await ApiService.post("Users/AddUser", user)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  async [Actions.UPDATE_USER](user) {
+    ApiService.vueInstance.axios.defaults.headers['Content-Type'] = 'multipart/form-data';
+    return await ApiService.put("Users/UpdateUser", user)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  async [Actions.CHANGE_USER_PASSWORD](user) {
+    return await ApiService.put("Users/ChangeUserPassword", user)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
+  async [Actions.DELETE_USER](id) {
+    return await ApiService.delete("Users/DeleteUser?id= " + id)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
 }

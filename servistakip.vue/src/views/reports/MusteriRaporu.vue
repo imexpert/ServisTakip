@@ -261,9 +261,23 @@
             </div>
             <div class="row mb-3">
               <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
-                <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+                <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-sm btn-lg btn-primary" type="submit">
                   Sorgula
                 </button>
+                <el-dropdown style="padding-left: 5px" trigger="click">
+                  <el-button type="danger">
+                    Dışa Aktar<el-icon class="el-icon--right">
+                      <arrow-down />
+                    </el-icon>
+                  </el-button>
+                  <template #dropdown>
+                    <el-dropdown-menu class="dropdownMenu">
+                      <el-dropdown-item @click="getMusteriRaporFileAsExcel">
+                        <el-icon><Document /></el-icon>Excel
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
               </div>
             </div>
           </el-form>
@@ -274,7 +288,8 @@
                 style="width: 100%; font-size: 12px"
                 height="300"
                 max-height="300px"
-                :default-sort="{ prop: 'startDate', order: 'descending' }"
+                ref="elTable"
+                id="denemeTable"
               >
                 <el-table-column type="index" width="50" />
                 <el-table-column label="Firma Unvan" width="440" sortable>
@@ -298,10 +313,24 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="Semt" width="140" sortable>
+                <el-table-column label="Semt" width="180" sortable>
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
                       <span>{{ scope.row.semt }}</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Adres" width="280" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.acikAdres }}</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Departman" width="180" sortable>
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <span>{{ scope.row.departman }}</span>
                     </div>
                   </template>
                 </el-table-column>
@@ -319,7 +348,7 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="Model Adı" width="140" sortable>
+                <el-table-column label="Model Adı" width="180" sortable>
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
                       <span>{{ scope.row.model }}</span>
@@ -382,10 +411,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, getCurrentInstance, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { useRouter } from 'vue-router';
+import elTableExport from 'el-table-export';
 
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { ICustomerListData } from '@/core/data/CustomerListData';
@@ -397,6 +427,7 @@ import { IDeviceModelData } from '@/core/data/DeviceModelData';
 import { IContractCodeData } from '@/core/data/ContractCodeData';
 import { IContractData } from '@/core/data/ContractData';
 import { ICustomerReportData } from '@/core/data/CustomerReportData';
+import PDFViewer from 'pdf-viewer-vue';
 
 interface IMusteriRaporRaporFilter {
   customerId: string | null;
@@ -416,10 +447,17 @@ interface IMusteriRaporRaporFilter {
 
 export default defineComponent({
   name: 'sozlesmeBasimRapor',
-
+  components: {
+    PDFViewer,
+  },
   setup() {
     const store = useStore();
     const router = useRouter();
+
+    var raporDialogVisible = ref<boolean>(false);
+    var supportType: ['csv', 'txt', 'json', 'xls'];
+    var exportType: 'csv';
+    var musteriRaporu = ref<string>('');
 
     const loading = ref<boolean>(false);
 
@@ -634,6 +672,47 @@ export default defineComponent({
       });
     };
 
+    const handleDownload = value => {
+      var a = document.createElement('a'); //Create <a>
+      a.href = value.src;
+      a.download = 'MusteriRaporu.xlsx'; //File name Here
+      a.click(); //Downloaded file
+      console.log(value);
+    };
+
+    async function getMusteriRaporFileAsPdf() {
+      await store
+        .dispatch(Actions.GET_MUSTERIRAPORFILEASPDF, filter.value)
+        .then(result => {
+          loading.value = false;
+          if (result.isSuccess) {
+            raporDialogVisible.value = true;
+            musteriRaporu.value = 'data:application/pdf;base64,' + result.data.report;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getMusteriRaporFileAsExcel() {
+      await store
+        .dispatch(Actions.GET_MUSTERIRAPORFILEASEXCEL, filter.value)
+        .then(result => {
+          loading.value = false;
+          if (result.isSuccess) {
+            musteriRaporu.value = 'data:application/xls;base64,' + result.data.report;
+            var a = document.createElement('a'); //Create <a>
+            a.href = musteriRaporu.value;
+            a.download = 'MusteriRaporu.xlsx'; //File name Here
+            a.click(); //Downloaded file
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
     async function getMusteriRaporList() {
       await store
         .dispatch(Actions.GET_MUSTERIRAPOR, filter.value)
@@ -649,6 +728,26 @@ export default defineComponent({
         });
     }
 
+    const elTable = ref<null | HTMLTableElement>(null);
+
+    async function exportFile() {
+      var table = document.getElementById('denemeTable');
+      console.log(table);
+
+      elTableExport(elTable.value, {
+        fileName: 'export-demo',
+        type: 'xls',
+        useFormatter: true,
+        withBOM: true,
+      })
+        .then(() => {
+          console.info('ok');
+        })
+        .catch(err => {
+          console.info(err);
+        });
+    }
+
     onMounted(async () => {
       loading.value = true;
       await getSehirList();
@@ -658,6 +757,8 @@ export default defineComponent({
     });
 
     return {
+      raporDialogVisible,
+      elTable,
       filter,
       loading,
       customerInfoList,
@@ -671,6 +772,10 @@ export default defineComponent({
       formSorgulaRef,
       newSorgulaRules,
       totalCount,
+      musteriRaporu,
+      handleDownload,
+      getMusteriRaporFileAsPdf,
+      getMusteriRaporFileAsExcel,
       remoteMusteriAramaMethod,
       remoteMethodModelName,
       onIlceChange,
@@ -678,6 +783,9 @@ export default defineComponent({
       sorgulaSubmit,
       handleSizeChange,
       handleCurrentChange,
+      exportFile,
+      supportType,
+      exportType,
     };
   },
 });

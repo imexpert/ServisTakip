@@ -9,7 +9,7 @@ class SignalRService {
     public static init() {
         // Create your connection
         SignalRService.connection = new signalR.HubConnectionBuilder()
-            .withUrl('https://localhost:6001/servisTakipHub')
+            .withUrl(process.env.VUE_APP_HUB_URL)
             .withAutomaticReconnect([
                 0,
                 2000,
@@ -27,12 +27,10 @@ class SignalRService {
 
     public static create() {
         SignalRService.connection.on("RefreshPage", (e) => {
-            console.log("RefreshPage");
-            window.location.href = "/";
+            window.location.href = "http://www.avrpro.net";
         });
 
         SignalRService.connection.on("CloseSession", async (e) => {
-            console.log("CloseSession");
             await store.dispatch(Actions.LOGOUT);
         });
     }

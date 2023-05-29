@@ -1,26 +1,19 @@
 ﻿using FastReport;
 using FastReport.Data;
-using MediatR;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.DataAccess.Abstract;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Extensions;
 using FastReport.Export.Pdf;
 using FastReport.Utils;
 using ServisTakip.Entities.DTOs.Reports;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Queries
 {
-    public class GetTechnicianDeviceServiceReportQuery : IRequest<ResponseMessage<TechnicianDeviceServiceReport>>
+    public class GetTechnicianDeviceServiceReportQuery : IRequest<ResponseMessage<ReportModel>>
     {
         public long UserId { get; set; }
-        public class GetTechnicianDeviceServiceReportQueryHandler : IRequestHandler<GetTechnicianDeviceServiceReportQuery, ResponseMessage<TechnicianDeviceServiceReport>>
+        public class GetTechnicianDeviceServiceReportQueryHandler : IRequestHandler<GetTechnicianDeviceServiceReportQuery, ResponseMessage<ReportModel>>
         {
-            public async Task<ResponseMessage<TechnicianDeviceServiceReport>> Handle(GetTechnicianDeviceServiceReportQuery request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<ReportModel>> Handle(GetTechnicianDeviceServiceReportQuery request, CancellationToken cancellationToken)
             {
-                var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var deviceServices = await deviceServiceRepo.GetTechnicianDeviceServiceListAsync(request.UserId, cancellationToken);
+                var deviceServices = await Tools.DeviceServiceRepository.GetTechnicianDeviceServiceListAsync(request.UserId, cancellationToken);
 
                 RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
 
@@ -45,12 +38,12 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Queries
                 using MemoryStream ms = new MemoryStream();
                 report.Export(export, ms);
 
-                TechnicianDeviceServiceReport rpr = new TechnicianDeviceServiceReport()
+                ReportModel rpr = new ReportModel()
                 {
                     Report = ms.ToArray()
                 };
 
-                return ResponseMessage<TechnicianDeviceServiceReport>.Success(rpr);
+                return ResponseMessage<ReportModel>.Success(rpr);
             }
         }
     }
