@@ -111,6 +111,7 @@ export default defineComponent({
       }
     } else {
       isLogoExists.value = true;
+      logoSrc.value = 'data:image/jpeg;base64,' + avatar;
     }
 
     console.log(isAdmin);

@@ -1,13 +1,5 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Aspects.Autofac.Transaction;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
+﻿using ServisTakip.Core.Aspects.Autofac.Transaction;
 using ServisTakip.Entities.DTOs.DeviceServices;
-using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 {
@@ -19,17 +11,14 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
             [TransactionScopeAspectAsync]
             public async Task<ResponseMessage<CreateBakimFormuDto>> Handle(CreateBakimFormuCommand request, CancellationToken cancellationToken)
             {
-                var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var bakimFormu = mapper.Map<DeviceService>(request.Model);
+                var bakimFormu = Tools.Mapper.Map<DeviceService>(request.Model);
                 bakimFormu.StatusCode = (int)StatusCodes.TalepSonlandirildi;
 
                 bakimFormu.ResultDate = bakimFormu.FailureDate;
                 bakimFormu.UserAssignDate = bakimFormu.FailureDate;
 
-                deviceServiceRepo.Add(bakimFormu);
-                await deviceServiceRepo.SaveChangesAsync();
+                Tools.DeviceServiceRepository.Add(bakimFormu);
+                await Tools.DeviceServiceRepository.SaveChangesAsync();
 
                 return ResponseMessage<CreateBakimFormuDto>.Success(request.Model);
             }

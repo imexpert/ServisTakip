@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace ServisTakip.Entities.DTOs.User
+﻿namespace ServisTakip.Entities.DTOs.User
 {
     public class CreateUserDto
     {

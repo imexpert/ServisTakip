@@ -1,22 +1,7 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Entities.Concrete;
-using ServisTakip.Core.Extensions;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Core.Utilities.Security.Hashing;
-using ServisTakip.DataAccess.Abstract;
+﻿using ServisTakip.Core.Entities.Concrete;
 using ServisTakip.Entities.DTOs.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ServisTakip.Core.Aspects.Autofac.Transaction;
-using Z.Expressions;
+using StatusCodes = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace ServisTakip.Business.Handlers.Users.Commands
 {
@@ -28,15 +13,11 @@ namespace ServisTakip.Business.Handlers.Users.Commands
             [TransactionScopeAspectAsync]
             public async Task<ResponseMessage<UpdateUserDto>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
             {
-                var userRepo = ServiceTool.ServiceProvider.GetService<IUserRepository>();
-                var userGroupRepo = ServiceTool.ServiceProvider.GetService<IUserGroupRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var isThereAnyUser = await userRepo.GetAsync(u => u.Email == request.Model.Email && u.Id != request.Model.Id);
+                var isThereAnyUser = await Tools.UserRepository.GetAsync(u => u.Email == request.Model.Email && u.Id != request.Model.Id);
                 if (isThereAnyUser != null)
                     return ResponseMessage<UpdateUserDto>.Fail(StatusCodes.Status400BadRequest, "Bu kullanıcı adı zaten eklenmiş.");
 
-                var user = await userRepo.GetAsync(s => s.Id == request.Model.Id);
+                var user = await Tools.UserRepository.GetAsync(s => s.Id == request.Model.Id);
 
                 user.CompanyId = Utils.CompanyId;
                 if (request.Model.Avatar is { Length: > 0 })
@@ -47,12 +28,12 @@ namespace ServisTakip.Business.Handlers.Users.Commands
                 user.Email = request.Model.Email;
                 user.Status = request.Model.Status;
 
-                userRepo.Update(user);
-                await userRepo.SaveChangesAsync();
+                Tools.UserRepository.Update(user);
+                await Tools.UserRepository.SaveChangesAsync();
 
-                var userGroups = await userGroupRepo.GetListAsync(s => s.UserId == request.Model.Id);
-                userGroupRepo.DeleteRange(userGroups.ToList());
-                await userGroupRepo.SaveChangesAsync();
+                var userGroups = await Tools.UserGroupRepository.GetListAsync(s => s.UserId == request.Model.Id);
+                Tools.UserGroupRepository.DeleteRange(userGroups.ToList());
+                await Tools.UserGroupRepository.SaveChangesAsync();
 
                 List<UserGroup> newGroup = new List<UserGroup>();
                 if (request.Model.Groups.Count > 0)
@@ -68,10 +49,10 @@ namespace ServisTakip.Business.Handlers.Users.Commands
                 }
                 
 
-                userGroupRepo.AddRange(newGroup);
-                await userGroupRepo.SaveChangesAsync();
+                Tools.UserGroupRepository.AddRange(newGroup);
+                await Tools.UserGroupRepository.SaveChangesAsync();
 
-                var result = mapper.Map<UpdateUserDto>(user);
+                var result = Tools.Mapper.Map<UpdateUserDto>(user);
 
                 return ResponseMessage<UpdateUserDto>.Success(result);
             }

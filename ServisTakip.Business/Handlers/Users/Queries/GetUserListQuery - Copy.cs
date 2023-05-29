@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.User;
+﻿using ServisTakip.Entities.DTOs.User;
 
 namespace ServisTakip.Business.Handlers.Users.Queries
 {
@@ -14,10 +8,8 @@ namespace ServisTakip.Business.Handlers.Users.Queries
         {
             public async Task<ResponseMessage<List<UserDto>>> Handle(GetUserListQuery request, CancellationToken cancellationToken)
             {
-                var userRepo = ServiceTool.ServiceProvider.GetService<IUserRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-                var userList = await userRepo.GetUserListAsync(cancellationToken);
-                var result = mapper.Map<List<UserDto>>(userList);
+                var userList = await Tools.UserRepository.GetUserListAsync(cancellationToken);
+                var result = Tools.Mapper.Map<List<UserDto>>(userList);
                 return ResponseMessage<List<UserDto>>.Success(result);
             }
         }

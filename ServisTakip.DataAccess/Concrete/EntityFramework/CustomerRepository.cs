@@ -1,16 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using ServisTakip.DataAccess.Abstract;
 using ServisTakip.DataAccess.Concrete.EntityFramework.Contexts;
 using ServisTakip.Core.DataAccess.EntityFramework;
 using ServisTakip.Core.Extensions;
 using ServisTakip.Entities.Concrete;
-using Z.EntityFramework.Plus;
 using ServisTakip.Entities.DTOs.Reports;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Core.Utilities.Results;
-using Azure.Core;
-using System.Threading;
 
 namespace ServisTakip.DataAccess.Concrete.EntityFramework
 {

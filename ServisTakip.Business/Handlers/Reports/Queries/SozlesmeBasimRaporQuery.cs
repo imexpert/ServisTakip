@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
 using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Reports;
 
@@ -18,11 +12,8 @@ namespace ServisTakip.Business.Handlers.Reports.Queries
             public async Task<PagedResult<List<ContractDto>>> Handle(SozlesmeBasimRaporQuery request, CancellationToken cancellationToken)
             {
                 var pagedResult = new PagedResult<List<ContractDto>>();
-
-                var contractRepo = ServiceTool.ServiceProvider.GetService<IContractRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var contractQuery = contractRepo.GetSozlesmeBasimQuery(request.Model);
+                
+                var contractQuery = Tools.ContractRepository.GetSozlesmeBasimQuery(request.Model);
 
                 if (request.Model.CustomerId.HasValue)
                     contractQuery = contractQuery.Where(s => s.Device.Address.CustomerId == request.Model.CustomerId);
@@ -61,7 +52,7 @@ namespace ServisTakip.Business.Handlers.Reports.Queries
                 var contracts = await contractQuery
                     .ToListAsync(cancellationToken);
 
-                pagedResult.Data =  mapper.Map<List<ContractDto>>(contracts);
+                pagedResult.Data =  Tools.Mapper.Map<List<ContractDto>>(contracts);
                 pagedResult.PageSize = request.Model.PageSize;
                 pagedResult.CurrentPage = request.Model.CurrentPage;
                 pagedResult.IsSuccess = true;

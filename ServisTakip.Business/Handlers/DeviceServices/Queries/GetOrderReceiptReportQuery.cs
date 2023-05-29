@@ -1,15 +1,8 @@
 ﻿using FastReport;
 using FastReport.Data;
-using MediatR;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.DataAccess.Abstract;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Extensions;
 using FastReport.Export.Pdf;
 using FastReport.Utils;
 using ServisTakip.Entities.DTOs.Reports;
-using AutoMapper;
 using ServisTakip.Entities.DTOs.DeviceServiceParts;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Queries
@@ -21,21 +14,15 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Queries
         {
             public async Task<ResponseMessage<ReportModel>> Handle(GetOrderReceiptReportQuery request, CancellationToken cancellationToken)
             {
-                var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var offerRepo = ServiceTool.ServiceProvider.GetService<IOfferRepository>();
-                var userRepo = ServiceTool.ServiceProvider.GetService<IUserRepository>();
-                var deviceServicePartRepo = ServiceTool.ServiceProvider.GetService<IDeviceServicePartRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
+                var deviceService = await Tools.DeviceServiceRepository.GetDeviceServiceWithId(request.DeviceServiceId, cancellationToken);
 
-                var deviceService = await deviceServiceRepo.GetDeviceServiceWithId(request.DeviceServiceId, cancellationToken);
+                var deviceServiceParts = await Tools.DeviceServicePartRepository.GetListAsync(s => s.DeviceServiceId == request.DeviceServiceId);
 
-                var deviceServiceParts = await deviceServicePartRepo.GetListAsync(s => s.DeviceServiceId == request.DeviceServiceId);
+                var offer = await Tools.OfferRepository.GetOfferAsync(request.DeviceServiceId, cancellationToken);
 
-                var offer = await offerRepo.GetOfferAsync(request.DeviceServiceId, cancellationToken);
+                var user = await Tools.UserRepository.GetAsync(s => s.Email == offer.UpdateUsername);
 
-                var user = await userRepo.GetAsync(s => s.Email == offer.UpdateUsername);
-
-                var parts = mapper.Map<List<DeviceServicePartDto>>(deviceServiceParts);
+                var parts = Tools.Mapper.Map<List<DeviceServicePartDto>>(deviceServiceParts);
 
                 RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
 

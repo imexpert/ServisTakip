@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using ServisTakip.Business.Handlers.Authorizations.Commands;
 using ServisTakip.Business.Handlers.Users.Commands;
 using ServisTakip.Business.Handlers.Users.Queries;
 using ServisTakip.Core.Utilities.Results;

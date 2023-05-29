@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using ServisTakip.Entities.DTOs.UserGroups;
-using System.Diagnostics.Metrics;
-using System.Linq;
+﻿using ServisTakip.Entities.DTOs.UserGroups;
 
 namespace ServisTakip.Entities.DTOs.User
 {

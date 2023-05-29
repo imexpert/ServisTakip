@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -18,6 +18,15 @@
     <Folder Include="Handlers\OfferSubjectCodes\Commands\" />
     <Folder Include="Handlers\UserGroups\Commands\" />
   </ItemGroup>
+
+	<ItemGroup>
+		<Using Include = "ServisTakip.Business.Helpers" />
+		<Using Include = "ServisTakip.Core.Utilities.Results" />
+		<Using Include = "MediatR" />
+		<Using Include = "ServisTakip.Entities.Concrete" />
+		<Using Include = "ServisTakip.Core.Extensions" />
+		<Using Include = "ServisTakip.Entities.Enums" />
+	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FastReport.Core" Version="2020.1.12" />

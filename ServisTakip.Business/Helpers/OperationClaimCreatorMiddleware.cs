@@ -9,23 +9,23 @@ namespace ServisTakip.Business.Helpers
         public static async Task UseDbOperationClaimCreator(this IApplicationBuilder app)
         {
             await Task.CompletedTask;
-            //var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
+            //var Tools.Mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
             //foreach (var operationName in GetOperationNames())
             //{
-            //    await mediator.Send(new CreateOperationClaimInternalCommand
+            //    await Tools.Mediator.Send(new CreateOperationClaimInternalCommand
             //    {
             //        ClaimName = operationName
             //    });
             //}
 
-            //var operationClaims = (await mediator.Send(new GetOperationClaimsInternalQuery())).Data;
-            //var user = await mediator.Send(new RegisterUserInternalCommand
+            //var operationClaims = (await Tools.Mediator.Send(new GetOperationClaimsInternalQuery())).Data;
+            //var user = await Tools.Mediator.Send(new RegisterUserInternalCommand
             //{
             //    FullName = "System Admin",
             //    Password = "Q1w212*_*",
             //    Email = "admin@adminmail.com",
             //});
-            //await mediator.Send(new CreateUserClaimsInternalCommand
+            //await Tools.Mediator.Send(new CreateUserClaimsInternalCommand
             //{
             //    UserId = 1,
             //    OperationClaims = operationClaims

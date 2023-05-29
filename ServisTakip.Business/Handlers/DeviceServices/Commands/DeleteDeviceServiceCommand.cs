@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-
-namespace ServisTakip.Business.Handlers.DeviceServices.Commands
+﻿namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 {
     public class DeleteDeviceServiceCommand : IRequest<ResponseMessage<bool>>
     {
@@ -14,12 +7,9 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
         {
             public async Task<ResponseMessage<bool>> Handle(DeleteDeviceServiceCommand request, CancellationToken cancellationToken)
             {
-                var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var deviceService = await deviceServiceRepo.GetAsync(s => s.Id == request.Id);
-                deviceServiceRepo.Delete(deviceService);
-                await deviceServiceRepo.SaveChangesAsync();
+                var deviceService = await Tools.DeviceServiceRepository.GetAsync(s => s.Id == request.Id);
+                Tools.DeviceServiceRepository.Delete(deviceService);
+                await Tools.DeviceServiceRepository.SaveChangesAsync();
 
                 return ResponseMessage<bool>.Success(true);
             }

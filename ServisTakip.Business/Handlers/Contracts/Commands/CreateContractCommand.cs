@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Aspects.Autofac.Transaction;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
+﻿using ServisTakip.Core.Aspects.Autofac.Transaction;
 using ServisTakip.Entities.DTOs.Contracts;
 
 namespace ServisTakip.Business.Handlers.Contracts.Commands
@@ -18,14 +11,10 @@ namespace ServisTakip.Business.Handlers.Contracts.Commands
             [TransactionScopeAspectAsync]
             public async Task<ResponseMessage<ContractDto>> Handle(CreateContractCommand request, CancellationToken cancellationToken)
             {
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-                var contractRepo = ServiceTool.ServiceProvider.GetService<IContractRepository>();
-                var contractMaintenancesRepo = ServiceTool.ServiceProvider.GetService<IContractMaintenanceRepository>();
-
                 #region Sözleşme Ekleme
-                var contract = mapper.Map<Contract>(request.Model);
-                contractRepo.Add(contract);
-                await contractRepo.SaveChangesAsync();
+                var contract = Tools.Mapper.Map<Contract>(request.Model);
+                Tools.ContractRepository.Add(contract);
+                await Tools.ContractRepository.SaveChangesAsync();
                 #endregion
 
                 #region Sözleşme Bakım Ekleme
@@ -47,12 +36,12 @@ namespace ServisTakip.Business.Handlers.Contracts.Commands
                         dt = contractMaintenance.EndDate.AddDays(1);
                     }
 
-                    contractMaintenancesRepo.AddRange(contractMaintenances);
-                    await contractMaintenancesRepo.SaveChangesAsync();
+                    Tools.ContractMaintenanceRepository.AddRange(contractMaintenances);
+                    await Tools.ContractMaintenanceRepository.SaveChangesAsync();
                 }
                 #endregion
 
-                var result = mapper.Map<ContractDto>(contract);
+                var result = Tools.Mapper.Map<ContractDto>(contract);
                 return ResponseMessage<ContractDto>.Success(result);
             }
         }

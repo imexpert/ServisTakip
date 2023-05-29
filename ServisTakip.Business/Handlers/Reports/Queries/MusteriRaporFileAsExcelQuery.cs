@@ -1,20 +1,8 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
-using ServisTakip.Entities.DTOs.Customers;
-using ServisTakip.Entities.DTOs.Reports;
-using ServisTakip.Core.Extensions;
-using Z.EntityFramework.Plus;
+﻿using ServisTakip.Entities.DTOs.Reports;
 using FastReport.Data;
 using FastReport.Utils;
 using FastReport;
-using System.IO;
 using FastReport.Export.OoXML;
-using FastReport.Export.Pdf;
 
 namespace ServisTakip.Business.Handlers.Reports.Queries
 {
@@ -25,8 +13,7 @@ namespace ServisTakip.Business.Handlers.Reports.Queries
         {
             public async Task<ResponseMessage<ReportModel>> Handle(MusteriRaporFileAsExcelQuery request, CancellationToken cancellationToken)
             {
-                var contractRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
-                var data =  await contractRepo.GetCustomerReportFileWithoutPaging(request.Model, cancellationToken);
+                var data =  await Tools.CustomerRepository.GetCustomerReportFileWithoutPaging(request.Model, cancellationToken);
 
                 RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
 

@@ -1,11 +1,5 @@
 ﻿using FastReport;
 using FastReport.Data;
-using MediatR;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.DataAccess.Abstract;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Extensions;
 using FastReport.Export.Pdf;
 using FastReport.Utils;
 using ServisTakip.Entities.DTOs.Reports;
@@ -19,8 +13,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Queries
         {
             public async Task<ResponseMessage<ReportModel>> Handle(GetTechnicianDeviceServiceReportQuery request, CancellationToken cancellationToken)
             {
-                var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var deviceServices = await deviceServiceRepo.GetTechnicianDeviceServiceListAsync(request.UserId, cancellationToken);
+                var deviceServices = await Tools.DeviceServiceRepository.GetTechnicianDeviceServiceListAsync(request.UserId, cancellationToken);
 
                 RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
 

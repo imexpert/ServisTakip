@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ServisTakip.Core.Entities.Concrete;
-using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Sectors;
 using ServisTakip.Entities.DTOs.User;

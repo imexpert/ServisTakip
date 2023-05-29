@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Configuration;
 using System.Reflection;
 using System.Security.Claims;
 using System.Security.Principal;

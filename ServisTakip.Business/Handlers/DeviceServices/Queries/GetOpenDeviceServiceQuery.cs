@@ -1,12 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.DeviceServices;
-using ServisTakip.Entities.Enums;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Queries
 {
@@ -17,10 +9,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Queries
         {
             public async Task<ResponseMessage<NoContent>> Handle(GetOpenDeviceServiceQuery request, CancellationToken cancellationToken)
             {
-                var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var anyServices = await deviceServiceRepo
+                var anyServices = await Tools.DeviceServiceRepository
                     .Query()
                     .Where(s => s.StatusCode != (int)StatusCodes.TalepSonlandirildi && s.StatusCode != (int)StatusCodes.TalepIptalEdildi && s.DeviceId == request.DeviceId)
                     .ToListAsync(cancellationToken: cancellationToken);

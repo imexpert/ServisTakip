@@ -1,11 +1,5 @@
-﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Aspects.Autofac.Transaction;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
+﻿using ServisTakip.Core.Aspects.Autofac.Transaction;
 using ServisTakip.Entities.DTOs.DeviceServices;
-using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 {
@@ -17,10 +11,7 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
             [TransactionScopeAspectAsync]
             public async Task<ResponseMessage<DeviceServiceDto>> Handle(CloseDeviceServicesCommand request, CancellationToken cancellationToken)
             {
-                var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
-
-                var deviceService = await deviceServiceRepo.GetAsync(s => s.Id == request.Model.Id);
+                var deviceService = await Tools.DeviceServiceRepository.GetAsync(s => s.Id == request.Model.Id);
                 deviceService.DetectionCode = request.Model.DetectionCode;
                 deviceService.DetectionDescription = request.Model.DetectionDescription;
                 deviceService.ServiceResultCode = request.Model.ServiceResultCode;
@@ -42,10 +33,10 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                 deviceService.Ak = request.Model.Ak;
                 deviceService.StatusCode = (int)StatusCodes.TalepSonlandirildi;
 
-                deviceServiceRepo.Update(deviceService);
-                await deviceServiceRepo.SaveChangesAsync();
+                Tools.DeviceServiceRepository.Update(deviceService);
+                await Tools.DeviceServiceRepository.SaveChangesAsync();
 
-                await mediator.Send(new CreateOfferDeviceServicesCommand()
+                await Tools.Mediator.Send(new CreateOfferDeviceServicesCommand()
                 {
                     ClosedDeviceService = deviceService
                 }, cancellationToken);

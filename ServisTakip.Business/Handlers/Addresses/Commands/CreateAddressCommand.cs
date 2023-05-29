@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
-using ServisTakip.Entities.DTOs.Addresses;
+﻿using ServisTakip.Entities.DTOs.Addresses;
 
 namespace ServisTakip.Business.Handlers.Addresses.Commands
 {
@@ -16,14 +9,11 @@ namespace ServisTakip.Business.Handlers.Addresses.Commands
         {
             public async Task<ResponseMessage<CreateAddressDto>> Handle(CreateAddressCommand request, CancellationToken cancellationToken)
             {
-                var addressRepo = ServiceTool.ServiceProvider.GetService<IAddressRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var customer = mapper.Map<Address>(request.Model);
+                var customer = Tools.Mapper.Map<Address>(request.Model);
                 customer.Status = true;
 
-                addressRepo.Add(customer);
-                await addressRepo.SaveChangesAsync();
+                Tools.AddressRepository.Add(customer);
+                await Tools.AddressRepository.SaveChangesAsync();
                 return ResponseMessage<CreateAddressDto>.Success();
             }
         }

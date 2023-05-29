@@ -1,15 +1,7 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Extensions;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.Contracts;
+﻿using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Devices;
 using ServisTakip.Entities.DTOs.DeviceServices;
-using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.Business.Handlers.Customers.Queries
 {
@@ -20,19 +12,10 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
             public async Task<ResponseMessage<LastTradedCustomerInfoDto>> Handle(GetSonIslemYapilanMusteriQuery request, CancellationToken cancellationToken)
             {
                 LastTradedCustomerInfoDto result = new LastTradedCustomerInfoDto();
+                
+                var userProcess = await Tools.UserProcessRepository.GetAsync(s => s.UserId == Utils.UserId);
 
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
-                var contractMaintenanceRepo = ServiceTool.ServiceProvider.GetService<IContractMaintenanceRepository>();
-                var deviceServicesRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var deviceRepo = ServiceTool.ServiceProvider.GetService<IDeviceRepository>();
-                var contractRepo = ServiceTool.ServiceProvider.GetService<IContractRepository>();
-                var userProcessRepo = ServiceTool.ServiceProvider.GetService<IUserProcessRepository>();
-
-                var userProcess = await userProcessRepo.GetAsync(s => s.UserId == Utils.UserId);
-
-                var lastService = await deviceServicesRepo.GetSonIslemYapianServis(userProcess);
+                var lastService = await Tools.DeviceServiceRepository.GetSonIslemYapianServis(userProcess);
 
                 if (lastService != null)
                 {
@@ -54,12 +37,12 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         QuarterName = lastService.Device.Address.QuerterName,
                         Department = lastService.Device.Address.Department,
                         RegionCode = lastService.Device.Address.RegionCode,
-                        Device = mapper.Map<DeviceDto>(lastService.Device),
+                        Device = Tools.Mapper.Map<DeviceDto>(lastService.Device),
                         RowId = $"{lastService.Device.Address.Customer.Id}|{lastService.Device.Address.Id}|{lastService.DeviceId}"
                     };
 
-                    var contracts = await contractRepo.GetListAsync(s => s.DeviceId == result.DeviceId);
-                    result.Contracts = mapper.Map<List<ContractDto>>(contracts);
+                    var contracts = await Tools.ContractRepository.GetListAsync(s => s.DeviceId == result.DeviceId);
+                    result.Contracts = Tools.Mapper.Map<List<ContractDto>>(contracts);
 
                     var lastContract = result.Contracts.MaxBy(s => s.EndDate);
                     if (lastContract != null && lastContract.EndDate >= DateTime.Now)
@@ -67,7 +50,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         result.ContractType = lastContract?.ContractCode;
 
                         var contractMaintenances =
-                            await contractMaintenanceRepo.GetListAsync(s =>
+                            await Tools.ContractMaintenanceRepository.GetListAsync(s =>
                                 s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
                                 s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
 
@@ -78,9 +61,9 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         result.ContractType = "ÜCRETLİ";
                     }
 
-                    var deviceServices = await deviceServicesRepo.GetDeviceServices(lastService.DeviceId);
+                    var deviceServices = await Tools.DeviceServiceRepository.GetDeviceServices(lastService.DeviceId);
 
-                    result.DeviceServices = mapper.Map<List<DeviceServiceDto>>(deviceServices.Where(s => s.StatusCode == ((int)StatusCodes.TalepSonlandirildi)));
+                    result.DeviceServices = Tools.Mapper.Map<List<DeviceServiceDto>>(deviceServices.Where(s => s.StatusCode == ((int)StatusCodes.TalepSonlandirildi)));
 
                     if (result.DeviceServices.Count > 0)
                     {
@@ -88,7 +71,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         result.WbCount = service.WBCount;
                         result.ColorCount = service.ColorCount;
 
-                        result.Devices = mapper.Map<List<DeviceDto>>(await deviceRepo.GetAllDevices(result.CustomerId));
+                        result.Devices = Tools.Mapper.Map<List<DeviceDto>>(await Tools.DeviceRepository.GetAllDevices(result.CustomerId));
 
                         result.Devices.Select(c => { c.RowId = $"{result.CustomerId}|{c.AddressId}|{c.Id}"; return c; }).ToList();
                     }
@@ -96,7 +79,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
-                var lastDevice = await deviceRepo.GetLastTradedCustomerInfo();
+                var lastDevice = await Tools.DeviceRepository.GetLastTradedCustomerInfo();
                 if (lastDevice != null)
                 {
                     result = new LastTradedCustomerInfoDto()
@@ -117,12 +100,12 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                         DistrictName = lastDevice.Address.District.Name,
                         QuarterName = lastDevice.Address.QuerterName,
                         RegionCode = lastDevice.Address.RegionCode,
-                        Device = mapper.Map<DeviceDto>(lastDevice),
+                        Device = Tools.Mapper.Map<DeviceDto>(lastDevice),
                         RowId = $"{lastDevice.Address.Customer.Id}|{lastDevice.Address.Id}|{lastDevice.Id}"
                     };
 
-                    var contracts = await contractRepo.GetListAsync(s => s.DeviceId == result.DeviceId);
-                    result.Contracts = mapper.Map<List<ContractDto>>(contracts);
+                    var contracts = await Tools.ContractRepository.GetListAsync(s => s.DeviceId == result.DeviceId);
+                    result.Contracts = Tools.Mapper.Map<List<ContractDto>>(contracts);
 
                     var lastContract = result.Contracts.MaxBy(s => s.EndDate);
                     result.ContractType = lastContract?.ContractCode;
@@ -130,19 +113,19 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                     if (lastContract != null)
                     {
                         var contractMaintenances =
-                            await contractMaintenanceRepo.GetListAsync(s =>
+                            await Tools.ContractMaintenanceRepository.GetListAsync(s =>
                                 s.ContractId == lastContract.Id && s.StartDate <= DateTime.Today &&
                                 s.EndDate >= DateTime.Today && s.DeviceServiceId.HasValue);
 
                         result.MaintenanceStatus = contractMaintenances.Any();
                     }
                     
-                    result.Devices = mapper.Map<List<DeviceDto>>(await deviceRepo.GetAllDevices(result.CustomerId));
+                    result.Devices = Tools.Mapper.Map<List<DeviceDto>>(await Tools.DeviceRepository.GetAllDevices(result.CustomerId));
                     result.Devices.Select(c => { c.RowId = $"{result.CustomerId}|{c.AddressId}|{c.Id}"; return c; }).ToList();
                     return ResponseMessage<LastTradedCustomerInfoDto>.Success(result);
                 }
 
-                var customerList = await customerRepo.GetCustomerListAsync(cancellationToken);
+                var customerList = await Tools.CustomerRepository.GetCustomerListAsync(cancellationToken);
 
                 var customer = customerList.FirstOrDefault(s => s.RecordUsername == Utils.Email);
                 if (customer != null)

@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.DeviceServiceParts;
+﻿using ServisTakip.Entities.DTOs.DeviceServiceParts;
 
 namespace ServisTakip.Business.Handlers.DeviceServiceParts.Queries
 {
@@ -15,11 +9,8 @@ namespace ServisTakip.Business.Handlers.DeviceServiceParts.Queries
         {
             public async Task<ResponseMessage<List<DeviceServicePartDto>>> Handle(GetDeviceServicePartListQuery request, CancellationToken cancellationToken)
             {
-                var deviceServicePartRepo = ServiceTool.ServiceProvider.GetService<IDeviceServicePartRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var deviceServicePartList = await deviceServicePartRepo.GetListAsync(s => s.DeviceServiceId == request.DeviceServiceId);
-                var result = mapper.Map<List<DeviceServicePartDto>>(deviceServicePartList);
+                var deviceServicePartList = await Tools.DeviceServicePartRepository.GetListAsync(s => s.DeviceServiceId == request.DeviceServiceId);
+                var result = Tools.Mapper.Map<List<DeviceServicePartDto>>(deviceServicePartList);
                 return ResponseMessage<List<DeviceServicePartDto>>.Success(result);
             }
         }

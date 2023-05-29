@@ -1,14 +1,5 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
-using ServisTakip.Entities.DTOs.Customers;
+﻿using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Reports;
-using ServisTakip.Core.Extensions;
-using Z.EntityFramework.Plus;
 
 namespace ServisTakip.Business.Handlers.Reports.Queries
 {
@@ -19,8 +10,7 @@ namespace ServisTakip.Business.Handlers.Reports.Queries
         {
             public async Task<PagedResult<List<CustomerReportDto>>> Handle(MusteriRaporQuery request, CancellationToken cancellationToken)
             {
-                var contractRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
-                return await contractRepo.GetMusteriRaporQuery(request.Model, cancellationToken);
+                return await Tools.CustomerRepository.GetMusteriRaporQuery(request.Model, cancellationToken);
             }
         }
     }
