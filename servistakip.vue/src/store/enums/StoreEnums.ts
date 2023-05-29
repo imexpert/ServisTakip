@@ -56,10 +56,12 @@ enum Actions {
   ADD_USER = "addUser",
   DELETE_USER = "deleteUser",
   UPDATE_USER = "updateUser",
+  CHANGE_USER_PASSWORD = "changeUserPasword",
 
   ADD_DEVICESERVICE = "addDeviceService",
   ADD_BAKIMFORMUDEVICESERVICE = "addBakimFormuDeviceService",
   GET_RECEIVEDDEVICESERVICE = "getReceivedDeviceService",
+  GET_OPENDEVICESERVICE = "getOpenDeviceService",
   GET_KAPATILMISDEVICESERVICE = "getKapatilmisService",
   GET_PARTSEXCHANGEDEVICESERVICELIST = "getPartsExchangeDeviceServiceList",
   GET_DEVICESERVICEWITHID = "getDeviceServiceWithId",

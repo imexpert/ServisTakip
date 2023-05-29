@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using ServisTakip.Core.Aspects.Autofac.Transaction;
 using ServisTakip.Core.Entities.Concrete;
 using ServisTakip.Core.Extensions;
 using ServisTakip.Core.Utilities.IoC;
@@ -22,9 +23,11 @@ namespace ServisTakip.Business.Handlers.Users.Commands
         public CreateUserDto Model { get; set; }
         public class AddUserCommandHandler : IRequestHandler<AddUserCommand, ResponseMessage<CreateUserDto>>
         {
+            [TransactionScopeAspectAsync]
             public async Task<ResponseMessage<CreateUserDto>> Handle(AddUserCommand request, CancellationToken cancellationToken)
             {
                 var userRepo = ServiceTool.ServiceProvider.GetService<IUserRepository>();
+                var userGroupRepo = ServiceTool.ServiceProvider.GetService<IUserGroupRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
 
                 var isThereAnyUser = await userRepo.GetAsync(u => u.Email == request.Model.Email);
@@ -51,6 +54,22 @@ namespace ServisTakip.Business.Handlers.Users.Commands
                 var result = mapper.Map<CreateUserDto>(user);
 
                 await userRepo.SaveChangesAsync();
+
+                List<UserGroup> newGroup = new List<UserGroup>();
+                if (request.Model.Groups.Count > 0)
+                {
+                    foreach (string group in request.Model.Groups.First().Split(","))
+                    {
+                        newGroup.Add(new UserGroup()
+                        {
+                            GroupId = Convert.ToInt64(group),
+                            UserId = user.Id
+                        });
+                    }
+                }
+
+                userGroupRepo.AddRange(newGroup);
+                await userGroupRepo.SaveChangesAsync();
 
                 return ResponseMessage<CreateUserDto>.Success(result);
             }

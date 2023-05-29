@@ -9,12 +9,12 @@ using ServisTakip.Entities.DTOs.Devices;
 
 namespace ServisTakip.Business.Handlers.Devices.Commands
 {
-    public class UpdateDeviceCommand : IRequest<ResponseMessage<CreateDeviceDto>>
+    public class UpdateDeviceCommand : IRequest<ResponseMessage<UpdateDeviceDto>>
     {
-        public CreateDeviceDto Model { get; set; }
-        public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, ResponseMessage<CreateDeviceDto>>
+        public UpdateDeviceDto Model { get; set; }
+        public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, ResponseMessage<UpdateDeviceDto>>
         {
-            public async Task<ResponseMessage<CreateDeviceDto>> Handle(UpdateDeviceCommand request, CancellationToken cancellationToken)
+            public async Task<ResponseMessage<UpdateDeviceDto>> Handle(UpdateDeviceCommand request, CancellationToken cancellationToken)
             {
                 var deviceRepo = ServiceTool.ServiceProvider.GetService<IDeviceRepository>();
                 var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
@@ -23,7 +23,7 @@ namespace ServisTakip.Business.Handlers.Devices.Commands
                 deviceRepo.Update(device);
                 await deviceRepo.SaveChangesAsync();
 
-                return ResponseMessage<CreateDeviceDto>.Success();
+                return ResponseMessage<UpdateDeviceDto>.Success();
             }
         }
     }

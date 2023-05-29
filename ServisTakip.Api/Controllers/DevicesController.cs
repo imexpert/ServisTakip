@@ -109,7 +109,7 @@ namespace ServisTakip.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateDeviceDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> UpdateDeviceAsync([FromBody] CreateDeviceDto model)
+        public async Task<IActionResult> UpdateDeviceAsync([FromBody] UpdateDeviceDto model)
         {
             return CreateActionResult(await Mediator.Send(new UpdateDeviceCommand() { Model = model }));
         }

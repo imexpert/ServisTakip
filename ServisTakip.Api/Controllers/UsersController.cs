@@ -29,7 +29,8 @@ namespace ServisTakip.Api.Controllers
                 Email = form["email"],
                 Password = form["password"],
                 Gender = byte.Parse(form["gender"]),
-                Status = bool.Parse(form["status"])
+                Status = bool.Parse(form["status"]),
+                Groups = form["groups"].ToList()
             };
 
             byte[] fileBytes;
@@ -76,6 +77,21 @@ namespace ServisTakip.Api.Controllers
             }
 
             return CreateActionResult(await Mediator.Send(new UpdateUserCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<ChangeUserPasswordDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPut]
+        public async Task<IActionResult> ChangeUserPasswordAsync([FromBody] ChangeUserPasswordDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new ChangeUserPasswordCommand() { Model = model }));
         }
 
         /// <summary>

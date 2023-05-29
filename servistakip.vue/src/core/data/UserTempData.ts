@@ -9,7 +9,8 @@ interface IUserTempData {
     password: string,
     gender: number,
     status: Boolean,
-    groups: Array<Number>
+    groups: Array<number>,
+    groupIds:Array<number>,
 }
 
 export { IUserTempData }

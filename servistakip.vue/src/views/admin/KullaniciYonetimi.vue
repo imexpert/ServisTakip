@@ -11,16 +11,27 @@
         <el-table
           :data="userList"
           class="tableClass"
-          height="150"
-          max-height="150px"
+          height="550"
+          max-height="550px"
           :default-sort="{ prop: 'startDate', order: 'descending' }"
         >
           <el-table-column label="Resim" width="140" label-class-name="tableHeader">
             <template #default="scope">
-              <div style="display: flex; align-items: center">
-                <img v-if="scope.row.avatar == ''" width="25" alt="Logo" src="/media/avatars/man.png" />
-                <img v-else width="25" alt="Logo" :src="'data:image/jpeg;base64,' + scope.row.avatar" />
-                <!-- <span>{{ scope.row.avatar }}</span> -->
+              <div class="image-cropper">
+                <img
+                  v-if="scope.row.avatar == ''"
+                  width="25"
+                  alt="Logo"
+                  src="/media/avatars/man.png"
+                  class="circular--square"
+                />
+                <img
+                  v-else
+                  width="25"
+                  alt="Logo"
+                  :src="'data:image/jpeg;base64,' + scope.row.avatar"
+                  class="circular--square"
+                />
               </div>
             </template>
           </el-table-column>
@@ -93,11 +104,9 @@
                       </el-icon>
                       Sil
                     </el-dropdown-item>
-                    <el-dropdown-item divided @click="kullaniciSil(scope.row.id)">
-                      <el-icon>
-                        <el-icon><SwitchButton /></el-icon>
-                      </el-icon>
-                      Oturumunu Kapat
+                    <el-dropdown-item @click="kullaniciSifreDegistirDialogAc(scope.row.id)">
+                      <el-icon><Refresh /></el-icon>
+                      Şifre Değiştir
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
@@ -245,6 +254,25 @@
                 <el-select v-model="userItem.status" placeholder="Durum">
                   <el-option label="Aktif" :value="true" />
                   <el-option label="Pasif" :value="false" />
+                </el-select>
+              </el-form-item>
+            </div>
+            <!--end::Input group-->
+          </div>
+
+          <!-- Roller -->
+          <div class="col-md-12 col-lg-6 col-xl-6 col-xxl-6 col-sm-12">
+            <!--begin::Input group-->
+            <div class="d-flex flex-column mb-1 fv-row">
+              <!--begin::Label-->
+              <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                <span>Roller</span>
+              </label>
+              <!--end::Label-->
+              <el-form-item prop="status">
+                <el-select v-model="userItem.groupIds" placeholder="Rol seçiniz" multiple filterable clearable>
+                  <el-option v-for="item in groupList" :key="item.id" :label="item.groupName" :value="item.id">
+                  </el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -427,7 +455,7 @@
               </label>
               <!--end::Label-->
               <el-form-item prop="status">
-                <el-select v-model="userItem.groups" placeholder="Rol seçiniz" multiple filterable clearable>
+                <el-select v-model="userItem.groupIds" placeholder="Rol seçiniz" multiple filterable clearable>
                   <el-option v-for="item in groupList" :key="item.id" :label="item.groupName" :value="item.id">
                   </el-option>
                 </el-select>
@@ -452,6 +480,83 @@
       </el-form>
     </div>
   </el-dialog>
+
+  <el-dialog v-model="deleteUserDialogVisible" title="Şifre Değiştir" width="20%" destroy-on-close center>
+    <div class="row">
+      <el-form
+        status-icon
+        :rules="changePasswordUserRules"
+        ref="formUserChangePasswordRef"
+        :model="userPassword"
+        @submit.prevent="userChangePasswordSubmit()"
+        label-width="120px"
+        label-position="top"
+      >
+        <div class="row">
+          <!-- Mevcut Şifre -->
+          <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+            <!--begin::Input group-->
+            <div class="d-flex flex-column mb-1 fv-row">
+              <!--begin::Label-->
+              <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <span>Mevcut Şifre</span>
+              </label>
+              <!--end::Label-->
+              <el-form-item prop="currentPassword">
+                <el-input type="password" v-model="userPassword.currentPassword" placeholder="Mevcut şifrenizi giriniz"></el-input>
+              </el-form-item>
+            </div>
+            <!--end::Input group-->
+          </div>
+
+          <!-- Yeni Şifre -->
+          <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+            <!--begin::Input group-->
+            <div class="d-flex flex-column mb-1 fv-row">
+              <!--begin::Label-->
+              <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <span>Yeni Şifre</span>
+              </label>
+              <!--end::Label-->
+              <el-form-item prop="password">
+                <el-input type="password" v-model="userPassword.password" placeholder="Yeni şifrenizi giriniz"></el-input>
+              </el-form-item>
+            </div>
+            <!--end::Input group-->
+          </div>
+
+          <!-- Mevcut Şifre -->
+          <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
+            <!--begin::Input group-->
+            <div class="d-flex flex-column mb-1 fv-row">
+              <!--begin::Label-->
+              <label class="d-flex align-items-center fs-6 fw-bold mb-2 required">
+                <span>Yeni Şifre (Tekrar)</span>
+              </label>
+              <!--end::Label-->
+              <el-form-item prop="passwordAgain">
+                <el-input type="password" v-model="userPassword.passwordAgain" placeholder="Yeni şifrenizi tekrar giriniz"></el-input>
+              </el-form-item>
+            </div>
+            <!--end::Input group-->
+          </div>
+        </div>
+        <!--begin::Actions-->
+        <div class="text-center">
+          <!--begin::Button-->
+          <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+            <span v-if="!loading" class="indicator-label"> Şifre Değiştir </span>
+            <span v-if="loading" class="indicator-progress">
+              Lütfen Bekleyiniz...
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </button>
+          <!--end::Button-->
+        </div>
+        <!--end::Actions-->
+      </el-form>
+    </div>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -459,10 +564,12 @@ import { IUserTempData } from '@/core/data/UserTempData';
 import { IUserData } from '@/core/data/UserData';
 import { defineComponent, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Actions } from '@/store/enums/StoreEnums';
 import { showSuccessMessage, showErrorMessage } from '@/core/plugins/Utils';
 import type { UploadProps, UploadFile, UploadUserFile, ElMessage, UploadInstance, UploadRawFile } from 'element-plus';
 import { IGroupData } from '@/core/data/GroupData';
+import { IUserPasswordData } from '@/core/data/UserPasswordData';
 
 export default defineComponent({
   components: {},
@@ -479,6 +586,7 @@ export default defineComponent({
 
     const userDialogVisible = ref<boolean>(false);
     const updateUserDialogVisible = ref<boolean>(false);
+    const deleteUserDialogVisible = ref<boolean>(false);
     const userList = ref<Array<IUserData>>();
     const groupList = ref<Array<IGroupData>>();
     var userItem = ref<IUserTempData>({
@@ -491,8 +599,19 @@ export default defineComponent({
       status: true,
       password: null,
       groups: [],
+      groupIds: null,
     });
-    var selectUserMode = ref<string>('I');
+
+    var userPassword = ref<IUserPasswordData>({
+      id: null,
+      currentPassword: null,
+      password: null,
+      passwordAgain: null,
+    });
+
+    const formUserRef = ref<null | HTMLFormElement>(null);
+    const formUserUpdateRef = ref<null | HTMLFormElement>(null);
+    const formUserChangePasswordRef = ref<null | HTMLFormElement>(null);
 
     function clearForm() {
       userItem.value.id = null;
@@ -505,8 +624,13 @@ export default defineComponent({
       userItem.value.password = null;
       avatarList.value = [];
     }
-    const formUserRef = ref<null | HTMLFormElement>(null);
-    const formUserUpdateRef = ref<null | HTMLFormElement>(null);
+
+    function clearPasswordForm() {
+      userPassword.value.id = null;
+      userPassword.value.password = null;
+      userPassword.value.currentPassword = null;
+      userPassword.value.passwordAgain = null;
+    }
 
     const newUserRules = ref({
       firstname: [
@@ -577,6 +701,30 @@ export default defineComponent({
       ],
     });
 
+    const changePasswordUserRules = ref({
+      currentPassword: [
+        {
+          required: true,
+          message: 'Mevcut şifre girilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      password: [
+        {
+          required: true,
+          message: 'Yeni şifre girilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      passwordAgain: [
+        {
+          required: true,
+          message: 'Yeni şifre bilgisi tekrar girilmeli.',
+          trigger: 'blur',
+        },
+      ],
+    });
+
     async function getirKullaniciListe() {
       await store
         .dispatch(Actions.GET_USER_LIST)
@@ -610,6 +758,7 @@ export default defineComponent({
         .then(async result => {
           if (result.isSuccess) {
             userItem.value = result.data;
+            console.log(userItem.value);
           }
         })
         .catch(() => {
@@ -617,22 +766,69 @@ export default defineComponent({
         });
     }
 
+    async function kullaniciSifreDegistirDialogAc(id) {
+      clearPasswordForm();
+      userPassword.value.id = id;
+      deleteUserDialogVisible.value = true;
+    }
+
     async function kullaniciDialogAc() {
       clearForm();
-
       userDialogVisible.value = true;
-      selectUserMode.value = 'I';
     }
 
     async function kullaniciDuzenleDialogAc(id) {
       clearForm();
-
       updateUserDialogVisible.value = true;
-      selectUserMode.value = 'U';
       await getirKullanici(id);
     }
 
-    async function kullaniciSil(id) {}
+    async function kullaniciSil(id) {
+      Swal.fire({
+        title: 'Kullanıcı silinecek !!!',
+        text: 'Devam etmek istiyor musunuz ?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Sil',
+        denyButtonText: `Vazgeç`,
+      }).then(async result => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          await store
+            .dispatch(Actions.DELETE_USER, id)
+            .then(async result => {
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Kullanıcı başarıyla silindi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(async () => {
+                  await getirKullaniciListe();
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        } else if (result.isDenied) {
+        }
+      });
+    }
 
     const userSubmit = () => {
       if (!formUserRef.value) {
@@ -641,31 +837,29 @@ export default defineComponent({
 
       formUserRef.value.validate(async valid => {
         if (valid) {
-          if (selectUserMode.value == 'I') {
-            const formData = new FormData();
-            formData.append('firstname', userItem.value.firstname);
-            formData.append('lastname', userItem.value.lastname);
-            formData.append('email', userItem.value.email);
-            formData.append('password', userItem.value.password);
-            formData.append('gender', userItem.value.gender.toString());
-            formData.append('status', userItem.value.status.toString());
-            formData.append('file', avatarList.value[0].raw);
+          const formData = new FormData();
+          formData.append('firstname', userItem.value.firstname);
+          formData.append('lastname', userItem.value.lastname);
+          formData.append('email', userItem.value.email);
+          formData.append('password', userItem.value.password);
+          formData.append('gender', userItem.value.gender.toString());
+          formData.append('status', userItem.value.status.toString());
+          formData.append('file', avatarList.value[0].raw);
+          formData.append('groups', userItem.value.groupIds.join());
 
-            store
-              .dispatch(Actions.ADD_USER, formData)
-              .then(result => {
-                if (result.isSuccess) {
-                  showSuccessMessage('Kullanıcı başarıyla eklendi.').then(async () => {
-                    await getirKullaniciListe();
-                    userDialogVisible.value = false;
-                  });
-                } else {
-                  showErrorMessage(result.message).then(() => {});
-                }
-              })
-              .catch(({ response }) => {});
-          } else {
-          }
+          store
+            .dispatch(Actions.ADD_USER, formData)
+            .then(result => {
+              if (result.isSuccess) {
+                showSuccessMessage('Kullanıcı başarıyla eklendi.').then(async () => {
+                  await getirKullaniciListe();
+                  userDialogVisible.value = false;
+                });
+              } else {
+                showErrorMessage(result.message).then(() => {});
+              }
+            })
+            .catch(({ response }) => {});
         }
       });
     };
@@ -684,7 +878,7 @@ export default defineComponent({
           formData.append('email', userItem.value.email);
           formData.append('gender', userItem.value.gender.toString());
           formData.append('status', userItem.value.status.toString());
-          formData.append('groups', userItem.value.groups.join());
+          formData.append('groups', userItem.value.groupIds.join());
 
           if (avatarList.value?.length > 0) formData.append('file', avatarList.value[0].raw);
 
@@ -695,6 +889,29 @@ export default defineComponent({
                 showSuccessMessage('Kullanıcı başarıyla güncellendi.').then(async () => {
                   await getirKullaniciListe();
                   updateUserDialogVisible.value = false;
+                });
+              } else {
+                showErrorMessage(result.message).then(() => {});
+              }
+            })
+            .catch(({ response }) => {});
+        }
+      });
+    };
+
+    const userChangePasswordSubmit = () => {
+      if (!formUserChangePasswordRef.value) {
+        return;
+      }
+
+      formUserChangePasswordRef.value.validate(async valid => {
+        if (valid) {
+          store
+            .dispatch(Actions.CHANGE_USER_PASSWORD, userPassword.value)
+            .then(result => {
+              if (result.isSuccess) {
+                showSuccessMessage('Kullanıcı şifresi başarıyla güncellendi.').then(async () => {
+                  deleteUserDialogVisible.value = false;
                 });
               } else {
                 showErrorMessage(result.message).then(() => {});
@@ -728,6 +945,12 @@ export default defineComponent({
       handleRemove,
       kullaniciDuzenleDialogAc,
       userUpdateSubmit,
+      userChangePasswordSubmit,
+      kullaniciSifreDegistirDialogAc,
+      changePasswordUserRules,
+      userPassword,
+      formUserChangePasswordRef,
+      deleteUserDialogVisible,
       updateUserRules,
       formUserUpdateRef,
       updateUserDialogVisible,
@@ -774,5 +997,12 @@ export default defineComponent({
   width: 178px;
   height: 178px;
   text-align: center;
+}
+
+.circular--square {
+  border-top-left-radius: 50% 50%;
+  border-top-right-radius: 50% 50%;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%;
 }
 </style>

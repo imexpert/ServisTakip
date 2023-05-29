@@ -321,6 +321,17 @@
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 fv-row">
+                <label class="fs-5 fw-semobold mb-2">Açık Adres</label>
+                <el-input readonly disabled v-model="firmaOzet.netAddress" class="input-with-select customBorder">
+                </el-input>
+                <div class="fv-plugins-message-container">
+                  <div class="fv-help-block">
+                    <ErrorMessage name="bolge" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </el-card>
@@ -510,6 +521,13 @@
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 fv-row mt-2">
               <label class="fs-5 fw-semobold mb-2">Renkli Sayaç</label>
               <el-input disabled style="font-size: 12px" v-model="firmaOzet.colorCount" class="customBorder">
+              </el-input>
+            </div>
+
+            <!-- Cihaz Açıklama -->
+            <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 fv-row mt-2">
+              <label class="fs-5 fw-semobold mb-2">Cihaz Açıklaması</label>
+              <el-input disabled style="font-size: 12px" v-model="firmaOzet.device.description" class="customBorder">
               </el-input>
             </div>
           </div>
@@ -2687,7 +2705,20 @@ export default defineComponent({
     });
 
     var firmaOzet = ref<IFirmaOzetData>({
-      device: null,
+      device: {
+        id: null,
+        address: null,
+        addressId: null,
+        assemblyDate: null,
+        assemblyDateString: '',
+        description: '',
+        deviceModel: null,
+        deviceModelId: null,
+        maintenancePeriod: null,
+        rowId: null,
+        serialNumber: null,
+        status: null,
+      },
       deviceBrand: null,
       deviceId: null,
       deviceModel: null,
@@ -2716,6 +2747,7 @@ export default defineComponent({
       wbCount: '',
       addressId: null,
       department: '',
+      netAddress: '',
     });
 
     var device = ref<IDeviceData>({
@@ -4024,6 +4056,7 @@ export default defineComponent({
                 selectedSerialNo.value = device.value.serialNumber;
 
                 deviceId.value = firmaOzet.value.deviceId;
+                firmaOzet.value.netAddress = device.value.address.netAddress;
               }
 
               deviceList.value = result.data.devices;
@@ -4065,6 +4098,7 @@ export default defineComponent({
               deviceList.value = result.data.devices;
               contractMaintenanceStatus.value = result.data.maintenanceStatus ? 'Bakım Yapıldı' : 'Bakım Yapılmadı';
               maintenanceBackgroundColor.value = result.data.maintenanceStatus ? '#ABEBC6' : '#F5B7B1';
+              firmaOzet.value.netAddress = device.value.address.netAddress;
             }
 
             selectedDevice.value = result.data.deviceId;
@@ -4250,14 +4284,27 @@ export default defineComponent({
     }
 
     async function servisAc() {
-      clearSevicAcModal();
+      await store
+        .dispatch(Actions.GET_OPENDEVICESERVICE, firmaOzet.value.deviceId)
+        .then(async result => {
+          if (result.isSuccess) {
+            clearSevicAcModal();
 
-      servisAcDialogVisible.value = true;
+            servisAcDialogVisible.value = true;
 
-      await getBootCodeList();
-      await getTechnicianList();
+            await getBootCodeList();
+            await getTechnicianList();
 
-      newService.value.failureDate = new Date().toUTCString();
+            newService.value.failureDate = new Date().toUTCString();
+          } else {
+            showErrorMessage(result.message).then(() => {
+              servisAcDialogVisible.value = false;
+            });
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
     }
 
     async function bakimFormuAc() {
@@ -4376,6 +4423,7 @@ export default defineComponent({
         .then(async result => {
           if (result.isSuccess) {
             newDevice.value = result.data;
+            newDevice.value.id = firmaOzet.value.deviceId;
             var modelId = newDevice.value.deviceModelId;
             selectedDeviceType.value = newDevice.value.deviceModel.deviceBrand.deviceType.id;
             await onDeviceTypeChange();

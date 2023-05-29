@@ -39,23 +39,12 @@ namespace ServisTakip.Entities.DTOs.User
             }
         }
 
-        public string GroupIds
+        public List<long> GroupIds
         {
             set { }
             get
             {
-                string result = "";
-                foreach (var group in UserGroups)
-                {
-                    if (group.Group != null)
-                    {
-                        result += group.Group.Id + ",";
-                    }
-                }
-
-                result = result.Length > 0 ? result.Remove(result.Length - 1, 1) : "";
-
-                return result;
+                return UserGroups.Select(s=>s.GroupId).ToList();
             }
         }
         public List<UserGroupDto> UserGroups = new List<UserGroupDto>();

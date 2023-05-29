@@ -48,6 +48,7 @@ namespace ServisTakip.Business.Handlers.Users.Commands
                 user.Status = request.Model.Status;
 
                 userRepo.Update(user);
+                await userRepo.SaveChangesAsync();
 
                 var userGroups = await userGroupRepo.GetListAsync(s => s.UserId == request.Model.Id);
                 userGroupRepo.DeleteRange(userGroups.ToList());
@@ -71,8 +72,6 @@ namespace ServisTakip.Business.Handlers.Users.Commands
                 await userGroupRepo.SaveChangesAsync();
 
                 var result = mapper.Map<UpdateUserDto>(user);
-
-                await userRepo.SaveChangesAsync();
 
                 return ResponseMessage<UpdateUserDto>.Success(result);
             }

@@ -65,6 +65,17 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
+  async [Actions.CHANGE_USER_PASSWORD](user) {
+    return await ApiService.put("Users/ChangeUserPassword", user)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        showError(response);
+      });
+  }
+
+  @Action
   async [Actions.DELETE_USER](id) {
     return await ApiService.delete("Users/DeleteUser?id= " + id)
       .then(({ data }) => {
