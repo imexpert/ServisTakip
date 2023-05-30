@@ -4,7 +4,7 @@
 </template>
 
 <script lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { defineComponent, nextTick, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { Mutations, Actions } from '@/store/enums/StoreEnums';
@@ -17,7 +17,6 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
-    const language = ref('tr');
     var locale = tr;
 
     onMounted(() => {
@@ -35,7 +34,8 @@ export default defineComponent({
       nextTick(() => {
         initializeComponents();
 
-        store.dispatch(Actions.REMOVE_BODY_CLASSNAME, 'page-loading');
+        // store.dispatch(Actions.REMOVE_BODY_CLASSNAME, 'page-loading');
+        // store.dispatch(Actions.ADD_BODY_LOADING);
       });
     });
 
@@ -83,5 +83,35 @@ export default defineComponent({
 
 .swal2-container {
   z-index: 20000 !important;
+}
+
+.tableHeader {
+  color: black;
+  font-size: 15px;
+  border-bottom: 2px solid black;
+}
+
+.sort-caret {
+  color: red;
+}
+
+.tableClass {
+  border: 2px solid var(--el-border-color);
+  width: 100%;
+  font-size: 13px;
+  color: black;
+  width: 100%;
+}
+
+.customLoading {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.customLoading .el-loading-text {
+  font-size: 15px;
+}
+
+.customLoading .element-loading-spinner {
+  color: rgba(122, 122, 122, 0.8);
 }
 </style>

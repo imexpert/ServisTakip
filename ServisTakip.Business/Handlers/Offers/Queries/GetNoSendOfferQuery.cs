@@ -1,14 +1,6 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Business.Handlers.Companies.Queries;
+﻿using ServisTakip.Business.Handlers.Companies.Queries;
 using ServisTakip.Business.Handlers.DeviceServices.Queries;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Offers;
-using ServisTakip.Entities.Enums;
 
 namespace ServisTakip.Business.Handlers.Offers.Queries
 {
@@ -19,11 +11,7 @@ namespace ServisTakip.Business.Handlers.Offers.Queries
         {
             public async Task<ResponseMessage<OfferDto>> Handle(GetNoSendOfferQuery request, CancellationToken cancellationToken)
             {
-                var offerRepo = ServiceTool.ServiceProvider.GetService<IOfferRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-                var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
-
-                Offer offer = await offerRepo.GetAsync(s =>
+                Offer offer = await Tools.OfferRepository.GetAsync(s =>
                     s.OfferStatus == (int)OfferStatusCodes.Gonderilmedi &&
                     s.DeviceServiceId == request.DeviceServiceId);
 
@@ -31,7 +19,7 @@ namespace ServisTakip.Business.Handlers.Offers.Queries
                 {
                     offer = new Offer();
 
-                    var companyResponse = await mediator.Send(new GetCompanyQuery(), cancellationToken);
+                    var companyResponse = await Tools.Mediator.Send(new GetCompanyQuery(), cancellationToken);
                     if (companyResponse.IsSuccess)
                     {
                         var company = companyResponse.Data;
@@ -42,7 +30,7 @@ namespace ServisTakip.Business.Handlers.Offers.Queries
                         offer.Address= company.Address;
                     }
 
-                    var deviceServiceResponse = await mediator.Send(new GetDeviceServiceQuery() { DeviceServiceId = request.DeviceServiceId });
+                    var deviceServiceResponse = await Tools.Mediator.Send(new GetDeviceServiceQuery() { DeviceServiceId = request.DeviceServiceId });
 
                     if (deviceServiceResponse.IsSuccess)
                     {
@@ -54,7 +42,7 @@ namespace ServisTakip.Business.Handlers.Offers.Queries
                     }
                 }
 
-                var result = mapper.Map<OfferDto>(offer);
+                var result = Tools.Mapper.Map<OfferDto>(offer);
                 return ResponseMessage<OfferDto>.Success(result);
             }
         }

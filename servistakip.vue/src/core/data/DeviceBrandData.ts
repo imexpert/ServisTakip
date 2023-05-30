@@ -1,8 +1,9 @@
 import { IDeviceTypeData } from "./DeviceTypeData";
 
 interface IDeviceBrandData {
-    name?: string | '',
-    deviceType: IDeviceTypeData;
+    id?: string | '',
+    name?: string | undefined | '',
+    deviceType: IDeviceTypeData | null;
 }
 
 export { IDeviceBrandData };

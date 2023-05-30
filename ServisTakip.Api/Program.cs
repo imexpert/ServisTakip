@@ -1,5 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Serilog.Context;
+using ServisTakip.Api.Hubs;
 using ServisTakip.Api.Infrastructure;
 using ServisTakip.Business.DependencyResolvers;
 using ServisTakip.Core.Extensions;
@@ -23,7 +25,21 @@ builder.Services.AddCustomMediatR();
 
 builder.Services.AddCustomCacheServices();
 
-builder.Services.AddCarbonDbContext();
+builder.Services.AddServisTakipDbContext();
+
+var redisConnection = builder.Configuration.GetSection("RedisSettings:Host");
+
+if (redisConnection is { Value: { } })
+{
+    builder.Services.AddSignalR(options =>
+    {
+        options.EnableDetailedErrors = true;
+    }).AddStackExchangeRedis(redisConnection.Value, options =>
+    {
+        options.Configuration.ChannelPrefix = "Kec";
+    });
+}
+
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
@@ -47,15 +63,15 @@ app.UseSwagger();
 
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("v1/swagger.json", "Carbon Calculator");
+    c.SwaggerEndpoint("v1/swagger.json", "Servis Takip Api");
     c.DocExpansion(DocExpansion.None);
 });
-
-app.UseCors("AllowOrigin");
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors("AllowOrigin");
 
 app.UseAuthentication();
 
@@ -63,12 +79,18 @@ app.UseAuthorization();
 
 app.Use(async (httpContext, next) =>
 {
-    //LogContext.PushProperty("Username", Utils.Username);
-    //LogContext.PushProperty("ClientIp", httpContext.Connection.RemoteIpAddress);
+    LogContext.PushProperty("UserMail", Utils.Email);
+    LogContext.PushProperty("UserId", Utils.UserId);
+    LogContext.PushProperty("CompanyId", Utils.CompanyId);
+    LogContext.PushProperty("ClientIp", httpContext.Connection.RemoteIpAddress);
 
     await next.Invoke();
 });
 
-app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ServisTakipHub>("/servisTakipHub");
+});
 
 app.Run();

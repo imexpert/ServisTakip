@@ -31,6 +31,21 @@ namespace ServisTakip.Api.Controllers
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateBakimFormuDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPost]
+        public async Task<IActionResult> AddBakimFormuAsync([FromBody] CreateBakimFormuDto model)
+        {
+            return CreateActionResult(await Mediator.Send(new CreateBakimFormuCommand() { Model = model }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceServiceDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPut]
@@ -219,6 +234,21 @@ namespace ServisTakip.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<DeviceServiceDto>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetOpenDeviceServiceWithIdAsync(long id)
+        {
+            return CreateActionResult(await Mediator.Send(new GetOpenDeviceServiceQuery() { DeviceId = id }));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -228,6 +258,20 @@ namespace ServisTakip.Api.Controllers
         public async Task<IActionResult> GetClosedDeviceServicesListAsync()
         {
             return CreateActionResult(await Mediator.Send(new GetClosedDeviceServicesListQuery()));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<List<DeviceServiceDto>>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpGet]
+        public async Task<IActionResult> GetirKapatilmisServisListAsync(long deviceId)
+        {
+            return CreateActionResult(await Mediator.Send(new GetirKapatilmisServisListQuery(){DeviceId = deviceId }));
         }
 
         /// <summary>

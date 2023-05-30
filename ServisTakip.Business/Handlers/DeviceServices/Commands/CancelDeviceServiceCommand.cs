@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.DeviceServices;
-using ServisTakip.Entities.Enums;
+﻿using ServisTakip.Entities.DTOs.DeviceServices;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 {
@@ -16,15 +9,12 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
         {
             public async Task<ResponseMessage<DeviceServiceDto>> Handle(CancelDeviceServiceCommand request, CancellationToken cancellationToken)
             {
-                var deviceServiceRepo = ServiceTool.ServiceProvider.GetService<IDeviceServiceRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var deviceService = await deviceServiceRepo.GetAsync(s => s.Id == request.Model.Id);
+                var deviceService = await Tools.DeviceServiceRepository.GetAsync(s => s.Id == request.Model.Id);
                 deviceService.StatusCode = (int)StatusCodes.TalepIptalEdildi;
                 deviceService.CancelDescription = request.Model.CancelDescription;
 
-                deviceServiceRepo.Update(deviceService);
-                await deviceServiceRepo.SaveChangesAsync();
+                Tools.DeviceServiceRepository.Update(deviceService);
+                await Tools.DeviceServiceRepository.SaveChangesAsync();
 
                 return ResponseMessage<DeviceServiceDto>.Success(request.Model);
             }

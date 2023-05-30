@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.Offers;
-using ServisTakip.Entities.Enums;
+﻿using ServisTakip.Entities.DTOs.Offers;
 
 namespace ServisTakip.Business.Handlers.Offers.Commands
 {
@@ -16,10 +9,7 @@ namespace ServisTakip.Business.Handlers.Offers.Commands
         {
             public async Task<ResponseMessage<CreateOfferDto>> Handle(UpdateOfferCommand request, CancellationToken cancellationToken)
             {
-                var offerRepo = ServiceTool.ServiceProvider.GetService<IOfferRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var offer = await offerRepo.GetAsync(s => s.Id == request.Model.Id);
+                var offer = await Tools.OfferRepository.GetAsync(s => s.Id == request.Model.Id);
 
                 offer.DeviceServiceId = request.Model.DeviceServiceId;
                 offer.OfferSubjectCodeId = request.Model.OfferSubjectCodeId;
@@ -38,8 +28,8 @@ namespace ServisTakip.Business.Handlers.Offers.Commands
                 offer.DiscountRate = request.Model.DiscountRate;
                 offer.OfferStatus = request.Model.OfferStatus;
 
-                offerRepo.Update(offer);
-                await offerRepo.SaveChangesAsync();
+                Tools.OfferRepository.Update(offer);
+                await Tools.OfferRepository.SaveChangesAsync();
 
                 return ResponseMessage<CreateOfferDto>.Success();
             }

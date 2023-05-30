@@ -11,42 +11,14 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
 {
     public class DeviceServiceRepository : EntityRepositoryBase<DeviceService, ProjectDbContext>, IDeviceServiceRepository
     {
-        ProjectDbContext _context;
         public DeviceServiceRepository(ProjectDbContext context)
             : base(context)
         {
-            _context = context;
         }
 
         public async Task<DeviceService> GetLastTradedCustomerInfo()
         {
-            return await _context.DeviceServices
-                .Include(s => s.User).AsNoTracking()
-                .Include(s=>s.Device)
-                    .ThenInclude(s=>s.DeviceModel)
-                    .ThenInclude(s=>s.DeviceBrand)
-                    .ThenInclude(s=>s.DeviceType)
-                    .AsNoTracking()
-                .Include(s => s.Device)
-                    .ThenInclude(s => s.Address)
-                    .ThenInclude(s => s.Customer)
-                    .ThenInclude(s=>s.Sector)
-                    .AsNoTracking()
-                .Include(s => s.Device)
-                    .ThenInclude(s => s.Address)
-                    .ThenInclude(s=>s.Querter)
-                    .ThenInclude(s=>s.District)
-                    .ThenInclude(s=>s.City)
-                    .AsNoTracking()
-                .Where(s => s.RecordUsername == Utils.Email)
-                .AsNoTracking()
-                .OrderByDescending(s=>s.RecordDate)
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<List<DeviceService>> GetDeviceServices(long deviceId)
-        {
-            return await _context.DeviceServices
+            return await Context.DeviceServices
                 .Include(s => s.User).AsNoTracking()
                 .Include(s => s.Device)
                     .ThenInclude(s => s.DeviceModel)
@@ -60,11 +32,48 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     .AsNoTracking()
                 .Include(s => s.Device)
                     .ThenInclude(s => s.Address)
-                    .ThenInclude(s => s.Querter)
                     .ThenInclude(s => s.District)
                     .ThenInclude(s => s.City)
                     .AsNoTracking()
-                .Where(s => s.DeviceId == deviceId)
+                .Where(s => s.RecordUsername == Utils.Email && s.Device.Address.Customer.CompanyId == Utils.CompanyId)
+                .AsNoTracking()
+                .OrderByDescending(s => s.UpdateDate)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<DeviceService> GetSonIslemYapianServis(UserProcess userProcess)
+        {
+            var query = DeviceServiceQueryable();
+
+            query = userProcess.DeviceServiceId.HasValue
+                ? query.Where(s => s.Id == userProcess.DeviceServiceId.Value)
+                : query.Where(s => s.Device.Address.Customer.CompanyId == Utils.CompanyId);
+
+            return await query
+                .OrderByDescending(s => s.UpdateDate)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<DeviceService>> GetDeviceServices(long deviceId)
+        {
+            return await Context.DeviceServices
+                .Include(s => s.User).AsNoTracking()
+                .Include(s => s.Device)
+                    .ThenInclude(s => s.DeviceModel)
+                    .ThenInclude(s => s.DeviceBrand)
+                    .ThenInclude(s => s.DeviceType)
+                    .AsNoTracking()
+                .Include(s => s.Device)
+                    .ThenInclude(s => s.Address)
+                    .ThenInclude(s => s.Customer)
+                    .ThenInclude(s => s.Sector)
+                    .AsNoTracking()
+                .Include(s => s.Device)
+                    .ThenInclude(s => s.Address)
+                    .ThenInclude(s => s.District)
+                    .ThenInclude(s => s.City)
+                    .AsNoTracking()
+                .Where(s => s.DeviceId == deviceId && s.User.CompanyId == Utils.CompanyId && s.Device.Address.Customer.CompanyId == Utils.CompanyId)
                 .AsNoTracking()
                 .OrderByDescending(s => s.RecordDate)
                 .ToListAsync();
@@ -72,7 +81,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
 
         public async Task<List<DeviceService>> GetDeviceServiceWithStatusCode(int statusCode)
         {
-            return await _context.DeviceServices
+            return await Context.DeviceServices
                 .Include(s => s.User).AsNoTracking()
                 .Include(s => s.Device)
                     .ThenInclude(s => s.DeviceModel)
@@ -86,7 +95,6 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     .AsNoTracking()
                 .Include(s => s.Device)
                     .ThenInclude(s => s.Address)
-                    .ThenInclude(s => s.Querter)
                     .ThenInclude(s => s.District)
                     .ThenInclude(s => s.City)
                     .AsNoTracking()
@@ -98,7 +106,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
 
         public async Task<List<DeviceService>> GetToBeOfferedDeviceServiceWithStatusCode(CancellationToken cancellationToken)
         {
-            return await _context.DeviceServices
+            return await Context.DeviceServices
                 .Include(s => s.User).AsNoTracking()
                 .Include(s => s.Device)
                     .ThenInclude(s => s.DeviceModel)
@@ -112,7 +120,6 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     .AsNoTracking()
                 .Include(s => s.Device)
                     .ThenInclude(s => s.Address)
-                    .ThenInclude(s => s.Querter)
                     .ThenInclude(s => s.District)
                     .ThenInclude(s => s.City)
                     .AsNoTracking()
@@ -124,7 +131,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
 
         public async Task<List<DeviceService>> GetSentOfferedDeviceServiceWithStatusCode(CancellationToken cancellationToken)
         {
-            return await _context.DeviceServices
+            return await Context.DeviceServices
                 .Include(s => s.User).AsNoTracking()
                 .Include(s => s.Device)
                 .ThenInclude(s => s.DeviceModel)
@@ -138,7 +145,6 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .AsNoTracking()
                 .Include(s => s.Device)
                 .ThenInclude(s => s.Address)
-                .ThenInclude(s => s.Querter)
                 .ThenInclude(s => s.District)
                 .ThenInclude(s => s.City)
                 .AsNoTracking()
@@ -150,7 +156,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
 
         public async Task<DeviceService> GetDeviceServiceWithId(long id, CancellationToken cancellationToken)
         {
-            return await _context.DeviceServices
+            return await Context.DeviceServices
                 .Include(s => s.User).AsNoTracking()
                 .Include(s => s.Device)
                     .ThenInclude(s => s.DeviceModel)
@@ -164,7 +170,6 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                     .AsNoTracking()
                 .Include(s => s.Device)
                     .ThenInclude(s => s.Address)
-                    .ThenInclude(s => s.Querter)
                     .ThenInclude(s => s.District)
                     .ThenInclude(s => s.City)
                     .AsNoTracking()
@@ -176,10 +181,29 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
 
         public async Task<List<TechnicianDeviceServiceReportModel>> GetTechnicianDeviceServiceListAsync(long userId, CancellationToken cancellationToken)
         {
-            return await _context.TechnicianDeviceServiceReports
+            return await Context.TechnicianDeviceServiceReports
                 .Where(s => s.UserId == userId)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
+        }
+
+        private IQueryable<DeviceService> DeviceServiceQueryable()
+        {
+            return Context.DeviceServices
+                .Include(s => s.User)
+                .Include(s => s.Device)
+                    .ThenInclude(s => s.DeviceModel)
+                    .ThenInclude(s => s.DeviceBrand)
+                    .ThenInclude(s => s.DeviceType)
+                .Include(s => s.Device)
+                    .ThenInclude(s => s.Address)
+                    .ThenInclude(s => s.Customer)
+                    .ThenInclude(s => s.Sector)
+                .Include(s => s.Device)
+                    .ThenInclude(s => s.Address)
+                    .ThenInclude(s => s.District)
+                    .ThenInclude(s => s.City)
+                .AsQueryable();
         }
     }
 }

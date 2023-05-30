@@ -1,11 +1,10 @@
-﻿using ServisTakip.Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Messages;
+﻿using ServisTakip.Core.Utilities.IoC;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using System.Data;
+using Serilog.Events;
 
 namespace ServisTakip.Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
@@ -15,32 +14,74 @@ namespace ServisTakip.Core.CrossCuttingConcerns.Logging.Serilog.Loggers
         {
             var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
 
-            var logConfig = configuration.GetSection("SeriLogConfigurations:MsSqlConfiguration")
-                                .Get<MsSqlConfiguration>() ??
-                            throw new Exception(SerilogMessages.NullOptionsMessage);
-            var sinkOpts = new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true };
+            string connectionString = configuration.GetConnectionString("ServisTakipContext");
+
+            var sinkOpts = new MSSqlServerSinkOptions
+            {
+                TableName = "ErrorLogs",
+                SchemaName = "dbo",
+                AutoCreateSqlTable = true
+            };
 
             var columnOpts = new ColumnOptions();
 
-            SqlColumn userId = new SqlColumn { DataType = SqlDbType.BigInt, ColumnName = "UserId", AllowNull = true };
-            SqlColumn methodName = new SqlColumn { DataType = SqlDbType.NVarChar, ColumnName = "Method", AllowNull = true };
-
-            columnOpts.AdditionalColumns = new List<SqlColumn> 
+            SqlColumn userMail = new SqlColumn
             {
+                DataType = SqlDbType.NVarChar,
+                ColumnName = "UserMail",
+                AllowNull = true,
+                DataLength = 100
+            };
+
+            SqlColumn userId = new SqlColumn
+            {
+                DataType = SqlDbType.BigInt,
+                ColumnName = "UserId",
+                AllowNull = true,
+            };
+
+            SqlColumn companyId = new SqlColumn
+            {
+                DataType = SqlDbType.BigInt,
+                ColumnName = "CompanyId",
+                AllowNull = true
+            };
+
+            SqlColumn clientIp = new SqlColumn
+            {
+                DataType = SqlDbType.NVarChar,
+                ColumnName = "ClientIp",
+                AllowNull = true,
+                DataLength = 100
+            };
+
+            columnOpts.AdditionalColumns = new List<SqlColumn>
+            {
+                userMail,
                 userId,
-                methodName,
+                companyId,
+                clientIp
             };
 
             columnOpts.Store.Remove(StandardColumn.MessageTemplate);
             columnOpts.Store.Remove(StandardColumn.Properties);
-            columnOpts.Store.Remove(StandardColumn.Level);
 
-            var seriLogConfig = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .WriteTo.MSSqlServer(connectionString: logConfig.ConnectionString, sinkOptions: sinkOpts, columnOptions: columnOpts)
+            Log.Logger = new LoggerConfiguration()
+            .Enrich.FromLogContext()
+                .WriteTo.MSSqlServer(
+                    connectionString,
+                    sinkOptions: sinkOpts, 
+                    null, 
+                    null,
+                    restrictedToMinimumLevel: LogEventLevel.Warning, 
+                    null,
+                    columnOptions: columnOpts, 
+                    null, 
+                    null)
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
                 .CreateLogger();
 
-            Logger = seriLogConfig;
+            Logger = Log.Logger;
         }
     }
 }

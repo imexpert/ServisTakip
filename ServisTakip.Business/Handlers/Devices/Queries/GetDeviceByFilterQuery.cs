@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.Customers;
+﻿using ServisTakip.Entities.DTOs.Customers;
 
 namespace ServisTakip.Business.Handlers.Devices.Queries
 {
@@ -15,12 +9,9 @@ namespace ServisTakip.Business.Handlers.Devices.Queries
         {
             public async Task<ResponseMessage<List<SearchCustomerDto>>> Handle(GetDeviceByFilterQuery request, CancellationToken cancellationToken)
             {
-                var customerRepo = ServiceTool.ServiceProvider.GetService<IDeviceRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
                 List<SearchCustomerDto> result = new List<SearchCustomerDto>();
 
-                var deviceList = await customerRepo.GetDeviceByFilterAsync(request.DeviceId, cancellationToken);
+                var deviceList = await Tools.DeviceRepository.GetDeviceByFilterAsync(request.DeviceId, cancellationToken);
                 foreach (var device in deviceList)
                 {
                     var cst = new SearchCustomerDto
@@ -31,9 +22,10 @@ namespace ServisTakip.Business.Handlers.Devices.Queries
                         AddressId = device.Address.Id,
                         DeviceId = device.Id,
                         Address = device.Address.AddressTitle,
-                        Querter = device.Address.Querter.Name,
+                        District = device.Address.District.Name,
                         Model = device.DeviceModel.Name,
-                        SerialNo = device.SerialNumber
+                        SerialNo = device.SerialNumber,
+                        Department = device.Address.Department
                     };
 
                     result.Add(cst);

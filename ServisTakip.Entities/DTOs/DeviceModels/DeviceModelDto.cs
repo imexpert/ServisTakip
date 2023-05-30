@@ -5,6 +5,7 @@ namespace ServisTakip.Entities.DTOs.DeviceModels
 {
     public class DeviceModelDto
     {
+        public long Id { get; set; }
         public long CompanyId { get; set; }
         public long DeviceBrandId { get; set; }
         public string Name { get; set; }

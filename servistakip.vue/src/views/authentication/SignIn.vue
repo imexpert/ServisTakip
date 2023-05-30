@@ -1,8 +1,15 @@
 <template>
   <!--begin::Wrapper-->
   <div class="w-lg-500px bg-white rounded shadow-sm p-10 p-lg-15 mx-auto">
-    <!--begin::Form-->
-    <Form class="form w-100" id="kt_login_signin_form" @submit="onSubmitLogin" :validation-schema="login">
+    <el-form
+      status-icon
+      :rules="loginRules"
+      ref="formLoginRef"
+      :model="loginModel"
+      @submit.prevent="loginSubmit()"
+      label-width="120px"
+      label-position="top"
+    >
       <!--begin::Heading-->
       <div class="text-center mb-10">
         <!--begin::Title-->
@@ -16,15 +23,15 @@
         <!--begin::Label-->
         <label class="form-label fs-6 fw-bolder text-dark">E-Mail</label>
         <!--end::Label-->
-
-        <!--begin::Input-->
-        <Field class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off" />
-        <!--end::Input-->
-        <div class="fv-plugins-message-container">
-          <div class="fv-help-block">
-            <ErrorMessage name="email" />
-          </div>
-        </div>
+        <el-form-item prop="email">
+          <el-input
+            class="w-150 m-2"
+            size="large"
+            v-model="loginModel.email"
+            autocomplete="off"
+            placeholder="E-Mail adresinizi giriniz"
+          />
+        </el-form-item>
       </div>
       <!--end::Input group-->
 
@@ -42,49 +49,53 @@
         </div>
         <!--end::Wrapper-->
 
-        <!--begin::Input-->
-        <Field
-          class="form-control form-control-lg form-control-solid"
-          type="password"
-          name="password"
-          autocomplete="off"
-        />
-        <!--end::Input-->
-        <div class="fv-plugins-message-container">
-          <div class="fv-help-block">
-            <ErrorMessage name="password" />
-          </div>
-        </div>
+        <el-form-item prop="password">
+          <!--begin::Input-->
+          <el-input
+            v-model="loginModel.password"
+            type="password"
+            class="w-150"
+            size="large"
+            placeholder="Şifrenizi giriniz"
+            autocomplete="off"
+            show-password
+          />
+          <!--end::Input-->
+        </el-form-item>
       </div>
       <!--end::Input group-->
 
       <!--begin::Actions-->
       <div class="text-center">
-        <!--begin::Submit button-->
-        <button type="submit" ref="submitButton" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-          <span class="indicator-label"> Giriş </span>
-
-          <span class="indicator-progress">
-            Please wait...
+        <!--begin::Button-->
+        <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary w-100" type="submit">
+          <span v-if="!loading" class="indicator-label"> Giriş </span>
+          <span v-if="loading" class="indicator-progress">
+            Lütfen Bekleyiniz...
             <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
           </span>
         </button>
-        <!--end::Submit button-->
+        <!--end::Button-->
       </div>
       <!--end::Actions-->
-    </Form>
-    <!--end::Form-->
+    </el-form>
   </div>
   <!--end::Wrapper-->
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref,onMounted } from 'vue';
+import { Search } from '@element-plus/icons-vue';
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import { Actions } from '@/store/enums/StoreEnums';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2/dist/sweetalert2.min.js';
+
+interface ILoginModel {
+  email: string;
+  password: string;
+}
 
 import * as Yup from 'yup';
 
@@ -94,12 +105,43 @@ export default defineComponent({
     Field,
     Form,
     ErrorMessage,
+    Search,
   },
   setup() {
     const store = useStore();
     const router = useRouter();
 
+    const loading = ref<boolean>(false);
+
+    var loginModel = ref<ILoginModel>({
+      email: '',
+      password: '',
+    });
+
+    onMounted(async () => {
+      store.dispatch(Actions.REMOVE_BODY_LOADING);
+    });
+
     const submitButton = ref<HTMLButtonElement | null>(null);
+
+    const formLoginRef = ref<null | HTMLFormElement>(null);
+
+    const loginRules = ref({
+      email: [
+        {
+          required: true,
+          message: 'Mail adresi girilmedi.',
+          trigger: 'blur',
+        },
+      ],
+      password: [
+        {
+          required: true,
+          message: 'Şifre girilmedi.',
+          trigger: 'blur',
+        },
+      ],
+    });
 
     //Create form validation object
     const login = Yup.object().shape({
@@ -107,48 +149,63 @@ export default defineComponent({
       password: Yup.string().min(4).required().label('Password'),
     });
 
-    //Form submit function
-    const onSubmitLogin = values => {
-      // Clear existing errors
-      store.dispatch(Actions.LOGOUT);
+    const loginSubmit = () => {
+      if (!formLoginRef.value) {
+        return;
+      }
 
-      submitButton.value?.setAttribute('data-kt-indicator', 'on');
-      submitButton.value!.disabled = true;
+      formLoginRef.value.validate(async valid => {
+        if (valid) {
+          loading.value = true;
 
-      // Send login request
-      store
-        .dispatch(Actions.LOGIN, values)
-        .then(result => {
-          if (result.isSuccess) {
-            // Go to page after successfully login
-            router.push({ name: 'dashboard' });
-          } else {
-            Swal.fire({
-              title: 'Hata',
-              text: result.message,
-              icon: 'error',
-              buttonsStyling: false,
-              confirmButtonText: 'Tamam !',
-              customClass: {
-                confirmButton: 'btn fw-bold btn-light-danger',
-              },
+          await store
+            .dispatch(Actions.LOGIN, loginModel.value)
+            .then(result => {
+              loading.value = false;
+              if (result == null) {
+                Swal.fire({
+                  title: 'Hata',
+                  html: 'Login işlemi sırasında hata oluştu.<br>Lütfen tekrar deneyiniz...',
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              } else {
+                if (result.isSuccess) {
+                  // Go to page after successfully login
+                  router.push({ name: 'anaSayfa' });
+                } else {
+                  Swal.fire({
+                    title: 'Hata',
+                    text: result.message,
+                    icon: 'error',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Tamam !',
+                    customClass: {
+                      confirmButton: 'btn fw-bold btn-danger',
+                    },
+                  });
+                }
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
             });
-          }
-        })
-        .catch(() => {
-          const [error] = Object.keys(store.getters.getErrors);
-        });
-
-      //Deactivate indicator
-      submitButton.value?.removeAttribute('data-kt-indicator');
-      // eslint-disable-next-line
-      submitButton.value!.disabled = false;
+        }
+      });
     };
 
     return {
-      onSubmitLogin,
+      loginSubmit,
       login,
       submitButton,
+      loginRules,
+      loginModel,
+      loading,
+      formLoginRef,
     };
   },
 });

@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.Customers;
+﻿using ServisTakip.Entities.DTOs.Customers;
 
 namespace ServisTakip.Business.Handlers.Customers.Queries
 {
@@ -15,10 +9,8 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
         {
             public async Task<ResponseMessage<CustomerDto>> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
             {
-                var customerRepo = ServiceTool.ServiceProvider.GetService<ICustomerRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-                var customer = await customerRepo.GetCustomerById(request.CustomerId);
-                var map = mapper.Map<CustomerDto>(customer);
+                var customer = await Tools.CustomerRepository.GetCustomerById(request.CustomerId);
+                var map = Tools.Mapper.Map<CustomerDto>(customer);
                 return ResponseMessage<CustomerDto>.Success(map);
             }
         }

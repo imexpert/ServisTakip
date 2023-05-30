@@ -9,6 +9,8 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.StackExchangeRedis" Version="6.0.16" />
+		<PackageReference Include="StackExchange.Redis" Version="2.6.104" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -17,6 +19,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="ReportFiles\MusteriRaporu.frx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="ReportFiles\OfferReports\1.frx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="ReportFiles\OrderReceipts\1.frx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="ReportFiles\TeknisyenRaporu.frx">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

@@ -48,10 +48,22 @@ namespace ServisTakip.Core.Extensions
             if (environment.IsDevelopment() || environment.IsStaging())
             {
                 result.Message = e.GetInnermostException().Message;
+
+                if (result.Message.Contains("FK_Devices_Addresses"))
+                {
+                    result.Message = "Bu adrese kayıtlı cihaz mevcuttur. İlk önce o cihaz'ın silinmesi gerekmektedir.";
+                }
             }
             else
             {
-                result.Message = "İşlem sırasında hata oluştu. Lütfen tekrar deneyiniz.";
+                if (result.Message.Contains("FK_Devices_Addresses"))
+                {
+                    result.Message = "Bu adrese kayıtlı cihaz mevcuttur. İlk önce o cihaz'ın silinmesi gerekmektedir.";
+                }
+                else
+                {
+                    result.Message = "İşlem sırasında hata oluştu. Lütfen tekrar deneyiniz.";
+                }
             }
 
             DefaultContractResolver contractResolver = new()

@@ -18,6 +18,7 @@ using ServisTakip.Core.Utilities.Security.Encyption;
 using ServisTakip.Core.Utilities.Security.Jwt;
 using ServisTakip.Core.Utilities.Settings;
 using ServisTakip.DataAccess.Concrete.EntityFramework.Contexts;
+using StackExchange.Redis;
 
 namespace ServisTakip.Api.Infrastructure
 {
@@ -56,6 +57,8 @@ namespace ServisTakip.Api.Infrastructure
 
         public static void AddCustomServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<RedisSettings>(configuration.GetSection("RedisSettings"));
+
             Assembly assembly = Assembly.GetAssembly(typeof(AutofacBusinessModule));
 
             services
@@ -70,7 +73,11 @@ namespace ServisTakip.Api.Infrastructure
             {
                 options.AddPolicy(
                     "AllowOrigin",
-                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                    builder =>
+                        builder.WithOrigins("http://localhost:8080", "http://192.168.68.111:8080", "https://www.avrpro.net", "http://www.avrpro.net", "http://avrpro.net", "https://avrpro.net", "http://192.168.1.166:8080")
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .AllowAnyHeader());
             });
 
             services.AddSwaggerGen();
@@ -84,6 +91,13 @@ namespace ServisTakip.Api.Infrastructure
                 new ClaimsPrincipal(new ClaimsIdentity(""));
 
             services.AddScoped<IPrincipal>(getPrincipal);
+
+            var _redis = ConnectionMultiplexer.Connect(new ConfigurationOptions
+            {
+                EndPoints = { $"{configuration.GetValue<string>("RedisSettings:Host")}:{configuration.GetValue<string>("RedisSettings:Port")}" }
+            });
+
+            services.AddSingleton<IConnectionMultiplexer>(_redis);
 
             var coreModule = new CoreModule();
 
@@ -105,7 +119,7 @@ namespace ServisTakip.Api.Infrastructure
             services.AddSingleton<ICacheManager, RedisCacheManager>();
         }
 
-        public static void AddCarbonDbContext(this IServiceCollection services)
+        public static void AddServisTakipDbContext(this IServiceCollection services)
         {
             services.AddDbContext<ProjectDbContext, MsDbContext>();
         }

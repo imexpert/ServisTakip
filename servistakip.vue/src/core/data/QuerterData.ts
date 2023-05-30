@@ -1,6 +1,7 @@
 import { IDistrictData } from "./DistrictData";
 
 interface IQuerterData {
+    id?: string | '',
     name?: string | '',
     quarterId?: string | '',
     serialNumber?: string | '',

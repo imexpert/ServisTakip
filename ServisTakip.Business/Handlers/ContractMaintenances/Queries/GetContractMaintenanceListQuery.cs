@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.ContractMaintenances;
+﻿using ServisTakip.Entities.DTOs.ContractMaintenances;
 
 namespace ServisTakip.Business.Handlers.ContractMaintenances.Queries
 {
@@ -16,11 +10,8 @@ namespace ServisTakip.Business.Handlers.ContractMaintenances.Queries
         {
             public async Task<ResponseMessage<List<ContractMaintenanceDto>>> Handle(GetContractMaintenanceListQuery request, CancellationToken cancellationToken)
             {
-                var contractMaintenanceRepo = ServiceTool.ServiceProvider.GetService<IContractMaintenanceRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var contractList = await contractMaintenanceRepo.GetListAsync(s => s.DeviceServiceId == request.DeviceServiceId);
-                var result = mapper.Map<List<ContractMaintenanceDto>>(contractList);
+                var contractList = await Tools.ContractMaintenanceRepository.GetListAsync(s => s.DeviceServiceId == request.DeviceServiceId);
+                var result = Tools.Mapper.Map<List<ContractMaintenanceDto>>(contractList);
                 return ResponseMessage<List<ContractMaintenanceDto>>.Success(result);
             }
         }

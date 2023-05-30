@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.DataAccess.Abstract;
-using ServisTakip.Entities.DTOs.ContractCodes;
+﻿using ServisTakip.Entities.DTOs.ContractCodes;
 
 namespace ServisTakip.Business.Handlers.ContractCodes.Queries
 {
@@ -14,11 +8,8 @@ namespace ServisTakip.Business.Handlers.ContractCodes.Queries
         {
             public async Task<ResponseMessage<List<ContractCodeDto>>> Handle(GetContractCodeListQuery request, CancellationToken cancellationToken)
             {
-                var contractCodeRepo = ServiceTool.ServiceProvider.GetService<IContractCodeRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
-                var bootCodeList = await contractCodeRepo.GetListAsync();
-                var result = mapper.Map<List<ContractCodeDto>>(bootCodeList);
+                var contractCodeList = await Tools.ContractCodeRepository.GetListAsync();
+                var result = Tools.Mapper.Map<List<ContractCodeDto>>(contractCodeList);
                 return ResponseMessage<List<ContractCodeDto>>.Success(result);
             }
         }

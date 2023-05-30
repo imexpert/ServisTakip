@@ -7,5 +7,6 @@ namespace ServisTakip.DataAccess.Abstract
     {
         Task BulkInsert(long userId, IEnumerable<UserGroup> userGroups);
         Task BulkInsertByGroupId(long groupId, IEnumerable<UserGroup> userGroups);
+        Task<List<UserGroup>> GetUserGroupsByUserId(long userId, CancellationToken cancellationToken);
     }
 }

@@ -2,24 +2,9 @@
 using FastReport.Export.Pdf;
 using FastReport.Utils;
 using FastReport;
-using MediatR;
-using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Reports;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac.Core;
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
-using ServisTakip.Core.Extensions;
-using ServisTakip.Core.Utilities.IoC;
-using ServisTakip.DataAccess.Abstract;
 using ServisTakip.Entities.DTOs.DeviceServiceParts;
 using Parameter = FastReport.Data.Parameter;
-using RichObject = FastReport.RichTextParser.RichObject;
 
 namespace ServisTakip.Business.Handlers.Offers.Commands
 {
@@ -30,16 +15,12 @@ namespace ServisTakip.Business.Handlers.Offers.Commands
         {
             public async Task<ResponseMessage<OfferReport>> Handle(DownloadOfferCommand request, CancellationToken cancellationToken)
             {
-                var offerRepo = ServiceTool.ServiceProvider.GetService<IOfferRepository>();
-                var deviceServicePartRepo = ServiceTool.ServiceProvider.GetService<IDeviceServicePartRepository>();
-                var mapper = ServiceTool.ServiceProvider.GetService<IMapper>();
-
                 var deviceServiceParts =
-                    await deviceServicePartRepo.GetListAsync(s => s.DeviceServiceId == request.DeviceServiceId);
+                    await Tools.DeviceServicePartRepository.GetListAsync(s => s.DeviceServiceId == request.DeviceServiceId);
 
-                var parts = mapper.Map<List<DeviceServicePartDto>>(deviceServiceParts);
+                var parts = Tools.Mapper.Map<List<DeviceServicePartDto>>(deviceServiceParts);
 
-                var offer = await offerRepo.GetOfferAsync(request.DeviceServiceId, cancellationToken);
+                var offer = await Tools.OfferRepository.GetOfferAsync(request.DeviceServiceId, cancellationToken);
 
                 RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
                 Report report = Report.FromFile($"ReportFiles/OfferReports/{Utils.CompanyId}.frx");

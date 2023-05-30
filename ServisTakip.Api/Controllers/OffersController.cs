@@ -3,7 +3,6 @@ using ServisTakip.Business.Handlers.DeviceServices.Queries;
 using ServisTakip.Business.Handlers.Offers.Commands;
 using ServisTakip.Business.Handlers.Offers.Queries;
 using ServisTakip.Core.Utilities.Results;
-using ServisTakip.Entities.DTOs.DeviceServices;
 using ServisTakip.Entities.DTOs.Offers;
 using ServisTakip.Entities.DTOs.Reports;
 

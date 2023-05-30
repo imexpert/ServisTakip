@@ -8,7 +8,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
 {
     public class CityRepository : EntityRepositoryBase<City, ProjectDbContext>, ICityRepository
     {
-        ProjectDbContext _context;
+        readonly ProjectDbContext _context;
         public CityRepository(ProjectDbContext context)
             : base(context)
         {
@@ -18,7 +18,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
         public async Task<List<City>> GetCities()
         {
             return await _context.Cities
-                .Include(s=>s.Districts).ThenInclude(s=>s.Querters)
+                .Include(s=>s.Districts)
                 .ToListAsync();
         }
     }

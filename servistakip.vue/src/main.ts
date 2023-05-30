@@ -15,11 +15,13 @@ import VuePdf from 'vue3-pdfjs'
 
 //imports for app initialization
 import ApiService from "@/core/services/ApiService";
+import SignalRService from "@/core/plugins/signalR";
 import { initApexCharts } from "@/core/plugins/apexcharts";
 import { initInlineSvg } from "@/core/plugins/inline-svg";
 import { initVeeValidate } from "@/core/plugins/vee-validate";
 
 import "@/core/plugins/prismjs";
+
 const app = createApp(App);
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -31,6 +33,10 @@ app.use(router);
 app.use(ElementPlus);
 app.use(loading, /*{...}*/)
 app.use(VuePdf)
+
+SignalRService.init();
+SignalRService.connect();
+SignalRService.create();
 
 ApiService.init(app);
 initApexCharts(app);
