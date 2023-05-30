@@ -8,6 +8,7 @@ export default class DeviceServicePartModule extends VuexModule {
 
   @Action
   [Actions.ADD_DEVICESERVICEPART](deviceServicePart) {
+    console.log(deviceServicePart);
     return ApiService.post("DeviceServiceParts/CreateDeviceServicePart", deviceServicePart)
       .then(({ data }) => {
         return data;

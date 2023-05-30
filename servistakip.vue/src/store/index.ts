@@ -17,8 +17,11 @@ import ConfigModule from "@/store/modules/ConfigModule";
 import ThemeModeModule from "@/store/modules/ThemeModeModule";
 import BootCodeModule from "@/store/modules/BootCodeModule";
 import DetectionCodeModule from "@/store/modules/DetectionCodeModule";
-import ResultCodeModule from  "@/store/modules/ResultCodeModule";
-import DeviceServicePartModule from  "@/store/modules/DeviceServicePartModule";
+import ResultCodeModule from "@/store/modules/ResultCodeModule";
+import DeviceServicePartModule from "@/store/modules/DeviceServicePartModule";
+import CompanyModule from "@/store/modules/CompanyModule";
+import OfferModule from "@/store/modules/OfferModule";
+import OfferSubjectModule from "@/store/modules/OfferSubjectModule";
 
 
 config.rawError = true;
@@ -42,7 +45,10 @@ const store = createStore({
     DeviceServiceModule,
     DetectionCodeModule,
     ResultCodeModule,
-    DeviceServicePartModule
+    DeviceServicePartModule,
+    CompanyModule,
+    OfferModule,
+    OfferSubjectModule
   },
   mutations: {
     setCustomerId(state, id) {

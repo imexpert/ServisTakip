@@ -270,7 +270,7 @@
               </template>
             </el-table-column>
             <el-table-column label="#" fixed="left" width="170">
-              <template>
+              <template #default="scope">
                 <el-dropdown size="small" type="danger">
                   <el-button type="primary">
                     İşlem Listesi<el-icon class="el-icon--right">
@@ -282,10 +282,10 @@
                       <el-dropdown-item>
                         <el-icon> <ArrowRight /> </el-icon>&nbsp; Teknisyen Ata
                       </el-dropdown-item>
-                      <el-dropdown-item>
+                      <el-dropdown-item @click="getOrderReceipt(scope.row.id)">
                         <el-icon> <Share /> </el-icon>&nbsp; Sipariş Fişi
                       </el-dropdown-item>
-                      <el-dropdown-item>
+                      <el-dropdown-item @click="parcaListesiDialogAc(scope.row.id)">
                         <el-icon> <List /> </el-icon>&nbsp; Parça Listesi
                       </el-dropdown-item>
                       <el-dropdown-item>
@@ -430,10 +430,128 @@
       </div>
     </div>
   </el-dialog>
+
+  <el-dialog
+    v-model="parcaListesiDialogVisible"
+    title="Parça Listesi"
+    width="50%"
+    style="height: 400px"
+    destroy-on-close
+    center
+  >
+    <div class="row">
+      <div class="col-md-12">
+        <el-table :data="deviceServicePartList" border style="width: 100%" max-height="300" height="300">
+          <el-table-column type="index" :index="indexMethod" />
+          <el-table-column label="Ürün Kodu" width="100">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.productCode }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Ürün Adı" width="170" sortable>
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.productName }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Adet" width="70">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.numberOfProduct }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Fiyat" width="80">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.unitPrice }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Toplam" width="100">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.totalPrice }}</span>
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="Para Birimi" width="100">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.currencyType }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Açıklama">
+            <template #default="scope">
+              <div style="display: flex; align-items: center">
+                <span>{{ scope.row.description }}</span>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
+  </el-dialog>
+
+  <el-dialog
+    v-model="orderReceiptDialogVisible"
+    title="Sipariş Fişi"
+    width="60%"
+    style="height: 800px"
+    destroy-on-close
+    center
+  >
+    <el-form
+      status-icon
+      :rules="siparisFisGonderRules"
+      ref="siparisFisGonderRef"
+      :model="mailModel"
+      @submit.prevent="siparisFisiGonderSubmit()"
+      label-width="120px"
+      label-position="top"
+    >
+      <div class="row">
+        <div class="col-md-3 mt-2">
+          <!--begin::Button-->
+          <button :data-kt-indicator="loading ? 'on' : null" class="btn btn-lg btn-primary" type="submit">
+            <span v-if="!loading" class="indicator-label"> Mail Gönder </span>
+            <span v-if="loading" class="indicator-progress">
+              Lütfen Bekleyiniz...
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </button>
+        </div>
+        <div class="col-md-3">
+          <!--begin::Input group-->
+          <div class="d-flex flex-column fv-row">
+            <!--begin::Label-->
+            <label class="d-flex align-items-center fs-6 fw-bold">
+              <span>Mail Adresi</span>
+            </label>
+            <!--end::Label-->
+            <el-form-item prop="mailAddress">
+              <el-input v-model="mailModel.mailAddress"></el-input>
+            </el-form-item>
+          </div>
+          <!--end::Input group-->
+        </div>
+        <div class="col-md-12 mt-5" v-loading="loading">
+          <!-- <VuePdf :src="teknisyenRaporu" annotation-layer /> -->
+          <PDFViewer :source="orderReceiptReport" style="height: 600px" @download="handleOrderReceiptDownload" />
+          <!-- <pdf src="/sample.pdf" @error="error" style="overflow-y: auto; height: 500px"></pdf> -->
+        </div>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onActivated, ref } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { ErrorMessage } from 'vee-validate';
@@ -443,7 +561,12 @@ import PDFViewer from 'pdf-viewer-vue';
 import { IDeviceServiceData } from '@/core/data/DeviceServiceData';
 import { IUserData } from '@/core/data/UserData';
 import { IAssignTechnicianData } from '@/core/data/AssignTechnicianData';
+import { IDeviceServicePartData } from '@/core/data/DeviceServicePartData';
 
+interface IMailModel {
+  mailAddress: string;
+  deviceServiceId: string;
+}
 export default defineComponent({
   components: {
     ErrorMessage,
@@ -452,11 +575,20 @@ export default defineComponent({
   setup() {
     const store = useStore();
     var teknisyenAtaDialogVisible = ref<boolean>(false);
+    var parcaListesiDialogVisible = ref<boolean>(false);
     var teknisyenRaporDialogVisible = ref<boolean>(false);
     var raporDialogVisible = ref<boolean>(false);
+    var orderReceiptDialogVisible = ref<boolean>(false);
     var teknisyenRaporu = ref<string>('');
+    var orderReceiptReport = ref<string>('');
     const loading = ref<boolean>(false);
     var selectedDeviceServiceId = ref<string>('');
+    var orderReceiptMailAddress = ref<string>('');
+    var mailModel = ref<IMailModel>({
+      mailAddress: '',
+      deviceServiceId: '',
+    });
+    var deviceServicePartList = ref<Array<IDeviceServicePartData>>([]);
 
     var receivedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
     var technicianAssignedDeviceServiceList = ref<Array<IDeviceServiceData>>([]);
@@ -464,6 +596,7 @@ export default defineComponent({
     var technicianUserList = ref<Array<IUserData>>([]);
 
     const formAssignTechnicianRef = ref<null | HTMLFormElement>(null);
+    const siparisFisGonderRef = ref<null | HTMLFormElement>(null);
 
     var assignTechnicianModel = ref<IAssignTechnicianData>({
       id: '',
@@ -476,6 +609,16 @@ export default defineComponent({
         {
           required: true,
           message: 'Teknisyen seçilmedi.',
+          trigger: 'blur',
+        },
+      ],
+    });
+
+    const siparisFisGonderRules = ref({
+      mailAddress: [
+        {
+          required: true,
+          message: 'Mail adresi girilmedi.',
           trigger: 'blur',
         },
       ],
@@ -617,6 +760,14 @@ export default defineComponent({
       console.log(value);
     };
 
+    const handleOrderReceiptDownload = value => {
+      var a = document.createElement('a'); //Create <a>
+      a.href = value.src;
+      a.download = 'SiparisFisi.pdf'; //File name Here
+      a.click(); //Downloaded file
+      console.log(value);
+    };
+
     async function teknisyenAtaAc(deviceServiceId) {
       selectedDeviceServiceId.value = deviceServiceId;
       await getTechnicianList();
@@ -634,6 +785,23 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             technicianUserList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getOrderReceipt(deviceServiceId) {
+      orderReceiptDialogVisible.value = true;
+      loading.value = true;
+      mailModel.value.deviceServiceId = deviceServiceId;
+      await store
+        .dispatch(Actions.GET_ORDERRECEIPT, deviceServiceId)
+        .then(result => {
+          if (result.isSuccess) {
+            loading.value = false;
+            orderReceiptReport.value = 'data:application/pdf;base64,' + result.data.report;
           }
         })
         .catch(() => {
@@ -660,6 +828,19 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             technicianAssignedDeviceServiceList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function getPartsExchangeDeviceServiceList() {
+      await store
+        .dispatch(Actions.GET_PARTSEXCHANGEDEVICESERVICELIST)
+        .then(result => {
+          if (result.isSuccess) {
+            partsExchangeDeviceServiceList.value = result.data;
           }
         })
         .catch(() => {
@@ -811,9 +992,78 @@ export default defineComponent({
       });
     }
 
+    async function getdeviceServicePartList(deviceServiceId) {
+      await store
+        .dispatch(Actions.GET_DEVICESERVICEPARTLIST, deviceServiceId)
+        .then(result => {
+          if (result.isSuccess) {
+            deviceServicePartList.value = result.data;
+          }
+        })
+        .catch(() => {
+          const [error] = Object.keys(store.getters.getErrors);
+        });
+    }
+
+    async function parcaListesiDialogAc(deviceServiceId) {
+      await getdeviceServicePartList(deviceServiceId);
+      parcaListesiDialogVisible.value = true;
+    }
+
+    const indexMethod = (index: number) => {
+      return index + 1;
+    };
+
+    const siparisFisiGonderSubmit = () => {
+      if (!siparisFisGonderRef.value) {
+        return;
+      }
+
+      siparisFisGonderRef.value.validate(async valid => {
+        if (valid) {
+          loading.value = true;
+          await store
+            .dispatch(Actions.SEND_ORDERRECEIPT, mailModel.value)
+            .then(result => {
+              loading.value = false;
+              console.clear();
+              console.log(result);
+              if (result.isSuccess) {
+                Swal.fire({
+                  text: 'Sipariş fişi başarıyla gönderildi.',
+                  icon: 'success',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam',
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                  },
+                }).then(async () => {
+                  orderReceiptDialogVisible.value = false;
+                });
+              } else {
+                Swal.fire({
+                  title: 'Hata',
+                  text: result.message,
+                  icon: 'error',
+                  buttonsStyling: false,
+                  confirmButtonText: 'Tamam !',
+                  customClass: {
+                    confirmButton: 'btn fw-bold btn-danger',
+                  },
+                });
+              }
+            })
+            .catch(() => {
+              const [error] = Object.keys(store.getters.getErrors);
+            });
+        }
+      });
+    };
+
     onMounted(async () => {
       await getReceivedDeviceServiceList();
       await getTechnicianAssignedDeviceServiceList();
+      await getPartsExchangeDeviceServiceList();
     });
 
     return {
@@ -831,6 +1081,14 @@ export default defineComponent({
       selectedDeviceServiceId,
       technicianUserList,
       teknisyenRaporu,
+      parcaListesiDialogVisible,
+      deviceServicePartList,
+      orderReceiptDialogVisible,
+      orderReceiptMailAddress,
+      orderReceiptReport,
+      mailModel,
+      siparisFisGonderRules,
+      siparisFisGonderRef,
       teknisyenAtaSubmit,
       getTechnicianList,
       teknisyenAtaAc,
@@ -843,6 +1101,12 @@ export default defineComponent({
       teknisyenRaporSubmit,
       handleDownload,
       kapatilacakIslereGonderSubmit,
+      getPartsExchangeDeviceServiceList,
+      parcaListesiDialogAc,
+      indexMethod,
+      handleOrderReceiptDownload,
+      getOrderReceipt,
+      siparisFisiGonderSubmit,
     };
   },
 });

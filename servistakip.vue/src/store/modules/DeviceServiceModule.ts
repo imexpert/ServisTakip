@@ -83,6 +83,19 @@ export default class DeviceServiceModule extends VuexModule {
   }
 
   @Action
+  [Actions.UPDATE_APPROVEDEVICESERVICEOFFER](deviceService) {
+    console.log(deviceService);
+    return ApiService.put("DeviceServices/ApproveDeviceServiceOffer", deviceService.value)
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
   [Actions.UPDATE_CANCELDEVICESERVICE](deviceService) {
     console.log(deviceService);
     return ApiService.put("DeviceServices/CancelDeviceService", deviceService.value)
@@ -123,6 +136,30 @@ export default class DeviceServiceModule extends VuexModule {
   @Action
   [Actions.GET_TOBEOFFEREDDEVICESERVICE]() {
     return ApiService.get("DeviceServices/GetToBeOfferedDeviceServicesList")
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
+  [Actions.GET_SENTOFFEREDDEVICESERVICE]() {
+    return ApiService.get("DeviceServices/GetSentOfferedDeviceServicesList")
+      .then(({ data }) => {
+        return data;
+      })
+      .catch(({ response }) => {
+        this.context.commit(Mutations.PURGE_AUTH);
+        router.push({ name: 'sign-in' });
+      });
+  }
+
+  @Action
+  [Actions.GET_PARTSEXCHANGEDEVICESERVICELIST]() {
+    return ApiService.get("DeviceServices/GetPartsExchangeDeviceServicesList")
       .then(({ data }) => {
         return data;
       })

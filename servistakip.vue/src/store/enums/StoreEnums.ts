@@ -1,5 +1,7 @@
 enum Actions {
   // action types
+  GET_COMPANY = "getCompany",
+
   ADD_BODY_CLASSNAME = "addBodyClassName",
   REMOVE_BODY_CLASSNAME = "removeBodyClassName",
   ADD_BODY_ATTRIBUTE = "addBodyAttribute",
@@ -14,6 +16,7 @@ enum Actions {
   SET_BREADCRUMB_ACTION = "setBreadcrumbAction",
   SET_THEME_MODE_ACTION = "setThemeModeAction",
   GET_SECTOR_LIST = "getsectorlist",
+  GET_OFFERSUBJECTCODE_LIST = "getOfferSubjectCodelist",
   GET_CITY_LIST = "getCitylist",
   GET_DISTRICT_LIST = "getDistrictlist",
   GET_QUERTER_LIST = "getQuerterlist",
@@ -37,10 +40,12 @@ enum Actions {
 
   ADD_DEVICESERVICE = "addDeviceService",
   GET_RECEIVEDDEVICESERVICE = "getReceivedDeviceService",
+  GET_PARTSEXCHANGEDEVICESERVICELIST = "getPartsExchangeDeviceServiceList",
   GET_DEVICESERVICEWITHID = "getDeviceServiceWithId",
   GET_TECHNICIANASSINEDDEVICESERVICE = "getTechnicianAssignedDeviceService",
   GET_CLOSEDDEVICESERVICE = "getClosedDeviceService",
   GET_TOBEOFFEREDDEVICESERVICE = "getToBeOfferedDeviceService",
+  GET_SENTOFFEREDDEVICESERVICE = "getSentOfferedDeviceService",
   UPDATE_ASSIGNTECHNICIANDEVICESERVICE = "updateAssignTechnicianDeviceService",
   UPDATE_RETURNDEVICESERVICETOTECHNICIAN = "updateReturnDeviceServiceTechnician",
   UPDATE_CLOSEDEVICESERVICE = "updateCloseDeviceService",
@@ -48,6 +53,7 @@ enum Actions {
   UPDATE_CANCELDEVICESERVICE = "updateCancelDeviceService",
   UPDATE_SENDDEVICESERVICETOCLOSE = "updateSendDeviceServiceToClose",
   DELETE_DELETEDEVICESERVICE = "deleteDeleteDeviceService",
+  UPDATE_APPROVEDEVICESERVICEOFFER = "updateApproveDeviceServiceOffer",
   GET_TECHNICIANDEVICESERVICEREPORT = "getTechnicianDeviceServiceReport",
 
   ADD_DEVICESERVICEPART = "addDeviceServicePart",
@@ -55,6 +61,16 @@ enum Actions {
   DELETE_DEVICESERVICEPART = "deleteDeviceServicePart",
   GET_DEVICESERVICEPARTLIST = "getDeviceServicePartList",
   GET_DEVICESERVICEPART = "getDeviceServicePart",
+
+  GET_OFFERNOTSEND = "getOfferNotSend",
+  GET_ORDERRECEIPT = "getOrderReceipt",
+  ADD_OFFER = "addOffer",
+  SEND_ORDERRECEIPT = "sendOrderReceipt",
+  UPDATE_OFFER = "updateOffer",
+  DELETE_OFFER = "deleteOffer",
+  UPDATE_SENDOFFER = "updateSendOffer",
+  UPDATE_SENDOFFERAGAIN = "updateSendOfferAgain",
+  GET_OFFERREPORT = "getOfferReport"
 }
 
 enum Mutations {
