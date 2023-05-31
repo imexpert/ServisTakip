@@ -1,4 +1,6 @@
-﻿using ServisTakip.Entities.DTOs.Devices;
+﻿using ServisTakip.Business.Handlers.UserProcesses.Commands;
+using ServisTakip.Entities.DTOs.Devices;
+using ServisTakip.Entities.DTOs.UserProcesses;
 
 namespace ServisTakip.Business.Handlers.Devices.Commands
 {
@@ -12,6 +14,15 @@ namespace ServisTakip.Business.Handlers.Devices.Commands
                 var device = Tools.Mapper.Map<Device>(request.Model);
                 Tools.DeviceRepository.Update(device);
                 await Tools.DeviceRepository.SaveChangesAsync();
+
+                #region Kullanıcı İşlem Bilgisi Ekleme
+                UpdateUserProcessDto userProcess = new UpdateUserProcessDto()
+                {
+                    DeviceId = device.Id,
+                    AddressId = device.AddressId,
+                };
+                await Tools.Mediator.Send(new UpdateUserProcessCommand() { Model = userProcess }, cancellationToken);
+                #endregion
 
                 return ResponseMessage<UpdateDeviceDto>.Success();
             }

@@ -1,5 +1,7 @@
-﻿using ServisTakip.Core.Aspects.Autofac.Transaction;
+﻿using ServisTakip.Business.Handlers.UserProcesses.Commands;
+using ServisTakip.Core.Aspects.Autofac.Transaction;
 using ServisTakip.Entities.DTOs.DeviceServices;
+using ServisTakip.Entities.DTOs.UserProcesses;
 
 namespace ServisTakip.Business.Handlers.DeviceServices.Commands
 {
@@ -40,6 +42,15 @@ namespace ServisTakip.Business.Handlers.DeviceServices.Commands
                 {
                     ClosedDeviceService = deviceService
                 }, cancellationToken);
+
+                #region Kullanıcı İşlem Bilgisi Ekleme
+                UpdateUserProcessDto userProcess = new UpdateUserProcessDto()
+                {
+                    DeviceServiceId = deviceService.Id,
+                    DeviceId = deviceService.DeviceId
+                };
+                await Tools.Mediator.Send(new UpdateUserProcessCommand() { Model = userProcess }, cancellationToken);
+                #endregion
 
                 return ResponseMessage<DeviceServiceDto>.Success(request.Model);
             }

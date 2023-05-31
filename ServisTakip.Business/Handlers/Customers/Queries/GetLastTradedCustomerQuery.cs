@@ -1,4 +1,7 @@
-﻿using ServisTakip.Entities.DTOs.Contracts;
+﻿using ServisTakip.Business.Handlers.Devices.Queries;
+using ServisTakip.Business.Handlers.DeviceServices.Queries;
+using ServisTakip.Business.Handlers.UserProcesses.Queries;
+using ServisTakip.Entities.DTOs.Contracts;
 using ServisTakip.Entities.DTOs.Customers;
 using ServisTakip.Entities.DTOs.Devices;
 using ServisTakip.Entities.DTOs.DeviceServices;
@@ -124,7 +127,7 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
 
                 var customerList = await Tools.CustomerRepository.GetCustomerListAsync(cancellationToken);
 
-                var customer = customerList.FirstOrDefault(s => s.RecordUsername == Utils.Email);
+                var customer = customerList.FirstOrDefault(s => s.RecordUsername == Utils.Email || s.UpdateUsername == Utils.Email);
                 if (customer != null)
                 {
                     result.CustomerTitle = customer.Title;

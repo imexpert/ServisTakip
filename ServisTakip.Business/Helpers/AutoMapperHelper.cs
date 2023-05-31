@@ -22,6 +22,7 @@ using ServisTakip.Entities.DTOs.Groups;
 using ServisTakip.Entities.DTOs.Offers;
 using ServisTakip.Entities.DTOs.OfferSubjectCodes;
 using ServisTakip.Entities.DTOs.UserGroups;
+using ServisTakip.Entities.DTOs.UserProcesses;
 
 namespace ServisTakip.Business.Helpers
 {
@@ -67,6 +68,7 @@ namespace ServisTakip.Business.Helpers
             CreateMap<Contract, UpdateContractDto>().ReverseMap();
             CreateMap<UserGroup, UserGroupDto>().ReverseMap();
             CreateMap<Group, GroupDto>().ReverseMap();
+            CreateMap<UserProcess, UserProcessDto>().ReverseMap();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ServisTakip.Entities.DTOs.UserProcesses
 {
-    public class UpdateUserProcessDto
+    public class UserProcessDto
     {
         public long? DeviceServiceId { get; set; }
         public long? CustomerId { get; set; }

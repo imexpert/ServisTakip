@@ -16,6 +16,7 @@ namespace ServisTakip.Business.Handlers.UserProcesses.Commands
                     userProcess.UserId = Utils.UserId;
                     userProcess.DeviceId = request.Model.DeviceId;
                     userProcess.DeviceServiceId = request.Model.DeviceServiceId;
+                    userProcess.AddressId = request.Model.AddressId;
                     Tools.UserProcessRepository.Update(userProcess);
                     await Tools.UserProcessRepository.SaveChangesAsync();
                 }

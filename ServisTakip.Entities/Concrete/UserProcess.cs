@@ -8,5 +8,6 @@ namespace ServisTakip.Entities.Concrete
         public long? DeviceServiceId { get; set; }
         public long? DeviceId { get; set; }
         public long? CustomerId { get; set; }
+        public long? AddressId { get; set; }
     }
 }

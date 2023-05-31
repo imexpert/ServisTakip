@@ -20,12 +20,12 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<Using Include = "ServisTakip.Business.Helpers" />
-		<Using Include = "ServisTakip.Core.Utilities.Results" />
-		<Using Include = "MediatR" />
-		<Using Include = "ServisTakip.Entities.Concrete" />
-		<Using Include = "ServisTakip.Core.Extensions" />
-		<Using Include = "ServisTakip.Entities.Enums" />
+		<Using Include="ServisTakip.Business.Helpers" />
+		<Using Include="ServisTakip.Core.Utilities.Results" />
+		<Using Include="MediatR" />
+		<Using Include="ServisTakip.Entities.Concrete" />
+		<Using Include="ServisTakip.Core.Extensions" />
+		<Using Include="ServisTakip.Entities.Enums" />
 	</ItemGroup>
 
   <ItemGroup>

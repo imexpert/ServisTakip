@@ -1,5 +1,8 @@
-﻿using ServisTakip.Core.Aspects.Autofac.Transaction;
+﻿using ServisTakip.Business.Handlers.UserProcesses.Commands;
+using ServisTakip.Core.Aspects.Autofac.Transaction;
+using ServisTakip.Entities.Concrete;
 using ServisTakip.Entities.DTOs.Contracts;
+using ServisTakip.Entities.DTOs.UserProcesses;
 
 namespace ServisTakip.Business.Handlers.Contracts.Commands
 {
@@ -39,6 +42,14 @@ namespace ServisTakip.Business.Handlers.Contracts.Commands
                     Tools.ContractMaintenanceRepository.AddRange(contractMaintenances);
                     await Tools.ContractMaintenanceRepository.SaveChangesAsync();
                 }
+                #endregion
+
+                #region Kullanıcı İşlem Bilgisi Ekleme
+                UpdateUserProcessDto userProcess = new UpdateUserProcessDto()
+                {
+                    DeviceId = contract.DeviceId
+                };
+                await Tools.Mediator.Send(new UpdateUserProcessCommand() { Model = userProcess }, cancellationToken);
                 #endregion
 
                 var result = Tools.Mapper.Map<ContractDto>(contract);

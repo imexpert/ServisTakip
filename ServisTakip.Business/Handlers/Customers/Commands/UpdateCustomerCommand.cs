@@ -1,4 +1,6 @@
-﻿using ServisTakip.Entities.DTOs.Customers;
+﻿using ServisTakip.Business.Handlers.UserProcesses.Commands;
+using ServisTakip.Entities.DTOs.Customers;
+using ServisTakip.Entities.DTOs.UserProcesses;
 
 namespace ServisTakip.Business.Handlers.Customers.Commands
 {
@@ -14,6 +16,14 @@ namespace ServisTakip.Business.Handlers.Customers.Commands
                 await Tools.CustomerRepository.SaveChangesAsync();
 
                 var resultCustomer = Tools.Mapper.Map<CustomerDto>(customer);
+
+                #region Kullanıcı İşlem Bilgisi Ekleme
+                UpdateUserProcessDto userProcess = new UpdateUserProcessDto()
+                {
+                    CustomerId = customer.Id
+                };
+                await Tools.Mediator.Send(new UpdateUserProcessCommand() { Model = userProcess }, cancellationToken);
+                #endregion
 
                 return ResponseMessage<CustomerDto>.Success(resultCustomer);
             }

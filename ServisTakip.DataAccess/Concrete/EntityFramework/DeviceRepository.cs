@@ -22,7 +22,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
                 .Include(s => s.Address).ThenInclude(s => s.Customer).ThenInclude(s => s.Sector)
                 .Include(s => s.Address).ThenInclude(s => s.District).ThenInclude(s => s.City)
                 .Include(s => s.DeviceModel).ThenInclude(s => s.DeviceBrand).ThenInclude(s => s.DeviceType)
-                .Where(s => s.RecordUsername == Utils.Email && s.Address.Customer.CompanyId == Utils.CompanyId)
+                .Where(s => (s.RecordUsername == Utils.Email || s.UpdateUsername == Utils.Email) && s.Address.Customer.CompanyId == Utils.CompanyId)
                 .AsNoTracking()
                 .OrderByDescending(s => s.RecordDate)
                 .FirstOrDefaultAsync();
