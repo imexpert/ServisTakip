@@ -13,5 +13,6 @@
         public string SerialNo { get; set; }
         public string District { get; set; }
         public string Department { get; set; }
+        public string ContractCode { get; set; }
     }
 }

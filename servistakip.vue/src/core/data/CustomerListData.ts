@@ -11,6 +11,7 @@ interface ICustomerListData {
     serialNo?: string | '',
     rowId?: string | '',
     querter?: string | '',
+    contractCode?: string | '',
 }
 
 export { ICustomerListData };

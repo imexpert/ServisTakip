@@ -46,7 +46,18 @@
     <el-table-column label="Fiyat" width="120" label-class-name="tableHeader">
       <template #default="scope">
         <div style="display: flex; align-items: center">
-          <span>{{ scope.row.price }} {{ scope.row.currencyType }} </span>
+          <span
+            >{{ scope.row.price }}
+            {{
+              scope.row.currencyType == 1
+                ? 'TL'
+                : scope.row.currencyType == 2
+                ? 'USD'
+                : scope.row.currencyType == 3
+                ? 'EURO'
+                : ''
+            }}
+          </span>
         </div>
       </template>
     </el-table-column>
@@ -229,9 +240,9 @@
               <!--end::Label-->
               <el-form-item prop="currencyType">
                 <el-select placeholder="Para birimi seçin" v-model="newContract.currencyType">
-                  <el-option label="TL" value="TL" />
-                  <el-option label="USD" value="USD" />
-                  <el-option label="EURO" value="EURO" />
+                  <el-option label="TL" :value="1" />
+                  <el-option label="USD" :value="2" />
+                  <el-option label="EURO" :value="3" />
                 </el-select>
               </el-form-item>
             </div>
@@ -366,7 +377,18 @@ export default defineComponent({
         });
     }
 
+    function clearForm() {
+      newContract.value.contractCode = null;
+      newContract.value.currencyType = null;
+      newContract.value.deviceId = null;
+      newContract.value.endDate = null;
+      newContract.value.maintenancePeriod = null;
+      newContract.value.price = null;
+      newContract.value.startDate = null;
+    }
     async function sozlemeDialogAc(id = 0) {
+      clearForm();
+
       sozlesmeDialogVisible.value = true;
 
       await getContractCodeList();

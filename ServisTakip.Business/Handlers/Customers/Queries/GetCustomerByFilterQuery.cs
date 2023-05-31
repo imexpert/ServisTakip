@@ -1,4 +1,6 @@
-﻿using ServisTakip.Entities.DTOs.Customers;
+﻿using ServisTakip.Business.Handlers.Contracts.Queries;
+using ServisTakip.Entities.Concrete;
+using ServisTakip.Entities.DTOs.Customers;
 
 namespace ServisTakip.Business.Handlers.Customers.Queries
 {
@@ -31,6 +33,9 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                             {
                                 foreach (var device in address.Devices)
                                 {
+                                    var contractCode = await Tools.Mediator.Send(new GetCustomerContractCodeQuery()
+                                        { DeviceId = device.Id }, cancellationToken);
+                                    
                                     cst.AddressId = address.Id;
                                     cst.Address = address.AddressTitle;
                                     cst.District = address.District.Name;
@@ -38,9 +43,9 @@ namespace ServisTakip.Business.Handlers.Customers.Queries
                                     cst.Model = device.DeviceModel.Name;
                                     cst.SerialNo = device.SerialNumber;
                                     cst.Department = address.Department;
+                                    cst.ContractCode = contractCode.ContractCode;
 
                                     result.Add(cst.Clone());
-
                                 }
                             }
                             else

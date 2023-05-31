@@ -165,7 +165,7 @@
                 >
                   <li class="el-select-dropdown__item">
                     <div class="row" style="width: 100%">
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                         <span style="font-weight: 900"> Unvan </span>
                       </div>
                       <div class="col-md-2">
@@ -180,6 +180,9 @@
                       <div class="col-md-1">
                         <span style="font-weight: 900"> Seri No </span>
                       </div>
+                      <div class="col-md-1">
+                        <span style="font-weight: 900"> Sözleşme Kodu </span>
+                      </div>
                     </div>
                   </li>
                   <el-option
@@ -190,7 +193,7 @@
                     :value="item.rowId"
                   >
                     <div class="row" style="width: 100%">
-                      <div class="col-md-4" style="font-size: 12px; word-wrap: break-word">
+                      <div class="col-md-3" style="font-size: 12px; word-wrap: break-word">
                         {{ item.title.substring(0, 47) + '...' }}
                       </div>
                       <div class="col-md-2" style="font-size: 12px">
@@ -204,6 +207,9 @@
                       </div>
                       <div class="col-md-1" style="font-size: 12px">
                         {{ item.serialNo }}
+                      </div>
+                      <div class="col-md-1" style="font-size: 12px">
+                        {{ item.contractCode }}
                       </div>
                     </div>
                   </el-option>
