@@ -19,10 +19,13 @@ import SignalRService from "@/core/plugins/signalR";
 import { initApexCharts } from "@/core/plugins/apexcharts";
 import { initInlineSvg } from "@/core/plugins/inline-svg";
 import { initVeeValidate } from "@/core/plugins/vee-validate";
+import VueDatePicker from '@vuepic/vue-datepicker';
 
 import "@/core/plugins/prismjs";
 
 const app = createApp(App);
+
+app.component('VueDatePicker', VueDatePicker);
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)

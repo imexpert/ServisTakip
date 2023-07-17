@@ -1002,14 +1002,23 @@
                   <!--end::Label-->
 
                   <el-form-item prop="failureDate">
-                    <el-date-picker
+                    <VueDatePicker
+                      v-model="newBakimService.failureDate"
+                      select-text="Seç"
+                      locale="tr"
+                      :is-24="true"
+                      format="dd.MM.yyyy HH:mm:ss"
+                      how-now-button
+                      now-button-label="Şimdi"
+                    ></VueDatePicker>
+                    <!-- <el-date-picker
                       v-model="newBakimService.failureDate"
                       format="DD.MM.YYYY HH:mm:ss"
                       type="datetime"
                       class="customBorder"
                       placeholder="Servis açılış tarihi"
                       :shortcuts="shortcuts"
-                    />
+                    /> -->
                   </el-form-item>
                 </div>
                 <!--end::Input group-->
@@ -2618,6 +2627,7 @@ import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { Plus, Search } from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
+import '@vuepic/vue-datepicker/dist/main.css';
 
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { IFirmaOzetData } from '@/core/data/FirmaOzetData';
@@ -3301,6 +3311,21 @@ export default defineComponent({
         if (valid) {
           newService.value.deviceId = Number(firmaOzet.value.deviceId);
 
+          newService.value.failureDate =
+            new Date(newService.value.failureDate).toLocaleDateString() +
+            ' ' +
+            new Date(newService.value.failureDate).toLocaleTimeString();
+
+          if (newService.value.userAssignDate != null) {
+            newService.value.userAssignDate =
+              new Date(newService.value.userAssignDate).toLocaleDateString() +
+              ' ' +
+              new Date(newService.value.userAssignDate).toLocaleTimeString();
+          }
+
+          console.log(newService.value.failureDate);
+          console.log(newService.value.userAssignDate);
+          console.log(newService.value);
           store
             .dispatch(Actions.ADD_DEVICESERVICE, newService.value)
             .then(result => {
@@ -3344,6 +3369,11 @@ export default defineComponent({
       formBakimFormuRef.value.validate(async valid => {
         if (valid) {
           newBakimService.value.deviceId = Number(firmaOzet.value.deviceId);
+
+          newBakimService.value.failureDate =
+            new Date(newBakimService.value.failureDate).toLocaleDateString() +
+            ' ' +
+            new Date(newBakimService.value.failureDate).toLocaleTimeString();
 
           await store
             .dispatch(Actions.ADD_BAKIMFORMUDEVICESERVICE, newBakimService.value)

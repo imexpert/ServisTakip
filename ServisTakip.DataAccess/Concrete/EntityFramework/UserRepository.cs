@@ -40,7 +40,7 @@ namespace ServisTakip.DataAccess.Concrete.EntityFramework
         {
             return await Context.Users
                 .Include(s=>s.UserGroups)
-                .Where(s=>s.CompanyId == Utils.CompanyId && s.UserGroups.Any(t=>t.GroupId == (long)GroupCodes.Technician))
+                .Where(s=>s.CompanyId == Utils.CompanyId && s.Status && s.UserGroups.Any(t=>t.GroupId == (long)GroupCodes.Technician))
                 .ToListAsync(cancellationToken);
         }
 
