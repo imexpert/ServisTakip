@@ -9,7 +9,7 @@
     <template #empty v-if="deviceId != null">
       <div class="row">
         <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-1">
-          <el-button type="danger">
+          <el-button type="danger" @click="sozlemeDialogAc()">
             <el-icon> <Plus></Plus> </el-icon>Yeni Ekle
           </el-button>
         </div>

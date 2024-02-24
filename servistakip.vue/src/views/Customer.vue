@@ -289,7 +289,6 @@
 import { defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
-import { ErrorMessage } from 'vee-validate';
 import { ElMessageBox } from 'element-plus';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { hideModal } from '@/core/helpers/dom';
@@ -331,7 +330,6 @@ interface CustomerAddressData {
 }
 export default defineComponent({
   components: {
-    ErrorMessage
   },
   setup() {
     const store = useStore();

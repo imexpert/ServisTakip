@@ -534,7 +534,6 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
-import { ErrorMessage } from 'vee-validate';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { hideModal } from '@/core/helpers/dom';
 import PDFViewer from 'pdf-viewer-vue';
@@ -549,7 +548,6 @@ interface IMailModel {
 }
 export default defineComponent({
   components: {
-    ErrorMessage,
     PDFViewer,
   },
   setup() {
@@ -749,7 +747,7 @@ export default defineComponent({
     };
 
     async function teknisyenAtaAc(deviceServiceId) {
-      assignTechnicianModel.value.userId = null;
+      assignTechnicianModel.value.userId = "";
       selectedDeviceServiceId.value = deviceServiceId;
       await getTechnicianList();
       teknisyenAtaDialogVisible.value = true;

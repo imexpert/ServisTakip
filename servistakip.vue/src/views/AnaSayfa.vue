@@ -130,7 +130,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="carikod" />
                   </div>
                 </div>
               </div>
@@ -142,7 +141,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="sektor" />
                   </div>
                 </div>
               </div>
@@ -221,7 +219,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="bolge" />
                   </div>
                 </div>
               </div>
@@ -233,7 +230,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
                   </div>
                 </div>
               </div>
@@ -243,7 +239,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
                   </div>
                 </div>
               </div>
@@ -253,7 +248,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
                   </div>
                 </div>
               </div>
@@ -265,7 +259,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
                   </div>
                 </div>
               </div>
@@ -275,7 +268,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
                   </div>
                 </div>
               </div>
@@ -285,7 +277,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
                   </div>
                 </div>
               </div>
@@ -297,7 +288,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
                   </div>
                 </div>
               </div>
@@ -312,7 +302,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="departman" />
                   </div>
                 </div>
               </div>
@@ -323,7 +312,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="bolge" />
                   </div>
                 </div>
               </div>
@@ -334,7 +322,6 @@
                 </el-input>
                 <div class="fv-plugins-message-container">
                   <div class="fv-help-block">
-                    <ErrorMessage name="bolge" />
                   </div>
                 </div>
               </div>
@@ -533,7 +520,7 @@
             <!-- Cihaz Açıklama -->
             <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 fv-row mt-2">
               <label class="fs-5 fw-semobold mb-2">Cihaz Açıklaması</label>
-              <el-input disabled style="font-size: 12px" v-model="firmaOzet.device.description" class="customBorder">
+              <el-input disabled style="font-size: 12px"  class="customBorder">
               </el-input>
             </div>
           </div>
@@ -695,7 +682,7 @@
       <el-dialog v-model="cihazListesiDialogVisible" title="Cihaz Listesi" width="50%" destroy-on-close center>
         <div class="row">
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-5">
-            <el-card class="box-card" style="height: 300px">
+            <el-card class="box-card" style="height: 350px">
               <div class="text item">
                 <el-table :data="deviceList" style="width: 100%" max-height="300">
                   <el-table-column label="Cihaz No" width="160">
@@ -712,7 +699,7 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column label="Model" width="160">
+                  <el-table-column label="Model" width="220">
                     <template #default="scope">
                       <div style="display: flex; align-items: center">
                         <span>{{ scope.row.deviceModel.name }}</span>
@@ -723,6 +710,13 @@
                     <template #default="scope">
                       <div style="display: flex; align-items: center">
                         <span>{{ scope.row.serialNumber }}</span>
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="Departman" width="160">
+                    <template #default="scope">
+                      <div style="display: flex; align-items: center">
+                        <span>{{ scope.row.departman }}</span>
                       </div>
                     </template>
                   </el-table-column>
@@ -2622,7 +2616,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, vModelCheckbox } from 'vue';
-import { ErrorMessage, Field, Form } from 'vee-validate';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
 import { Plus, Search } from '@element-plus/icons-vue';
@@ -2660,9 +2653,6 @@ import { showModal } from '@/core/helpers/dom';
 export default defineComponent({
   name: 'default-dashboard-widget-2',
   components: {
-    ErrorMessage,
-    Field,
-    Form,
     Search,
     Plus,
     SozlesmeListesi,
@@ -4079,7 +4069,9 @@ export default defineComponent({
             if (result.isSuccess) {
               firmaOzet.value = result.data;
 
+              
               if (result.data.device) {
+                console.log(firmaOzet.value.device);
                 device.value = result.data.device;
                 deviceBrand.value = result.data.device?.deviceModel?.deviceBrand;
                 deviceModel.value = result.data.device?.deviceModel;

@@ -104,7 +104,6 @@
 import { defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
-import { ErrorMessage } from 'vee-validate';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import PDFViewer from 'pdf-viewer-vue';
 import { IDeviceServiceData } from '@/core/data/DeviceServiceData';
@@ -123,7 +122,6 @@ interface ICustomInfo {
 export default defineComponent({
   name: 'ComponentOfferToSend',
   components: {
-    ErrorMessage,
     PDFViewer,
   },
   setup() {

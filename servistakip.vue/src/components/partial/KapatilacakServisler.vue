@@ -506,7 +506,6 @@
 import { defineComponent, ref, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 import { Actions } from '@/store/enums/StoreEnums';
-import { ErrorMessage } from 'vee-validate';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { IAssignTechnicianData } from '@/core/data/AssignTechnicianData';
 import { IDeviceServiceData } from '@/core/data/DeviceServiceData';
@@ -516,7 +515,6 @@ import { IResultCodeData } from '@/core/data/ResultCodeData';
 
 export default defineComponent({
   components: {
-    ErrorMessage,
   },
   setup() {
     const store = useStore();

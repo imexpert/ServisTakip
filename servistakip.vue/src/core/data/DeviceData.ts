@@ -8,7 +8,7 @@ interface IDeviceData {
     serialNumber?: string | '',
     assemblyDate?: Date | '',
     assemblyDateString?: string | '',
-    description?: string | '',
+    description: string | '',
     status?: boolean | null | undefined,
     address?: IAddressData | null;
     rowId?: string | null;

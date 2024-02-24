@@ -86,7 +86,6 @@
 <script lang="ts">
 import { defineComponent, ref,onMounted } from 'vue';
 import { Search } from '@element-plus/icons-vue';
-import { ErrorMessage, Field, Form } from 'vee-validate';
 import { Actions } from '@/store/enums/StoreEnums';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -102,9 +101,6 @@ import * as Yup from 'yup';
 export default defineComponent({
   name: 'sign-in',
   components: {
-    Field,
-    Form,
-    ErrorMessage,
     Search,
   },
   setup() {

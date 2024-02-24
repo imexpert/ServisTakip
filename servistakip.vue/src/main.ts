@@ -18,7 +18,6 @@ import ApiService from "@/core/services/ApiService";
 import SignalRService from "@/core/plugins/signalR";
 import { initApexCharts } from "@/core/plugins/apexcharts";
 import { initInlineSvg } from "@/core/plugins/inline-svg";
-import { initVeeValidate } from "@/core/plugins/vee-validate";
 import VueDatePicker from '@vuepic/vue-datepicker';
 
 import "@/core/plugins/prismjs";
@@ -44,7 +43,6 @@ SignalRService.create();
 ApiService.init(app);
 initApexCharts(app);
 initInlineSvg(app);
-initVeeValidate();
 
 app.use(i18n);
 
