@@ -27,18 +27,18 @@ builder.Services.AddCustomCacheServices();
 
 builder.Services.AddServisTakipDbContext();
 
-var redisConnection = builder.Configuration.GetSection("RedisSettings:Host");
+//var redisConnection = builder.Configuration.GetSection("RedisSettings:Host");
 
-if (redisConnection is { Value: { } })
-{
-    builder.Services.AddSignalR(options =>
-    {
-        options.EnableDetailedErrors = true;
-    }).AddStackExchangeRedis(redisConnection.Value, options =>
-    {
-        options.Configuration.ChannelPrefix = "Kec";
-    });
-}
+//if (redisConnection is { Value: { } })
+//{
+//    builder.Services.AddSignalR(options =>
+//    {
+//        options.EnableDetailedErrors = true;
+//    }).AddStackExchangeRedis(redisConnection.Value, options =>
+//    {
+//        options.Configuration.ChannelPrefix = "Kec";
+//    });
+//}
 
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -90,7 +90,7 @@ app.Use(async (httpContext, next) =>
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    endpoints.MapHub<ServisTakipHub>("/servisTakipHub");
+    // endpoints.MapHub<ServisTakipHub>("/servisTakipHub");
 });
 
 app.Run();

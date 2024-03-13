@@ -541,10 +541,7 @@ export default defineComponent({
     },
     async getCustomer() {
       if (this.store.state.customerId == undefined) {
-        this.$router.push({
-          name: 'dashboard',
-          path: '/dashboard',
-        });
+        
       }
 
       await this.store

@@ -4292,19 +4292,13 @@ export default defineComponent({
     }
 
     function routeAddCustomer() {
-      router.push({
-        name: 'customer',
-        path: '/customer',
-      });
+      
     }
 
     function routeUpdateCustomer() {
       store.commit('setCustomerId', firmaOzet.value.customerId);
 
-      router.push({
-        name: 'customer',
-        path: '/customer',
-      });
+      
     }
 
     async function cihazListesi() {

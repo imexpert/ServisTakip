@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ServisTakip.Business.DependencyResolvers;
 using ServisTakip.Core.CrossCuttingConcerns.Caching;
+using ServisTakip.Core.CrossCuttingConcerns.Caching.Microsoft;
 using ServisTakip.Core.CrossCuttingConcerns.Caching.Redis;
 using ServisTakip.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using ServisTakip.Core.DependencyResolvers;
@@ -57,7 +58,7 @@ namespace ServisTakip.Api.Infrastructure
 
         public static void AddCustomServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<RedisSettings>(configuration.GetSection("RedisSettings"));
+            // services.Configure<RedisSettings>(configuration.GetSection("RedisSettings"));
 
             Assembly assembly = Assembly.GetAssembly(typeof(AutofacBusinessModule));
 
@@ -92,12 +93,12 @@ namespace ServisTakip.Api.Infrastructure
 
             services.AddScoped<IPrincipal>(getPrincipal);
 
-            var _redis = ConnectionMultiplexer.Connect(new ConfigurationOptions
-            {
-                EndPoints = { $"{configuration.GetValue<string>("RedisSettings:Host")}:{configuration.GetValue<string>("RedisSettings:Port")}" }
-            });
+            //var _redis = ConnectionMultiplexer.Connect(new ConfigurationOptions
+            //{
+            //    EndPoints = { $"{configuration.GetValue<string>("RedisSettings:Host")}:{configuration.GetValue<string>("RedisSettings:Port")}" }
+            //});
 
-            services.AddSingleton<IConnectionMultiplexer>(_redis);
+            //services.AddSingleton<IConnectionMultiplexer>(_redis);
 
             var coreModule = new CoreModule();
 
@@ -116,7 +117,7 @@ namespace ServisTakip.Api.Infrastructure
 
         public static void AddCustomCacheServices(this IServiceCollection services)
         {
-            services.AddSingleton<ICacheManager, RedisCacheManager>();
+            services.AddSingleton<ICacheManager, MemoryCacheManager>();
         }
 
         public static void AddServisTakipDbContext(this IServiceCollection services)

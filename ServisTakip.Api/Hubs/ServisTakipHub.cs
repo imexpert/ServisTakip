@@ -18,7 +18,7 @@ namespace ServisTakip.Api.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            await SaveToRedisAsync(Context.ConnectionId);
+            // await SaveToRedisAsync(Context.ConnectionId);
             await base.OnConnectedAsync();
         }
 
@@ -26,22 +26,22 @@ namespace ServisTakip.Api.Hubs
         {
             if(!string.IsNullOrEmpty(Context.ConnectionId))
             {
-                await _db.KeyDeleteAsync(Context.ConnectionId);
+                // await _db.KeyDeleteAsync(Context.ConnectionId);
             }
 
             await base.OnDisconnectedAsync(exception);
         }
 
-        private async Task SaveToRedisAsync(string key)
-        {
-            string clientIp = Context.GetHttpContext().Connection.RemoteIpAddress.ToString();
+        //private async Task SaveToRedisAsync(string key)
+        //{
+        //    string clientIp = Context.GetHttpContext().Connection.RemoteIpAddress.ToString();
 
-            if (!string.IsNullOrEmpty(key))
-            {
-                await _db.KeyDeleteAsync(key);
-            }
+        //    if (!string.IsNullOrEmpty(key))
+        //    {
+        //        await _db.KeyDeleteAsync(key);
+        //    }
             
-            await _db.StringSetAsync(key, clientIp);
-        }
+        //    await _db.StringSetAsync(key, clientIp);
+        //}
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using ServisTakip.Core.CrossCuttingConcerns.Caching.Microsoft;
 
 namespace ServisTakip.Core.DependencyResolvers
 {
@@ -17,7 +18,7 @@ namespace ServisTakip.Core.DependencyResolvers
         public void Load(IServiceCollection services, IConfiguration configuration)
         {
             services.AddMemoryCache();
-            services.AddSingleton<ICacheManager, RedisCacheManager>();
+            services.AddSingleton<ICacheManager, MemoryCacheManager>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
 

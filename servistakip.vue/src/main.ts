@@ -36,9 +36,9 @@ app.use(ElementPlus);
 app.use(loading, /*{...}*/)
 app.use(VuePdf)
 
-SignalRService.init();
-SignalRService.connect();
-SignalRService.create();
+// SignalRService.init();
+// SignalRService.connect();
+// SignalRService.create();
 
 ApiService.init(app);
 initApexCharts(app);
