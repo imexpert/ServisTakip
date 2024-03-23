@@ -93,7 +93,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static async update(resource: string, slug: string, params: AxiosRequestConfig): Promise<AxiosResponse> {
-    return await ApiService.vueInstance.axios.put(`${resource}/${slug}`, params);
+    return await ApiService.vueInstance.axios.post(`${resource}/${slug}`, params);
   }
 
   /**
@@ -103,7 +103,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static async put(resource: string, params: AxiosRequestConfig): Promise<AxiosResponse> {
-    return await ApiService.vueInstance.axios.put(`${resource}`, params);
+    return await ApiService.vueInstance.axios.post(`${resource}`, params);
   }
 
   /**
@@ -112,7 +112,7 @@ class ApiService {
    * @returns Promise<AxiosResponse>
    */
   public static async delete(resource: string): Promise<AxiosResponse> {
-    return await ApiService.vueInstance.axios.delete(resource);
+    return await ApiService.vueInstance.axios.get(resource);
   }
 }
 

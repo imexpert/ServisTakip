@@ -47,7 +47,7 @@ namespace ServisTakip.Api.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPost]
         [EnableCors("AllowOrigin")]
         public async Task<IActionResult> UpdateUserAsync()
         {
@@ -86,7 +86,7 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<ChangeUserPasswordDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> ChangeUserPasswordAsync([FromBody] ChangeUserPasswordDto model)
         {
             return CreateActionResult(await Mediator.Send(new ChangeUserPasswordCommand() { Model = model }));
@@ -101,7 +101,7 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<UpdateUserDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> DeleteUserAsync(long id)
         {
             return CreateActionResult(await Mediator.Send(new DeleteUserCommand() { Model = new DeleteUserDto() { Id = id } }));

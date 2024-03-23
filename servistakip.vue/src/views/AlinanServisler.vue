@@ -795,8 +795,7 @@ export default defineComponent({
         .then(result => {
           if (result.isSuccess) {
             receivedDeviceServiceList.value = result.data;
-            alinanServislerLabel.value =
-              alinanServislerLabel.value + ' (' + receivedDeviceServiceList.value.length + ')';
+            alinanServislerLabel.value ="Alınan Servisler " + ' (' + receivedDeviceServiceList.value.length + ')';
           }
         })
         .catch(() => {
@@ -812,7 +811,7 @@ export default defineComponent({
           if (result.isSuccess) {
             technicianAssignedDeviceServiceList.value = result.data;
             teknisyendekiIslerLabel.value =
-              teknisyendekiIslerLabel.value + ' (' + technicianAssignedDeviceServiceList.value.length + ')';
+              "Teknisyendeki İşler" + ' (' + technicianAssignedDeviceServiceList.value.length + ')';
           }
         })
         .catch(() => {

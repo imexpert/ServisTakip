@@ -34,7 +34,7 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateOfferDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> UpdateOfferAsync([FromBody] CreateOfferDto model)
         {
             return CreateActionResult(await Mediator.Send(new UpdateOfferCommand() { Model = model }));
@@ -49,7 +49,7 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateOfferDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> SendOfferAsync([FromBody] OfferDto model)
         {
             return CreateActionResult(await Mediator.Send(new SendOfferCommand() { Model = model }));
@@ -64,7 +64,7 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateOfferDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> SendOfferAgainAsync([FromBody] OfferDto model)
         {
             return CreateActionResult(await Mediator.Send(new SendOfferAgainCommand() { Model = model }));
@@ -79,7 +79,7 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<bool>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> DeleteOfferAsync(long id)
         {
             return CreateActionResult(await Mediator.Send(new DeleteOfferCommand() { Id = id }));

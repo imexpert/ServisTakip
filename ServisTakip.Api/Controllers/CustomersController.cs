@@ -32,7 +32,7 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CustomerDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> UpdateCustomerAsync([FromBody] UpdateCustomerDto model)
         {
             return CreateActionResult(await Mediator.Send(new UpdateCustomerCommand() { Model = model }));
@@ -47,7 +47,7 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CustomerDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> DeleteCustomerAsync(long id)
         {
             return CreateActionResult(await Mediator.Send(new DeleteCustomerCommand() { Id = id }));

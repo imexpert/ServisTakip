@@ -32,7 +32,7 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateDeviceServicePartDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> UpdateDeviceServicePartAsync([FromBody] CreateDeviceServicePartDto model)
         {
             return CreateActionResult(await Mediator.Send(new UpdateDeviceServicePartCommand() { Model = model }));
@@ -46,7 +46,7 @@ namespace ServisTakip.Api.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage<CreateDeviceServicePartDto>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> DeleteDeviceServicePartAsync(long id)
         {
             return CreateActionResult(await Mediator.Send(new DeleteDeviceServicePartCommand() { Id = id }));

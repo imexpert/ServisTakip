@@ -6,7 +6,7 @@ const hideModal = (modalEl: HTMLElement | null): void => {
   }
 
   const myModal = Modal.getInstance(modalEl);
-  myModal.hide();
+  // myModal.hide();
 };
 
 const showModal = (modalEl: HTMLElement | null): void => {
